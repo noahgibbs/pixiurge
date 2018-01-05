@@ -3,9 +3,9 @@ require "rake/testtask"
 require_relative "./lib/pixiurge/version"
 
 Rake::TestTask.new(:test) do |t|
-  t.libs << "test"
+  t.libs << "test/server"
   t.libs << "lib"
-  t.test_files = FileList['test/**/*_test.rb']
+  t.test_files = FileList['test/server/**/*_test.rb']
 end
 
 file "releases/pixiurge-combined.min.js" => Rake::FileList["pixiurge/*.coffee", "vendor/*.js"] do
@@ -18,6 +18,11 @@ task :package_js => "releases/pixiurge-combined.min.js" do
   sh "cp releases/pixiurge-combined.js.map releases/pixiurge-v#{Pixiurge::VERSION}pre.js.map"
   sh "cp releases/pixiurge-combined.min.js releases/pixiurge-v#{Pixiurge::VERSION}pre.min.js"
   sh "cp releases/pixiurge-combined.min.js.map releases/pixiurge-v#{Pixiurge::VERSION}pre.min.js.map"
+end
+
+desc "Test the Javascript and Coffeescript libraries"
+task :test_js do
+  sh "./test/js/bundle_and_test.sh"
 end
 
 task :default => :test
