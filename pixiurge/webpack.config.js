@@ -1,7 +1,7 @@
 const path = require('path');
 const glob = require('glob');
-const webpack = require('webpack');
-//const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+//const webpack = require('webpack');
+//const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const pixiurge_source_files = glob.sync("pixiurge/pixiurge*.coffee").concat(glob.sync("vendor/dev/*.js")).map(function(d) { return path.resolve(__dirname + "/..", d); });
 
@@ -10,7 +10,7 @@ module.exports = {
     target: "web",
     entry: {
         "pixiurge-combined": pixiurge_source_files,
-        "pixiurge-combined.min": pixiurge_source_files
+        //"pixiurge-combined.min": pixiurge_source_files
     },
     devtool: "source-map",
     output: {
@@ -30,9 +30,12 @@ module.exports = {
         symlinks: true
     },
     plugins: [
-              new webpack.optimize.UglifyJsPlugin({
-                      include: /\.min\.js$/,
-                      minimize: true
-                  })
+              //new webpack.optimize.UglifyJsPlugin({
+              //        include: /\.min\.js$/,
+              //        minimize: true
+              //    })
+              //new MinifyPlugin({}, {
+              //        test: /\.min\.js$/,
+              //    })
     ]
 };
