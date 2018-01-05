@@ -8,12 +8,13 @@ Rake::TestTask.new(:test) do |t|
   t.test_files = FileList['test/**/*_test.rb']
 end
 
-file "pixiurge/pixiurge-combined.min.js" => Rake::FileList["pixiurge/*.coffee", "vendor/*.js"] do
+file "releases/pixiurge-combined.min.js" => Rake::FileList["pixiurge/*.coffee", "vendor/*.js"] do
   sh "./node_modules/.bin/webpack --config pixiurge/webpack.config.js"
 end
 
-task :package_js => "pixiurge/pixiurge-combined.min.js" do
-  sh "cp pixiurge/pixiurge-combined.min.js pixiurge/pixiurge-v#{Pixiurge::VERSION}pre.min.js"
+desc "Package the current Pixiurge Javascript into a combined, minified archive."
+task :package_js => "releases/pixiurge-combined.min.js" do
+  sh "cp releases/pixiurge-combined.min.js releases/pixiurge-v#{Pixiurge::VERSION}pre.min.js"
 end
 
 task :default => :test

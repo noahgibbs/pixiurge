@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pixiurge Example Client</title>
+
+  <script src="pixiurge-0.1.0.min.js"></script>
+
+</head>
+<body>
+
+<script>
+//<![CDATA[
+
+// Not HTTPS already? Redirect to HTTPS.
+if (window.location.protocol != "https:") {
+   window.location.protocol = "https:";
+   window.location.reload();
+}
+
+  $(function(){
+    if(!("WebSocket" in window)) {
+      alert("Sorry, your browser does not appear to support WebSockets. Please use the latest version of your browser, and not any version of Opera Mini.");
+      return;
+    }
+
+    window.pixiurge_game = new Pixiurge();
+    // If necessary, change "3001" to the appropriate port number! WSS in the URL means you need to set up secure sockets!
+    var ws = new WebSocket("wss://localhost:3001/");
+    pixiurge_game.setTransport(new Pixiurge.WebsocketTransport(pixiurge_game, ws));
+    var display = new Pixiurge.Display(pixiurge_game, { container: "#displayarea" });
+    pixiurge_game.setDisplay(display);
+
+    pixiurge_game.setup();
+  });
+
+//]]>
+</script>
+
+<div id="displayarea"></div>
+
+</body>
+</html>
