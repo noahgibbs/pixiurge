@@ -1,7 +1,7 @@
 # Pixiurge
 
-Pixiurge (sometimes "PXG" for short) provides a Websocket- and
-Pixi-based browser game front end for a Demiurge simulation engine.
+Pixiurge provides a Websocket- and Pixi-based browser game front end
+for a Demiurge simulation engine.
 
 Demiurge is a library for easy creation of game simulation and
 artificial intelligence using Ruby. Demiurge stays powerful, simple
