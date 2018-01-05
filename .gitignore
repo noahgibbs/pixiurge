@@ -13,5 +13,8 @@ incoming_traffic.json
 outgoing_traffic.json
 node_modules
 test/js/*bundle.js
-pixiurge/*-combined*.js
-*-combined*.js
+releases/pixiurge-combined.*
+releases/*combined*pre.js
+releases/*combined*pre.js.map
+*combined*pre.js
+*combined*pre.js.map

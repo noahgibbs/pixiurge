@@ -1,19 +1,20 @@
-//const path = require('path');
+const path = require('path');
 const glob = require('glob');
+const webpack = require('webpack');
 //const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
-//const pixiurge_source_files = glob.sync("pixiurge*.coffee").concat(glob.sync("../vendor/dev/*.js"));
+const pixiurge_source_files = glob.sync("pixiurge/pixiurge*.coffee").concat(glob.sync("vendor/dev/*.js")).map(function(d) { return path.resolve(__dirname + "/..", d); });
 
 module.exports = {
-    context: __dirname,
+    context: __dirname + "/..",
     target: "web",
     entry: {
-        "pixiurge-combined": glob.sync("pixiurge*.coffee").concat(glob.sync("../vendor/dev/*.js")),
-        "pixiurge-combined.min": glob.sync("pixiurge*.coffee").concat(glob.sync("../vendor/dev/*.js"))
+        "pixiurge-combined": pixiurge_source_files,
+        "pixiurge-combined.min": pixiurge_source_files
     },
-    //devtool: "source-map",
+    devtool: "source-map",
     output: {
-        path: "../releases",
+        path: path.resolve(__dirname, "../releases"),
         filename: "[name].js"
     },
     module: {
