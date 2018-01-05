@@ -26,10 +26,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "minitest", "~> 5.0"
 
   spec.add_runtime_dependency "demiurge", "~> 0.2.0"
-  spec.add_runtime_dependency "thin"
-  spec.add_runtime_dependency "faye-websocket"
-  spec.add_runtime_dependency "multi_json"
-  spec.add_runtime_dependency "tmx"
-  spec.add_runtime_dependency "therubyracer"
-  spec.add_runtime_dependency "rack-coffee"
+  spec.add_runtime_dependency "thin", "~> 1.7"
+  spec.add_runtime_dependency "faye-websocket", "~> 0.10"
+  spec.add_runtime_dependency "multi_json", "~> 1.12"
+  spec.add_runtime_dependency "tmx", "~> 0.1.5"
+  spec.add_runtime_dependency "therubyracer", "~> 0.12"
+  spec.add_runtime_dependency "rack-coffee", "~> 1.0"
 end
