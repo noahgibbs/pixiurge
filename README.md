@@ -56,7 +56,9 @@ Your software will run via an app server, either Thin or Puma.
 
 For most applications you'll want to run with SSL configured -
 Pixiurge does *not* handle over-the-wire security for you, it assumes
-that SSL/TLS will take care of that problem.
+that SSL/TLS will take care of that problem. See example/start_server
+for an example of how to make sure SSL is set up when running your
+server locally.
 
 ## Development
 
