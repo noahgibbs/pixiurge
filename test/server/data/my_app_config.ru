@@ -1,4 +1,4 @@
-require "pixiurge/config_ru"
+require "pixiurge"
 
 #file = File.new File.join(__dir__, "log", "http_req.txt"), "a"
 #file.sync = true
@@ -8,10 +8,12 @@ require "pixiurge/config_ru"
 #  STDERR.puts "ERROR: #{e.message}\n#{e.backtrace.join "\n"}\n"
 #end
 
-Pixiurge.rack_builder self
-Pixiurge.root_dir __dir__
-Pixiurge.coffeescript_dirs "coffee"
-Pixiurge.static_dirs "static"
-Pixiurge.static_files "bobo.txt"
+# Use a raw base-class app - we're not specializing the behavior in any way.
+app = Pixiurge::App.new
+app.rack_builder self
+app.root_dir __dir__
+app.coffeescript_dirs "coffee"
+app.static_dirs "static"
+app.static_files "bobo.txt"
 
-run Pixiurge.handler
+run app.handler
