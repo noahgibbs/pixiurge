@@ -29,7 +29,7 @@ class window.Pixiurge
     # TODO: send back a warning to the server side?
     console.warn "Unknown message name: #{msgName}, args: #{args}"
 
-# This is an example message handling parent class
+# This is an example message-handling parent class
 class Pixiurge.Simulation
   constructor: (@dcjs) ->
   setup: () ->
