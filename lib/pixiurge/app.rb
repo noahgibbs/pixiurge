@@ -148,7 +148,7 @@ class Pixiurge::App
       if Faye::WebSocket.websocket? env
         @app.websocket_handler env
       else
-        if static_files.include?(env["PATH_INFO"])
+        if @root_dir && static_files.include?(env["PATH_INFO"])
           file = env["PATH_INFO"]
           path = File.join(@root_dir, file)
           return [200, {'Content-Type' => 'text/html'}, [File.read(path)]]
