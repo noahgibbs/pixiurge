@@ -37,6 +37,7 @@ module Pixiurge
   # @param dirs [String, Array<String>] The directory name or array of directory names, located under the web root you passed to Pixiurge.root_dir
   # @since 0.1.0
   def self.coffeescript_dirs *dirs
+    raise "Please set Pixiurge.root_dir before using Pixiurge.static_dirs!" unless @root_dir
     dirs = [*dirs].flatten
     @rack_builder.use Rack::Coffee, :root => (@root_dir + "/"), :urls => dirs.map { |d| "/" + d }
   end
@@ -49,7 +50,8 @@ module Pixiurge
   def self.static_dirs *dirs
     dirs = [*dirs].flatten
 
-    @rack_builder.use Rack::Static, :urls => dirs.map { |d| "/" + d }
+    raise "Please set Pixiurge.root_dir before using Pixiurge.static_dirs!" unless @root_dir
+    @rack_builder.use Rack::Static, :root => @root_dir, :urls => dirs.map { |d| "/" + d }
   end
 
   # To have Pixiurge serve individual static files such as index.html, call this with the appropriate list of file paths.
@@ -78,8 +80,8 @@ module Pixiurge
       else
         if static_files.include?(env["PATH_INFO"])
           file = env["PATH_INFO"]
-          file = file[1..-1] if file[0] == "/"
-          return [200, {'Content-Type' => 'text/html'}, [File.read(file)]]
+          path = File.join(@root_dir, file)
+          return [200, {'Content-Type' => 'text/html'}, [File.read(path)]]
         else
           return [404, {}, [""]]
         end

@@ -10,8 +10,8 @@ require "pixiurge/config_ru"
 
 Pixiurge.rack_builder self
 Pixiurge.root_dir __dir__
-#Pixiurge.coffeescript_dirs "coffee"
-#Pixiurge.static_dirs "static"
-#Pixiurge.static_files "index.html"
+Pixiurge.coffeescript_dirs "coffee"
+Pixiurge.static_dirs "static"
+Pixiurge.static_files "bobo.txt"
 
 run Pixiurge.handler
