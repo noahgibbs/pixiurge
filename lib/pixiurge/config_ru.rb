@@ -76,7 +76,7 @@ module Pixiurge
     static_files = @static_files.map { |f| "/" + f }
     lambda do |env|
       if Faye::WebSocket.websocket? env
-        Demiurge::Createjs.websocket_handler env
+        @app.websocket_handler env
       else
         if static_files.include?(env["PATH_INFO"])
           file = env["PATH_INFO"]
