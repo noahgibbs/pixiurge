@@ -91,7 +91,7 @@ TEXT
 
   def test_repeat_registration
     pixi_app = get_pixi_app
-    pixi_app.mem_storage.account_state["existing"] = { "account" => { "username" => "existing", "salt" => "fake_salt", "bcrypted" => "fake_hash" } }
+    pixi_app.mem_storage.account_state["existing"] = { "account" => { "username" => "existing", "salt" => "fake_salt", "hashed" => "fake_hash" } }
 
     ws.open
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "existing", "salt" => "fake_salt2", "bcrypted" => "fake_hash2" } ])
@@ -99,5 +99,17 @@ TEXT
 
     assert_equal 1, ws.sent_data.length
     assert_equal Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, ws.parsed_sent_data[0][0]
+  end
+
+  def test_existing_login
+    pixi_app = get_pixi_app
+    pixi_app.mem_storage.account_state["existing"] = { "account" => { "username" => "existing", "salt" => "fake_salt", "hashed" => "fake_hash" } }
+
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "existing", "bcrypted" => "fake_hash" } ])
+    ws.close
+
+    assert_equal 1, ws.sent_data.length
+    assert_equal Pixiurge::Protocol::Outgoing::AUTH_LOGIN, ws.parsed_sent_data[0][0]
   end
 end
