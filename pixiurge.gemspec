@@ -25,6 +25,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.0"
   spec.add_development_dependency "rack-test", "~> 0.7"
+  spec.add_development_dependency "yard"
+  spec.add_development_dependency "redcarpet"
+  spec.add_development_dependency "github-markdown"
 
   spec.add_runtime_dependency "demiurge", "~> 0.2.0"
   spec.add_runtime_dependency "thin", "~> 1.7"

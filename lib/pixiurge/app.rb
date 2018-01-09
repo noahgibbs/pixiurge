@@ -1,10 +1,148 @@
 require "pixiurge/protocol"
 
-# Pixiurge::App is the parent class of Pixiurge applications (games).
-# By inheriting from this and overriding various handlers, your
-# Pixiurge server-side application can respond appropriately to the
-# Javascript/Pixi client-side browsers.
+# This is an interface class that defines all handlers for a Pixiurge
+# application.  It's possible to inherit from it but then you must
+# override all handlers and you won't get AuthenticatedApp
+# functionality, which you probably want. This class exists primarily
+# for purposes of documentation.
 #
+# Here is a config.ru that sets up a very basic Pixiurge App:
+# ```ruby
+# require "pixiurge"
+# # require_relative "my_pixiurge_app_file"
+#
+# # You can also set up normal Rack code here like logfiles or
+# # EM.error_handler here.
+#
+# # Instead of Pixiurge::App, call new on your child class here
+# app = Pixiurge::App.new
+# app.rack_builder self
+# app.root_dir __dir__
+# app.coffeescript_dirs "coffee"
+# app.static_dirs "static"
+# app.static_files "bobo.txt"
+#
+# run app.handler
+# ```
+#
+# Here are handlers that your app can or should define:
+#
+# * {#on_open} - message handler for a newly-opened connection
+# * {#on_auth_message} - message handler for authentication messages (defined by AuthenticatedApp by default)
+# * {#on_player_action_message} - message handler for player action messages
+# * {#on_message} - generic message handler for non-auth, non-player-action messages
+# * {#on_login} - called when a user successfully logs in using built-in authentication (AuthenticatedApp only)
+# * {#handle_message} - low-level message handler, only if you're comfortable reading the source code
+#
+#
+# @see Pixiurge::AuthenticatedApp
+# @since 0.1.0
+class Pixiurge::AppInterface
+  # This handler will be called when a new websocket connection is
+  # made. At this point we don't know what player/account the
+  # connection is for, nor very much else about it. If you are
+  # inheriting from AuthenticatedApp, the {#on_login} handler will
+  # later associate this connection with an account username.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @return [void]
+  # @since 0.1.0
+  def on_open(ws)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This handler is for authentication messages. By default,
+  # AuthenticatedApp will define one for you, though you may wish to
+  # override or completely replace it. The msg_subtype is normally to
+  # show whether it is a login, registration, failure or other message
+  # within authentication generally.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @param msg_subtype [String] The type of auth message
+  # @param args [Array] All remaining arguments to the method
+  # @return [void]
+  # @since 0.1.0
+  def on_auth_message(ws, msg_subtype, *args)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This handler is for player action messages, as chosen by the
+  # client-side front end code. This handler will not normally be
+  # defined for you. The msg_subtype is normally to show what action
+  # is being taken. What entity took the action should be checked via
+  # the websocket object, which will be the same as the one passed to
+  # on_login or on_open.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @param msg_subtype [String] The type of action message
+  # @param args [Array] All remaining arguments to the method
+  # @return [void]
+  # @since 0.1.0
+  def on_player_action_message(ws, msg_subtype, *args)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This handler is for messages that do not seem to be authentication
+  # or player action messages based on their initial data header. The
+  # type of message is chosen by the client-side browser code. This
+  # handler will not normally be defined for you and may not be
+  # required at all. What user took the action should be checked via
+  # the websocket object, which will be the same as the one passed to
+  # on_login or on_open.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @param args [Array] All remaining arguments to the method
+  # @return [void]
+  # @since 0.1.0
+  def on_message(ws, *args)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # If you inherit from AuthenticatedApp, this handler will be called
+  # when a player has successfully logged in. Later handlers will
+  # continue passing the websocket object. This handler lets you
+  # associate the websocket with a specific player account.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @param username [String] The username for the account
+  # @return [void]
+  # @since 0.1.0
+  def on_login(ws, username)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This handler dispatches to on_auth_message,
+  # on_player_action_message or on_message, depending on the incoming
+  # message type and what handlers the app subtype has defined.
+  # If you override this handler but use the {Pixiurge::AuthenticatedApp},
+  # make sure to call {Pixiurge::AppInterface#on_auth_message} for messages that start with
+  # {Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE}.
+  #
+  # @see #on_player_action_message
+  # @see #on_auth_message
+  # @param ws [Websocket] The Ruby-Websocket-Driver websocket object
+  # @param data [Hash] Deserialized JSON data sent from the client
+  # @since 0.1.0
+  def handle_message(ws, data)
+    raise "Do not use AppInterface directly!"
+  end
+end
+
+# {Pixiurge::App} is the parent class of Pixiurge applications
+# (games).  By inheriting from this and overriding various handlers,
+# your Pixiurge server-side application can respond appropriately to
+# the Javascript/Pixi client-side browsers.
+#
+# An app is used in config.ru to set up web server setup like asset
+# directories.  It also defines methods for interacting with players.
+# This basic App class is very bare-bones. See
+# {Pixiurge::AuthenticatedApp} for a version with accounts and login.
+#
+# For full documentation of the interface, see
+# {Pixiurge::AppInterface}.
+#
+# @see Pixiurge::AppInterface
+# @see Pixiurge::AuthenticatedApp
 # @since 0.1.0
 class Pixiurge::App
   attr :record_traffic
@@ -30,7 +168,7 @@ class Pixiurge::App
   def websocket_handler(ws)
     ws.on :open do |event|
       puts "Socket open" if @debug
-      on_open(ws, event) if self.respond_to?(:on_open)
+      on_open(ws) if self.respond_to?(:on_open)
     end
 
     ws.on :message do |event|
@@ -61,16 +199,15 @@ class Pixiurge::App
   #
   # @see #on_player_action_message
   # @see #on_auth_message
-  # @param ws [Websocket] The Faye websocket object
+  # @param ws [Websocket] The Ruby-Websocket-Driver websocket object
   # @param data [Hash] Deserialized JSON data sent from the client
-  # @api private
   # @since 0.1.0
   def handle_message(ws, data)
     if data[0] == Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE
       return on_auth_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_auth_message)
     end
     if data[0] == Pixiurge::Protocol::Incoming::ACTION_MSG_TYPE
-      return on_player_action_message(ws, data[1], *data[2]) if self.respond_to?(:on_player_action_message)
+      return on_player_action_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_player_action_message)
     end
     return on_message(ws, data) if self.respond_to?(:on_message)
     raise "No handler for message! #{data.inspect}"

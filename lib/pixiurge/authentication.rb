@@ -38,6 +38,7 @@
 # {Pixiurge::App#handle_message} and you receive an authorization
 # message.
 #
+# @see Pixiurge::App
 # @since 0.1.0
 class Pixiurge::AuthenticatedApp < Pixiurge::App
   # Regex for what usernames are allowed

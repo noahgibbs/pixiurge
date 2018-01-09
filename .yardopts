@@ -1,5 +1,6 @@
 --readme README.md
 --title 'Pixiurge API Documentation'
 --charset utf-8
+--markup-provider redcarpet
 --markup markdown
 'lib/**/*.rb' - '*.md'

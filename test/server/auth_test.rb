@@ -1,8 +1,8 @@
 require_relative "test_helper"
 
-# This is, among other things, an example of how to set up hybrid
-# Rack/Websocket testing. They're basically just set up completely
-# separate and independent from each other.
+# This is, among other things, an example of how to set up both Rack
+# and Websocket testing. They're set up completely separate and
+# independent from each other.
 
 class AuthTestApp < Pixiurge::AuthenticatedApp
   attr_reader :mem_storage
