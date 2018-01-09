@@ -52,9 +52,11 @@ TEXT
     AuthTestApp.new options
   end
 
-  def test_can_get_salt
+  def test_get_failed_salt
     ws.open
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_GET_SALT, { "username" => "bobo" } ])
     ws.close
+
+    assert_equal [ MultiJson.dump([ Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as \"bobo\"!" } ]) ], ws.sent_data
   end
 end
