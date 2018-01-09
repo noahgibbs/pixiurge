@@ -52,6 +52,10 @@ class MockWebSocket
   def json_message(data)
     @handlers[:message] && @handlers[:message].call(WebSocket::Driver::MessageEvent.new(MultiJson.dump(data)))
   end
+
+  def parsed_sent_data
+    @sent_data.map { |d| MultiJson.load d }
+  end
 end
 
 # For WebSocket tests, we'll want to fake the whole WebSocket

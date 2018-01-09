@@ -59,4 +59,14 @@ TEXT
 
     assert_equal [ MultiJson.dump([ Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as \"bobo\"!" } ]) ], ws.sent_data
   end
+
+  def test_bad_username
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "bob ", "salt" => "", "bcrypted" => "" } ])
+    ws.close
+
+    assert_equal 1, ws.sent_data.length
+    assert_equal Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, ws.parsed_sent_data[0][0]
+    assert ws.parsed_sent_data[0][1]["message"]["contains illegal"]
+  end
 end
