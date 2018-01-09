@@ -19,3 +19,5 @@ releases/*combined*pre.js.map
 *combined*pre.js
 *combined*pre.js.map
 releases/pixiurge-v*pre.*js*
+accounts.json
+accounts.json.old

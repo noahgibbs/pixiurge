@@ -22,14 +22,12 @@ class Pixiurge::App
     @outgoing_traffic_logfile = "log/outgoing_traffic.json"
   end
 
-  # Create a websocket handler for the Pixiurge app.
+  # The websocket handler for the Pixiurge app.
   #
   # @param env [Rack::Env] The Rack environment
   # @api private
   # @since 0.1.0
-  def websocket_handler(env)
-    ws = Faye::WebSocket.new(env)
-
+  def websocket_handler(ws)
     ws.on :open do |event|
       puts "Socket open" if @debug
       on_open(ws, event) if self.respond_to?(:on_open)
@@ -51,20 +49,25 @@ class Pixiurge::App
     end
 
     # Return async Rack response
-    ws.rack_response
+    ws
   end
 
   # This handler dispatches to on_auth_message,
   # on_player_action_message or on_message, depending on the incoming
   # message type and what handlers the app subtype has defined.
+  # If you override this handler but use the {Pixiurge::AuthenticatedApp},
+  # make sure to call {#on_auth_message} for messages that start with
+  # {Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE}.
   #
+  # @see #on_player_action_message
+  # @see #on_auth_message
   # @param ws [Websocket] The Faye websocket object
   # @param data [Hash] Deserialized JSON data sent from the client
   # @api private
   # @since 0.1.0
   def handle_message(ws, data)
     if data[0] == Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE
-      return on_auth_message(ws, data[1], *data[2]) if self.respond_to?(:on_auth_message)
+      return on_auth_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_auth_message)
     end
     if data[0] == Pixiurge::Protocol::Incoming::ACTION_MSG_TYPE
       return on_player_action_message(ws, data[1], *data[2]) if self.respond_to?(:on_player_action_message)
@@ -72,6 +75,18 @@ class Pixiurge::App
     return on_message(ws, data) if self.respond_to?(:on_message)
     raise "No handler for message! #{data.inspect}"
   end
+
+  private
+
+  def websocket_send(socket, *args)
+    json_data = MultiJson.dump(args)
+    if record_traffic
+      File.open(@outgoing_traffic_logfile, "a") { |f| f.write json_data + "\n" } if @record_traffic
+    end
+    socket.send json_data
+  end
+
+  public
 
   # Below this line: For Pixiurge's Config.ru handling
   ####################################################
@@ -146,7 +161,8 @@ class Pixiurge::App
     static_files = @static_files.map { |f| "/" + f }
     lambda do |env|
       if Faye::WebSocket.websocket? env
-        @app.websocket_handler env
+        ws = Faye::WebSocket.new(env)
+        return websocket_handler(ws).rack_response
       else
         if @root_dir && static_files.include?(env["PATH_INFO"])
           file = env["PATH_INFO"]
