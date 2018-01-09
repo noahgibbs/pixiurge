@@ -5,6 +5,12 @@ require_relative "test_helper"
 # separate and independent from each other.
 
 class AuthTestApp < Pixiurge::AuthenticatedApp
+  attr_reader :mem_storage
+
+  def initialize(options = {})
+    @mem_storage = Pixiurge::Authentication::MemStorage.new
+    super(options.merge({ "storage" => @mem_storage }))
+  end
 end
 
 class AuthTest < WebSocketTest
@@ -68,5 +74,30 @@ TEXT
     assert_equal 1, ws.sent_data.length
     assert_equal Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, ws.parsed_sent_data[0][0]
     assert ws.parsed_sent_data[0][1]["message"]["contains illegal"]
+  end
+
+  def test_fresh_registration_and_login
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "bob", "salt" => "fake_salt", "bcrypted" => "fake_hash" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_GET_SALT, { "username" => "bob" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    ws.close
+
+    assert_equal 3, ws.sent_data.length
+    assert_equal Pixiurge::Protocol::Outgoing::AUTH_REGISTRATION, ws.parsed_sent_data[0][0]
+    assert_equal Pixiurge::Protocol::Outgoing::AUTH_SALT, ws.parsed_sent_data[1][0]
+    assert_equal Pixiurge::Protocol::Outgoing::AUTH_LOGIN, ws.parsed_sent_data[2][0]
+  end
+
+  def test_repeat_registration
+    pixi_app = get_pixi_app
+    pixi_app.mem_storage.account_state["existing"] = { "account" => { "username" => "existing", "salt" => "fake_salt", "bcrypted" => "fake_hash" } }
+
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "existing", "salt" => "fake_salt2", "bcrypted" => "fake_hash2" } ])
+    ws.close
+
+    assert_equal 1, ws.sent_data.length
+    assert_equal Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, ws.parsed_sent_data[0][0]
   end
 end

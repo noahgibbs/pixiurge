@@ -24,7 +24,7 @@ class Pixiurge::App
 
   # The websocket handler for the Pixiurge app.
   #
-  # @param env [Rack::Env] The Rack environment
+  # @param ws [#on] A Websocket-Driver socket object or object with matching interface
   # @api private
   # @since 0.1.0
   def websocket_handler(ws)
@@ -56,7 +56,7 @@ class Pixiurge::App
   # on_player_action_message or on_message, depending on the incoming
   # message type and what handlers the app subtype has defined.
   # If you override this handler but use the {Pixiurge::AuthenticatedApp},
-  # make sure to call {#on_auth_message} for messages that start with
+  # make sure to call {Pixiurge::App#on_auth_message} for messages that start with
   # {Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE}.
   #
   # @see #on_player_action_message
