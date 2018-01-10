@@ -186,6 +186,19 @@ class Pixiurge::AppInterface
   def on_player_logout(username)
     raise "Do not use AppInterface directly!"
   end
+
+  # This message means a player has reconnected to your application,
+  # often by connecting with a new browser. This won't normally
+  # require action on your part, but you can react in some way if you
+  # wish.
+  #
+  # @see AuthenticatedApp#websocket_for_username
+  # @param username [String] The new player's registered username
+  # @return [void]
+  # @since 0.1.0
+  def on_player_reconnect(username)
+    raise "Do not use AppInterface directly!"
+  end
 end
 
 # {Pixiurge::App} is the parent class of Pixiurge applications

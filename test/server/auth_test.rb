@@ -8,6 +8,8 @@ class AuthTestApp < Pixiurge::AuthenticatedApp
   attr_reader :mem_storage
   attr_reader :on_login_called
   attr_reader :on_player_login_called
+  attr_reader :on_close_called
+  attr_reader :on_player_logout_called
 
   def initialize(options = {})
     @mem_storage = Pixiurge::Authentication::MemStorage.new
@@ -21,6 +23,15 @@ class AuthTestApp < Pixiurge::AuthenticatedApp
 
   def on_player_login(username)
     @on_player_login_called = true
+  end
+
+  def on_close(ws, code, reason)
+    super
+    @on_close_called = true
+  end
+
+  def on_player_logout(username)
+    @on_player_logout_called = true
   end
 end
 
@@ -117,14 +128,21 @@ TEXT
     pixi_app.mem_storage.account_state["existing"] = { "account" => { "username" => "existing", "salt" => "fake_salt", "hashed" => "fake_hash" } }
 
     ws.open
+    # Before first message, make sure on_login and on_player_login weren't called
+    assert !pixi_app.on_login_called, "Shouldn't receive on_login handler call before first message"
+    assert !pixi_app.on_player_login_called, "Shouldn't receive on_player_login handler call before first message"
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "existing", "bcrypted" => "fake_hash" } ])
-    ws.close
-
     assert_equal 1, ws.sent_data.length
     assert_equal Pixiurge::Protocol::Outgoing::AUTH_LOGIN, ws.parsed_sent_data[0][0]
-
-    # Also, make sure on_login and on_player_login handlers got called
+    # Now make sure on_login and on_player_login handlers got called
     assert pixi_app.on_login_called, "Received on_login handler call"
     assert pixi_app.on_player_login_called, "Received on_player_login handler call"
+    assert !pixi_app.on_close_called, "Shouldn't receive on_close handler call before socket close"
+    assert !pixi_app.on_player_logout_called, "Shouldn't receive on_player_logout handler call before logout"
+
+    ws.close
+    assert pixi_app.on_close_called, "Received on_close handler call"
+    assert pixi_app.on_player_logout_called, "Received on_player_logout handler call"
+
   end
 end
