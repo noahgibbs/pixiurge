@@ -6,10 +6,21 @@ require_relative "test_helper"
 
 class AuthTestApp < Pixiurge::AuthenticatedApp
   attr_reader :mem_storage
+  attr_reader :on_login_called
+  attr_reader :on_player_login_called
 
   def initialize(options = {})
     @mem_storage = Pixiurge::Authentication::MemStorage.new
     super(options.merge({ "storage" => @mem_storage }))
+  end
+
+  def on_login(ws, username)
+    super
+    @on_login_called = true
+  end
+
+  def on_player_login(username)
+    @on_player_login_called = true
   end
 end
 
@@ -111,5 +122,9 @@ TEXT
 
     assert_equal 1, ws.sent_data.length
     assert_equal Pixiurge::Protocol::Outgoing::AUTH_LOGIN, ws.parsed_sent_data[0][0]
+
+    # Also, make sure on_login and on_player_login handlers got called
+    assert pixi_app.on_login_called, "Received on_login handler call"
+    assert pixi_app.on_player_login_called, "Received on_player_login handler call"
   end
 end

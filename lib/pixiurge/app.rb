@@ -2,7 +2,7 @@ require "pixiurge/protocol"
 
 # This is an interface class that defines all handlers for a Pixiurge
 # application.  It's possible to inherit from it but then you must
-# override all handlers and you won't get AuthenticatedApp
+# override all handlers and you won't get higher-level application
 # functionality, which you probably want. This class exists primarily
 # for purposes of documentation.
 #
@@ -25,15 +25,35 @@ require "pixiurge/protocol"
 # run app.handler
 # ```
 #
-# Here are handlers that your app can or should define:
+# You can implement most games by only implementing a straightforward
+# higher-level interface and not directly dealing with authentication,
+# websockets, etc. The high-level handlers assume you are using
+# AuthenticatedApp or have implemented the same functionality. Here
+# are high-level handlers you can implement:
+#
+# * {#on_player_login} - a new player has logged in
+# * {#on_player_logout} - a player has logged out
+# * {#on_player_reconnect} - a player has re-logged in, often from a new browser session
+#
+# Here are the message handlers that your app can define for the
+# low-level message interface:
 #
 # * {#on_open} - message handler for a newly-opened connection
+# * {#on_close} - connection has been closed
 # * {#on_auth_message} - message handler for authentication messages (defined by AuthenticatedApp by default)
-# * {#on_player_action_message} - message handler for player action messages
+# * {#on_action_message} - message handler for player action messages
 # * {#on_message} - generic message handler for non-auth, non-player-action messages
 # * {#on_login} - called when a user successfully logs in using built-in authentication (AuthenticatedApp only)
-# * {#handle_message} - low-level message handler, only if you're comfortable reading the source code
+# * {#handle_message} - very low-level message handler, only use it if you're comfortable reading the source code
 #
+# Some of these handlers may already be defined by AuthenticatedApp,
+# which will require you to call super() appropriately.
+#
+# The websocket object has a .send(message) method and a .close(code,
+# reason) method. Send normally takes a String, and .close() can be
+# called without arguments if you don't know or want to provide a code
+# or reason. For more detail on the Websocket object, see
+# https://github.com/faye/faye-websocket-ruby/blob/master/lib/faye/websocket/api.rb
 #
 # @see Pixiurge::AuthenticatedApp
 # @since 0.1.0
@@ -48,6 +68,19 @@ class Pixiurge::AppInterface
   # @return [void]
   # @since 0.1.0
   def on_open(ws)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This handler will be called when a websocket connection is
+  # closed. It can be used for cleaning up player-related data
+  # structures.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @param code [Integer] A Websocket protocol onclose status code (see https://tools.ietf.org/html/rfc6455)
+  # @param reason [String] A reason for the websocket closing
+  # @return [void]
+  # @since 0.1.0
+  def on_close(ws, code, reason)
     raise "Do not use AppInterface directly!"
   end
 
@@ -78,7 +111,7 @@ class Pixiurge::AppInterface
   # @param args [Array] All remaining arguments to the method
   # @return [void]
   # @since 0.1.0
-  def on_player_action_message(ws, msg_subtype, *args)
+  def on_action_message(ws, msg_subtype, *args)
     raise "Do not use AppInterface directly!"
   end
 
@@ -101,7 +134,10 @@ class Pixiurge::AppInterface
   # If you inherit from AuthenticatedApp, this handler will be called
   # when a player has successfully logged in. Later handlers will
   # continue passing the websocket object. This handler lets you
-  # associate the websocket with a specific player account.
+  # associate the websocket with a specific player account. If you
+  # override this method, make sure to call super() so that the
+  # AuthenticatedApp code can implement methods like
+  # {Pixiurge::AuthenticatedApp#username_for_websocket}.
   #
   # @param ws [#on] A Websocket-Driver websocket object
   # @param username [String] The username for the account
@@ -111,19 +147,43 @@ class Pixiurge::AppInterface
     raise "Do not use AppInterface directly!"
   end
 
-  # This handler dispatches to on_auth_message,
-  # on_player_action_message or on_message, depending on the incoming
-  # message type and what handlers the app subtype has defined.
-  # If you override this handler but use the {Pixiurge::AuthenticatedApp},
-  # make sure to call {Pixiurge::AppInterface#on_auth_message} for messages that start with
-  # {Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE}.
+  # This handler dispatches to on_auth_message, on_action_message or
+  # on_message, depending on the incoming message type and what
+  # handlers the app subtype has defined.  If you override this
+  # handler but use the {Pixiurge::AuthenticatedApp}, make sure to
+  # call {Pixiurge::AppInterface#on_auth_message} for messages that
+  # start with {Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE}.
   #
-  # @see #on_player_action_message
+  # @see #on_action_message
   # @see #on_auth_message
   # @param ws [Websocket] The Ruby-Websocket-Driver websocket object
   # @param data [Hash] Deserialized JSON data sent from the client
   # @since 0.1.0
   def handle_message(ws, data)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This message means a player has logged into your application.
+  # Your handler can do things like create an in-game presence for
+  # them, if they should have one.
+  #
+  # @see AuthenticatedApp#websocket_for_username
+  # @param username [String] The new player's registered username
+  # @return [void]
+  # @since 0.1.0
+  def on_player_login(username)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This message means a player has logged out of your application.
+  # Your handler can do things like remove their in-game presence if
+  # they have one.
+  #
+  # @see AuthenticatedApp#websocket_for_username
+  # @param username [String] The new player's registered username
+  # @return [void]
+  # @since 0.1.0
+  def on_player_logout(username)
     raise "Do not use AppInterface directly!"
   end
 end
@@ -182,7 +242,7 @@ class Pixiurge::App
     end
 
     ws.on :close do |event|
-      on_close(ws, event) if self.respond_to?(:on_close)
+      on_close(ws, event.code, event.reason) if self.respond_to?(:on_close)
       ws = nil
     end
 
@@ -190,14 +250,14 @@ class Pixiurge::App
     ws
   end
 
-  # This handler dispatches to on_auth_message,
-  # on_player_action_message or on_message, depending on the incoming
-  # message type and what handlers the app subtype has defined.
-  # If you override this handler but use the {Pixiurge::AuthenticatedApp},
-  # make sure to call {Pixiurge::App#on_auth_message} for messages that start with
+  # This handler dispatches to on_auth_message, on_action_message or
+  # on_message, depending on the incoming message type and what
+  # handlers the app subtype has defined.  If you override this
+  # handler but use the {Pixiurge::AuthenticatedApp}, make sure to
+  # call {Pixiurge::App#on_auth_message} for messages that start with
   # {Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE}.
   #
-  # @see #on_player_action_message
+  # @see #on_action_message
   # @see #on_auth_message
   # @param ws [Websocket] The Ruby-Websocket-Driver websocket object
   # @param data [Hash] Deserialized JSON data sent from the client
@@ -207,7 +267,7 @@ class Pixiurge::App
       return on_auth_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_auth_message)
     end
     if data[0] == Pixiurge::Protocol::Incoming::ACTION_MSG_TYPE
-      return on_player_action_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_player_action_message)
+      return on_action_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_action_message)
     end
     return on_message(ws, data) if self.respond_to?(:on_message)
     raise "No handler for message! #{data.inspect}"

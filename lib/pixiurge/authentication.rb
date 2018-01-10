@@ -1,15 +1,27 @@
 # Pixiurge::AuthenticatedApp is a parent class for applications
 # (games) that want the built-in Pixiurge accounts and
-# authentication. It's not terribly hard to roll your own as
-# authentication systems go, but it *is* easy to make something
-# horrifically insecure any time you're doing browser/server
-# communication.  Pixiurge makes this neither harder nor easier than
-# usual. The built-in authentication is simple and pretty okay *if*
-# you keep the requirement for HTTPS/WSS for messages. If you use this
-# over an unencrypted connection, all your password-equivalents can be
-# stolen for your game, but it shouldn't leak the actual passwords --
-# passwords are never sent to the server, though they are preserved
-# unencrypted in browser cookies.
+# authentication.
+#
+# AuthenticatedApp only allows a single login by each player at one
+# time. That's not a hard limit of Pixiurge, but AuthenticatedApp
+# requires it. Similarly, AuthenticatedApp adds the requirement that
+# you register an account for each player before logging in.
+#
+# For more details of how to implement on top of it, see
+# {Pixiurge::AppInterface}.
+#
+# ### Implementation
+#
+# It's not terribly hard to roll your own authentication system in
+# Ruby. It is *easy* to make something horrifically insecure any time
+# you're doing browser/server communication. Pixiurge makes this
+# neither harder nor easier than usual. The built-in authentication is
+# simple and pretty okay *if* you keep the requirement for HTTPS/WSS
+# for messages. If you use this over an unencrypted connection, all
+# your password-equivalents can be stolen for your game, but it
+# shouldn't leak the actual passwords -- passwords are never sent to
+# the server, though they are preserved unencrypted in browser
+# cookies.
 #
 # There are lots of potential ways to implements accounts and
 # authentication. If you care a lot about it, may I recommend rolling
@@ -32,13 +44,7 @@
 # easily query them. The latter is hard to ensure, but it's still
 # better not to put them directly in the in-engine data.
 #
-# This class defines the method {#on_auth_message}. If you inherit
-# from the class, make sure to call super if you override
-# {#on_auth_message}, or call {#on_auth_message} if you override
-# {Pixiurge::App#handle_message} and you receive an authorization
-# message.
-#
-# @see Pixiurge::App
+# @see Pixiurge::AppInterface
 # @since 0.1.0
 class Pixiurge::AuthenticatedApp < Pixiurge::App
   # Regex for what usernames are allowed
@@ -53,6 +59,8 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
   # @since 0.1.0
   def initialize(options = { "accounts_file" => "accounts.json" })
     @storage = options["storage"] || Pixiurge::Authentication::FileAccountStorage.new(options["accounts_file"] || "accounts.json")
+    @username_for_websocket = {}
+    @websocket_for_username = {}
     nil
   end
 
@@ -110,6 +118,93 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
 
     raise "Unrecognized authorization message: #{msg_type.inspect} / #{args.inspect}!"
   end
+
+  # If you inherit from AuthenticatedApp, this handler will be called
+  # when a player has successfully logged in. Later handlers will
+  # continue passing the websocket object. This handler lets you
+  # associate the websocket with a specific player account. If you
+  # override this method, make sure to call super() so that the
+  # AuthenticatedApp code can implement methods like
+  # {Pixiurge::AuthenticatedApp#username_for_websocket}.
+  #
+  # @param ws [Websocket] A Websocket-Driver websocket object
+  # @param username [String] The username for the account
+  # @return [void]
+  # @since 0.1.0
+  def on_login(ws, username)
+    reconnect = false
+
+    # This websocket is already logged in. Weird. Close the new connection.
+    if @username_for_websocket.has_key?(ws)
+      ws.send(Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Your websocket is somehow already logged in! Failing!" })
+      ws.close(1002, "Websocket already logged in, failing")  # 1002 is a protocol error, such as a double-login
+      return
+    end
+
+    # This username is already logged in, so we'll override. Close the old connection.
+    if @websocket_for_username.has_key?(username)
+      old_ws = @websocket_for_username[username]
+      old_ws.send(Pixiurge::Protocol::Outgoing::DISCONNECTION, { "message" => "You have just logged in from a new location - disconnecting your old location." })
+      old_ws.close(1000, "You have been disconnected in favor of a new connection by your account.")
+      @username_for_websocket.delete(old_ws)
+      reconnect = true
+    end
+
+    @username_for_websocket[ws] = username
+    @websocket_for_username[username] = ws
+
+    if reconnect
+      on_player_reconnect(username) if self.respond_to?(:on_player_reconnect)
+    else
+      on_player_login(username) if self.respond_to?(:on_player_login)
+    end
+    nil
+  end
+
+  # This handler will be called when a websocket connection is
+  # closed. It can be used for cleaning up player-related data
+  # structures.
+  #
+  # @param ws [#on] A Websocket-Driver websocket object
+  # @param code [Integer] A Websocket protocol onclose status code (see https://tools.ietf.org/html/rfc6455)
+  # @param reason [String] A reason for the websocket closing
+  # @return [void]
+  # @since 0.1.0
+  def on_close(ws, code, reason)
+    username = @username_for_websocket.delete(ws)
+    if username && @websocket_for_username[username] == ws
+      @websocket_for_username.delete(username)
+      on_player_logout(username) if self.respond_to?(:on_player_logout)
+    end
+    nil
+  end
+
+  # For a given websocket object, get its associated username.
+  #
+  # @param websocket [Websocket] The Websocket object to query
+  # @return [String,nil] The username for this websocket or nil if there is none currently
+  # @since 0.1.0
+  def username_for_websocket(websocket)
+    @username_for_websocket[websocket]
+  end
+
+  # For a given account username, get its associated websocket if any.
+  #
+  # @param websocket [String] The account username to query
+  # @return [Websocket,nil] The websocket for this account if it's logged in, or nil if not
+  # @since 0.1.0
+  def websocket_for_username(websocket)
+    @websocket_for_username[websocket]
+  end
+
+  # Return a list of all currently connected usernames.
+  #
+  # @return [Array<String>] Usernames for all connected accounts.
+  # @since 0.1.0
+  def all_logged_in_usernames
+    @username_for_websocket.keys
+  end
+
 end
 
 # Code specific to Pixiurge's built-in Authentication libraries.
