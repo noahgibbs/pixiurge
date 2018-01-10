@@ -35,7 +35,7 @@ class MockWebSocket
   end
 
   def error(message = "Generic error!")
-    @handlers[:error] && @handlers[:error].call(WebSocket::Driver::ErrorEvent.new(message))
+    @handlers[:error] && @handlers[:error].call(WebSocket::Driver::ProtocolError.new(message))
   end
 
   def close(code = 1000, reason = "Normal exit")

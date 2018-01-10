@@ -1,10 +1,11 @@
 require "pixiurge/protocol"
 
 # This is an interface class that defines all handlers for a Pixiurge
-# application.  It's possible to inherit from it but then you must
+# application. It's possible to inherit from it but then you must
 # override all handlers and you won't get higher-level application
-# functionality, which you probably want. This class exists primarily
-# for purposes of documentation.
+# functionality, which you probably want. Instead, inherit from
+# {Pixiurge::AuthenticatedApp} or just {Pixiurge::App}. This class
+# exists primarily for purposes of documentation.
 #
 # Here is a config.ru that sets up a very basic Pixiurge App:
 # ```ruby
@@ -14,7 +15,7 @@ require "pixiurge/protocol"
 # # You can also set up normal Rack code here like logfiles or
 # # EM.error_handler here.
 #
-# # Instead of Pixiurge::App, call new on your child class here
+# # Instead of Pixiurge::App, you can instantiate a child class here
 # app = Pixiurge::App.new
 # app.rack_builder self
 # app.root_dir __dir__
@@ -25,6 +26,28 @@ require "pixiurge/protocol"
 # run app.handler
 # ```
 #
+# To detect what's happening with an App, you can add handlers for
+# various sorts of events. You can use the
+# {Pixiurge::AppInterface#on_event} method to subscribe to an event,
+# or you can inherit from an app class (usually AuthenticatedApp) and
+# add child methods. The name of the event is the same as the method
+# without the "on_" prefix. The event and the methods take the same
+# arguments. Here is an example using the {#on_close} method:
+#
+# ```
+# class MyAppSubtype < Pixiurge::AuthenticatedApp
+#   def on_close(ws, code, reason)
+#     # Handler code goes here
+#   end
+# end
+#
+# # Or equivalently...
+# app = Pixiurge::AuthenticatedApp.new
+# app.on_event("close") do |ws, code, reason|
+#   # Handler code goes here
+# end
+# ```
+#
 # You can implement most games by only implementing a straightforward
 # higher-level interface and not directly dealing with authentication,
 # websockets, etc. The high-level handlers assume you are using
@@ -33,24 +56,35 @@ require "pixiurge/protocol"
 #
 # * {#on_player_login} - a new player has logged in
 # * {#on_player_logout} - a player has logged out
+# * {#on_player_message} - a message has been received from a player on the front end
 # * {#on_player_reconnect} - a player has re-logged in, often from a new browser session
 #
-# Here are the message handlers that your app can define for the
-# low-level message interface:
+# Next are the message handlers that your app can define for the
+# low-level message interface. Keep in mind that higher-level
+# functionality with AuthenticatedApp may depend on existing methods
+# for these, so you should call super as appropriate if you override
+# the methods - this is not a problem with the event approach, and may
+# be a reason to use events instead.
 #
 # * {#on_open} - message handler for a newly-opened connection
 # * {#on_close} - connection has been closed
-# * {#on_auth_message} - message handler for authentication messages (defined by AuthenticatedApp by default)
+# * {#on_auth_message} - message handler for authentication messages
 # * {#on_action_message} - message handler for player action messages
 # * {#on_message} - generic message handler for non-auth, non-player-action messages
+# * {#on_error} - an error has occurred in the websocket layer
 # * {#on_login} - called when a user successfully logs in using built-in authentication (AuthenticatedApp only)
+#
+# And finally there's a low-level websocket message handler you can
+# override, but it doesn't send events via on_event:
+#
 # * {#handle_message} - very low-level message handler, only use it if you're comfortable reading the source code
 #
 # Some of these handlers may already be defined by AuthenticatedApp,
 # which will require you to call super() appropriately.
 #
-# The websocket object has a .send(message) method and a .close(code,
-# reason) method. Send normally takes a String, and .close() can be
+# The low-level message handlers tend to use websocket objects. A
+# websocket object has a #send(message) method and a #close(code,
+# reason) method. #send normally takes a String, and #close can be
 # called without arguments if you don't know or want to provide a code
 # or reason. For more detail on the Websocket object, see
 # https://github.com/faye/faye-websocket-ruby/blob/master/lib/faye/websocket/api.rb
@@ -64,7 +98,7 @@ class Pixiurge::AppInterface
   # inheriting from AuthenticatedApp, the {#on_login} handler will
   # later associate this connection with an account username.
   #
-  # @param ws [#on] A Websocket-Driver websocket object
+  # @param ws [Websocket] A Websocket-Driver websocket object
   # @return [void]
   # @since 0.1.0
   def on_open(ws)
@@ -75,12 +109,22 @@ class Pixiurge::AppInterface
   # closed. It can be used for cleaning up player-related data
   # structures.
   #
-  # @param ws [#on] A Websocket-Driver websocket object
+  # @param ws [Websocket] A Websocket-Driver websocket object
   # @param code [Integer] A Websocket protocol onclose status code (see https://tools.ietf.org/html/rfc6455)
   # @param reason [String] A reason for the websocket closing
   # @return [void]
   # @since 0.1.0
   def on_close(ws, code, reason)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This is called if the websocket has a protocol error.
+  #
+  # @param ws [Websocket] A Websocket-Driver websocket object
+  # @param message [String] The error message
+  # @return [void]
+  # @since 0.1.0
+  def on_error(ws, message)
     raise "Do not use AppInterface directly!"
   end
 
@@ -90,7 +134,7 @@ class Pixiurge::AppInterface
   # show whether it is a login, registration, failure or other message
   # within authentication generally.
   #
-  # @param ws [#on] A Websocket-Driver websocket object
+  # @param ws [Websocket] A Websocket-Driver websocket object
   # @param msg_subtype [String] The type of auth message
   # @param args [Array] All remaining arguments to the method
   # @return [void]
@@ -106,7 +150,7 @@ class Pixiurge::AppInterface
   # the websocket object, which will be the same as the one passed to
   # on_login or on_open.
   #
-  # @param ws [#on] A Websocket-Driver websocket object
+  # @param ws [Websocket] A Websocket-Driver websocket object
   # @param msg_subtype [String] The type of action message
   # @param args [Array] All remaining arguments to the method
   # @return [void]
@@ -123,7 +167,7 @@ class Pixiurge::AppInterface
   # the websocket object, which will be the same as the one passed to
   # on_login or on_open.
   #
-  # @param ws [#on] A Websocket-Driver websocket object
+  # @param ws [Websocket] A Websocket-Driver websocket object
   # @param args [Array] All remaining arguments to the method
   # @return [void]
   # @since 0.1.0
@@ -139,7 +183,7 @@ class Pixiurge::AppInterface
   # AuthenticatedApp code can implement methods like
   # {Pixiurge::AuthenticatedApp#username_for_websocket}.
   #
-  # @param ws [#on] A Websocket-Driver websocket object
+  # @param ws [Websocket] A Websocket-Driver websocket object
   # @param username [String] The username for the account
   # @return [void]
   # @since 0.1.0
@@ -163,9 +207,9 @@ class Pixiurge::AppInterface
     raise "Do not use AppInterface directly!"
   end
 
-  # This message means a player has logged into your application.
-  # Your handler can do things like create an in-game presence for
-  # them, if they should have one.
+  # This event means a player has logged into your application. Your
+  # handler can do things like create an in-game presence for them, if
+  # they should have one.
   #
   # @see AuthenticatedApp#websocket_for_username
   # @param username [String] The new player's registered username
@@ -175,7 +219,19 @@ class Pixiurge::AppInterface
     raise "Do not use AppInterface directly!"
   end
 
-  # This message means a player has logged out of your application.
+  # This event means a player has sent a message from their browser to your application.
+  #
+  # @see AuthenticatedApp#websocket_for_username
+  # @param username [String] The player's registered username
+  # @param message_type [String] The type of the message
+  # @param args [Array] Arguments sent along with this message
+  # @return [void]
+  # @since 0.1.0
+  def on_player_message(username, message_type, *args)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This event means a player has logged out of your application.
   # Your handler can do things like remove their in-game presence if
   # they have one.
   #
@@ -187,7 +243,7 @@ class Pixiurge::AppInterface
     raise "Do not use AppInterface directly!"
   end
 
-  # This message means a player has reconnected to your application,
+  # This event means a player has reconnected to your application,
   # often by connecting with a new browser. This won't normally
   # require action on your part, but you can react in some way if you
   # wish.
@@ -197,6 +253,20 @@ class Pixiurge::AppInterface
   # @return [void]
   # @since 0.1.0
   def on_player_reconnect(username)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This method allows you to handle one or more events of your choice
+  # using a handler of your choice. For the list of events, see
+  # {Pixiurge::AppInterface}. The handler will be called whenever
+  # the event occurs, and the block will receive the same arguments
+  # that a child method would receive for that event type.
+  #
+  # @see Pixiurge::AppInterface
+  # @param event [String] The name of the event, such as "close" or "player_login"
+  # @return [void]
+  # @since 0.1.0
+  def on_event(event, &block)
     raise "Do not use AppInterface directly!"
   end
 end
@@ -223,25 +293,34 @@ class Pixiurge::App
   attr :incoming_traffic_logfile
   attr :outgoing_traffic_logfile
 
+  EVENTS = [ "player_login", "player_logout", "player_reconnect", "open", "close", "error", "auth_message", "action_message", "message", "login" ]
+
   # Constructor for Pixiurge App base class.
   #
+  # @param options [Hash] Options to configure app behavior
+  # @option options [Boolean] debug Whether to print debug output
+  # @option options [Boolean] record_traffic Whether to record incoming and outgoing websocket traffic to logfiles
+  # @option options [String] incoming_traffic_logfile Pathname to record incoming websocket traffic
+  # @option options [String] outgoing_traffic_logfile Pathname to record outgoing websocket traffic
   # @since 0.1.0
-  def initialize
-    @debug = true  # For now, default to true
-    @record_traffic = true # For now, default to true
-    @incoming_traffic_logfile = "log/incoming_traffic.json"
-    @outgoing_traffic_logfile = "log/outgoing_traffic.json"
+  def initialize(options = { "debug" => false, "record_traffic" => false,
+                   "incoming_traffic_logfile" => "log/incoming_traffic.json", "outgoing_traffic_logfile" => "log/outgoing_traffic.json" })
+    @debug = options["debug"]
+    @record_traffic = options["record_traffic"]
+    @incoming_traffic_logfile = options["incoming_traffic_logfile"] || "log/incoming_traffic.json"
+    @outgoing_traffic_logfile = options["outgoing_traffic_logfile"] || "log/outgoing_traffic.json"
+    @event_handlers = {}
   end
 
   # The websocket handler for the Pixiurge app.
   #
-  # @param ws [#on] A Websocket-Driver socket object or object with matching interface
+  # @param ws [Websocket] A Websocket-Driver socket object or object with matching interface
   # @api private
   # @since 0.1.0
   def websocket_handler(ws)
     ws.on :open do |event|
       puts "Socket open" if @debug
-      on_open(ws) if self.respond_to?(:on_open)
+      send_event "open", ws
     end
 
     ws.on :message do |event|
@@ -251,17 +330,45 @@ class Pixiurge::App
     end
 
     ws.on :error do |event|
-      on_error(ws, event) if self.respond_to?(:on_error)
+      send_event "error", event.message
     end
 
     ws.on :close do |event|
-      on_close(ws, event.code, event.reason) if self.respond_to?(:on_close)
+      send_event "close", ws, event.code, event.reason
       ws = nil
     end
 
     # Return async Rack response
     ws
   end
+
+  # This method allows you to handle one or more events of your choice
+  # using a handler of your choice. For the list of events, see
+  # {Pixiurge::AppInterface}. The handler will be called whenever
+  # the event occurs, and the block will receive the same arguments
+  # that a child method would receive for that event type.
+  #
+  # @see Pixiurge::AppInterface
+  # @param event [String] The name of the event, such as "close" or "player_login"
+  # @return [void]
+  # @since 0.1.0
+  def on_event(event, &block)
+    raise("Can't subscribe to unrecognized event #{event.inspect}! Only #{EVENTS.inspect}!") unless EVENTS.include?(event)
+    @event_handlers[event] ||= []
+    @event_handlers[event].push(block)
+  end
+
+  private
+  def send_event(event_name, *args)
+    if self.respond_to?("on_" + event_name.to_s)
+      self.send("on_" + event_name.to_s, *args)
+    end
+    (@event_handlers[event_name] || []).each do |handler|
+      handler.call(*args)
+    end
+    nil
+  end
+  public
 
   # This handler dispatches to on_auth_message, on_action_message or
   # on_message, depending on the incoming message type and what
@@ -277,13 +384,12 @@ class Pixiurge::App
   # @since 0.1.0
   def handle_message(ws, data)
     if data[0] == Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE
-      return on_auth_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_auth_message)
+      return send_event "auth_message", ws, data[1], *data[2..-1]
     end
     if data[0] == Pixiurge::Protocol::Incoming::ACTION_MSG_TYPE
-      return on_action_message(ws, data[1], *data[2..-1]) if self.respond_to?(:on_action_message)
+      return send_event "action_message", ws, data[1], *data[2..-1]
     end
-    return on_message(ws, data) if self.respond_to?(:on_message)
-    raise "No handler for message! #{data.inspect}"
+    return send_event "message", ws, data
   end
 
   private

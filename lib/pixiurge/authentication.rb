@@ -52,12 +52,19 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
 
   # Constructor
   #
-  # @param options [Hash] Options for the app
+  # @param options [Hash] Options to configure app behavior
   # @option options [String] accounts_file JSON file to hold the accounts. Defaults to "accounts.json".
   # @option options [Pixiurge::Authentication::AccountStorage] storage An object to hold the accounts matching the AccountStorage interface
+  # @option options [Boolean] debug Whether to print debug output
+  # @option options [Boolean] record_traffic Whether to record incoming and outgoing websocket traffic to logfiles
+  # @option options [String] incoming_traffic_logfile Pathname to record incoming websocket traffic
+  # @option options [String] outgoing_traffic_logfile Pathname to record outgoing websocket traffic
   # @return [void]
   # @since 0.1.0
-  def initialize(options = { "accounts_file" => "accounts.json" })
+  def initialize(options = { "debug" => false, "record_traffic" => false,
+                   "incoming_traffic_logfile" => "log/incoming_traffic.json", "outgoing_traffic_logfile" => "log/outgoing_traffic.json",
+                   "accounts_file" => "accounts.json" })
+    super
     @storage = options["storage"] || Pixiurge::Authentication::FileAccountStorage.new(options["accounts_file"] || "accounts.json")
     @username_for_websocket = {}
     @websocket_for_username = {}
@@ -98,8 +105,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
         # Let the browser side know that a login succeeded
         websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => username }
         # Let the app know that a login succeeded
-        self.on_login(websocket, username) if self.respond_to?(:on_login)
-        return
+        return send_event "login", websocket, username
       else
         return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Wrong password for user #{username.inspect}!" }
       end
@@ -154,9 +160,9 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     @websocket_for_username[username] = ws
 
     if reconnect
-      on_player_reconnect(username) if self.respond_to?(:on_player_reconnect)
+      send_event "player_reconnect", username
     else
-      on_player_login(username) if self.respond_to?(:on_player_login)
+      send_event "player_login", username
     end
     nil
   end
@@ -174,7 +180,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     username = @username_for_websocket.delete(ws)
     if username && @websocket_for_username[username] == ws
       @websocket_for_username.delete(username)
-      on_player_logout(username) if self.respond_to?(:on_player_logout)
+      send_event "player_logout", username
     end
     nil
   end
