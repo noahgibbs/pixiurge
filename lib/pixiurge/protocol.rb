@@ -9,16 +9,6 @@ module Pixiurge::Protocol; end
 #
 # @since 0.1.0
 module Pixiurge::Protocol::Incoming
-  # This is the JSON header for an incoming authorization message. It's the first entry in its array.
-  #
-  # @since 0.1.0
-  AUTH_MSG_TYPE = "auth"
-
-  # This is the JSON header for an incoming player-action message. It's the first entry in its array.
-  #
-  # @since 0.1.0
-  ACTION_MSG_TYPE = "act"
-
   # This is the JSON specifier for registering an account using the
   # built-in auth protocol. If used, it's the second string entry in
   # its JSON array. The final entry in the array is a

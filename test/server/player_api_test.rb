@@ -26,7 +26,7 @@ class PlayerApiTest < WebSocketTest
     assert_equal [], events
     ws.open
     assert_equal [ "open" ], events
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
     assert_equal [ "open", "login" ], events
     ws.error("yup, a fake error")
     ws.close

@@ -71,7 +71,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     nil
   end
 
-  # Process an authorization message.
+  # Process an authorization message or fall back to old message handling.
   #
   # @see #on_message
   # @param websocket [Websocket] A websocket object, as defined by the websocket-driver gem
@@ -79,9 +79,10 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
   # @param args [Array] Additional message-type-specific arguments
   # @return [void]
   # @since 0.1.0
-  def on_auth_message(websocket, msg_type, *args)
+  def handle_message(websocket, args)
+    msg_type = args[0]
     if msg_type == Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT
-      username, salt, hashed = args[0]["username"], args[0]["salt"], args[0]["bcrypted"]
+      username, salt, hashed = args[1]["username"], args[1]["salt"], args[1]["bcrypted"]
       user_state = @storage.data_for(username)
       if user_state
         return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, { "message" => "Account #{username.inspect} already exists!" }
@@ -96,7 +97,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     end
 
     if msg_type == Pixiurge::Protocol::Incoming::AUTH_LOGIN
-      username, hashed = args[0]["username"], args[0]["bcrypted"]
+      username, hashed = args[1]["username"], args[1]["bcrypted"]
       user_state = @storage.data_for(username)
       unless user_state
         return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as #{username.inspect}!" }
@@ -113,7 +114,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     end
 
     if msg_type == Pixiurge::Protocol::Incoming::AUTH_GET_SALT
-      username = args[0]["username"]
+      username = args[1]["username"]
       user_state = @storage.data_for(username)
       unless user_state
         return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as #{username.inspect}!" }
@@ -122,7 +123,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
       return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_SALT, { "salt" => user_salt }
     end
 
-    raise "Unrecognized authorization message: #{msg_type.inspect} / #{args.inspect}!"
+    super
   end
 
   # If you inherit from AuthenticatedApp, this handler will be called

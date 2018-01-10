@@ -82,7 +82,7 @@ TEXT
 
   def test_get_failed_salt
     ws.open
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_GET_SALT, { "username" => "bobo" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_GET_SALT, { "username" => "bobo" } ])
     ws.close
 
     assert_equal [ MultiJson.dump([ Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as \"bobo\"!" } ]) ], ws.sent_data
@@ -90,7 +90,7 @@ TEXT
 
   def test_bad_username
     ws.open
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "bob ", "salt" => "", "bcrypted" => "" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "bob ", "salt" => "", "bcrypted" => "" } ])
     ws.close
 
     assert_equal 1, ws.sent_data.length
@@ -100,9 +100,9 @@ TEXT
 
   def test_fresh_registration_and_login
     ws.open
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "bob", "salt" => "fake_salt", "bcrypted" => "fake_hash" } ])
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_GET_SALT, { "username" => "bob" } ])
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "bob", "salt" => "fake_salt", "bcrypted" => "fake_hash" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_GET_SALT, { "username" => "bob" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
     ws.close
 
     assert_equal 3, ws.sent_data.length
@@ -116,7 +116,7 @@ TEXT
     pixi_app.mem_storage.account_state["existing"] = { "account" => { "username" => "existing", "salt" => "fake_salt", "hashed" => "fake_hash" } }
 
     ws.open
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "existing", "salt" => "fake_salt2", "bcrypted" => "fake_hash2" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT, { "username" => "existing", "salt" => "fake_salt2", "bcrypted" => "fake_hash2" } ])
     ws.close
 
     assert_equal 1, ws.sent_data.length
@@ -131,7 +131,7 @@ TEXT
     # Before first message, make sure on_login and on_player_login weren't called
     assert !pixi_app.on_login_called, "Shouldn't receive on_login handler call before first message"
     assert !pixi_app.on_player_login_called, "Shouldn't receive on_player_login handler call before first message"
-    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "existing", "bcrypted" => "fake_hash" } ])
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "existing", "bcrypted" => "fake_hash" } ])
     assert_equal 1, ws.sent_data.length
     assert_equal Pixiurge::Protocol::Outgoing::AUTH_LOGIN, ws.parsed_sent_data[0][0]
     # Now make sure on_login and on_player_login handlers got called
