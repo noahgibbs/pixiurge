@@ -1,3 +1,13 @@
+# A Pixiurge Displayable handles server-side display of in-world
+# simulated items. This doesn't directly mess with Javascript or
+# Pixi.js code, but it sets up data for display primitives like
+# "sprite stacks", particles, animations and so on.
+#
+# More complex visual groupings like tilemap areas and humanoid bodies
+# inherit from this class.
+#
+# @see file:CONCEPTS.md
+# @since 0.1.0
 class Pixiurge::Displayable
   attr_reader :demi_item   # Demiurge item that this displays
   attr_reader :name        # Name, which should be the same as the Demiurge item name if there is one.

@@ -80,8 +80,8 @@ What are the major parts of a Pixiurge server?
 
 * The Demiurge engine, which runs on the server; this calculates the in-game world
 * The EngineConnector, which watches Demiurge and notifies everything about what happens inside
-* DisplayObjects, which keep track of how Demiurge objects get shown to human players
-* Player objects, which keep track of what DisplayObjects have been seen and know the JSON protocol
+* Displayables, which keep track of how Demiurge objects get shown to human players
+* Player objects, which keep track of what Displayables have been seen and know the JSON protocol
 * Browser-side Javascript code, to actually show everything to the human player
 
 ## The Cycle of Simulation
@@ -108,41 +108,44 @@ choices and wait for the results. It's meant for a slower-paced game,
 more like Stardew Valley or Dwarf Fortress, where the user's exact,
 instant actions aren't make-or-break.
 
-## DisplayObjects on the Server, SpriteStacks on the Client
+## Displayables on the Server, sprites on the Client
 
-A Pixiurge server is providing a lot of views into Demiurge, for a lot of
-different clients, at a lot of different times. The same zone or room
-looks different to different players, as you'd expect it to.
+A Pixiurge server provides different views into Demiurge for a lot of
+different clients at a lot of different times. The same zone or room
+looks different to different players, as you'd expect it to, and of
+course each player only sees a sliver of the game world at any time.
 
 There is one single Demiurge engine on the server, with one copy of
-each unique item. When it a Demiurge item changes, several different
+each unique item. When a Demiurge item changes, several different
 players may be able to see it, and may receive updates to show the
-change in their browser.
+change in their browser. They may also see the change in different
+ways: can player A see it at all? Can player B see the enchanted
+invisible item? Does player C get a different description of the item
+because his lore skills are higher or lower?
 
-Pixiurge keeps a single server-side DisplayObject for each potentially
+Pixiurge keeps a single server-side Displayable for each potentially
 visible Demiurge object (and for some that will never be visible.)
-When each DisplayObject changes, it may send updates to a bunch of
+When each Displayable changes, it may send updates to a bunch of
 players who can see it. So: each Demiurge item has a matching
-server-side Pixiurge DisplayObject.
+server-side Pixiurge Displayable.
 
 When the Demiurge item changes, it sends a Demiurge notification. The
 single, server-side EngineConnector object subscribes to all Demiurge
 notifications and provides all the players with a constant, consistent
 view of what's happening by translating the notifications into
 Pixiurge messages over Websockets. The browsers, when they get the
-messages, will show the human players what changed for that Demiurge
-item.
+messages, will show the human players what changed.
 
 A particular browser will have items representing some of the
-DisplayObjects in Pixiurge. These in-browser objects include
-"spritestacks", which may have multiple layers of tiled sprites. For
-instance, a ManaSource-style humanoid like a player or enemy will
-normally be several layers of "grids", where each grid is (usually) 1
-sprite by 1 sprite, and each sprite is 64x64. The multiple layers, if
-present, are for things like hair, clothing and equipment which are
-modeled as overlaid layers.
+Displayables in Pixiurge. These in-browser objects include
+"spritestacks", which may have multiple layers of sprites in their
+Pixi.js representation. For instance, a ManaSource-style humanoid like
+a player or enemy will normally be several layers of "grids", where
+each grid is (usually) 1 sprite by 1 sprite, and each sprite is
+64x64. The multiple layers, if present, are for things like hair,
+clothing and equipment which are modeled as overlaid layers.
 
-## Three Layers of Snapshots: Demiurge, DisplayObjects, the Browser
+## Three Layers of Snapshots: Demiurge, Displayables, the Browser
 
 Notifications can cause some complications - more than one thing can
 happen to an item during a single tick, for instance. And
@@ -156,7 +159,7 @@ the Demiurge latest. This makes things a little complicated for
 EngineConnector. It can't just get the latest state from Demiurge, because
 that may not be the state it wants or shows.
 
-We also can't assume every player sees the DisplayObject the same way,
+We also can't assume every player sees the Displayable the same way,
 even if they're up to date. If Bob and Jane are standing in two
 different parts of the same room, Bob may be able to see different
 items than Jane, and they're scrolled to different positions. If Jane
@@ -164,7 +167,7 @@ has a better "perception" in some way than Bob, she may even see
 things that, in effect, don't exist at all for Bob, and which may not
 get sent to his browser.
 
-## DisplayObjects and Players
+## Displayables and Players
 
 A Pixiurge "Player" object is a server side object that coordinates
 what gets sent to a particular browser. It may not correspond to a
@@ -177,11 +180,18 @@ Stack before?" and "is the browser currently showing a location where
 this action is visible?" That "something" is called a "Player" by
 Pixiurge.
 
-When a DisplayObject changes (e.g. is created or destroyed or moved or
+When a Displayable changes (e.g. is created or destroyed or moved or
 changes its display) then the various Player objects need to be
 updated and send messages to the browser so that those actions can be
 shown to the human viewers.
 
 Several objects are involved in this process. The EngineConnector object
 sees the notification from Demiurge and makes appropriate calls to the
-various DisplayObjects to let them know they've changed.
+various Displayables to let them know they've changed.
+
+The Player object keeps track of whether a specific browser has seen a
+Displayable, and where. It shows and hides them. It can start and stop
+animations. It keeps track of Panning - what area the player is
+looking at, and making sure that the player's view continues to follow
+along and see the right things in an area larger than their browser
+window.
