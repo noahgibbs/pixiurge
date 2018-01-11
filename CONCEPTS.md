@@ -13,12 +13,13 @@ continually. It accepts control information from the browser and feeds
 the resulting player actions into the simulation. Pixiurge also takes
 care of simple accounts, logins and authentication.
 
-Pixiurge intentionally borrows a lot from ManaSource-engine and
-similar games like The Mana World, Land of Fire and Source of Tales,
-as well as OpenGameArt.org and the Liberated Pixel Cup. It uses those
-art styles and sprite sizes, of course. Pixiurge also uses the
-ManaSource-specific subformat of TMX files and Tiled editor data. See
-http://mapeditor.org for more about Tiled.
+Pixiurge intentionally borrows a lot of display conventions from
+ManaSource-engine and similar games like The Mana World, Land of Fire
+and Source of Tales, as well as OpenGameArt.org and the Liberated
+Pixel Cup. It uses those art styles and sprite sizes, of
+course. Pixiurge also uses the ManaSource-specific subformat of TMX
+files and Tiled editor data. See http://mapeditor.org for more about
+Tiled.
 
 ## Demiurge and Players
 
@@ -37,19 +38,37 @@ instance. A statedump or server reboot won't normally happen as an
 Agent action, for instance.
 
 But in general, a player's UI actions will turn into queued actions in
-Demiurge, and Pixiurge is how that happens.
+Demiurge via several intermediate layers.
+
+## Pixiurge Conventions
+
+Demiurge leaves many things to the user's preferences. That's as it
+should be. Pixiurge makes some simplifying assumptions about how
+you'll use them. That's also as it should be.
+
+Here are some conventions Pixiurge requires:
+
+* A Player's account name is the same as the Demiurge body item name
+* The Demiurge starting location (often a tmx_location) is named
+  "start location". You're permitted to use a "create" action to move
+  the player if you want more variety.
+
+Pixiurge also assumes that a lot of your customization of the game
+world will be done in the Demiurge World Files. For instance, it's
+normal to handle on-login and on-creation actions with Demiurge
+actions in the World Files.
 
 ## Software Architecture
 
 The Demiurge engine runs inside a Ruby server which uses Websockets to
-talk to the connected browsers. This is the same server that also
-provides assets like maps, Javascript, graphics and sounds.
+talk to the connected browsers. This is usually the same server that
+also provides assets like maps, Javascript, graphics and sounds.
 
 The websockets are connected to a browser, which can send control
 information *to* the server and receives simulation and feedback
-information *from* the server. Pixiurge has its own simple JSON
-messages that it uses to communicate back and forth between browsers
-and the server.
+information *from* the server. Pixiurge uses a simple
+JSON-over-websocket protocol that it uses to communicate back and
+forth between browsers and the server.
 
 A Demiurge engine knows how objects act -- it knows how often a
 particular Agent moves, or what it says. It does *not* know how they
@@ -60,7 +79,7 @@ visible on a screen.
 What are the major parts of a Pixiurge server?
 
 * The Demiurge engine, which runs on the server; this calculates the in-game world
-* The EngineSync, which watches Demiurge and notifies everything about what happens inside
+* The EngineConnector, which watches Demiurge and notifies everything about what happens inside
 * DisplayObjects, which keep track of how Demiurge objects get shown to human players
 * Player objects, which keep track of what DisplayObjects have been seen and know the JSON protocol
 * Browser-side Javascript code, to actually show everything to the human player
@@ -107,7 +126,7 @@ players who can see it. So: each Demiurge item has a matching
 server-side Pixiurge DisplayObject.
 
 When the Demiurge item changes, it sends a Demiurge notification. The
-single, server-side EngineSync object subscribes to all Demiurge
+single, server-side EngineConnector object subscribes to all Demiurge
 notifications and provides all the players with a constant, consistent
 view of what's happening by translating the notifications into
 Pixiurge messages over Websockets. The browsers, when they get the
@@ -134,7 +153,7 @@ time. The player is seeing the old pre-notification state. The
 notification tells what happened. But the item may have changed again
 in a later notification, so we can't assume we're just updating it to
 the Demiurge latest. This makes things a little complicated for
-EngineSync. It can't just get the latest state from Demiurge, because
+EngineConnector. It can't just get the latest state from Demiurge, because
 that may not be the state it wants or shows.
 
 We also can't assume every player sees the DisplayObject the same way,
@@ -163,6 +182,6 @@ changes its display) then the various Player objects need to be
 updated and send messages to the browser so that those actions can be
 shown to the human viewers.
 
-Several objects are involved in this process. The EngineSync object
+Several objects are involved in this process. The EngineConnector object
 sees the notification from Demiurge and makes appropriate calls to the
 various DisplayObjects to let them know they've changed.
