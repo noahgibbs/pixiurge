@@ -5,24 +5,17 @@ require "demiurge"
 class EngineConnectorTestApp < Pixiurge::AuthenticatedApp
   attr_reader :mem_storage
 
-  def initialize(options = {})
+  def initialize(engine, options = {})
+    @engine = engine
     @mem_storage = Pixiurge::Authentication::MemStorage.new
     super(options.merge({ "storage" => @mem_storage }))
 
     on_event("player_message") do |username, action_name, *args|
     end
 
-    on_event("player_login") do |username|
-      body = @engine.item_by_name(username)
-      if body
-        raise("You can't create a body with reserved name #{username}!") unless body.state["player_body"] == username
-      else
-        player_template = @engine.item_by_name("player template")
-        body = @engine.instantiate_new_item(username, player_template, "position" => "right here")
-        body.state["$player_body"] = username
-        body.run_action("create") if body.get_action("create")
-      end
-      body.run_action("login") if body.get_action("login")
+    on_event("player_create_body") do |username|
+      player_template = @engine.item_by_name("player template")
+      body = @engine.instantiate_new_item(username, player_template, "position" => "right here")
     end
 
     on_event("player_logout") do |username|
@@ -38,20 +31,23 @@ class EngineConnectorTest < WebSocketTest
 zone "Engine DSL Zone" do
   location "right here" do
   end
+  agent "player template" do
+    display { invisible }
+  end
 end
 DSL
 
   # Set up the Pixiurge App for Websocket-based testing
-  def pixi_app(options = {})
-    EngineConnectorTestApp.new options
+  def pixi_app(engine, options = {})
+    EngineConnectorTestApp.new engine, options
   end
 
   def connector
     return @pixi_connector if @pixi_connector
-    pixi_app = get_pixi_app
-    pixi_app.mem_storage.account_state["bob"] = { "account" => { "username" => "bob", "salt" => "fake_salt", "hashed" => "fake_hash" } }
 
     demi_engine = Demiurge::DSL.engine_from_dsl_text(["EngineConnectorDSL", ENGINE_DSL])
+    pixi_app = get_pixi_app(demi_engine)  # Initialize @pixi_app and mock websocket
+    pixi_app.mem_storage.account_state["bob"] = { "account" => { "username" => "bob", "salt" => "fake_salt", "hashed" => "fake_hash" } }
 
     @pixi_connector = Pixiurge::EngineConnector.new demi_engine, pixi_app
     @pixi_connector
@@ -59,6 +55,9 @@ DSL
 
   def test_basic_connector_creation
     con = connector
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    ws.close
   end
 
   #def test_lowlevel_events

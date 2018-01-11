@@ -1,3 +1,9 @@
+# Pixiurge::Display is the parent namespace for various more specific
+# Displayable subtypes.
+#
+# @since 0.1.0
+module Pixiurge::Display; end
+
 # A Pixiurge Displayable handles server-side display of in-world
 # simulated items. This doesn't directly mess with Javascript or
 # Pixi.js code, but it sets up data for display primitives like
@@ -20,7 +26,7 @@ class Pixiurge::Displayable
   attr_reader :x              # Most recently-drawn coordinates
   attr_reader :y
   attr_reader :location_name  # Most recently-drawn Demiurge location name
-  attr_reader :location_display_obj
+  attr_reader :location_displayable
   attr_reader :location_spritesheet
   attr_reader :location_spritestack
   attr_reader :position
@@ -32,7 +38,7 @@ class Pixiurge::Displayable
   # @param engine_connector [Pixiurge::EngineConnector] The Pixiurge EngineConnector this Displayable belongs to
   # @since 0.1.0
   def initialize demi_item:, name:, engine_connector:
-      @name = name
+    @name = name
     @demi_item = demi_item
     @demi_name = demi_item.name  # Usually the same as @name
     @engine_connector = engine_connector
@@ -67,7 +73,7 @@ class Pixiurge::Displayable
     @position = new_position
     @location_name, @x, @y = ::Demiurge::TmxLocation.position_to_loc_coords(new_position)
     @location_item = @demi_engine.item_by_name(@location_name)
-    @location_display_obj = @engine_connector.display_object_by_name(@location_name)
+    @location_displayable = @engine_connector.displayable_by_name(@location_name)
     if @location_item && @location_item.respond_to?(:tiles)
       @location_spritesheet = @location_item.tiles[:spritesheet]
       @location_spritestack = @location_item.tiles[:spritestack]

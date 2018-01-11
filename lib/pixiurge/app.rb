@@ -269,7 +269,7 @@ class Pixiurge::App
   attr :incoming_traffic_logfile
   attr :outgoing_traffic_logfile
 
-  EVENTS = [ "player_login", "player_logout", "player_message", "player_reconnect", "open", "close", "error", "message", "login" ]
+  EVENTS = [ "player_login", "player_logout", "player_create_body", "player_message", "player_reconnect", "open", "close", "error", "message", "login" ]
 
   # Constructor for Pixiurge App base class.
   #

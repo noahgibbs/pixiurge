@@ -77,10 +77,10 @@ class WebSocketTest < Minitest::Test
     @ws = nil
   end
 
-  def get_pixi_app
+  def get_pixi_app(*args)
     return @pixi_app if @pixi_app
 
-    @pixi_app = self.pixi_app
+    @pixi_app = self.pixi_app(*args)
     @ws = MockWebSocket.new
     @pixi_app.websocket_handler(ws)
 

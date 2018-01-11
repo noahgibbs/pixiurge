@@ -8,14 +8,13 @@
 
 class Pixiurge::Player
   attr_reader :name
-  attr_reader :demi_item
   attr_reader :websocket
-  attr_accessor :display_obj # To be set from EngineConnector
+  attr_accessor :displayable # To be set from EngineConnector
 
-  def initialize(websocket:, name:, demi_item:)
+  def initialize(websocket:, name:, displayable:)
     @websocket = websocket
     @name = name
-    @demi_item = demi_item
+    @displayable = displayable
 
     @currently_shown = {}
 
@@ -47,16 +46,16 @@ class Pixiurge::Player
   end
 
   def show_sprites_at_position(item_name, spritesheet, spritestack, position)
-    unless display_obj.location_spritesheet
-      STDERR.puts "Not showing when at location #{display_obj.location_name}, Displayable has no location_spritesheet, something's odd."
+    unless displayable.location_spritesheet
+      STDERR.puts "Not showing when at location #{displayable.location_name}, Displayable has no location_spritesheet, something's odd."
       return
     end
     show_sprites(item_name, spritesheet, spritestack)
     location_name, x, y = ::Demiurge::TmxLocation.position_to_loc_coords(position)
-    if display_obj.location_name != location_name
-      raise "Trying to show sprite #{item_name.inspect} at location #{location_name.inspect}, not current location #{player.display_obj.location_name.inspect}!"
+    if displayable.location_name != location_name
+      raise "Trying to show sprite #{item_name.inspect} at location #{location_name.inspect}, not current location #{player.displayable.location_name.inspect}!"
     end
-    self.message "displayTeleportStackToPixel", item_name, x * self.display_obj.location_spritesheet[:tilewidth], y * self.display_obj.location_spritesheet[:tileheight], {}
+    self.message "displayTeleportStackToPixel", item_name, x * self.displayable.location_spritesheet[:tilewidth], y * self.displayable.location_spritesheet[:tileheight], {}
   end
 
   def hide_sprites(item_name)
