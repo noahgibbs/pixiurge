@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require File.expand_path('lib/pixiurge/commands/generator', Dir.pwd)
+Pixiurge::Commands::Generator.start

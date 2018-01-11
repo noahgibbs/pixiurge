@@ -36,4 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "tmx", "~> 0.1.5"
   spec.add_runtime_dependency "therubyracer", "~> 0.12"
   spec.add_runtime_dependency "rack-coffee", "~> 1.0"
+  spec.add_runtime_dependency "thor", "~> 0.20"
 end
