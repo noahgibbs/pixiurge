@@ -75,7 +75,6 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
   #
   # @see #on_message
   # @param websocket [Websocket] A websocket object, as defined by the websocket-driver gem
-  # @param msg_type [String] The message type - not "auth", which has already been stripped off, but the subtype
   # @param args [Array] Additional message-type-specific arguments
   # @return [void]
   # @since 0.1.0
