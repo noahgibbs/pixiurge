@@ -172,14 +172,26 @@ class Pixiurge::AppInterface
   end
 
   # This event means a player has logged into your application. Your
-  # handler can do things like create an in-game presence for them, if
-  # they should have one.
+  # handler can reflect their logged-in state in their visible
+  # presence, if they have one.
   #
   # @see AuthenticatedApp#websocket_for_username
   # @param username [String] The new player's registered username
   # @return [void]
   # @since 0.1.0
   def on_player_login(username)
+    raise "Do not use AppInterface directly!"
+  end
+
+  # This event means a player has logged into your application and has
+  # no current Demiurge item to represent them. Your handler should
+  # create a Demiurge item to represent them.
+  #
+  # @see AuthenticatedApp#websocket_for_username
+  # @param username [String] The new player's registered username
+  # @return [void]
+  # @since 0.1.0
+  def on_player_create_body(username)
     raise "Do not use AppInterface directly!"
   end
 
@@ -324,6 +336,7 @@ class Pixiurge::App
 
   private
   def send_event(event_name, *args)
+    # Call the inherited event handler first, if any
     if self.respond_to?("on_" + event_name.to_s)
       self.send("on_" + event_name.to_s, *args)
     end

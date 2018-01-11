@@ -46,12 +46,16 @@ Demiurge leaves many things to the user's preferences. That's as it
 should be. Pixiurge makes some simplifying assumptions about how
 you'll use them. That's also as it should be.
 
-Here are some conventions Pixiurge requires:
+Here are some conventions Pixiurge expects and/or enforces:
 
-* A Player's account name is the same as the Demiurge body item name
-* The Demiurge starting location (often a tmx_location) is named
-  "start location". You're permitted to use a "create" action to move
-  the player if you want more variety.
+* A Player's account name is the same as their Demiurge body item
+  name, which is the same as the Displayable name
+* The player will have a Demiurge item instantiated for them by your
+  code, and various Demiurge action names will be needed for their
+  Demiurge item - "create", "login" and so on - if you want to
+  customize what happens at those times. Pixiurge will use the
+  reserved state variable name "$player_body" to indicate that this is
+  a special item.
 
 Pixiurge also assumes that a lot of your customization of the game
 world will be done in the Demiurge World Files. For instance, it's

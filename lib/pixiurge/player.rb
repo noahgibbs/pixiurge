@@ -25,7 +25,7 @@ class Pixiurge::Player
     # and viewport set pretty much immediately after creation, so we
     # don't send a message for it yet.
     #
-    # Normally a "player" will be set up by an EngineSync to
+    # Normally a "player" will be set up by an EngineConnector to
     # automatically follow a particular agent (that player's body) so
     # the panning will be taken care of that way pretty rapidly.
 
@@ -39,14 +39,6 @@ class Pixiurge::Player
     @websocket.send out_str
   end
 
-  def register()
-    @engine_connector.add_player(self)
-  end
-
-  def deregister()
-    @engine_connector.remove_player(self)
-  end
-
   def show_sprites(item_name, spritesheet, spritestack)
     return if @currently_shown[item_name]
     self.message "displayNewSpriteSheet", spritesheet
@@ -56,7 +48,7 @@ class Pixiurge::Player
 
   def show_sprites_at_position(item_name, spritesheet, spritestack, position)
     unless display_obj.location_spritesheet
-      STDERR.puts "Not showing when at location #{display_obj.location_name}, item is at #{@demi_item.location_name}, something's odd."
+      STDERR.puts "Not showing when at location #{display_obj.location_name}, Displayable has no location_spritesheet, something's odd."
       return
     end
     show_sprites(item_name, spritesheet, spritestack)
