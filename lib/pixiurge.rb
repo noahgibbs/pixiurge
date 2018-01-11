@@ -31,3 +31,4 @@ module Pixiurge;end
 require "pixiurge/config_ru"
 require "pixiurge/app"
 require "pixiurge/authentication"
+require "pixiurge/engine_connector"
