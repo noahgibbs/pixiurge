@@ -1,6 +1,6 @@
 require "thor"
-$LOAD_PATH.unshift File.expand_path('../../../lib', __FILE__)
-require "pixiurge/app"
+$LOAD_PATH.unshift File.expand_path(File.join(__dir__, "..", ".."))
+require "pixiurge"
 
 module Pixiurge
   module Commands
@@ -13,13 +13,9 @@ module Pixiurge
         File.join __dir__, "..", "..", "..", "generator"
       end
 
-      def self.app_name
-        name
-      end
-
       #desc "new GAMENAME", "Creates a new Pixiurge game (or similar application)"
       def top_level_directory
-        directory "%app_name%"
+        directory "%name%"
       end
     end
   end
