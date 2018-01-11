@@ -109,7 +109,7 @@ class Pixiurge::EngineConnector
     return if item.zone? # No displayable info for zones (yet?)
     return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
     if item.is_a?(::Demiurge::TmxLocation)
-      @displayables[item.name] = ::Pixiurge::Location.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
+      @displayables[item.name] = ::Pixiurge::TiledLocation.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
     elsif item.agent?
       disp = item.get_action("$display")
       if disp && disp["block"] # This special action is used to pass the Display info through to a Display library.
