@@ -240,6 +240,8 @@ class Pixiurge::AppInterface
   #
   # @see Pixiurge::AppInterface
   # @param event [String] The name of the event, such as "close" or "player_login"
+  # @yield Your handler for the event in question, which takes event-dependent arguments
+  # @yieldreturn [void]
   # @return [void]
   # @since 0.1.0
   def on_event(event, &block)
@@ -326,6 +328,8 @@ class Pixiurge::App
   #
   # @see Pixiurge::AppInterface
   # @param event [String] The name of the event, such as "close" or "player_login"
+  # @yield Your handler for the event in question, which takes event-dependent arguments
+  # @yieldreturn [void]
   # @return [void]
   # @since 0.1.0
   def on_event(event, &block)
