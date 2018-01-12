@@ -34,7 +34,7 @@ class Pixiurge::Player
 
   def message(msg_name, *args)
     out_str = MultiJson.dump [ "game_msg", msg_name, *args ]
-    File.open("log/outgoing_traffic.json", "a") { |f| f.write out_str + "\n" } if Demiurge::Createjs.get_record_traffic
+    #File.open("log/outgoing_traffic.json", "a") { |f| f.write out_str + "\n" } if record_traffic # @todo record traffic using app's setting
     @websocket.send out_str
   end
 

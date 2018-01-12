@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="32" tileheight="32" nextobjectid="12">
  <tileset firstgid="1" name="MageCity" tilewidth="32" tileheight="32" tilecount="360" columns="8">
-  <image source="/static/magecity.png" width="256" height="1450"/>
+  <image source="../sprites/magecity.png" width="256" height="1450"/>
  </tileset>
  <tileset firstgid="361" name="Collision" tilewidth="32" tileheight="32" tilecount="2" columns="2">
-  <image source="/static/collision.png" width="64" height="32"/>
+  <image source="../sprites/collision.png" width="64" height="32"/>
  </tileset>
  <layer name="Ground 5" width="20" height="20">
   <data encoding="csv">
