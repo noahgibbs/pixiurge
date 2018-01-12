@@ -1,7 +1,7 @@
 # This Builder class handles the Display DSL in Demiurge Display blocks for Pixiurge.
 #
 # @since 0.1.0
-module Pixiurge
+module Pixiurge::Display
   class DisplayBuilder
     attr_reader :built_objects
 
