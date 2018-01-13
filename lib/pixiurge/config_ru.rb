@@ -44,8 +44,13 @@ class Pixiurge::App
     @rack_builder.use Rack::Coffee, :root => (@root_dir + "/"), :urls => dirs.map { |d| "/" + d }
   end
 
-  # To have Pixiurge serve static directories of Javascript or assets, call this with the appropriate list of directory names.
-  # All directory names are relative to the web root you passed to Pixiurge.root_dir.
+  # To have Pixiurge serve static directories of Javascript or assets,
+  # call this with the appropriate list of directory names.  All
+  # directory names are relative to the web root you passed to
+  # Pixiurge.root_dir. It's possible to call this multiple times, but
+  # then you'll get a tiny inefficiency where two different Rack
+  # middlewares get checked. Not a big deal if you have a reason, but
+  # it's slightly better to call it once with a list of directories.
   #
   # @param dirs [String, Array<String>] The directory name or array of directory names, located under the web root you passed to Pixiurge.root_dir
   # @since 0.1.0

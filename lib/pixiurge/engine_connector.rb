@@ -1,6 +1,4 @@
-require "demiurge/tmx"
-require "pixiurge/displayable"
-#require "pixiurge/display_dsl"
+require "demiurge"
 
 # A single EngineConnector runs on the server, sending messages about
 # the game world to the various player connections. An EngineConnector

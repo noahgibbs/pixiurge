@@ -28,11 +28,11 @@ require "faye/websocket"
 # @since 0.1.0
 module Pixiurge;end
 
-require "pixiurge/config_ru"
 require "pixiurge/app"
 require "pixiurge/authentication"
 require "pixiurge/engine_connector"
 require "pixiurge/player"
+require "pixiurge/displayable"
 require "pixiurge/displayable/dsl"
 require "pixiurge/displayable/invisible"
 require "pixiurge/displayable/tiled_location"

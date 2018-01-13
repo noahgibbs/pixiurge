@@ -5,7 +5,9 @@
 # @since 0.1.0
 module Pixiurge::Protocol; end
 
-# Fixed constants for incoming protocol messages
+# Fixed constants for incoming protocol messages. "Incoming" in this
+# sense means "sent from the front end to the server" rather than
+# vice-versa.
 #
 # @since 0.1.0
 module Pixiurge::Protocol::Incoming
@@ -38,7 +40,8 @@ module Pixiurge::Protocol::Incoming
   AUTH_GET_SALT = "get_salt"
 end
 
-# Fixed constants for outgoing protocol messages
+# Fixed constants for outgoing protocol messages. That means messages
+# sent from the server to the front end rather than the opposite.
 #
 # @since 0.1.0
 module Pixiurge::Protocol::Outgoing
