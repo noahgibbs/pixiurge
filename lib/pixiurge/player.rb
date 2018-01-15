@@ -9,12 +9,13 @@
 class Pixiurge::Player
   attr_reader :name
   attr_reader :websocket
-  attr_accessor :displayable # To be set from EngineConnector
+  attr_reader :displayable
 
-  def initialize(websocket:, name:, displayable:)
+  def initialize(websocket:, name:, displayable:, engine_connector:, display_settings: {})
     @websocket = websocket
     @name = name
     @displayable = displayable
+    @engine_connector = engine_connector
 
     @currently_shown = {}
 
@@ -30,18 +31,20 @@ class Pixiurge::Player
 
     @pan_center_x = 0
     @pan_center_y = 0
+
+    message(Pixiurge::Protocol::Outgoing::DISPLAY_INIT, display_settings )
   end
 
   def message(msg_name, *args)
-    out_str = MultiJson.dump [ "game_msg", msg_name, *args ]
+    out_str = MultiJson.dump [ msg_name, *args ]
     #File.open("log/outgoing_traffic.json", "a") { |f| f.write out_str + "\n" } if record_traffic # @todo record traffic using app's setting
     @websocket.send out_str
   end
 
   def show_sprites(item_name, spritesheet, spritestack)
     return if @currently_shown[item_name]
-    self.message "displayNewSpriteSheet", spritesheet
-    self.message "displayNewSpriteStack", spritestack
+    self.message Pixiurge::Protocol::Outgoing::LOAD_SPRITESHEET, spritesheet[:name]
+    self.message Pixiurge::Protocol::Outgoing::LOAD_SPRITESTACK, spritestack[:name]
     @currently_shown[item_name] = [ spritesheet[:name], spritestack[:name] ]
   end
 
@@ -61,16 +64,16 @@ class Pixiurge::Player
   def hide_sprites(item_name)
     return unless @currently_shown[item_name]
     sheet_name, stack_name = @currently_shown[item_name]
-    self.message "displayHideSpriteStack", "name" => stack_name
-    self.message "displayHideSpriteSheet", "name" => sheet_name
+    self.message Pixiurge::Protocol::Outgoing::UNLOAD_SPRITESTACK, stack_name
+    self.message Pixiurge::Protocol::Outgoing::UNLOAD_SPRITESHEET, sheet_name
     @currently_shown.delete(item_name)
   end
 
   def hide_all_sprites
     @currently_shown.each do |item_name, entry|
       sheet_name, stack_name = *entry
-      self.message "displayHideSpriteStack", "name" => stack_name
-      self.message "displayHideSpriteSheet", "name" => sheet_name
+      self.message Pixiurge::Protocol::Outgoing::UNLOAD_SPRITESTACK, stack_name
+      self.message Pixiurge::Protocol::Outgoing::UNLOAD_SPRITESHEET, sheet_name
     end
     @currently_shown = {}
   end

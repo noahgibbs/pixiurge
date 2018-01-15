@@ -88,4 +88,40 @@ module Pixiurge::Protocol::Outgoing
   #
   # @since 0.1.0
   AUTH_SALT = "login_salt"
+
+  # This is the message used to set up an initial display with
+  # appropriate settings. It should normally never be sent a second
+  # time. This should contain display-relevant and server-variable
+  # settings like how fast in milliseconds a tick is.
+  #
+  # @since 0.1.0
+  DISPLAY_INIT = "display_init"
+
+  # This message tells the client to load a JSON spritesheet by name
+  # as an asset. By passing the asset name (not the full asset), this
+  # slows down initial loading from an empty cache but speeds up
+  # future cached requests - it's hard to cache or compress assets
+  # that are sent inside Websocket messages.
+  #
+  # @since 0.1.0
+  LOAD_SPRITESHEET = "display_load_spritesheet"
+
+  # This message tells the client a spritesheet is no longer in use.
+  #
+  UNLOAD_SPRITESHEET = "display_unload_spritesheet"
+
+  # This message tells the client to load and display a spritestack by
+  # name as an asset. By passing the asset name (not the full asset),
+  # this slows down initial loading from an empty cache but speeds up
+  # future cached requests - it's hard to cache or compress assets
+  # that are sent inside Websocket messages.
+  #
+  # @since 0.1.0
+  LOAD_SPRITESTACK = "display_load_spritestack"
+
+  # This message tells the client a spritestack is no longer in use
+  # and should be visually hidden and removed.
+  #
+  UNLOAD_SPRITESTACK = "display_unload_spritesheet"
+
 end

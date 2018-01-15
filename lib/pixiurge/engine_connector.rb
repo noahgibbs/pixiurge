@@ -66,7 +66,7 @@ class Pixiurge::EngineConnector
       demi_item.run_action("login") if demi_item.get_action("login")
       ws = @app.websocket_for_username username
       displayable = @displayables[username]
-      player = Pixiurge::Player.new websocket: ws, name: username, displayable: displayable
+      player = Pixiurge::Player.new websocket: ws, name: username, displayable: displayable, display_settings: display_settings, engine_connector: self
       add_player(player)
     end
     @app.on_event "player_logout" do |username|
@@ -102,6 +102,11 @@ class Pixiurge::EngineConnector
   end
 
   private
+
+  def display_settings
+    { "ms_per_tick" => 300 }
+  end
+
   def register_engine_item(item)
     return if @displayables[item.name] # Already have this one
     return if item.zone? # No displayable info for zones (yet?)
@@ -144,7 +149,6 @@ class Pixiurge::EngineConnector
 
   def show_displayable_to_players(displayable)
     return unless displayable.position # Agents and some other items are allowed to have no position and just be instantiable
-    demi_item = displayable.demi_item
     loc_name, x, y = ::Demiurge::TmxLocation.position_to_loc_coords(displayable.position)
     each_player_for_location_name(loc_name) do |player|
       displayable.show_to_player(player)
@@ -167,10 +171,9 @@ class Pixiurge::EngineConnector
     position ||= displayable.demi_item.position
     return unless position
     if position  # Agents and some other items are allowed to have no position and just be instantiable
-      loc_name, x, y = ::Demiurge::TmxLocation.position_to_loc_coords(position)
+      loc_name = position.split("#")[0]
       loc = @engine.item_by_name(loc_name)
       if loc.is_a?(::Demiurge::TmxLocation)
-        spritesheet = loc.tiles[:spritesheet]
         @players.each do |player_name, player|
           if player.displayable.location_name == loc_name
             # The new agent and the player are in the same location
@@ -185,12 +188,17 @@ class Pixiurge::EngineConnector
     spritesheet = location_do.spritesheet
     spritestack = location_do.spritestack
 
+    raise("Nil for spritesheet!") if spritesheet.nil?
+    raise("Nil for spritestack!") if spritestack.nil?
+
     loc_name = location_do.name
 
     # Show the location's sprites
     player.hide_all_sprites
     player.show_sprites(location_do.name, spritesheet, spritestack)
     x, y = ::Demiurge::TmxLocation.position_to_coords(position)
+    x ||= 0
+    y ||= 0
     player.send_instant_pan_to_pixel_offset spritesheet[:tilewidth] * x, spritesheet[:tileheight] * y
 
     # Anybody else there? Show them to this player.
@@ -203,7 +211,6 @@ class Pixiurge::EngineConnector
 
   def add_player(player)
     @players[player.name] = player
-    player.displayable = @displayables[player.name]
     unless player.displayable
       raise "Set the Player's Displayable before this!"
     end
@@ -267,10 +274,10 @@ class Pixiurge::EngineConnector
       speaker = @engine.item_by_name(data["actor"])
       body = @displayables[data["actor"]]
       speaker_loc_name = speaker.location_name
-      @players.each do |player_name, player|
-        player_loc_name = player.displayable.location_name
+      @players.each do |player_name, player_obj|
+        player_loc_name = player_obj.displayable.location_name
         next unless player_loc_name == speaker_loc_name
-        player.message "displayTextAnimOverStack", body.stack_name, text, "color" => data["color"] || "#CCCCCC", "font" => data["font"] || "20px Arial", "duration" => data["duration"] || 5.0
+        player_obj.message "displayTextAnimOverStack", body.stack_name, text, "color" => data["color"] || "#CCCCCC", "font" => data["font"] || "20px Arial", "duration" => data["duration"] || 5.0
       end
       return
     end
@@ -288,16 +295,13 @@ class Pixiurge::EngineConnector
   def notified_of_move_to(data)
     actor_do = @displayables[data["actor"]]
     x, y = ::Demiurge::TmxLocation.position_to_coords(data["new_position"])
-    old_x = actor_do.x
-    old_y = actor_do.y
     loc_name = data["new_location"]
     loc_do = @displayables[loc_name]
-    if loc_do
-      spritesheet = loc_do.spritesheet
-      spritestack = loc_do.spritestack
-    else
+    unless loc_do
       STDERR.puts "Moving to a non-displayed location #{loc_name.inspect}, no display object found..."
+      return
     end
+    spritesheet = loc_do.spritesheet
 
     actor_do.position = data["new_position"]
 
