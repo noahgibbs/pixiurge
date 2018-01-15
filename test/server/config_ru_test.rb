@@ -38,10 +38,13 @@ class ConfigRuTest < Minitest::Test
     assert last_response.body["function"], "Make sure the CoffeeScript is compiled to Javascript"
   end
 
-  #def test_it_says_hello_world
-  #  browser = Rack::Test::Session.new(Rack::MockSession.new(Sinatra::Application))
-  #  browser.get '/'   # get url, req_params, rack_env   # For Rack env, see http://www.rubydoc.info/github/rack/rack/master/file/SPEC
-  #  assert browser.last_response.ok?
-  #  assert_equal 'Hello World', browser.last_response.body
-  #end
+  # Realistically, my JSON exporter isn't perfect. There are more
+  # differences between TMX XML and JSON formats than I'm properly
+  # accounting for.
+  def test_can_serve_tmx_as_json
+    get '/tmx/magecity_cc0_lorestrome.json'
+    assert last_response.ok?
+    rack_exported_version = MultiJson.load(last_response.body)
+    assert_equal 7, rack_exported_version["layers"].select { |l| l["type"] == "tilelayer" }.size
+  end
 end

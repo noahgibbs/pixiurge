@@ -72,6 +72,20 @@ class Pixiurge::App
     @static_files.concat [*files].flatten
   end
 
+  # Call this to have Pixiurge serve 'normal' XML TMX files from the
+  # Tiled Map Editor as JavaScript-friendly JSON format, which
+  # otherwise must be manually exported. Static JSON TMX files can
+  # just be served as static without having to mark them specially as
+  # TMX.
+  #
+  # @param dirs [String, Array<String>] One or more directories to serve TMX files from
+  # @since 0.1.0
+  def tmx_dirs *dirs
+    dirs = [*dirs].flatten
+    raise "Please set Pixiurge.root_dir before using Pixiurge.static_dirs!" unless @root_dir
+    @rack_builder.use Pixiurge::Middleware::TmxJson, :root => @root_dir, :urls => dirs.map { |d| "/" + d }
+  end
+
   # Get the final, built Rack handler from Pixiurge with all the specified middleware and websocket handling.
   #
   # @see Pixiurge.root_dir
@@ -95,5 +109,62 @@ class Pixiurge::App
         end
       end
     end
+  end
+end
+
+# Middleware modules for Pixiurge. This allows custom serving of
+# assets. Pixiurge also uses off-the-shelf middleware like
+# Rack::Static and Rack::Coffee to serve common asset types.
+#
+# @since 0.1.0
+module Pixiurge::Middleware
+
+  # The TmxJson middleware reads TMX files in the normal XML mode that
+  # Tiled loads and saves easily, but serves it in the AJAX-friendly
+  # JSON format that it exports. By converting the (static) TMX file
+  # and giving appropriate checksums and cache headers, you can make
+  # virtual-static exported JSON TMX files with sane caching and
+  # reload behavior directly from a standard XML TMX file.
+  #
+  # @since 0.1.0
+  class TmxJson
+    # @param app [Rack::App] The next innermost Rack app
+    # @param options [Hash] Options to this middleware
+    # @option options [String,Array<String>] :urls A root or list of URL roots to serve TMX files from
+    # @option options [String] :root The file system root to serve from (default: Dir.pwd)
+    # @since 0.1.0
+    def initialize(app, options = {})
+      @app = app
+      @urls = [(options[:urls] || "/tmx")].flatten
+      @root = options[:root] || Dir.pwd
+    end
+
+    # The Rack .call method for middleware.
+    #
+    # @since 0.1.0
+    def call(env)
+      # If no TMX path is matched, forward the call to the next middleware
+      call_root = matches_url(env["PATH_INFO"])
+      return @app.call(env) unless call_root
+
+      # Okay, a TMX root was matched...
+
+      local_path = File.join(@root, env["PATH_INFO"])
+      local_path.sub!(/\.json$/, ".tmx")
+      unless File.exists?(local_path)
+        return [404, {}, [""]]
+      else
+        tmx_map = Tmx.load(local_path)
+        json_contents = tmx_map.export_to_string(:filename => local_path, :format => :json)
+        return [200, { "type" => "application/json" }, json_contents]
+      end
+    end
+
+    private
+
+    def matches_url(path)
+      @urls.detect { |u| path.index(u) == 0 }
+    end
+
   end
 end

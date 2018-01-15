@@ -15,5 +15,6 @@ app.root_dir __dir__
 app.coffeescript_dirs "coffee"
 app.static_dirs "static"
 app.static_files "bobo.txt"
+app.tmx_dirs "tmx"
 
 run app.handler
