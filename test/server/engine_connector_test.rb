@@ -7,6 +7,8 @@ class EngineConnectorTestApp < Pixiurge::AuthenticatedApp
 
   def initialize(engine, options = {})
     @engine = engine
+
+    # For this test, use memory-only storage with an accessor so we can mess with it.
     @mem_storage = Pixiurge::Authentication::MemStorage.new
     super(options.merge({ "storage" => @mem_storage }))
 
@@ -46,15 +48,14 @@ DSL
   def connector
     return @pixi_connector if @pixi_connector
 
-    # Load our TMX files from the data subdir
-    Dir.chdir(File.join(__dir__, "data")) do
-      demi_engine = Demiurge::DSL.engine_from_dsl_text(["EngineConnectorDSL", ENGINE_DSL])
-      pixi_app = get_pixi_app(demi_engine)  # Initialize @pixi_app and mock websocket
-      pixi_app.mem_storage.account_state["bob"] = { "account" => { "username" => "bob", "salt" => "fake_salt", "hashed" => "fake_hash" } }
+    # Load TMX files with the test data dir as a root; this also clears the TMX cache
+    Demiurge::Tmx::TmxLocation.default_cache.root_dir = File.join(__dir__, "data")
+    demi_engine = Demiurge::DSL.engine_from_dsl_text(["EngineConnectorDSL", ENGINE_DSL])
 
-      @pixi_connector = Pixiurge::EngineConnector.new demi_engine, pixi_app
-    end
-    @pixi_connector
+    pixi_app = get_pixi_app(demi_engine)  # Initialize @pixi_app and mock websocket
+    pixi_app.mem_storage.account_state["bob"] = { "account" => { "username" => "bob", "salt" => "fake_salt", "hashed" => "fake_hash" } }
+
+    @pixi_connector = Pixiurge::EngineConnector.new demi_engine, pixi_app
   end
 
   def test_basic_connector_creation
@@ -62,12 +63,12 @@ DSL
     ws.open
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
 
+    messages = ws.parsed_sent_data
+    assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_TMX, "right here", "tmx/magecity_cc0_lorestrome.json" ], messages[3]
     assert_equal 4, ws.sent_data.size
-    assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], ws.parsed_sent_data[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], ws.parsed_sent_data[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::LOAD_SPRITESHEET, "spritesheet_name" ], ws.parsed_sent_data[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::SHOW_SPRITESTACK, "spritestack_name", 0, 0 ], ws.parsed_sent_data[3]
-    ws.sent_data.pop
 
     ws.close
   end

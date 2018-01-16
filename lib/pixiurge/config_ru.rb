@@ -72,18 +72,41 @@ class Pixiurge::App
     @static_files.concat [*files].flatten
   end
 
-  # Call this to have Pixiurge serve 'normal' XML TMX files from the
-  # Tiled Map Editor as JavaScript-friendly JSON format, which
-  # otherwise must be manually exported. Static JSON TMX files can
-  # just be served as static without having to mark them specially as
-  # TMX.
+  # The Tiled map editor strongly prefers keeping its map data in TMX,
+  # an XML-based format. Unfortunately, JSON is *much* better for use by
+  # Javascript. Since TMX has a standard JSON export format, we
+  # preconvert the TMX to JSON on the Ruby side to keep the structures
+  # and field names the same. TMX and TMX-JSON have some unfortunate
+  # structure and naming differences, so it's not trivial to convert
+  # between them.
+  #
+  # It's possible to use Tiled to export from TMX to JSON on the
+  # command line, but TMX is a graphical program and can be hard to
+  # build on a server - we'd rather not have it as a runtime dependency.
+  #
+  # This middleware uses the Ruby tmx gem to on-the-fly convert between
+  # XML-based TMX data and an approximation of Tiled's JSON TMX format.
+  # The current converter is somewhat limited - if we need a closer match
+  # in the future, the plan is to submit pull requests to the tmx gem
+  # until its approximation of Tiled's behavior is good enough.
   #
   # @param dirs [String, Array<String>] One or more directories to serve TMX files from
+  # @param options [Hash] Optional final options after directories
+  # @option options [Demiurge::Tmx::TileCache] Optional TMX TileCache to use; defaults to TmxLocation.default_cache
+  # @return [void]
   # @since 0.1.0
   def tmx_dirs *dirs
+    options = {}
+    if dirs[-1].respond_to?(:has_key?)
+      options = dirs.pop
+    end
     dirs = [*dirs].flatten
     raise "Please set Pixiurge.root_dir before using Pixiurge.static_dirs!" unless @root_dir
-    @rack_builder.use Pixiurge::Middleware::TmxJson, :root => @root_dir, :urls => dirs.map { |d| "/" + d }
+    @rack_builder.use Pixiurge::Middleware::TmxJson,
+      :root => @root_dir,
+      :urls => dirs.map { |d| "/" + d },
+      :cache => Demiurge::Tmx::TmxLocation.default_cache  # By default, use the same cache TmxLocations do
+    nil
   end
 
   # Get the final, built Rack handler from Pixiurge with all the specified middleware and websocket handling.
@@ -132,11 +155,13 @@ module Pixiurge::Middleware
     # @param options [Hash] Options to this middleware
     # @option options [String,Array<String>] :urls A root or list of URL roots to serve TMX files from
     # @option options [String] :root The file system root to serve from (default: Dir.pwd)
+    # @option options [Demiurge::Tmx::TileCache] :cache The tile cache to serve from; use this option to share or clear the cache from elsewhere
     # @since 0.1.0
     def initialize(app, options = {})
       @app = app
       @urls = [(options[:urls] || "/tmx")].flatten
       @root = options[:root] || Dir.pwd
+      @cache = options[:cache] || ::Demiurge::Tmx::TmxCache.new(:root_dir => @root)
     end
 
     # The Rack .call method for middleware.
@@ -150,12 +175,14 @@ module Pixiurge::Middleware
       # Okay, a TMX root was matched...
 
       local_path = File.join(@root, env["PATH_INFO"])
-      local_path.sub!(/\.json$/, ".tmx")
-      unless File.exists?(local_path)
+      json_local_path = local_path.sub(/\.json$/, ".tmx")
+      existing = [local_path, json_local_path].detect { |f| File.exists?(f) }
+      unless existing
         return [404, {}, [""]]
       else
-        tmx_map = Tmx.load(local_path)
-        json_contents = tmx_map.export_to_string(:filename => local_path, :format => :json)
+        tmx_map = Tmx.load(existing)
+        json_contents = tmx_map.export_to_string :filename => existing, :format => :json
+        File.open("local_reexported.json", "wb") { |f| f.write json_contents }
         return [200, { "type" => "application/json" }, json_contents]
       end
     end

@@ -7,7 +7,11 @@ module Pixiurge::Display; end
 # A Pixiurge Displayable handles server-side display of in-world
 # simulated items. This doesn't directly mess with Javascript or
 # Pixi.js code, but it sets up data for display primitives like
-# "sprite stacks", particles, animations and so on.
+# sprites, TMX areas, particles, animations and so on.
+#
+# The {Pixiurge::Player} knows what objects are being displayed, while
+# the {Pixiurge::Displayable}s know how to send messages to display
+# themselves.
 #
 # More complex visual groupings like tilemap areas and humanoid bodies
 # inherit from this class.
@@ -23,12 +27,20 @@ class Pixiurge::Displayable
   # series of movement notifications - the Demiurge item may already
   # be at the final location, while the notifications go one at a
   # time through the places in between.
-  attr_reader :x              # Most recently-drawn coordinates
+  attr_reader :x              # Most recently drawn coordinates
   attr_reader :y
-  attr_reader :location_name  # Most recently-drawn Demiurge location name
+  attr_reader :location_name  # Most recently drawn Demiurge location name
   attr_reader :location_displayable
-  attr_reader :location_spritesheet
-  attr_reader :location_spritestack
+
+  # For a tiled-type area, these are the tile height and width of this Displayable in pixels
+  attr_reader :block_width
+  attr_reader :block_height
+
+  # For a tiled-type area, these are the tile height and width of the location (backdrop) of this Displayable in pixels
+  attr_reader :location_block_width
+  attr_reader :location_block_height
+
+  # This is the most recently-displayed position of this Displayable
   attr_reader :position
 
   # Constructor
@@ -59,6 +71,7 @@ class Pixiurge::Displayable
   def demiurge_reloaded
     @demi_item = @demi_engine.item_by_name(@demi_name)
     @location_item = @demi_engine.item_by_name(@location_name)
+    @location_displayable = @engine_connector.displayable_by_name(@location_name)
   end
 
   # Move this Displayable to a new position. This is normally done by
@@ -71,32 +84,26 @@ class Pixiurge::Displayable
   # @since 0.1.0
   def position=(new_position)
     @position = new_position
-    @location_name, @x, @y = ::Demiurge::TmxLocation.position_to_loc_coords(new_position)
+    @location_name, @x, @y = ::Demiurge::TiledLocation.position_to_loc_coords(new_position)
     @location_item = @demi_engine.item_by_name(@location_name)
     @location_displayable = @engine_connector.displayable_by_name(@location_name)
     if @location_item && @location_item.respond_to?(:tiles)
-      @location_spritesheet = @location_item.tiles[:spritesheet]
-      @location_spritestack = @location_item.tiles[:spritestack]
+      @location_block_width = @location_displayable.block_width
+      @location_block_height = @location_displayable.block_height
     else
-      @location_spritesheet = nil
-      @location_spritestack = nil
+      @location_block_width = nil
+      @location_block_height = nil
     end
     nil
   end
 
-  # Show this Displayable to a player. The default method assumes this
-  # Displayable uses a SpriteStack and has set the spritesheet and
-  # spritestack names already. For other display methods, override
-  # this method in a subclass.
+  # Show this Displayable to a player, generally by sending messages.
   #
   # @param player [Pixiurge::Player] The player to show this Displayable to
   # @return [void]
   # @since 0.1.0
   def show_to_player(player)
-    #show_to_player_at_position(player, @position)
-    raise "Need a spritesheet/spritestack or to override Displayable#show_to_player!" unless self.spritestack
-    player.show_sprites_at_position(@demi_item.name, self.spritesheet, self.spritestack, @position)
-    nil
+    raise "Override Displayable#show_to_player!"
   end
 
   # Hide this Displayable from a player. The default method assumes
@@ -108,8 +115,7 @@ class Pixiurge::Displayable
   # @return [void]
   # @since 0.1.0
   def hide_from_player(player)
-    player.hide_sprites(@demi_item.name)
-    nil
+    player.message Pixiurge::Protocol::Outgoing::HIDE_DISPLAYABLE, self.name
   end
 
   # Animate the motion of this Displayable from an old location to a

@@ -12,6 +12,7 @@ require "demiurge"
 # @since 0.1.0
 class Pixiurge::EngineConnector
   attr_reader :engine
+  attr_reader :app
 
   # Constructor. Set up the EngineConnector as a gateway between the
   # demi_engine and the pixi_app.
@@ -111,8 +112,8 @@ class Pixiurge::EngineConnector
     return if @displayables[item.name] # Already have this one
     return if item.zone? # No displayable info for zones (yet?)
     return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
-    if item.is_a?(::Demiurge::TmxLocation)
-      @displayables[item.name] = ::Pixiurge::Display::TiledLocation.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
+    if item.is_a?(::Demiurge::Tmx::TmxLocation)
+      @displayables[item.name] = ::Pixiurge::Display::TmxMap.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
     elsif item.agent?
       disp = item.get_action("$display")
       if disp && disp["block"] # This special action is used to pass the Display info through to a Display library.
@@ -149,19 +150,17 @@ class Pixiurge::EngineConnector
 
   def show_displayable_to_players(displayable)
     return unless displayable.position # Agents and some other items are allowed to have no position and just be instantiable
-    loc_name, x, y = ::Demiurge::TmxLocation.position_to_loc_coords(displayable.position)
+    loc_name, x, y = ::Demiurge::TiledLocation.position_to_loc_coords(displayable.position)
     each_player_for_location_name(loc_name) do |player|
       displayable.show_to_player(player)
     end
 
     loc = @engine.item_by_name(loc_name)
-    if loc.is_a?(::Demiurge::TmxLocation)
-      spritesheet = loc.tiles[:spritesheet]
+    if loc.is_a?(::Demiurge::Tmx::TmxLocation)
       @players.each do |player_name, player|
         if player.displayable.location_name == loc_name
           # The new displayable and the player are in the same location
-          player.show_sprites(displayable.name, displayable.spritesheet, displayable.spritestack)
-          player.message "displayTeleportStackToPixel", displayable.stack_name, x * spritesheet[:tilewidth], y * spritesheet[:tileheight], {}
+          player.show_tmx_at_position(displayable.name, displayable.entry, displayable.position)
         end
       end
     end
@@ -173,7 +172,7 @@ class Pixiurge::EngineConnector
     if position  # Agents and some other items are allowed to have no position and just be instantiable
       loc_name = position.split("#")[0]
       loc = @engine.item_by_name(loc_name)
-      if loc.is_a?(::Demiurge::TmxLocation)
+      if loc.is_a?(::Demiurge::Tmx::TmxLocation)
         @players.each do |player_name, player|
           if player.displayable.location_name == loc_name
             # The new agent and the player are in the same location
@@ -184,27 +183,21 @@ class Pixiurge::EngineConnector
     end
   end
 
-  def show_location_to_player(player, position, location_do)
-    spritesheet = location_do.spritesheet
-    spritestack = location_do.spritestack
-
-    raise("Nil for spritesheet!") if spritesheet.nil?
-    raise("Nil for spritestack!") if spritestack.nil?
-
+  def set_player_backdrop(player, player_position, location_do)
     loc_name = location_do.name
 
     # Show the location's sprites
-    player.hide_all_sprites
-    player.show_sprites(location_do.name, spritesheet, spritestack)
-    x, y = ::Demiurge::TmxLocation.position_to_coords(position)
+    player.hide_all_displayables
+    player.show_displayable(location_do)
+    x, y = ::Demiurge::TiledLocation.position_to_coords(player_position)
     x ||= 0
     y ||= 0
-    player.send_instant_pan_to_pixel_offset spritesheet[:tilewidth] * x, spritesheet[:tileheight] * y
+    player.send_instant_pan_to_pixel_offset location_do.block_width * x, location_do.block_height * y
 
     # Anybody else there? Show them to this player.
     @displayables.each do |do_name, displayable|
       if displayable.location_name == loc_name
-        displayable.show_to_player(player)
+        player.show_displayable(displayable)
       end
     end
   end
@@ -224,7 +217,7 @@ class Pixiurge::EngineConnector
       return
     end
 
-    show_location_to_player(player, player_position, loc_do)
+    set_player_backdrop(player, player_position, loc_do)
   end
 
   # The logout action happens before this does, which may affect what's where.
@@ -294,7 +287,7 @@ class Pixiurge::EngineConnector
 
   def notified_of_move_to(data)
     actor_do = @displayables[data["actor"]]
-    x, y = ::Demiurge::TmxLocation.position_to_coords(data["new_position"])
+    x, y = ::Demiurge::TiledLocation.position_to_coords(data["new_position"])
     loc_name = data["new_location"]
     loc_do = @displayables[loc_name]
     unless loc_do
@@ -315,7 +308,7 @@ class Pixiurge::EngineConnector
     if acting_player
       if data["old_location"] != data["new_location"]
         ## Show the new location's sprites to the player who is moving, if the new location has sprites
-        show_location_to_player(acting_player, data["new_position"], @displayables[loc_name]) if loc_do
+        set_player_backdrop(acting_player, data["new_position"], @displayables[loc_name]) if loc_do
       else
         # Player moved in same location, pan to new position
         actor_do.move_for_player(acting_player, data["old_position"], data["new_position"], { "duration" => 0.5 })

@@ -1,40 +1,27 @@
 require "pixiurge/displayable"
 
-class Pixiurge::Display::TiledSimpleArea < ::Pixiurge::Displayable
-  attr_reader :spritesheet
-  attr_reader :spritestack
-
-  # Display a Pixiurge TMX location as a straightforward spritesheet and spritestack.
+# A TmxMap uses a Demiurge item's TMX entry as its source of data and
+# behavior.
+#
+# @since 0.1.0
+class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
+  # Constructor. Assume we read the TMX cache information from the Demiurge item and display it.
+  #
+  # @since 0.1.0
   def initialize(demi_item:, name:, engine_connector:)
     super
-    tiles = @demi_item.tiles
-    @spritesheet = tiles[:spritesheet]
-    @spritestack = tiles[:spritestack]
+    @entry = @demi_item.tile_cache_entry
+    @block_width = @entry["tilewidth"]
+    @block_height = @entry["tileheight"]
   end
 
-  # Show this Displayable to a player. The default method assumes this
-  # Displayable uses a SpriteStack and has set the spritesheet and
-  # spritestack names already. For other display methods, override
-  # this method in a subclass.
+  # Send messages to display the TMX object.
   #
   # @param player [Pixiurge::Player] The player to show this Displayable to
   # @return [void]
   # @since 0.1.0
   def show_to_player(player)
-    player.show_sprites_at_position(@demi_item.name, self.spritesheet, self.spritestack, @position)
-    nil
-  end
-
-  # Hide this Displayable from a player. The default method assumes
-  # this Displayable uses a SpriteStack and has set the spritesheet
-  # and spritestack names already. For other display methods, override
-  # this method in a subclass.
-  #
-  # @param player [Pixiurge::Player] The player to hide this Displayable from
-  # @return [void]
-  # @since 0.1.0
-  def hide_from_player(player)
-    player.hide_sprites(@demi_item.name)
+    player.message Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_TMX, @name, File.join(@entry["dir"], @entry["tmx_name"] + ".json")
     nil
   end
 

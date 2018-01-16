@@ -266,10 +266,14 @@ end
 # @see Pixiurge::AuthenticatedApp
 # @since 0.1.0
 class Pixiurge::App
-  attr :record_traffic
-  attr :debug
-  attr :incoming_traffic_logfile
-  attr :outgoing_traffic_logfile
+  # Whether the app is currently recording Websocket traffic to logfiles; useful for development, bad in production
+  attr_reader :record_traffic
+  # Whether to print debugging messages - can be set to nil/false, or to an Integer
+  attr_reader :debug
+  # Path to logfile for incoming Websocket messages
+  attr_reader :incoming_traffic_logfile
+  # Path to logfile for outgoing Websocket messages
+  attr_reader :outgoing_traffic_logfile
 
   EVENTS = [ "player_login", "player_logout", "player_create_body", "player_message", "player_reconnect", "open", "close", "error", "message", "login" ]
 
@@ -339,6 +343,8 @@ class Pixiurge::App
   end
 
   private
+  # Sends an event such as {#on_event} would receive. This checks for
+  # both inherited handler methods and on_event subscriptions.
   def send_event(event_name, *args)
     # Call the inherited event handler first, if any
     if self.respond_to?("on_" + event_name.to_s)
@@ -363,6 +369,7 @@ class Pixiurge::App
 
   private
 
+  # Send with traffic logging
   def websocket_send(socket, *args)
     json_data = MultiJson.dump(args)
     if record_traffic

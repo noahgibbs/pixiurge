@@ -97,31 +97,17 @@ module Pixiurge::Protocol::Outgoing
   # @since 0.1.0
   DISPLAY_INIT = "display_init"
 
-  # This message tells the client to load a JSON spritesheet by name
-  # as an asset. By passing the asset name (not the full asset), this
-  # slows down initial loading from an empty cache but speeds up
-  # future cached requests - it's hard to cache or compress assets
-  # that are sent inside Websocket messages.
+  # This message indicates that all currently shown displayables of
+  # any description should be hidden. Items, agents, locations and
+  # effects are all removed, animations should be cancelled and any
+  # hints or preloads no longer apply.
   #
   # @since 0.1.0
-  LOAD_SPRITESHEET = "display_load_spritesheet"
+  DISPLAY_HIDE_ALL = "display_hide_all"
 
-  # This message tells the client a spritesheet is no longer in use.
-  #
-  UNLOAD_SPRITESHEET = "display_unload_spritesheet"
-
-  # This message tells the client to load and display a spritestack by
-  # name as an asset. By passing the asset name (not the full asset),
-  # this slows down initial loading from an empty cache but speeds up
-  # future cached requests - it's hard to cache or compress assets
-  # that are sent inside Websocket messages.
+  # Show a TMX entity. The arguments following the message type are a
+  # String name for the item and then the URL of the TMX JSON object.
   #
   # @since 0.1.0
-  LOAD_SPRITESTACK = "display_load_spritestack"
-
-  # This message tells the client a spritestack is no longer in use
-  # and should be visually hidden and removed.
-  #
-  UNLOAD_SPRITESTACK = "display_unload_spritesheet"
-
+  DISPLAY_SHOW_TMX = "display_show_tmx"
 end
