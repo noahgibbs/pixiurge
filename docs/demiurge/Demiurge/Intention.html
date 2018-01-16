@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Demiurge::Intention
+  
+    &mdash; Demiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Demiurge::Intention";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span>
+     &raquo; 
+    <span class="title">Intention</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Demiurge::Intention
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Demiurge::Intention</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/demiurge/intention.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>An Intention is an unresolved event. Some part of the simulated world
+“wishes” to take an action. This need not be a sentient being - any change
+to the world should occur with an Intention then being resolved into
+changes in state and events – or not. It&#39;s also possible for an
+intention to resolve to nothing at all. For instance, an intention to move
+in an impossible direction could simply resolve with no movement, no state
+change and no event.</p>
+
+<p>Intentions go through verification, resolution and eventually notification.</p>
+
+<p>Intentions are not, in general, serializable. They normally persist for
+only a single tick. To persist an intention for most StateItems, consider
+persisting action names instead.</p>
+
+<p>For more details about Intention, see <a href="../file.CONCEPTS.html" title="CONCEPTS">CONCEPTS</a>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="ActionItemInternal/ActionIntention.html" title="Demiurge::ActionItemInternal::ActionIntention (class)">ActionItemInternal::ActionIntention</a></span>, <span class='object_link'><a href="ActionItemInternal/EveryXTicksIntention.html" title="Demiurge::ActionItemInternal::EveryXTicksIntention (class)">ActionItemInternal::EveryXTicksIntention</a></span>, <span class='object_link'><a href="AgentInternal/AgentMaintenanceIntention.html" title="Demiurge::AgentInternal::AgentMaintenanceIntention (class)">AgentInternal::AgentMaintenanceIntention</a></span></p>
+</div>
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#allowed%3F-instance_method" title="#allowed? (instance method)">#<strong>allowed?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This method allows child classes of Intention to check whether they should
+happen at all.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply-instance_method" title="#apply (instance method)">#<strong>apply</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This method tells the Intention that it has successfully occurred and it
+should modify StateItems accordingly.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply_notification-instance_method" title="#apply_notification (instance method)">#<strong>apply_notification</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Intentions should send an apply notice when they are successfully applied.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cancel-instance_method" title="#cancel (instance method)">#<strong>cancel</strong>(reason, info = {})  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This cancels the intention, and gives the reason for the cancellation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cancel_notification-instance_method" title="#cancel_notification (instance method)">#<strong>cancel_notification</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Most intentions will send a cancellation notice when they are cancelled.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cancelled%3F-instance_method" title="#cancelled? (instance method)">#<strong>cancelled?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This returns whether this intention has been cancelled.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(engine)  &#x21d2; Intention </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Subclasses of intention can require all sorts of constructor arguments to
+specify what the intention is.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#offer-instance_method" title="#offer (instance method)">#<strong>offer</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>When an Intention is “offered”, that means appropriate other entities have
+a chance to modify or cancel the intention.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#try_apply-instance_method" title="#try_apply (instance method)">#<strong>try_apply</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This is a normally-private part of the Tick cycle.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(engine)  &#x21d2; <tt><span class='object_link'><a href="" title="Demiurge::Intention (class)">Intention</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Subclasses of intention can require all sorts of constructor arguments to
+specify what the intention is. But the engine should always be supplied.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>engine</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Engine.html" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The engine this Intention is part of.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+28
+29
+30
+31
+32</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 28</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_engine'>engine</span><span class='rparen'>)</span>
+  <span class='ivar'>@cancelled</span> <span class='op'>=</span> <span class='kw'>false</span>
+  <span class='ivar'>@engine</span> <span class='op'>=</span> <span class='id identifier rubyid_engine'>engine</span>
+  <span class='ivar'>@intention_id</span> <span class='op'>=</span> <span class='id identifier rubyid_engine'>engine</span><span class='period'>.</span><span class='id identifier rubyid_get_intention_id'>get_intention_id</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="allowed?-instance_method">
+  
+    #<strong>allowed?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This method allows child classes of Intention to check whether they should
+happen at all. If this method returns false, the intention will self-cancel
+without sending a notification and quietly not occur. The method exists
+primarily to allow “illegal” intentions like walking through a wall or
+drinking nonexistent water to quietly not happen without the rest of the
+simulation responding to them in any way.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>If this method returns false, the Intention will quietly self-cancel before
+the offer phase.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_allowed?'>allowed?</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unimplemented &#39;allowed?&#39; for intention: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="apply-instance_method">
+  
+    #<strong>apply</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>This method tells the Intention that it has successfully occurred and it
+should modify StateItems accordingly. Normally this will only be called
+after <span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::Intention#allowed? (method)">#allowed?</a></span> and <span class='object_link'><a href="#offer-instance_method" title="Demiurge::Intention#offer (method)">#offer</a></span> have completed, and other items have had a
+chance to modify or cancel this Intention.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+128
+129
+130</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 128</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unimplemented &#39;apply&#39; for intention: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="apply_notification-instance_method">
+  
+    #<strong>apply_notification</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Intentions should send an apply notice when they are successfully applied.
+<span class='object_link'><a href="#apply_notification-instance_method" title="Demiurge::Intention#apply_notification (method)">#apply_notification</a></span> can be overridden by child classes to send more
+specific information.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply_notification'>apply_notification</span>
+  <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+                              <span class='symbol'>:id</span> <span class='op'>=&gt;</span> <span class='ivar'>@intention_id</span><span class='comma'>,</span>
+                              <span class='symbol'>:intention_type</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+                              <span class='symbol'>:info</span> <span class='op'>=&gt;</span> <span class='ivar'>@cancelled_info</span>
+                            <span class='rbrace'>}</span><span class='comma'>,</span>
+                            <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Demiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#IntentionApplied-constant" title="Demiurge::Notifications::IntentionApplied (constant)">IntentionApplied</a></span></span><span class='comma'>,</span> <span class='label'>zone:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>admin</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>actor:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+                            <span class='label'>include_context:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cancel-instance_method">
+  
+    #<strong>cancel</strong>(reason, info = {})  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>This cancels the intention, and gives the reason for the cancellation.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>reason</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A human-readable reason this action was cancelled</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>info</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A String-keyed Hash of additional information about the cancellation</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cancel'>cancel</span><span class='lparen'>(</span><span class='id identifier rubyid_reason'>reason</span><span class='comma'>,</span> <span class='id identifier rubyid_info'>info</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@cancelled</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='ivar'>@cancelled_by</span> <span class='op'>=</span> <span class='id identifier rubyid_caller'>caller</span><span class='lparen'>(</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='ivar'>@cancelled_reason</span> <span class='op'>=</span> <span class='id identifier rubyid_reason'>reason</span>
+  <span class='ivar'>@cancelled_info</span> <span class='op'>=</span> <span class='id identifier rubyid_info'>info</span>
+  <span class='id identifier rubyid_cancel_notification'>cancel_notification</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cancel_notification-instance_method">
+  
+    #<strong>cancel_notification</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p>
+<p>Most intentions will send a cancellation notice when they are cancelled. By
+default, this will include who cancelled the intention and why.</p>
+
+<p>If the cancellation info Hash includes “silent” with a true value, by
+default no notification will be sent out. This is to avoid an avalache of
+notifications for common cancelled intentions that happen nearly every
+tick. Examples include an agent&#39;s action queue being empty so it
+cancels its intention. These are normal operation and nobody is likely to
+need notification every tick that they didn&#39;t ask to do anything so
+they didn&#39;t.</p>
+
+<p><span class='object_link'><a href="#cancel_notification-instance_method" title="Demiurge::Intention#cancel_notification (method)">#cancel_notification</a></span> can be overridden by child classes for more specific
+cancel notifications.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 68</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cancel_notification'>cancel_notification</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cancelled_info</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@cancelled_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>silent</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+                              <span class='symbol'>:reason</span> <span class='op'>=&gt;</span> <span class='ivar'>@cancelled_reason</span><span class='comma'>,</span>
+                              <span class='symbol'>:by</span> <span class='op'>=&gt;</span> <span class='ivar'>@cancelled_by</span><span class='comma'>,</span>
+                              <span class='symbol'>:id</span> <span class='op'>=&gt;</span> <span class='ivar'>@intention_id</span><span class='comma'>,</span>
+                              <span class='symbol'>:intention_type</span> <span class='op'>=&gt;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+                              <span class='symbol'>:info</span> <span class='op'>=&gt;</span> <span class='ivar'>@cancelled_info</span>
+                            <span class='rbrace'>}</span><span class='comma'>,</span>
+                            <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Demiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#IntentionCancelled-constant" title="Demiurge::Notifications::IntentionCancelled (constant)">IntentionCancelled</a></span></span><span class='comma'>,</span> <span class='label'>zone:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>admin</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>actor:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+                            <span class='label'>include_context:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cancelled?-instance_method">
+  
+    #<strong>cancelled?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This returns whether this intention has been cancelled.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether the notification is cancelled.</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cancelled?'>cancelled?</span>
+  <span class='ivar'>@cancelled</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="offer-instance_method">
+  
+    #<strong>offer</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This method changed signature in 0.2.0 to stop taking an intention ID.</p>
+</div>
+  </div>
+
+<p class="note returns_void">This method returns an undefined value.</p>
+<p>When an Intention is “offered”, that means appropriate other entities have
+a chance to modify or cancel the intention. For instance, a movement action
+in a room should be offered to that room, which may trigger a special
+action (e.g. trap) or change the destination of the action (e.g. exits,
+slippery ice, spinning spaces.)</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="../file.CONCEPTS.html" title="CONCEPTS">CONCEPTS</a></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+143
+144
+145</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 143</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_offer'>offer</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unimplemented &#39;offer&#39; for intention: </span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="try_apply-instance_method">
+  
+    #<strong>try_apply</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This method changed signature in 0.2.0 to stop taking an intention ID.</p>
+</div>
+  </div>
+
+<p class="note returns_void">This method returns an undefined value.</p>
+<p>This is a normally-private part of the Tick cycle. It checks the
+<span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::Intention#allowed? (method)">#allowed?</a></span> and <span class='object_link'><a href="#offer-instance_method" title="Demiurge::Intention#offer (method)">#offer</a></span> phases for this one specific Intention.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156
+157
+158
+159
+160
+161
+162</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/intention.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_try_apply'>try_apply</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_allowed?'>allowed?</span>
+  <span class='id identifier rubyid_offer'>offer</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_cancelled?'>cancelled?</span> <span class='comment'># Notification should already have been sent out
+</span>  <span class='id identifier rubyid_apply'>apply</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_cancelled?'>cancelled?</span> <span class='comment'># Notification should already have been sent out
+</span>  <span class='id identifier rubyid_apply_notification'>apply_notification</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:10 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Demiurge::DSL
+  
+    &mdash; Demiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Demiurge::DSL";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (D)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span>
+     &raquo; 
+    <span class="title">DSL</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Demiurge::DSL
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/demiurge/dsl.rb<span class="defines">,<br />
+  lib/demiurge/tmx.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>This module contains the Builder classes that parse the World File DSL.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="DSL/ActionItemBuilder.html" title="Demiurge::DSL::ActionItemBuilder (class)">ActionItemBuilder</a></span>, <span class='object_link'><a href="DSL/AgentBuilder.html" title="Demiurge::DSL::AgentBuilder (class)">AgentBuilder</a></span>, <span class='object_link'><a href="DSL/LocationBuilder.html" title="Demiurge::DSL::LocationBuilder (class)">LocationBuilder</a></span>, <span class='object_link'><a href="DSL/TmxLocationBuilder.html" title="Demiurge::DSL::TmxLocationBuilder (class)">TmxLocationBuilder</a></span>, <span class='object_link'><a href="DSL/TopLevelBuilder.html" title="Demiurge::DSL::TopLevelBuilder (class)">TopLevelBuilder</a></span>, <span class='object_link'><a href="DSL/ZoneBuilder.html" title="Demiurge::DSL::ZoneBuilder (class)">ZoneBuilder</a></span>
+    
+  
+</p>
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#engine_from_dsl_files-class_method" title="engine_from_dsl_files (class method)">.<strong>engine_from_dsl_files</strong>(*filenames)  &#x21d2; Demiurge::Engine </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This is a primary method for creating a new Demiurge Engine.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#engine_from_dsl_text-class_method" title="engine_from_dsl_text (class method)">.<strong>engine_from_dsl_text</strong>(*specs)  &#x21d2; Demiurge::Engine </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This method takes either strings containing World File DSL text, or
+name/string pairs.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="engine_from_dsl_files-class_method">
+  
+    .<strong>engine_from_dsl_files</strong>(*filenames)  &#x21d2; <tt><span class='object_link'><a href="Engine.html" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This is a primary method for creating a new Demiurge Engine. It should be
+passed a list of filenames to load World File DSL from. It will return a
+fully-configured Engine which has called finished_init. If the Engine
+should load from an existing state-dump, that can be accomplished via
+load_state_from_dump.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>filenames</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>An array of filenames, suitable for calling File.read on</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Engine.html" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A configured Engine</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="../file.RELOADING.html" title="RELOADING">RELOADING</a></li>
+    
+      <li><span class='object_link'><a href="Engine.html#load_state_from_dump-instance_method" title="Demiurge::Engine#load_state_from_dump (method)">Engine#load_state_from_dump</a></span></li>
+    
+      <li><span class='object_link'><a href="Engine.html#reload_from_dsl_files-instance_method" title="Demiurge::Engine#reload_from_dsl_files (method)">Engine#reload_from_dsl_files</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+171
+172
+173
+174</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/dsl.rb', line 171</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_engine_from_dsl_files'>engine_from_dsl_files</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_filename_string_pairs'>filename_string_pairs</span> <span class='op'>=</span> <span class='id identifier rubyid_filenames'>filenames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fn'>fn</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fn'>fn</span><span class='comma'>,</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_fn'>fn</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_engine_from_dsl_text'>engine_from_dsl_text</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filename_string_pairs'>filename_string_pairs</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="engine_from_dsl_text-class_method">
+  
+    .<strong>engine_from_dsl_text</strong>(*specs)  &#x21d2; <tt><span class='object_link'><a href="Engine.html" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This method takes either strings containing World File DSL text, or
+name/string pairs. If a pair is supplied, the name gives the origin of the
+text for error messages.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>specs</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>, <tt>Array&lt;Array&lt;String&gt;&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Either an array of chunks of DSL text, or an Array of two-element Arrays.
+Each two-element Array is a String name followed by a String of DSL text</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Engine.html" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A configured Engine</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="../file.RELOADING.html" title="RELOADING">RELOADING</a></li>
+    
+      <li><span class='object_link'><a href="Engine.html#load_state_from_dump-instance_method" title="Demiurge::Engine#load_state_from_dump (method)">Engine#load_state_from_dump</a></span></li>
+    
+      <li><span class='object_link'><a href="Engine.html#reload_from_dsl_text-instance_method" title="Demiurge::Engine#reload_from_dsl_text (method)">Engine#reload_from_dsl_text</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.0.1</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/dsl.rb', line 186</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_engine_from_dsl_text'>engine_from_dsl_text</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_specs'>specs</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Demiurge::DSL (module)">DSL</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DSL/TopLevelBuilder.html" title="Demiurge::DSL::TopLevelBuilder (class)">TopLevelBuilder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DSL/TopLevelBuilder.html#initialize-instance_method" title="Demiurge::DSL::TopLevelBuilder#initialize (method)">new</a></span></span>
+
+  <span class='id identifier rubyid_specs'>specs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_spec'>spec</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='id identifier rubyid_spec'>spec</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Array</span><span class='rparen'>)</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>!=</span> <span class='int'>2</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not sure what to do with a </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span><span class='embexpr_end'>}</span><span class='tstring_content'>-elt array, normally this is a filename/string pair!</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span> <span class='id identifier rubyid_spec'>spec</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_spec'>spec</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not sure what to do in engine_from_dsl_text with a </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_built_engine'>built_engine</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:05 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

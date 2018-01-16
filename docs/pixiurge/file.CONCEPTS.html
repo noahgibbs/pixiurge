@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: CONCEPTS
+  
+    &mdash; Pixiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "CONCEPTS";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: CONCEPTS</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1>Pixiurge Concepts</h1>
+
+<p>Pixiurge runs a simulation on the server, while putting up a browser
+interface in front of it. This can turn a simulation on the server
+into a nice playable game in many people&#39;s web browsers.</p>
+
+<p>Pixiurge is somewhat inspired by Rails: it tries to be
+batteries-included, opinionated and friendly to new users. And while
+there&#39;s definitely some &quot;Ruby magic&quot; happening, it&#39;s well-documented
+and tries to get out of your way.</p>
+
+<p>Inside, Pixiurge has several major components: the simulation, the
+network server and the in-browser front end. Obviously there are many
+smaller components inside these and connecting them. But it&#39;s useful
+for you to think of Pixiurge as a sort of connector between the major
+components. It will also be simpler for you to learn one or two
+components at a time instead of everything all at once.</p>
+
+<p>Pixiurge runs its simulation and displays the results in the browser
+continually. It accepts control information from the browsers and
+feeds the resulting player actions into the simulation.</p>
+
+<p>It&#39;s easier to build something if you can use existing
+pieces. Pixiurge is named after its simulation engine (Demiurge) and
+its in-browser display library (PIXI.js). Most of the pieces of
+Pixiurge are open-source and open standards of various kinds:
+Websockets, Faye, EventMachine and even Ruby itself are great
+examples. Pixiurge also intentionally borrows a lot of display
+conventions from ManaSource-engine and similar games like The Mana
+World, Land of Fire and Source of Tales, as well as OpenGameArt.org
+and the Liberated Pixel Cup. It uses those art styles and sprite
+sizes.  Pixiurge uses the ManaSource-specific subformat of TMX files
+and Tiled editor data. See <a href="http://mapeditor.org">http://mapeditor.org</a> for more about Tiled.</p>
+
+<h2>Software Architecture</h2>
+
+<p>The Demiurge engine runs inside a Ruby EventMachine server which uses
+Websockets to talk to the connected browsers. This is usually the same
+web server that provides assets like maps, Javascript, graphics and
+sounds.</p>
+
+<p>The websockets are connected to browsers, which can send control
+information <em>to</em> the server and receive simulation and feedback
+information <em>from</em> the server. Pixiurge uses a simple
+JSON-over-websocket protocol to communicate back and forth between
+browsers and the server.</p>
+
+<p>A Demiurge engine knows how in-world objects act -- it knows how often
+a particular Agent moves, or what it says. Demiurge does <em>not</em> know
+how they look, such as whether a particular pictures goes with a
+particular agent or room. Pixiurge is the adapter to make the Demiurge
+world visible on a screen.</p>
+
+<p>If we drill down a bit more, what are the major parts of a Pixiurge
+server?</p>
+
+<ul>
+<li>The Demiurge engine, which runs on the server; this calculates the in-game world</li>
+<li>The EngineConnector, which watches the Demiurge simulation and notifies Pixiurge about what happens inside</li>
+<li>Displayables, which keep track of how Demiurge objects get shown to human players</li>
+<li>Player objects, which keep track of what Displayables have been seen and know the JSON protocol</li>
+<li>Browser-side Javascript code, to get human input and show everything to the human player</li>
+</ul>
+
+<h2>World Simulation with Demiurge</h2>
+
+<p>Demiurge is a world simulation, and Pixiurge mostly stays out of the
+internals. A Demiurge engine should mostly run the same whether it&#39;s
+hooked up to a display library or not... Except for players and their
+actions. Pixiurge translates a player&#39;s in-browser behavior to
+Demiurge simulated actions.</p>
+
+<p>A player is represented by a Demiurge item called an Agent. The human
+player&#39;s browser input turns into Agent actions.</p>
+
+<p>Certain administrative actions may turn into more exotic
+occurrences. And administrator may create new Demiurge items or
+perform non-Agent actions - a statedump or server reboot won&#39;t
+normally be an Agent action, but it could happen in response to an
+administrator hitting a button.</p>
+
+<p>But in general, a player&#39;s UI actions will turn into queued actions in
+Demiurge. But first they&#39;ll be sent as Websocket messages by the
+browser and decoded in the Pixiurge server, to be given to the
+Demiurge simulator.</p>
+
+<h3>The Cycle of Simulation</h3>
+
+<p>When a player takes action (moves, fights, speaks or whatever) the
+browser doesn&#39;t normally display the result immediately. Instead, that
+action is sent to the server, which determines what happens to
+it. Demiurge picks it up on the next &quot;tick&quot; of the simulation and
+sends out the results of the action.</p>
+
+<p>Would it make more sense to just show the player&#39;s actions
+immediately? Often not. If a player moves left, they could be blocked
+by a wall. A trap could trigger. There might be slippery ground that
+makes them move farther than they thought. By having the engine accept
+the action and send the results, the user&#39;s browser doesn&#39;t have to
+know about all these things. It can send the action and wait for an
+answer.</p>
+
+<p>The down-side of all this is that it limits the speed of
+feedback. Very little that the player does can happen faster than once
+per tick. You&#39;d never want to build a rhythm game or a fast-paced
+platformer this way. Pixiurge is designed to have the player make
+choices and wait for the results. It&#39;s meant for a slower-paced game,
+more like Stardew Valley or Dwarf Fortress, where the user&#39;s exact,
+instant actions aren&#39;t make-or-break.</p>
+
+<h2>Pixiurge Conventions</h2>
+
+<p>Demiurge leaves many things to the user&#39;s preferences. It tries to be
+very flexible and not restrict very much. That&#39;s as it should
+be. Pixiurge takes a Rails-like opinionated approach and locks down a
+lot of how Demiurge gets configured. That&#39;s also as it should be.</p>
+
+<p>Here are some example conventions Pixiurge expects and/or enforces:</p>
+
+<ul>
+<li><p>A Player&#39;s account name is the same as their Demiurge body item
+name, which is the same as the Displayable name.</p></li>
+<li><p>In general, Demiurge item names match the names of their
+corresponding Pixiurge Displayable objects. A Demiurge item won&#39;t
+necessarily have a Displayable, but it will never have more than
+one.</p></li>
+<li><p>Most Demiurge items are in a Location, which is in a Zone. The
+exceptions to this are the Locations and Zones themselves, Inert
+State Items for tracking variables, and Agents that are currently
+inactive, which are in Zones. Zones are top-level objects - they
+aren&#39;t inside anything. If you query a Zone&#39;s location, the returned
+object is that same Zone.</p></li>
+<li><p>The player will have a Demiurge item instantiated for them by your
+code, and various Demiurge action names will be needed for their
+Demiurge item - &quot;create&quot;, &quot;login&quot; and so on - if you want to
+customize what happens at those times. Pixiurge will use the
+reserved state variable name &quot;$player_body&quot; to indicate that this is
+a special item.</p></li>
+<li><p>TMX files should use only embedded tilesets, not external TSX files.
+Maps should be orthographic with right-down renderorder, and not use
+any options (like layer offsets) that can&#39;t be set in the Tiled
+UI. All layers should have the same dimensions. No infinite or
+procedural TMX maps are supported.</p></li>
+</ul>
+
+<p>Pixiurge also assumes that a lot of your customization of the game
+world will be done in the Demiurge World Files. For instance, it&#39;s
+normal to handle on-login and on-creation actions with Demiurge
+actions in the World Files.</p>
+
+<h2>Displaying the World: Connecting Simulation and the Front End</h2>
+
+<p>A lot of Pixiurge is an intermediate level of message handling,
+passing notes back and forth. A user hits a key and instructs their
+Agent to move inside the Demiurge simulation. Another user says &quot;hi,
+everybody!&quot; and Demiurge notifies the three players in the same
+room. A new user sends their password and logs in, which means more
+messages as they appear in the room.</p>
+
+<p>The EngineConnector and the Pixiurge App are the two primary pieces of
+code passing these messages around - the EngineConnector monitors the
+Demiurge engine, while the Pixiurge App handles Websocket connections
+to web browsers. There are other software components such as
+Displayables. Most of Pixiurge is about passing the messages back and
+forth in a reasonable way.</p>
+
+<h3>Displayables on the Server, sprites on the Client</h3>
+
+<p>A Pixiurge server provides different views into Demiurge for a lot of
+different clients at a lot of different times. The same zone or room
+looks different to different players, as you&#39;d expect it to, and of
+course each player only sees a sliver of the game world at any time.</p>
+
+<p>There is one single Demiurge engine on the server, with one copy of
+each unique item. When a Demiurge item changes, several different
+players may be able to see it, and may receive updates to show the
+change in their browser. They may also see the change in different
+ways: can player A see it at all? Can player B see the enchanted
+invisible item? Does player C get a different description of the item
+because his lore skills are higher or lower?</p>
+
+<p>Pixiurge keeps a single server-side Displayable for each potentially
+visible Demiurge object (and for some that will never be visible.)
+When each Displayable changes, it may send updates to a bunch of
+players who can see it. So: each Demiurge item has a matching
+server-side Pixiurge Displayable.</p>
+
+<p>When the Demiurge item changes, it sends a Demiurge notification. The
+single, server-side EngineConnector object subscribes to all Demiurge
+notifications and provides all the players with a constant, consistent
+view of what&#39;s happening by translating the notifications into
+Pixiurge messages over Websockets. The browsers, when they get the
+messages, will show the human players what changed.</p>
+
+<p>A particular browser will have items representing some of the
+Displayables in Pixiurge. These in-browser objects include
+&quot;spritestacks&quot;, which may have multiple layers of sprites in their
+Pixi.js representation. For instance, a ManaSource-style humanoid like
+a player or enemy will normally be several layers of &quot;grids&quot;, where
+each grid is (usually) 1 sprite by 1 sprite, and each sprite is
+64x64. The multiple layers, if present, are for things like hair,
+clothing and equipment which are modeled as overlaid layers.</p>
+
+<h3>Three Layers of Snapshots: Demiurge, Displayables, the Browser</h3>
+
+<p>Notifications can cause some complications - more than one thing can
+happen to an item during a single tick, for instance. And
+notifications go out in a big batch after the tick is over, not
+immediately as things happen. So when Pixiurge is processing a
+notification, the item&#39;s condition may have changed in the mean
+time. The player is seeing the old pre-notification state. The
+notification tells what happened. But the item may have changed again
+in a later notification, so we can&#39;t assume we&#39;re just updating it to
+the Demiurge latest. This makes things a little complicated for
+EngineConnector. It can&#39;t just get the latest state from Demiurge, because
+that may not be the state it wants or shows.</p>
+
+<p>We also can&#39;t assume every player sees the Displayable the same way,
+even if they&#39;re up to date. If Bob and Jane are standing in two
+different parts of the same room, Bob may be able to see different
+items than Jane, and they&#39;re scrolled to different positions. If Jane
+has a better &quot;perception&quot; in some way than Bob, she may even see
+things that, in effect, don&#39;t exist at all for Bob, and which may not
+get sent to his browser.</p>
+
+<h3>Displayables and Players</h3>
+
+<p>A Pixiurge &quot;Player&quot; object is a server object that coordinates what
+gets sent to a particular browser. It will correspond to a Demiurge
+Agent, though it&#39;s possible to make that Agent invisible and/or unable
+to act if you want to.</p>
+
+<p>The Player object answers important questions like &quot;is this browser
+already showing this area?&quot; and &quot;can this player currently see this
+action that&#39;s happening?&quot; As a side effect, the Player object
+coordinates any &quot;fog of war&quot; you need to have - making sure that the
+browser doesn&#39;t receive information it shouldn&#39;t. You can&#39;t ever truly
+trust browser code, so any cheat-proofing <em>must</em> happen on the
+server. The Player object is the final place to do that.</p>
+
+<p>When a Displayable changes (e.g. is created or destroyed or moved)
+then the various Player objects need to know and send messages to the
+browser so that those actions can be shown to the human viewers.</p>
+
+<p>Several objects are involved in notifying about changes. The
+EngineConnector subscribes to the notification from Demiurge and makes
+appropriate calls to the Displayables to let them know they&#39;ve
+changed. The Displayables and the Player both know a bit about how to
+show particular things visually with Websocket messages.</p>
+
+<p>The Player object keeps track of whether a specific browser has seen a
+Displayable, and where. It shows and hides them. It can start and stop
+animations. It keeps track of Panning - what area the player is
+looking at, and making sure that the player&#39;s view continues to follow
+along and see the right things in an area larger than their browser
+window.</p>
+
+<h2>The Front End</h2>
+
+<p>Pixiurge includes a display library with some built-in display
+primitives. It knows how to display a JSON TMX tiled area, for
+instance, and to show hovering text, and humanoid figures with
+equipment.</p>
+
+<h3>Pixiurge Websocket Protocol</h3>
+
+<p>The Pixiurge Websocket Protocol is simple and designed for easy
+testing and reading by humans. That&#39;s bad if you need high
+performance, but good if you want to put together games easily.</p>
+
+<h2>Pixiurge Performance Limits</h2>
+
+<p>It&#39;s easy to read all this stuff about &quot;no twitch games&quot;, &quot;designed
+for simulation&quot; and so on and think, &quot;yeah, but that&#39;s just because
+he&#39;s not good at optimizing.&quot; Fair enough. But let&#39;s talk about some
+of the fundamental limits on Pixiurge and what&#39;s going on with that.</p>
+
+<h3>Javascript and Ruby</h3>
+
+<p>Neither Javascript nor Ruby is all that fast. Both are garbage
+collected, so it&#39;s <em>really</em> hard to avoid random slowdowns, at least
+occasionally.</p>
+
+<p>You can fix the Javascript side of that with a plugin such as Unity,
+or using something like NaCl for Chrome. Or by building out an actual
+native app, obviously. I wouldn&#39;t normally recommend starting from
+Pixiurge, or a web browser, or Websockets if that&#39;s your approach. If
+you&#39;re going to build from scratch, that&#39;s cool. Do that.</p>
+
+<p>The Ruby side can be handled with C extensions to Ruby if you want to
+(hint: you do not.) But mostly the server is going to be slow because
+it&#39;s a network server and you have to wait for packets, not because
+it&#39;s Ruby. Things have to get pretty bad before Ruby is truly your
+bottleneck unless you&#39;re doing a lot of in-Ruby calculation.</p>
+
+<p>If you&#39;re doing a lot of in-Ruby calculation, I have two
+recommendations: Ruby is a great prototyping language, but you&#39;re
+going to want to rebuild in order to scale out game simulation - Ruby
+is <em>not</em> going to build you the equivalent of Crysis, though it might
+build the equivalent of the WoW game servers.</p>
+
+<p>So why build in Ruby? For the same reason Rails does. Server-side
+processor time is cheap. If you can trade cheap computer time for
+expensive human time, do that.</p>
+
+<p>Why build in Javascript? Because web browsers are everywhere and
+that&#39;s going to stay true. Because by <em>far</em> the widest audience is
+browser apps, and that&#39;s going to be true for a long time. Because I
+don&#39;t much care about building AAA-style high-performance &quot;whoah, the
+graphics&quot; games, but I care a <em>lot</em> about reaching people and talking
+to them.</p>
+
+<h3>Network Round Trips</h3>
+
+<p>One of the biggest limits on Pixiurge performance is this: for most
+actions, you need a network round trip to the server. Worse, you need
+a <em>Websocket</em> round trip to the server, which means TCP/IP and
+significant per-message overhead.</p>
+
+<p>Can&#39;t we fix that?</p>
+
+<p>Well, maybe. It&#39;s possible for you to write client-side Javascript
+that does things without waiting for the server. But then you&#39;re
+giving up the convenience of one nice server-side simulation. You
+could write a peer-to-peer simulated Javascript library that keeps
+everything synchronized,
+but... <a href="https://gafferongames.com/post/state_synchronization/">Do you know how that gets done</a>?</p>
+
+<p>It&#39;s totally possible. But if you read a bit, you&#39;ll discover that
+using TCP means long delays - you have to wait for packets to arrive
+in-order. There is no Websocket-style UDP protocol without using
+WebRTC, which is massively complicated and not very well supported in
+browsers. Worse, it requires anybody setting it up to run
+<a href="https://en.wikipedia.org/wiki/STUN">STUN</a> and
+<a href="https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT">TURN</a>
+servers, which are <em>not</em> trivial to set up.</p>
+
+<p>There are ways around all of this... <em>If</em> you make every player
+install a browser plugin, which is how engines like Unity handle
+it. It would be wonderful if there were
+<a href="https://en.wikipedia.org/wiki/Netcode">some kind of sane in-browser UDP-style protocol</a>
+to handle this. But currently there&#39;s no such standard on the
+horizon. You have to install a plugin.</p>
+
+<p>If you just want a Javascript twitch game without synchronizing a
+bunch of players... Great! Write it in Javascript and send back
+occasional data to the server about how the player is doing. Cheating
+can be an issue there, but I don&#39;t care if you don&#39;t. Have fun!</p>
+
+<p>But unfortunately, if you want it to be server-simulated and
+multiplayer, your choices are &quot;slow&quot; and &quot;very complicated.&quot; Pixiurge
+can be one or the other, and I picked &quot;slow&quot; on purpose. I feel like
+we already have a lot of great game engines that are complicated and
+difficult but powerful and fast - Unity and Unreal are both free to
+use until you have revenue and powerful enough to regularly ship AAA
+games. I <em>can&#39;t</em> compete with that, but I also don&#39;t <em>want</em> to compete
+with that - they&#39;re already great, why would I bother? If you&#39;re up
+for spending weeks building beautiful 3D art assets, your game engine
+code is amazing, and is already written and basically free.</p>
+
+<p>Instead, I&#39;m an old MUD guy. And I miss games that feel like a
+neighborhood hang-out, where there are two or three people running it
+and they know the regulars. I love little
+<a href="https://ldjam.com/">Ludum-Dare-style</a> games and
+<a href="http://ludomancy.com/today/index.html">art games</a> and
+<a href="http://store.steampowered.com/app/221910/The_Stanley_Parable/">games that are too meta for their own good</a>. For
+those, I don&#39;t think we need Unity or Unreal. Sometimes the tools to
+code easily and put a view window on top of it in a browser are
+exactly what you need. Sometimes you want a focus on &quot;what can I build
+quickly and people may think is kind of cool?&quot; So I built that
+instead.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:02 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

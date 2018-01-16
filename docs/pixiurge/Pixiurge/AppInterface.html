@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Pixiurge::AppInterface
+  
+    &mdash; Pixiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Pixiurge::AppInterface";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (A)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span>
+     &raquo; 
+    <span class="title">AppInterface</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Pixiurge::AppInterface
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Pixiurge::AppInterface</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/pixiurge/app.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>This is an interface class that defines all handlers for a Pixiurge
+application. It&#39;s possible to inherit from it but then you must
+override all handlers and you won&#39;t get higher-level application
+functionality, which you probably want. Instead, inherit from
+<span class='object_link'><a href="AuthenticatedApp.html" title="Pixiurge::AuthenticatedApp (class)">AuthenticatedApp</a></span> or just <span class='object_link'><a href="App.html" title="Pixiurge::App (class)">App</a></span>. This class
+exists primarily for purposes of documentation.</p>
+
+<p>Here is a config.ru that sets up a very basic Pixiurge App:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pixiurge</span><span class='tstring_end'>&quot;</span></span>
+<span class='comment'># require_relative &quot;my_pixiurge_app_file&quot;
+</span>
+<span class='comment'># You can also set up normal Rack code here like logfiles or
+</span><span class='comment'># EM.error_handler here.
+</span>
+<span class='comment'># Instead of Pixiurge::App, you can instantiate a child class here
+</span><span class='id identifier rubyid_app'>app</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="App.html" title="Pixiurge::App (class)">App</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="App.html#initialize-instance_method" title="Pixiurge::App#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_rack_builder'>rack_builder</span> <span class='kw'>self</span>
+<span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_root_dir'>root_dir</span> <span class='id identifier rubyid___dir__'>__dir__</span>
+<span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_coffeescript_dirs'>coffeescript_dirs</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>coffee</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_static_dirs'>static_dirs</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>static</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_static_files'>static_files</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bobo.txt</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_run'>run</span> <span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_handler'>handler</span>
+</code></pre>
+
+<p>To detect what&#39;s happening with an App, you can add handlers for
+various sorts of events. You can use the
+<span class='object_link'><a href="#on_event-instance_method" title="Pixiurge::AppInterface#on_event (method)">#on_event</a></span> method to subscribe to an event,
+or you can inherit from an app class (usually AuthenticatedApp) and
+add child methods. The name of the event is the same as the method
+without the &quot;on_&quot; prefix. The event and the methods take the same
+arguments. Here is an example using the <span class='object_link'><a href="#on_close-instance_method" title="Pixiurge::AppInterface#on_close (method)">#on_close</a></span> method:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>MyAppSubtype</span> <span class='op'>&lt;</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="AuthenticatedApp.html" title="Pixiurge::AuthenticatedApp (class)">AuthenticatedApp</a></span></span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_on_close'>on_close</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span><span class='rparen'>)</span>
+    <span class='comment'># Handler code goes here
+</span>  <span class='kw'>end</span>
+<span class='kw'>end</span>
+
+<span class='comment'># Or equivalently...
+</span><span class='id identifier rubyid_app'>app</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="AuthenticatedApp.html" title="Pixiurge::AuthenticatedApp (class)">AuthenticatedApp</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="AuthenticatedApp.html#initialize-instance_method" title="Pixiurge::AuthenticatedApp#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_on_event'>on_event</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span><span class='op'>|</span>
+  <span class='comment'># Handler code goes here
+</span><span class='kw'>end</span>
+</code></pre>
+
+<p>You can implement most games by only implementing a straightforward
+higher-level interface and not directly dealing with authentication,
+websockets, etc. The high-level handlers assume you are using
+AuthenticatedApp or have implemented the same functionality. Here
+are high-level handlers you can implement:</p>
+
+<ul>
+<li><span class='object_link'><a href="#on_player_login-instance_method" title="Pixiurge::AppInterface#on_player_login (method)">#on_player_login</a></span> - a new player has logged in</li>
+<li><span class='object_link'><a href="#on_player_logout-instance_method" title="Pixiurge::AppInterface#on_player_logout (method)">#on_player_logout</a></span> - a player has logged out</li>
+<li><span class='object_link'><a href="#on_player_message-instance_method" title="Pixiurge::AppInterface#on_player_message (method)">#on_player_message</a></span> - a message has been received from a logged-in player via their browser</li>
+<li><span class='object_link'><a href="#on_player_reconnect-instance_method" title="Pixiurge::AppInterface#on_player_reconnect (method)">#on_player_reconnect</a></span> - a player has re-logged in, often from a new browser session</li>
+</ul>
+
+<p>Next are the message handlers that your app can define for the
+low-level message and socket interface. Keep in mind that
+higher-level functionality with AuthenticatedApp may depend on
+existing methods for these, so you should call super as appropriate
+if you override the methods. This is not a problem if you subscribe
+to events instead of overriding handler methods, which can be a good
+reason to use <span class='object_link'><a href="#on_event-instance_method" title="Pixiurge::AppInterface#on_event (method)">#on_event</a></span> for these.</p>
+
+<ul>
+<li><span class='object_link'><a href="#on_open-instance_method" title="Pixiurge::AppInterface#on_open (method)">#on_open</a></span> - message handler for a newly-opened connection</li>
+<li><span class='object_link'><a href="#on_close-instance_method" title="Pixiurge::AppInterface#on_close (method)">#on_close</a></span> - connection has been closed</li>
+<li><span class='object_link'><a href="#on_error-instance_method" title="Pixiurge::AppInterface#on_error (method)">#on_error</a></span> - an error has occurred in the websocket layer</li>
+<li><span class='object_link'><a href="#on_message-instance_method" title="Pixiurge::AppInterface#on_message (method)">#on_message</a></span> - generic low-level message handler for messages not handled by the app</li>
+<li><span class='object_link'><a href="#on_login-instance_method" title="Pixiurge::AppInterface#on_login (method)">#on_login</a></span> - called when a user successfully logs in using built-in authentication (AuthenticatedApp only)</li>
+</ul>
+
+<p>And finally there&#39;s a low-level websocket message handler you can
+override, but it doesn&#39;t send events via on_event:</p>
+
+<ul>
+<li><span class='object_link'><a href="#handle_message-instance_method" title="Pixiurge::AppInterface#handle_message (method)">#handle_message</a></span> - very low-level message handler, only use it if you&#39;re comfortable reading the source code</li>
+</ul>
+
+<p>Some of these handlers may already be defined by AuthenticatedApp,
+which will require you to call super() appropriately.</p>
+
+<p>The low-level message handlers tend to use websocket objects. A
+websocket object has a #send(message) method and a #close(code,
+reason) method. #send normally takes a String, and #close can be
+called without arguments if you don&#39;t know or want to provide a code
+or reason. For more detail on the Websocket object, see
+<a href="https://github.com/faye/faye-websocket-ruby/blob/master/lib/faye/websocket/api.rb">https://github.com/faye/faye-websocket-ruby/blob/master/lib/faye/websocket/api.rb</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html" title="Pixiurge::AuthenticatedApp (class)">AuthenticatedApp</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#handle_message-instance_method" title="#handle_message (instance method)">#<strong>handle_message</strong>(ws, data)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This handler can be enhanced or overridden by various App subtypes, and will normally dispatch to on_message or other handlers if it can&#39;t fully handle a given message itself.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_close-instance_method" title="#on_close (instance method)">#<strong>on_close</strong>(ws, code, reason)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This handler will be called when a websocket connection is closed.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_error-instance_method" title="#on_error (instance method)">#<strong>on_error</strong>(ws, message)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This is called if the websocket has a protocol error.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_event-instance_method" title="#on_event (instance method)">#<strong>on_event</strong>(event) { ... } &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This method allows you to handle one or more events of your choice using a handler of your choice.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_login-instance_method" title="#on_login (instance method)">#<strong>on_login</strong>(ws, username)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>If you inherit from AuthenticatedApp, this handler will be called when a player has successfully logged in.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_message-instance_method" title="#on_message (instance method)">#<strong>on_message</strong>(ws, *args)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This handler is for messages that are not automatically handled by your application (e.g. non-auth messages for an AuthenticatedApp.) The message content is sent by the client-side browser code.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_open-instance_method" title="#on_open (instance method)">#<strong>on_open</strong>(ws)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This handler will be called when a new websocket connection is made.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_player_create_body-instance_method" title="#on_player_create_body (instance method)">#<strong>on_player_create_body</strong>(username)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This event means a player has logged into your application and has no current Demiurge item to represent them.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_player_login-instance_method" title="#on_player_login (instance method)">#<strong>on_player_login</strong>(username)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This event means a player has logged into your application.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_player_logout-instance_method" title="#on_player_logout (instance method)">#<strong>on_player_logout</strong>(username)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This event means a player has logged out of your application.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_player_message-instance_method" title="#on_player_message (instance method)">#<strong>on_player_message</strong>(username, message_type, *args)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This event means a player has sent a message from their browser to your application.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#on_player_reconnect-instance_method" title="#on_player_reconnect (instance method)">#<strong>on_player_reconnect</strong>(username)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This event means a player has reconnected to your application, often by connecting with a new browser.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="handle_message-instance_method">
+  
+    #<strong>handle_message</strong>(ws, data)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>This handler can be enhanced or overridden by various App
+subtypes, and will normally dispatch to on_message or other
+handlers if it can&#39;t fully handle a given message itself.  If you
+want to be sure to catch every message for some reason, this can
+be the method to override to do it. This method has no equivalent
+event for <span class='object_link'><a href="#on_event-instance_method" title="Pixiurge::AppInterface#on_event (method)">#on_event</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ws</span>
+      
+      
+        <span class='type'>(<tt>Websocket</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The Ruby-Websocket-Driver websocket object</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>data</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Deserialized JSON data sent from the client</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+170
+171
+172</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 170</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_handle_message'>handle_message</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_close-instance_method">
+  
+    #<strong>on_close</strong>(ws, code, reason)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This handler will be called when a websocket connection is
+closed. It can be used for cleaning up player-related data
+structures.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ws</span>
+      
+      
+        <span class='type'>(<tt>Websocket</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Websocket-Driver websocket object</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>code</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Websocket protocol onclose status code (see <a href="https://tools.ietf.org/html/rfc6455">https://tools.ietf.org/html/rfc6455</a>)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>reason</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A reason for the websocket closing</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 116</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_close'>on_close</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_code'>code</span><span class='comma'>,</span> <span class='id identifier rubyid_reason'>reason</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_error-instance_method">
+  
+    #<strong>on_error</strong>(ws, message)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This is called if the websocket has a protocol error.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ws</span>
+      
+      
+        <span class='type'>(<tt>Websocket</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Websocket-Driver websocket object</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>message</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The error message</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+126
+127
+128</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 126</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_error'>on_error</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_message'>message</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_event-instance_method">
+  
+    #<strong>on_event</strong>(event) { ... } &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method allows you to handle one or more events of your choice
+using a handler of your choice. For the list of events, see
+<span class='object_link'><a href="" title="Pixiurge::AppInterface (class)">Pixiurge::AppInterface</a></span>. The handler will be called whenever
+the event occurs, and the block will receive the same arguments
+that a child method would receive for that event type.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>event</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The name of the event, such as &quot;close&quot; or &quot;player_login&quot;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Yields:</p>
+<ul class="yield">
+  
+    <li>
+      
+      
+        <span class='type'></span>
+      
+      
+      
+        
+        <div class='inline'><p>Your handler for the event in question, which takes event-dependent arguments</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Returns:</p>
+<ul class="yieldreturn">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>void</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="" title="Pixiurge::AppInterface (class)">Pixiurge::AppInterface</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+247
+248
+249</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 247</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_event'>on_event</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_login-instance_method">
+  
+    #<strong>on_login</strong>(ws, username)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>If you inherit from AuthenticatedApp, this handler will be called
+when a player has successfully logged in. Later handlers will
+continue passing the websocket object. This handler lets you
+associate the websocket with a specific player account. If you
+override this method, make sure to call super() so that the
+AuthenticatedApp code can implement methods like
+<span class='object_link'><a href="AuthenticatedApp.html#username_for_websocket-instance_method" title="Pixiurge::AuthenticatedApp#username_for_websocket (method)">Pixiurge::AuthenticatedApp#username_for_websocket</a></span>.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ws</span>
+      
+      
+        <span class='type'>(<tt>Websocket</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Websocket-Driver websocket object</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The username for the account</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 156</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_login'>on_login</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_message-instance_method">
+  
+    #<strong>on_message</strong>(ws, *args)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This handler is for messages that are not automatically handled by
+your application (e.g. non-auth messages for an AuthenticatedApp.)
+The message content is sent by the client-side browser code. What
+user took the action should be checked via the websocket object,
+which will be the same as the one passed to on_login or on_open.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ws</span>
+      
+      
+        <span class='type'>(<tt>Websocket</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Websocket-Driver websocket object</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>args</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>All remaining arguments to the method</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+140
+141
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 140</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_message'>on_message</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_open-instance_method">
+  
+    #<strong>on_open</strong>(ws)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This handler will be called when a new websocket connection is
+made. At this point we don&#39;t know what player/account the
+connection is for, nor very much else about it. If you are
+inheriting from AuthenticatedApp, the <span class='object_link'><a href="#on_login-instance_method" title="Pixiurge::AppInterface#on_login (method)">#on_login</a></span> handler will
+later associate this connection with an account username.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>ws</span>
+      
+      
+        <span class='type'>(<tt>Websocket</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A Websocket-Driver websocket object</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+103
+104
+105</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 103</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_open'>on_open</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_player_create_body-instance_method">
+  
+    #<strong>on_player_create_body</strong>(username)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has logged into your application and has
+no current Demiurge item to represent them. Your handler should
+create a Demiurge item to represent them.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new player&#39;s registered username</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+194
+195
+196</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 194</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_player_create_body'>on_player_create_body</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_player_login-instance_method">
+  
+    #<strong>on_player_login</strong>(username)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has logged into your application. Your
+handler can reflect their logged-in state in their visible
+presence, if they have one.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new player&#39;s registered username</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+182
+183
+184</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 182</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_player_login'>on_player_login</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_player_logout-instance_method">
+  
+    #<strong>on_player_logout</strong>(username)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has logged out of your application.
+Your handler can do things like remove their in-game presence if
+they have one.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new player&#39;s registered username</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+218
+219
+220</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 218</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_player_logout'>on_player_logout</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_player_message-instance_method">
+  
+    #<strong>on_player_message</strong>(username, message_type, *args)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has sent a message from their browser to your application.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The player&#39;s registered username</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>message_type</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The type of the message</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>args</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Arguments sent along with this message</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+206
+207
+208</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 206</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_player_message'>on_player_message</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_message_type'>message_type</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="on_player_reconnect-instance_method">
+  
+    #<strong>on_player_reconnect</strong>(username)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has reconnected to your application,
+often by connecting with a new browser. This won&#39;t normally
+require action on your part, but you can react in some way if you
+wish.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new player&#39;s registered username</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+231
+232
+233</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 231</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_player_reconnect'>on_player_reconnect</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:02 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: WORLD_FILES
+  
+    &mdash; Demiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "WORLD_FILES";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: WORLD_FILES</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-Demiurge+World+Files">Demiurge World Files</h1>
+
+<p>Demiurge includes a very convenient Ruby DSL (Domain-Specific Language) for
+declaring your zones, locations, agents and so on. These are referred to as
+World Files, and are by far the easiest and most common way to create a
+simulation using Demiurge.</p>
+
+<p>Unfortunately, the Builder classes in the API documentation aren&#39;t a
+great way to document the World File syntax and how to use it. There are
+some good examples, but many of them are either too complicated, or
+intentionally weird. For instance, the test/ directory is full of World
+File examples that are designed to test weird corner cases or generate
+errors or both.</p>
+
+<p>This is a quick guide to using World Files. It&#39;s not full and
+comprehensive. But it may provide a kick-start, after which the Builder
+classes won&#39;t seem quite so bizarre and inscrutable.</p>
+
+<p>Normally World Files are stored in a directory in your game. I like calling
+it “world”. If you used multiple Demiurge engines for some reason,
+you&#39;d probably want to store their two sets of World Files in two
+different directories. But for a single Engine, you&#39;d normally want a
+single directory of World Files.</p>
+
+<h2 id="label-Getting+Started">Getting Started</h2>
+
+<p>Your game will need to load its World Files somehow. Here&#39;s a good
+simple example of how to do that:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>**/world/extensions/**/*.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_ruby_ext'>ruby_ext</span><span class='op'>|</span>
+  <span class='id identifier rubyid_require_relative'>require_relative</span> <span class='id identifier rubyid_ruby_ext'>ruby_ext</span>
+<span class='kw'>end</span>
+<span class='ivar'>@engine</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='period'>.</span><span class='id identifier rubyid_engine_from_dsl_files'>engine_from_dsl_files</span> <span class='op'>*</span><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>world/*.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+</code></pre>
+
+<p>This example doesn&#39;t try to do any kind of sorting to load the files in
+a particular order. In other words, you&#39;ll need to do something fancier
+if your game gets big.</p>
+
+<p>It also assumes that all your World Files are in the top-level directory,
+which won&#39;t stay true for long either. So: you can start with this
+example, but you&#39;ll need to change it later.</p>
+
+<h2 id="label-Your+First+Zone">Your First Zone</h2>
+
+<p>Here&#39;s an example file containing a very simple zone for use with
+Demiurge-CreateJS:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_zone'>zone</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>trackless island</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_tmx_location'>tmx_location</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>start location</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_manasource_tile_layout'>manasource_tile_layout</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tmx/trackless_island_main.tmx</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_description'>description</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A Mysterious Island</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>If you&#39;re using Demiurge-CreateJS (aka DCJS) then you&#39;ll probably
+want to use 2D tile-based locations, also called TmxLocations. Those are
+the ones you can generate using the Tiled map editor. See Demiurge-CreateJS
+for more details.</p>
+
+<p>If you&#39;re using Demiurge on your own projects without DCJS, you can do
+that too. Here&#39;s an example administrative zone containing a player
+definition:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># Player information can be stored here. In general, if you want
+</span><span class='comment'># information to stick around it needs a StateItem.  An &quot;inert&quot;
+</span><span class='comment'># StateItem just means it doesn&#39;t change on its own or take any
+</span><span class='comment'># actions.
+</span><span class='id identifier rubyid_inert'>inert</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>players</span><span class='tstring_end'>&quot;</span></span>
+
+<span class='id identifier rubyid_zone'>zone</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>adminzone</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_agent'>agent</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player template</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+    <span class='comment'># No position or location, so it&#39;s instantiable.
+</span>
+    <span class='comment'># Special action that gets performed on character creation
+</span>    <span class='id identifier rubyid_define_action'>define_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>create</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>engine_code</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='kw'>if</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bob</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>angelbob</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>noah</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>admin</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>true</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+
+    <span class='id identifier rubyid_define_action'>define_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>statedump</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tags</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>admin</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_action</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_dump_state'>dump_state</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>You can create interesting object interactions with actions. You can see a
+few actions above, but they&#39;re just the tip of the iceberg. Here&#39;s
+a fun example where an agent can kick some stones down a cliff and
+they&#39;ll start a mini-avalanche. The bigger the initial kick, the bigger
+(by far) the total number of stones falling down:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_zone'>zone</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echoing cliffs</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_location'>location</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cliffside</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+
+    <span class='id identifier rubyid_agent'>agent</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stone kicker</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
+      <span class='id identifier rubyid_define_action'>define_action</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kick stones</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_how_many'>how_many</span><span class='op'>|</span>
+        <span class='id identifier rubyid_notification'>notification</span> <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echoing noise</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>stone size</span><span class='label_end'>&quot;:</span> <span class='id identifier rubyid_how_many'>how_many</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span>
+        <span class='id identifier rubyid_how_many'>how_many</span> <span class='op'>-=</span> <span class='int'>1</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_how_many'>how_many</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+          <span class='id identifier rubyid_action'>action</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kick stones</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_how_many'>how_many</span>
+          <span class='id identifier rubyid_action'>action</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kick stones</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_how_many'>how_many</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Each action block (the do/end part) is just Ruby code, so you can do
+whatever Ruby can do there. The hard part is just figuring out what
+information you can work with, and what you&#39;re allowed to do with it.
+The methods above called “notification”, “action” and “dump_state” above
+are all standard and can be found in the BlockRunner classes - that&#39;s
+AgentBlockRunner, ActionItemBlockRunner and EngineBlockRunner, depending on
+how you run it. Agents get the AgentBlockRunner, ActionItems get the
+ActionItemBlockRunner, and you only get the EngineBlockRunner if you
+specifically pass the “:engine_code” option to your action.</p>
+
+<h2 id="label-Security">Security</h2>
+
+<p>There&#39;s a SECURITY guide in its own file. But the short version is:
+keep in mind that World Files are <em>not</em> secure. You should read
+through any World File that somebody else gives you completely before you
+add it to your game. A bad World File can steal your in-game passwords and
+code. It can even attack other programs running on the same server as your
+game (which might be your home computer, where you do your banking.) It can
+send somebody else your data, and it can download other code from the
+Internet if it&#39;s connected to the Internet.</p>
+
+<p>Do <em>not</em> accept unknown World Files from other people. It&#39;s like
+running a downloaded .EXE on a Windows machine - it can do whatever your
+computer can, and you really shouldn&#39;t let it.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:05 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

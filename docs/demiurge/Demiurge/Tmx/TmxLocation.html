@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Demiurge::Tmx::TmxLocation
+  
+    &mdash; Demiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Demiurge::Tmx::TmxLocation";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Tmx.html" title="Demiurge::Tmx (module)">Tmx</a></span></span>
+     &raquo; 
+    <span class="title">TmxLocation</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Demiurge::Tmx::TmxLocation
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../TiledLocation.html" title="Demiurge::TiledLocation (class)">Demiurge::TiledLocation</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="../StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../ActionItem.html" title="Demiurge::ActionItem (class)">ActionItem</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../Container.html" title="Demiurge::Container (class)">Container</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../Location.html" title="Demiurge::Location (class)">Location</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../TiledLocation.html" title="Demiurge::TiledLocation (class)">Demiurge::TiledLocation</a></span></li>
+          
+            <li class="next">Demiurge::Tmx::TmxLocation</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/demiurge/tmx.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>A TmxLocation is a special location that is attached to a tile layout, a
+TMX file. This affects the size and shape of the room, and how agents may
+travel through it. TmxLocations have X and Y coordinates (grid coordinates)
+for their positions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+  <h2>Constant Summary</h2>
+  
+  <h3 class="inherited">Constants inherited
+     from <span class='object_link'><a href="../ActionItem.html" title="Demiurge::ActionItem (class)">ActionItem</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../ActionItem.html#ACTION_LEGAL_KEYS-constant" title="Demiurge::ActionItem::ACTION_LEGAL_KEYS (constant)">ActionItem::ACTION_LEGAL_KEYS</a></span></p>
+
+
+
+
+  <h2>Instance Attribute Summary</h2>
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../StateItem.html#engine-instance_method" title="Demiurge::StateItem#engine (method)">#engine</a></span>, <span class='object_link'><a href="../StateItem.html#name-instance_method" title="Demiurge::StateItem#name (method)">#name</a></span></p>
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_cache-class_method" title="default_cache (class method)">.<strong>default_cache</strong>  &#x21d2; Demiurge::Tmx::TileCache </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the default tile cache for newly-created TmxLocations.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_default_cache-class_method" title="set_default_cache (class method)">.<strong>set_default_cache</strong>(cache)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the default cache for newly-created TmxLocations.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#any_legal_position-instance_method" title="#any_legal_position (instance method)">#<strong>any_legal_position</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>For a TmxLocation&#39;s legal position, find somewhere not covered as a
+collision on the collision map.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cache-instance_method" title="#cache (instance method)">#<strong>cache</strong>  &#x21d2; Demiurge::Tmx::TileCache </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Get the tile cache for this Tmxlocation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#can_accomodate_dimensions%3F-instance_method" title="#can_accomodate_dimensions? (instance method)">#<strong>can_accomodate_dimensions?</strong>(left_x, upper_y, width, height)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Determine whether this coordinate location can accommodate a rectangular
+item of the given coordinate dimensions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#finished_init-instance_method" title="#finished_init (instance method)">#<strong>finished_init</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Let&#39;s resolve any exits that go to other TMX locations.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_cache-instance_method" title="#set_cache (instance method)">#<strong>set_cache</strong>(cache)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Set the tile cache for this specific TmxLocation.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tile_cache_entry-instance_method" title="#tile_cache_entry (instance method)">#<strong>tile_cache_entry</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return the tile object for this location.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tmx_object_by_name-instance_method" title="#tmx_object_by_name (instance method)">#<strong>tmx_object_by_name</strong>(name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return a TMX object&#39;s structure, for an object of the given name, or
+nil.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tmx_object_coords_by_name-instance_method" title="#tmx_object_coords_by_name (instance method)">#<strong>tmx_object_coords_by_name</strong>(name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Return the tile coordinates of the TMX object with the given name, or nil.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#valid_coordinate%3F-instance_method" title="#valid_coordinate? (instance method)">#<strong>valid_coordinate?</strong>(x, y)  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This checks the coordinate&#39;s validity, but not relative to any specific
+person/item/whatever that could occupy the space.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../TiledLocation.html" title="Demiurge::TiledLocation (class)">Demiurge::TiledLocation</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../TiledLocation.html#adjacent_positions-instance_method" title="Demiurge::TiledLocation#adjacent_positions (method)">#adjacent_positions</a></span>, <span class='object_link'><a href="../TiledLocation.html#can_accomodate_agent%3F-instance_method" title="Demiurge::TiledLocation#can_accomodate_agent? (method)">#can_accomodate_agent?</a></span>, <span class='object_link'><a href="../TiledLocation.html#can_accomodate_shape%3F-instance_method" title="Demiurge::TiledLocation#can_accomodate_shape? (method)">#can_accomodate_shape?</a></span>, <span class='object_link'><a href="../TiledLocation.html#item_change_position-instance_method" title="Demiurge::TiledLocation#item_change_position (method)">#item_change_position</a></span>, <span class='object_link'><a href="../TiledLocation.html#position_to_coords-class_method" title="Demiurge::TiledLocation.position_to_coords (method)">position_to_coords</a></span>, <span class='object_link'><a href="../TiledLocation.html#position_to_loc_coords-class_method" title="Demiurge::TiledLocation.position_to_loc_coords (method)">position_to_loc_coords</a></span>, <span class='object_link'><a href="../TiledLocation.html#valid_position%3F-instance_method" title="Demiurge::TiledLocation#valid_position? (method)">#valid_position?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Location.html" title="Demiurge::Location (class)">Location</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Location.html#add_exit-instance_method" title="Demiurge::Location#add_exit (method)">#add_exit</a></span>, <span class='object_link'><a href="../Location.html#adjacent_positions-instance_method" title="Demiurge::Location#adjacent_positions (method)">#adjacent_positions</a></span>, <span class='object_link'><a href="../Location.html#can_accomodate_agent%3F-instance_method" title="Demiurge::Location#can_accomodate_agent? (method)">#can_accomodate_agent?</a></span>, <span class='object_link'><a href="../Location.html#exits-instance_method" title="Demiurge::Location#exits (method)">#exits</a></span>, <span class='object_link'><a href="../Location.html#initialize-instance_method" title="Demiurge::Location#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="../Location.html#location-instance_method" title="Demiurge::Location#location (method)">#location</a></span>, <span class='object_link'><a href="../Location.html#location_name-instance_method" title="Demiurge::Location#location_name (method)">#location_name</a></span>, <span class='object_link'><a href="../Location.html#valid_position%3F-instance_method" title="Demiurge::Location#valid_position? (method)">#valid_position?</a></span>, <span class='object_link'><a href="../Location.html#zone-instance_method" title="Demiurge::Location#zone (method)">#zone</a></span>, <span class='object_link'><a href="../Location.html#zone_name-instance_method" title="Demiurge::Location#zone_name (method)">#zone_name</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Container.html" title="Demiurge::Container (class)">Container</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Container.html#can_accomodate_agent%3F-instance_method" title="Demiurge::Container#can_accomodate_agent? (method)">#can_accomodate_agent?</a></span>, <span class='object_link'><a href="../Container.html#contents-instance_method" title="Demiurge::Container#contents (method)">#contents</a></span>, <span class='object_link'><a href="../Container.html#contents_names-instance_method" title="Demiurge::Container#contents_names (method)">#contents_names</a></span>, <span class='object_link'><a href="../Container.html#ensure_contains-instance_method" title="Demiurge::Container#ensure_contains (method)">#ensure_contains</a></span>, <span class='object_link'><a href="../Container.html#ensure_does_not_contain-instance_method" title="Demiurge::Container#ensure_does_not_contain (method)">#ensure_does_not_contain</a></span>, <span class='object_link'><a href="../Container.html#initialize-instance_method" title="Demiurge::Container#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="../Container.html#intentions_for_next_step-instance_method" title="Demiurge::Container#intentions_for_next_step (method)">#intentions_for_next_step</a></span>, <span class='object_link'><a href="../Container.html#item_change_location-instance_method" title="Demiurge::Container#item_change_location (method)">#item_change_location</a></span>, <span class='object_link'><a href="../Container.html#item_change_position-instance_method" title="Demiurge::Container#item_change_position (method)">#item_change_position</a></span>, <span class='object_link'><a href="../Container.html#move_item_inside-instance_method" title="Demiurge::Container#move_item_inside (method)">#move_item_inside</a></span>, <span class='object_link'><a href="../Container.html#receive_offer-instance_method" title="Demiurge::Container#receive_offer (method)">#receive_offer</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../ActionItem.html" title="Demiurge::ActionItem (class)">ActionItem</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../ActionItem.html#__state_internal-instance_method" title="Demiurge::ActionItem#__state_internal (method)">#__state_internal</a></span>, <span class='object_link'><a href="../ActionItem.html#get_action-instance_method" title="Demiurge::ActionItem#get_action (method)">#get_action</a></span>, <span class='object_link'><a href="../ActionItem.html#get_actions_with_tags-instance_method" title="Demiurge::ActionItem#get_actions_with_tags (method)">#get_actions_with_tags</a></span>, <span class='object_link'><a href="../ActionItem.html#initialize-instance_method" title="Demiurge::ActionItem#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="../ActionItem.html#intentions_for_next_step-instance_method" title="Demiurge::ActionItem#intentions_for_next_step (method)">#intentions_for_next_step</a></span>, <span class='object_link'><a href="../ActionItem.html#location-instance_method" title="Demiurge::ActionItem#location (method)">#location</a></span>, <span class='object_link'><a href="../ActionItem.html#location_name-instance_method" title="Demiurge::ActionItem#location_name (method)">#location_name</a></span>, <span class='object_link'><a href="../ActionItem.html#position-instance_method" title="Demiurge::ActionItem#position (method)">#position</a></span>, <span class='object_link'><a href="../ActionItem.html#register_actions-instance_method" title="Demiurge::ActionItem#register_actions (method)">#register_actions</a></span>, <span class='object_link'><a href="../ActionItem.html#run_action-instance_method" title="Demiurge::ActionItem#run_action (method)">#run_action</a></span>, <span class='object_link'><a href="../ActionItem.html#zone-instance_method" title="Demiurge::ActionItem#zone (method)">#zone</a></span>, <span class='object_link'><a href="../ActionItem.html#zone_name-instance_method" title="Demiurge::ActionItem#zone_name (method)">#zone_name</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../StateItem.html#agent%3F-instance_method" title="Demiurge::StateItem#agent? (method)">#agent?</a></span>, <span class='object_link'><a href="../StateItem.html#from_name_type-class_method" title="Demiurge::StateItem.from_name_type (method)">from_name_type</a></span>, <span class='object_link'><a href="../StateItem.html#get_structure-instance_method" title="Demiurge::StateItem#get_structure (method)">#get_structure</a></span>, <span class='object_link'><a href="../StateItem.html#initialize-instance_method" title="Demiurge::StateItem#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="../StateItem.html#intentions_for_next_step-instance_method" title="Demiurge::StateItem#intentions_for_next_step (method)">#intentions_for_next_step</a></span>, <span class='object_link'><a href="../StateItem.html#state-instance_method" title="Demiurge::StateItem#state (method)">#state</a></span>, <span class='object_link'><a href="../StateItem.html#state_type-instance_method" title="Demiurge::StateItem#state_type (method)">#state_type</a></span>, <span class='object_link'><a href="../StateItem.html#zone%3F-instance_method" title="Demiurge::StateItem#zone? (method)">#zone?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="../Location.html#initialize-instance_method" title="Demiurge::Location#initialize (method)">Demiurge::Location</a></span></p>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="default_cache-class_method">
+  
+    .<strong>default_cache</strong>  &#x21d2; <tt>Demiurge::Tmx::TileCache</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the default tile cache for newly-created TmxLocations. Demiurge
+provides one by default which can be overridden.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Demiurge::Tmx::TileCache</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The current default TileCache for newly-created TmxLocations</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112
+113</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_default_cache'>default_cache</span>
+  <span class='ivar'>@default_cache</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Tmx.html" title="Demiurge::Tmx (module)">Tmx</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="TmxCache.html" title="Demiurge::Tmx::TmxCache (class)">TmxCache</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="TmxCache.html#initialize-instance_method" title="Demiurge::Tmx::TmxCache#initialize (method)">new</a></span></span>
+  <span class='ivar'>@default_cache</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_default_cache-class_method">
+  
+    .<strong>set_default_cache</strong>(cache)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the default cache for newly-created TmxLocations.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cache</span>
+      
+      
+        <span class='type'>(<tt>Demiurge::Tmx::TileCache</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The tile cache for all subsequently-created TmxLocations</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+119
+120
+121</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 119</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_set_default_cache'>set_default_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='rparen'>)</span>
+  <span class='ivar'>@default_cache</span> <span class='op'>=</span> <span class='id identifier rubyid_cache'>cache</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="any_legal_position-instance_method">
+  
+    #<strong>any_legal_position</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>For a TmxLocation&#39;s legal position, find somewhere not covered as a
+collision on the collision map.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A legal position string within this location</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 214</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_any_legal_position'>any_legal_position</span>
+  <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_entry'>entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>collision</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='comment'># We have a collision layer? Fabulous. Scan upper-left to lower-right until we get something non-collidable.
+</span>    <span class='lparen'>(</span><span class='int'>0</span><span class='op'>...</span><span class='id identifier rubyid_entry'>entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>width</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span>
+      <span class='lparen'>(</span><span class='int'>0</span><span class='op'>...</span><span class='id identifier rubyid_entry'>entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>height</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_y'>y</span><span class='op'>|</span>
+        <span class='kw'>if</span> <span class='id identifier rubyid_entry'>entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>collision</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>width</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_x'>x</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
+          <span class='comment'># We found a walkable spot.
+</span>          <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_x'>x</span><span class='embexpr_end'>}</span><span class='tstring_content'>,</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_y'>y</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='comment'># If we got here, there exists no walkable spot in the whole location.
+</span>  <span class='kw'>end</span>
+  <span class='comment'># Screw it, just return the upper left corner.
+</span>  <span class='kw'>return</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='embexpr_end'>}</span><span class='tstring_content'>#0,0</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cache-instance_method">
+  
+    #<strong>cache</strong>  &#x21d2; <tt>Demiurge::Tmx::TileCache</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Get the tile cache for this Tmxlocation</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Demiurge::Tmx::TileCache</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+135
+136
+137</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 135</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cache'>cache</span>
+  <span class='ivar'>@cache</span> <span class='op'>||=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_default_cache'>default_cache</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="can_accomodate_dimensions?-instance_method">
+  
+    #<strong>can_accomodate_dimensions?</strong>(left_x, upper_y, width, height)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determine whether this coordinate location can accommodate a rectangular
+item of the given coordinate dimensions.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 195</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_can_accomodate_dimensions?'>can_accomodate_dimensions?</span><span class='lparen'>(</span><span class='id identifier rubyid_left_x'>left_x</span><span class='comma'>,</span> <span class='id identifier rubyid_upper_y'>upper_y</span><span class='comma'>,</span> <span class='id identifier rubyid_width'>width</span><span class='comma'>,</span> <span class='id identifier rubyid_height'>height</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_left_x'>left_x</span> <span class='op'>&lt;</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_upper_y'>upper_y</span> <span class='op'>&lt;</span> <span class='int'>0</span>
+  <span class='id identifier rubyid_right_x'>right_x</span> <span class='op'>=</span> <span class='id identifier rubyid_left_x'>left_x</span> <span class='op'>+</span> <span class='id identifier rubyid_width'>width</span> <span class='op'>-</span> <span class='int'>1</span>
+  <span class='id identifier rubyid_lower_y'>lower_y</span> <span class='op'>=</span> <span class='id identifier rubyid_upper_y'>upper_y</span> <span class='op'>+</span> <span class='id identifier rubyid_height'>height</span> <span class='op'>-</span> <span class='int'>1</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_right_x'>right_x</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>width</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_lower_y'>lower_y</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>height</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>collision</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='lparen'>(</span><span class='id identifier rubyid_left_x'>left_x</span><span class='op'>..</span><span class='id identifier rubyid_right_x'>right_x</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_x'>x</span><span class='op'>|</span>
+    <span class='lparen'>(</span><span class='id identifier rubyid_upper_y'>upper_y</span><span class='op'>..</span><span class='id identifier rubyid_lower_y'>lower_y</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_y'>y</span><span class='op'>|</span>
+      <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>collision</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>width</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_x'>x</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='int'>0</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="finished_init-instance_method">
+  
+    #<strong>finished_init</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Let&#39;s resolve any exits that go to other TMX locations.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 142</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_finished_init'>finished_init</span>
+  <span class='kw'>super</span>
+  <span class='id identifier rubyid_exits'>exits</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tile_layout_type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>manasource</span><span class='tstring_end'>&quot;</span></span>
+
+  <span class='comment'># Go through the contents looking for locations
+</span>  <span class='id identifier rubyid_zone_contents'>zone_contents</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_zone'>zone</span><span class='period'>.</span><span class='id identifier rubyid_contents'>contents</span>
+
+  <span class='comment'># ManaSource locations often store exits as objects in an
+</span>  <span class='comment'># object layer.  They don&#39;t cope with multiple locations that
+</span>  <span class='comment'># use the same TMX file since they identify the destination by
+</span>  <span class='comment'># the TMX filename.  In Demiurge, we don&#39;t let them cross zone
+</span>  <span class='comment'># boundaries to avoid unexpected behavior in other folks&#39;
+</span>  <span class='comment'># zones.
+</span>  <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>objects</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_obj'>obj</span><span class='op'>|</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>warp</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_obj'>obj</span><span class='op'>|</span>
+    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_dest_map_name'>dest_map_name</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dest_map</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_dest_location'>dest_location</span> <span class='op'>=</span> <span class='id identifier rubyid_zone_contents'>zone_contents</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_loc'>loc</span><span class='op'>|</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Tmx.html" title="Demiurge::Tmx (module)">Tmx</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Demiurge::Tmx::TmxLocation (class)">TmxLocation</a></span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tmx_name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_dest_map_name'>dest_map_name</span> <span class='rbrace'>}</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_dest_location'>dest_location</span>
+      <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='id identifier rubyid_dest_location'>dest_location</span><span class='period'>.</span><span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span>
+      <span class='id identifier rubyid_dest_position'>dest_position</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dest_location'>dest_location</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dest_x</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>,</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dest_y</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_src_x_coord'>src_x_coord</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>/</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tilewidth</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_src_y_coord'>src_y_coord</span> <span class='op'>=</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>/</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tileheight</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+      <span class='id identifier rubyid_src_position'>src_position</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_src_x_coord'>src_x_coord</span><span class='embexpr_end'>}</span><span class='tstring_content'>,</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_src_y_coord'>src_y_coord</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Exit destination position </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dest_position'>dest_position</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> loaded from TMX location </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> (TMX: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>) is not valid!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_dest_location'>dest_location</span><span class='period'>.</span><span class='id identifier rubyid_valid_position?'>valid_position?</span><span class='lparen'>(</span><span class='id identifier rubyid_dest_position'>dest_position</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_exits'>exits</span><span class='period'>.</span><span class='id identifier rubyid_push'>push</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>src_loc:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='label'>src_pos:</span> <span class='id identifier rubyid_src_position'>src_position</span><span class='comma'>,</span> <span class='label'>dest_pos:</span> <span class='id identifier rubyid_dest_position'>dest_position</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_admin_warning'>admin_warning</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unresolved TMX exit in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                            <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>properties</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_exits'>exits</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_exit'>exit</span><span class='op'>|</span>
+    <span class='id identifier rubyid_exit'>exit</span><span class='lbracket'>[</span><span class='symbol'>:src_loc</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_add_exit'>add_exit</span><span class='lparen'>(</span><span class='label'>from:</span> <span class='id identifier rubyid_exit'>exit</span><span class='lbracket'>[</span><span class='symbol'>:src_pos</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_exit'>exit</span><span class='lbracket'>[</span><span class='symbol'>:dest_pos</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_cache-instance_method">
+  
+    #<strong>set_cache</strong>(cache)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Set the tile cache for this specific TmxLocation</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>cache</span>
+      
+      
+        <span class='type'>(<tt>Demiurge::Tmx::TileCache</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_cache'>set_cache</span><span class='lparen'>(</span><span class='id identifier rubyid_cache'>cache</span><span class='rparen'>)</span>
+  <span class='ivar'>@cache</span> <span class='op'>=</span> <span class='id identifier rubyid_cache'>cache</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tile_cache_entry-instance_method">
+  
+    #<strong>tile_cache_entry</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return the tile object for this location</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+233
+234
+235
+236</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 233</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span>
+  <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A TMX location (name: </span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>) must have a tile layout!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tile_layout_filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_cache'>cache</span><span class='period'>.</span><span class='id identifier rubyid_tmx_entry'>tmx_entry</span><span class='lparen'>(</span><span class='ivar'>@state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tile_layout_type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tile_layout_filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tmx_object_by_name-instance_method">
+  
+    #<strong>tmx_object_by_name</strong>(name)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return a TMX object&#39;s structure, for an object of the given name, or
+nil.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+239
+240
+241</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 239</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tmx_object_by_name'>tmx_object_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>objects</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_detect'>detect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span> <span class='id identifier rubyid_o'>o</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_name'>name</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tmx_object_coords_by_name-instance_method">
+  
+    #<strong>tmx_object_coords_by_name</strong>(name)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Return the tile coordinates of the TMX object with the given name, or nil.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+244
+245
+246
+247
+248</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 244</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tmx_object_coords_by_name'>tmx_object_coords_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_obj'>obj</span> <span class='op'>=</span> <span class='id identifier rubyid_tmx_object_by_name'>tmx_object_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_obj'>obj</span>
+  <span class='lbracket'>[</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>/</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tilewidth</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_obj'>obj</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>/</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tileheight</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="valid_coordinate?-instance_method">
+  
+    #<strong>valid_coordinate?</strong>(x, y)  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>This checks the coordinate&#39;s validity, but not relative to any specific
+person/item/whatever that could occupy the space.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Whether the coordinate is valid</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+184
+185
+186
+187
+188
+189</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 184</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_valid_coordinate?'>valid_coordinate?</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>&lt;</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>&lt;</span> <span class='int'>0</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>width</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>&gt;=</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>height</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>collision</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>collision</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>width</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_x'>x</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:08 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

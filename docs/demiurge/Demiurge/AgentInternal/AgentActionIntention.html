@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Demiurge::AgentInternal::AgentActionIntention
+  
+    &mdash; Demiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "Demiurge::AgentInternal::AgentActionIntention";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (A)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../AgentInternal.html" title="Demiurge::AgentInternal (module)">AgentInternal</a></span></span>
+     &raquo; 
+    <span class="title">AgentActionIntention</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Demiurge::AgentInternal::AgentActionIntention
+  
+  
+  <span class="private note title">Private</span>
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="../ActionItemInternal/ActionIntention.html" title="Demiurge::ActionItemInternal::ActionIntention (class)">Demiurge::ActionItemInternal::ActionIntention</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="../Intention.html" title="Demiurge::Intention (class)">Intention</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="../ActionItemInternal/ActionIntention.html" title="Demiurge::ActionItemInternal::ActionIntention (class)">Demiurge::ActionItemInternal::ActionIntention</a></span></li>
+          
+            <li class="next">Demiurge::AgentInternal::AgentActionIntention</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/demiurge/agent.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This class is part of a private API.</strong>
+  You should avoid using this class if possible, as it may be removed or be changed in the future.
+</p>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>There is a bit of weirdness in how this intention handles <span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#allowed? (method)">#allowed?</a></span> and
+<span class='object_link'><a href="#offer-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#offer (method)">#offer</a></span>. We want to be able to queue an action on the same tick that we
+execute it if the agent is idle. So we count this intention as #allowed?
+even if the queue is empty, then silent-cancel the intention during
+<span class='object_link'><a href="#offer-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#offer (method)">#offer</a></span> if nobody has added anything to it. If you see a lot of cancel
+notifications from this object with “silent” set, now you know why.</p>
+</div>
+  </div>
+
+
+<p>An AgentActionIntention is how the agent takes queued actions each tick.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#action_name-instance_method" title="#action_name (instance method)">#<strong>action_name</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The queued action name this Intention will next take.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#agent-instance_method" title="#agent (instance method)">#<strong>agent</strong>  &#x21d2; StateItem </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The agent to whom this Intention applies.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+  
+  
+  <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../ActionItemInternal/ActionIntention.html" title="Demiurge::ActionItemInternal::ActionIntention (class)">Demiurge::ActionItemInternal::ActionIntention</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../ActionItemInternal/ActionIntention.html#action_args-instance_method" title="Demiurge::ActionItemInternal::ActionIntention#action_args (method)">#action_args</a></span></p>
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#allowed%3F-instance_method" title="#allowed? (instance method)">#<strong>allowed?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>This action is allowed if the agent is not busy, or will become not-busy
+soon.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply-instance_method" title="#apply (instance method)">#<strong>apply</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>If the agent can do so, take the action in question.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#apply_notification-instance_method" title="#apply_notification (instance method)">#<strong>apply_notification</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Send out a notification to indicate this ActionIntention was applied.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#cancel_notification-instance_method" title="#cancel_notification (instance method)">#<strong>cancel_notification</strong>  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Send out a notification to indicate this ActionIntention was cancelled.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name, engine)  &#x21d2; AgentActionIntention </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Constructor.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#offer-instance_method" title="#offer (instance method)">#<strong>offer</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>An action being pulled from the action queue is offered normally.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="../Intention.html" title="Demiurge::Intention (class)">Intention</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Intention.html#cancel-instance_method" title="Demiurge::Intention#cancel (method)">#cancel</a></span>, <span class='object_link'><a href="../Intention.html#cancelled%3F-instance_method" title="Demiurge::Intention#cancelled? (method)">#cancelled?</a></span>, <span class='object_link'><a href="../Intention.html#try_apply-instance_method" title="Demiurge::Intention#try_apply (method)">#try_apply</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(name, engine)  &#x21d2; <tt><span class='object_link'><a href="" title="Demiurge::AgentInternal::AgentActionIntention (class)">AgentActionIntention</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Constructor. Takes an agent name and an engine</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../Errors/NoSuchAgentError.html" title="Demiurge::Errors::NoSuchAgentError (class)">::Demiurge::Errors::NoSuchAgentError</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+160
+161
+162
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 160</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_engine'>engine</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_engine'>engine</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@agent</span> <span class='op'>=</span> <span class='id identifier rubyid_engine'>engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Errors.html" title="Demiurge::Errors (module)">Errors</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Errors/NoSuchAgentError.html" title="Demiurge::Errors::NoSuchAgentError (class)">NoSuchAgentError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Errors/Exception.html#initialize-instance_method" title="Demiurge::Errors::Exception#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No such agent as </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> found in AgentActionIntention!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>agent</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+                                                 <span class='label'>execution_context:</span> <span class='id identifier rubyid_engine'>engine</span><span class='period'>.</span><span class='id identifier rubyid_execution_context'>execution_context</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='ivar'>@agent</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="action_name-instance_method">
+  
+    #<strong>action_name</strong>  &#x21d2; <tt>String</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns The queued action name this Intention will next take</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The queued action name this Intention will next take</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+157
+158
+159</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 157</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_action_name'>action_name</span>
+  <span class='ivar'>@action_name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="agent-instance_method">
+  
+    #<strong>agent</strong>  &#x21d2; <tt><span class='object_link'><a href="../StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span></tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>Returns The agent to whom this Intention applies</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The agent to whom this Intention applies</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+155
+156
+157</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 155</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_agent'>agent</span>
+  <span class='ivar'>@agent</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="allowed?-instance_method">
+  
+    #<strong>allowed?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>This action is allowed if the agent is not busy, or will become not-busy
+soon</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 186</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_allowed?'>allowed?</span>
+  <span class='comment'># If the agent&#39;s busy state will clear this turn, this action
+</span>  <span class='comment'># could happen.  We intentionally don&#39;t send a &quot;disallowed&quot;
+</span>  <span class='comment'># notification for the action. It&#39;s not cancelled, nor is it
+</span>  <span class='comment'># dispatched successfully. It&#39;s just waiting for a later tick to
+</span>  <span class='comment'># do one of those two things.
+</span>  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>1</span>
+
+  <span class='comment'># A dilemma: if we cancel now when no actions are queued, then
+</span>  <span class='comment'># any action queued this turn (e.g. from an
+</span>  <span class='comment'># EveryXActionsIntention) won&#39;t be executed -- we said this
+</span>  <span class='comment'># intention wasn&#39;t happening. If we *don&#39;t* return false in the
+</span>  <span class='comment'># &quot;allowed?&quot; phase then we&#39;ll wind up sending out a cancel
+</span>  <span class='comment'># notice every turn when there are no actions. So we add a
+</span>  <span class='comment'># &quot;silent&quot; info option to the normal-every-turn cancellations,
+</span>  <span class='comment'># but we *do* allow-then-cancel even in perfectly normal
+</span>  <span class='comment'># circumstances.
+</span>  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="apply-instance_method">
+  
+    #<strong>apply</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>If the agent can do so, take the action in question.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 207</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>queued_actions</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='comment'># Pull the first entry off the action queue
+</span>    <span class='id identifier rubyid_queue'>queue</span> <span class='op'>=</span> <span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>queued_actions</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_queue'>queue</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_queue'>queue</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+      <span class='kw'>if</span> <span class='ivar'>@action_queue_number</span> <span class='op'>!=</span> <span class='id identifier rubyid_queue'>queue</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>
+        <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_admin_warning'>admin_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Somehow the agent&#39;s action queue has gotten screwed up mid-offer!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>agent</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@name</span><span class='rparen'>)</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_queue'>queue</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span> <span class='comment'># Remove the queue entry
+</span>      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_run_action'>run_action</span><span class='lparen'>(</span><span class='ivar'>@action_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='ivar'>@action_args</span><span class='comma'>,</span> <span class='label'>current_intention:</span> <span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>+=</span> <span class='lparen'>(</span><span class='ivar'>@action_struct</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>1</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="apply_notification-instance_method">
+  
+    #<strong>apply_notification</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p class="note returns_void">This method returns an undefined value.</p>
+<p>Send out a notification to indicate this ActionIntention was applied.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 254</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_apply_notification'>apply_notification</span>
+  <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+                              <span class='label'>id:</span> <span class='ivar'>@intention_id</span><span class='comma'>,</span>
+                              <span class='label'>intention_type:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+                              <span class='label'>queue_number:</span> <span class='ivar'>@action_queue_number</span><span class='comma'>,</span>
+                              <span class='label'>action_name:</span> <span class='ivar'>@action_name</span><span class='comma'>,</span>
+                              <span class='label'>action_args:</span> <span class='ivar'>@action_args</span><span class='comma'>,</span>
+                            <span class='rbrace'>}</span><span class='comma'>,</span>
+                            <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Notifications.html" title="Demiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Notifications.html#IntentionApplied-constant" title="Demiurge::Notifications::IntentionApplied (constant)">IntentionApplied</a></span></span><span class='comma'>,</span>
+                            <span class='label'>zone:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_zone_name'>zone_name</span><span class='comma'>,</span>
+                            <span class='label'>location:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span><span class='comma'>,</span>
+                            <span class='label'>actor:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+                            <span class='label'>include_context:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="cancel_notification-instance_method">
+  
+    #<strong>cancel_notification</strong>  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p class="note returns_void">This method returns an undefined value.</p>
+<p>Send out a notification to indicate this ActionIntention was cancelled. If
+“silent” is set to true in the cancellation info, no notification will be
+sent.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 229</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_cancel_notification'>cancel_notification</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cancelled_info</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@cancelled_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>silent</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+                              <span class='label'>reason:</span> <span class='ivar'>@cancelled_reason</span><span class='comma'>,</span>
+                              <span class='label'>by:</span> <span class='ivar'>@cancelled_by</span><span class='comma'>,</span>
+                              <span class='label'>id:</span> <span class='ivar'>@intention_id</span><span class='comma'>,</span>
+                              <span class='label'>intention_type:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='comma'>,</span>
+                              <span class='label'>info:</span> <span class='ivar'>@cancelled_info</span><span class='comma'>,</span>
+                              <span class='label'>queue_number:</span> <span class='ivar'>@action_queue_number</span><span class='comma'>,</span>
+                              <span class='label'>action_name:</span> <span class='ivar'>@action_name</span><span class='comma'>,</span>
+                              <span class='label'>action_args:</span> <span class='ivar'>@action_args</span><span class='comma'>,</span>
+                            <span class='rbrace'>}</span><span class='comma'>,</span>
+                            <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Notifications.html" title="Demiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Notifications.html#IntentionCancelled-constant" title="Demiurge::Notifications::IntentionCancelled (constant)">IntentionCancelled</a></span></span><span class='comma'>,</span>
+                            <span class='label'>zone:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_zone_name'>zone_name</span><span class='comma'>,</span>
+                            <span class='label'>location:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span><span class='comma'>,</span>
+                            <span class='label'>actor:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+                            <span class='label'>include_context:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="offer-instance_method">
+  
+    #<strong>offer</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+
+<p>An action being pulled from the action queue is offered normally.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 168</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_offer'>offer</span>
+  <span class='comment'># Don&#39;t offer the action if it&#39;s going to be a no-op.
+</span>  <span class='kw'>if</span> <span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>0</span>
+    <span class='comment'># See comment on &quot;silent&quot; in #allowed? below.
+</span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cancel'>cancel</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Agent </span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> was too busy to act (</span><span class='embexpr_beg'>#{</span><span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>).</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>silent</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span>
+  <span class='kw'>elsif</span> <span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>queued_actions</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_cancel'>cancel</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Agent </span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> had no actions during the &#39;offer&#39; phase.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>silent</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
+    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+  <span class='comment'># Now offer the agent&#39;s action via the usual channels
+</span>  <span class='id identifier rubyid_action'>action</span> <span class='op'>=</span> <span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>queued_actions</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+  <span class='ivar'>@action_name</span><span class='comma'>,</span> <span class='ivar'>@action_args</span><span class='comma'>,</span> <span class='ivar'>@action_queue_number</span> <span class='op'>=</span> <span class='op'>*</span><span class='id identifier rubyid_action'>action</span>
+  <span class='ivar'>@action_struct</span> <span class='op'>=</span> <span class='ivar'>@agent</span><span class='period'>.</span><span class='id identifier rubyid_get_action'>get_action</span><span class='lparen'>(</span><span class='ivar'>@action_name</span><span class='rparen'>)</span>
+  <span class='kw'>super</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Jan 16 12:25:09 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>
