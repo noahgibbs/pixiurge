@@ -182,7 +182,6 @@ module Pixiurge::Middleware
       else
         tmx_map = Tmx.load(existing)
         json_contents = tmx_map.export_to_string :filename => existing, :format => :json
-        File.open("local_reexported.json", "wb") { |f| f.write json_contents }
         return [200, { "type" => "application/json" }, json_contents]
       end
     end
