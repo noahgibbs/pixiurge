@@ -1,16 +1,16 @@
 # Pixiurge
 
-Pixiurge provides a Websocket- and Pixi-based browser game front end
-for a Demiurge simulation engine.
+Pixiurge provides a Websocket- and PIXI.js-based browser game front
+end for a Demiurge simulation engine.
 
-Demiurge is a library for easy creation of game simulation and
-artificial intelligence using Ruby. Demiurge stays powerful, simple
-and easy to test by only doing simulation, not display. Pixiurge
-leaves the simulation to Demiurge, and does the display.
+Demiurge is a library for easy creation of game rules and behavior
+using Ruby. Demiurge stays powerful, simple and easy to test by only
+handling simulation, not display. Pixiurge leaves the simulation to
+Demiurge and displays the result.
 
 Pixiurge's tech stack includes:
 
-* Pixi
+* Pixi.JS
 * Demiurge
 * Websockets using Faye and EventMachine
 * CoffeeScript
@@ -19,6 +19,14 @@ Pixiurge's tech stack includes:
 Pixiurge is intended for creating simulation-heavy browser games that
 don't need fast response -- it's for interactive novels and simulated
 gardens, not "twitch" games.
+
+## Getting Started
+
+Whether you're getting up to speed on an existing Pixiurge project or
+starting a new one, documentation is important. See
+[the documentation page](https://codefolio.github.io/pixiurge) for
+various good starting points and
+[the API documentation](https://codefolio.github.io/pixiurge/pixiurge).
 
 ## Installation
 

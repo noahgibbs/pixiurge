@@ -255,6 +255,11 @@ looking at, and making sure that the player's view continues to follow
 along and see the right things in an area larger than their browser
 window.
 
+In a software sense, a Displayable subclass knows how to display or
+hide itself using messages over Websockets. A Player knows what
+objects are currently displayed, but must ask a Displayable to display
+itself to get the specific messages.
+
 ## The Front End
 
 Pixiurge includes a display library with some built-in display
