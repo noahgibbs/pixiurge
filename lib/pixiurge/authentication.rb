@@ -142,7 +142,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
 
     # This websocket is already logged in. Weird. Close the new connection.
     if @username_for_websocket.has_key?(ws)
-      ws.send(Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Your websocket is somehow already logged in! Failing!" })
+      websocket_send ws, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Your websocket is somehow already logged in! Failing!" }
       ws.close(1002, "Websocket already logged in, failing")  # 1002 is a protocol error, such as a double-login
       return
     end
@@ -150,7 +150,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     # This username is already logged in, so we'll override. Close the old connection.
     if @websocket_for_username.has_key?(username)
       old_ws = @websocket_for_username[username]
-      old_ws.send(Pixiurge::Protocol::Outgoing::DISCONNECTION, { "message" => "You have just logged in from a new location - disconnecting your old location." })
+      websocket_send old_ws, Pixiurge::Protocol::Outgoing::DISCONNECTION, { "message" => "You have just logged in from a new location - disconnecting your old location." }
       old_ws.close(1000, "You have been disconnected in favor of a new connection by your account.")
       @username_for_websocket.delete(old_ws)
       reconnect = true

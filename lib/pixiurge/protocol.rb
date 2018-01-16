@@ -89,6 +89,16 @@ module Pixiurge::Protocol::Outgoing
   # @since 0.1.0
   AUTH_SALT = "login_salt"
 
+  # Used to show that the socket is being intentionally disconnected.
+  # Possible reasons include a user request to disconnect, another
+  # login from the same account or an administrator requesting the
+  # disconnect. After the message type, there is a hash argument. The
+  # "message" key holds a human-readable message with the reason for
+  # the disconnection.
+  #
+  # @since 0.1.0
+  DISCONNECTION = "disconnect"
+
   # This is the message used to set up an initial display with
   # appropriate settings. It should normally never be sent a second
   # time. This should contain display-relevant and server-variable

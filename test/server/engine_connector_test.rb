@@ -73,21 +73,30 @@ DSL
     ws.close
   end
 
-  #def test_lowlevel_events
-  #  events = []
-  #  [ "open", "login", "error", "close" ].each { |ev| pixi_app.on_event(ev) { events.push(ev) } }
-  #
-  #  assert_equal [], events
-  #  ws.open
-  #  assert_equal [ "open" ], events
-  #  ws.json_message([Pixiurge::Protocol::Incoming::AUTH_MSG_TYPE, Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
-  #  assert_equal [ "open", "login" ], events
-  #  ws.error("yup, a fake error")
-  #  ws.close
-  #  assert_equal [ "open", "login", "error", "close" ], events
-  #
-  #  assert_equal 1, ws.sent_data.length
-  #  assert_equal Pixiurge::Protocol::Outgoing::AUTH_LOGIN, ws.parsed_sent_data[0][0]
-  #end
+  def test_no_multiple_login_with_same_account
+    socket_closed = false
+
+    con = connector
+    ws.open
+    ws.on(:close) { socket_closed = true }
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+
+    messages = ws.parsed_sent_data
+    assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_TMX, "right here", "tmx/magecity_cc0_lorestrome.json" ], messages[3]
+    assert_equal 4, ws.sent_data.size
+    ws.clear_sent_data
+
+    # Now, create another login from bob
+    next_ws = additional_websocket
+    next_ws.open
+    next_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+
+    # We should see a disconnect and a websocket close on the first socket
+    assert_equal Pixiurge::Protocol::Outgoing::DISCONNECTION, ws.parsed_sent_data[0][0]
+    assert socket_closed, "Pixiurge has closed the old socket after the new socket logged in with the same account"
+  end
 
 end

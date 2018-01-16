@@ -23,7 +23,8 @@ class MockWebSocket
 
   def on(action, &block)
     raise("Illegal fake WebSocket event type: #{action.inspect}!") unless EVENT_TYPES.include?(action)
-    @handlers[action] = block
+    @handlers[action] ||= []
+    @handlers[action].push block
   end
 
   def send(data)
@@ -31,31 +32,35 @@ class MockWebSocket
     @sent_data.push data
   end
 
+  def parsed_sent_data
+    @sent_data.map { |d| MultiJson.load d }
+  end
+
+  def clear_sent_data
+    @sent_data.clear
+  end
+
   def open
-    @handlers[:open] && @handlers[:open].call(WebSocket::Driver::OpenEvent.new())
+    @handlers[:open] && @handlers[:open].each { |h| h.call(WebSocket::Driver::OpenEvent.new()) }
   end
 
   def error(message = "Generic error!")
-    @handlers[:error] && @handlers[:error].call(WebSocket::Driver::ProtocolError.new(message))
+    @handlers[:error] && @handlers[:error].each { |h| h.call(WebSocket::Driver::ProtocolError.new(message)) }
   end
 
   def close(code = 1000, reason = "Normal exit")
-    @handlers[:close] && @handlers[:close].call(WebSocket::Driver::CloseEvent.new(code, reason))
+    @handlers[:close] && @handlers[:close].each { |h| h.call(WebSocket::Driver::CloseEvent.new(code, reason)) }
   end
 
   # This is for a text message. Binary will have an array of Integers for data.
   def message(data)
     raise("Message should be a String!") unless data.is_a?(String)
-    @handlers[:message] && @handlers[:message].call(WebSocket::Driver::MessageEvent.new(data))
+    @handlers[:message] && @handlers[:message].each { |h| h.call(WebSocket::Driver::MessageEvent.new(data)) }
   end
 
   # This is for a text message. Binary will have an array of Integers for data.
   def json_message(data)
-    @handlers[:message] && @handlers[:message].call(WebSocket::Driver::MessageEvent.new(MultiJson.dump(data)))
-  end
-
-  def parsed_sent_data
-    @sent_data.map { |d| MultiJson.load d }
+    @handlers[:message] && @handlers[:message].each { |h| h.call(WebSocket::Driver::MessageEvent.new(MultiJson.dump(data))) }
   end
 end
 
@@ -92,6 +97,12 @@ class WebSocketTest < Minitest::Test
     return @ws if @ws
     get_pixi_app
     @ws
+  end
+
+  def additional_websocket
+    extra_ws = MockWebSocket.new
+    @pixi_app.websocket_handler(extra_ws)
+    extra_ws
   end
 end
 
