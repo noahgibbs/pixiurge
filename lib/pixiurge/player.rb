@@ -141,6 +141,25 @@ class Pixiurge::Player
     nil
   end
 
+  # Move the given Displayable from the old to the new position for
+  # the given player. Options can be supplied to change the nature of
+  # the movement in Displayable-specific ways. For instance, there may
+  # be a difference between teleporting, swimming, walking and
+  # running, or it may be possible to supply a speed or a duration.
+  #
+  # @param displayable [Pixiurge::Displayable] The currently-shown Displayable to be moved
+  # @param old_position [String] The old position string within the same location
+  # @param new_position [String] The new position string within the same location
+  # @param options [Hash{String=>String}] JSON-serializable hash of options to pass to the Displayable
+  # @return [void]
+  # @since 0.1.0
+  def move_displayable(displayable, old_position, new_position, options = {})
+    return unless @currently_shown[displayable.name]
+
+    displayable.move_for_player(self, old_position, new_position, options)
+    nil
+  end
+
   # Pan the display to a pixel offset in the current backdrop.
   #
   # @param x [Integer] The new x pixel coordinate for the center of the display
@@ -152,7 +171,20 @@ class Pixiurge::Player
     return if x == @pan_center_x && y == @pan_center_y
     @pan_center_x = x
     @pan_center_y = y
-    message Pixiurge::Protocol::Outgoing::PAN_TO_PIXEL, x, y, options
+    message Pixiurge::Protocol::Outgoing::DISPLAY_PAN_TO_PIXEL, x, y, options
+    nil
+  end
+
+  # Pan the display to a coordinate offset in the current backdrop.
+  #
+  # @param x [Integer] The new x block coordinate for the center of the display
+  # @param y [Integer] The new y block coordinate for the center of the display
+  # @param options [Hash] Options to send to the front end for handling this pan
+  # @return [void]
+  # @since 0.1.0
+  def pan_to_coordinates(x, y, options = {})
+    loc = displayable.location_displayable
+    send_instant_pan_to_pixel_offset(x * loc.block_width, y * loc.block_height, options)
     nil
   end
 end

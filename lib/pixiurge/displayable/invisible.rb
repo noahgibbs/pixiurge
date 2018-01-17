@@ -11,6 +11,6 @@ class Pixiurge::Display::Invisible < Pixiurge::Displayable
   def hide_from_player(player)
   end
 
-  def move_for_player(player, old_pos, new_pos)
+  def move_for_player(player, old_pos, new_pos, options)
   end
 end

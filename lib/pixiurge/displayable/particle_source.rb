@@ -40,7 +40,7 @@ class Pixiurge::Display::ParticleSource < Pixiurge::Displayable
   # @param new_position [String] The new/ending position string
   # @return [void]
   # @since 0.1.0
-  def move_for_player(player, old_position, new_position)
-    player.message( Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE, @name, { "position" => new_position } )
+  def move_for_player(player, old_position, new_position, options)
+    player.message( Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE, @name, { "old_position" => old_position, "position" => new_position, "options" => options } )
   end
 end

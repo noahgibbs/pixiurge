@@ -201,6 +201,54 @@ DSL
     assert_equal false, socket_closed
   end
 
+  def test_same_location_movement_visibility
+    con = connector
+
+    # Connect websockets for murray, sam and phil
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "murray", "bcrypted" => "fake_hash3" } ])
+    murray_ws = ws
+    sam_ws = additional_websocket
+    sam_ws.open
+    sam_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "sam", "bcrypted" => "fake_hash2" } ])
+    phil_ws = additional_websocket
+    phil_ws.open
+    phil_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "phil", "bcrypted" => "fake_hash4" } ])
+
+    demi_phil = @demi_engine.item_by_name("phil")
+    demi_murray = @demi_engine.item_by_name("murray")
+    demi_sam = @demi_engine.item_by_name("sam")
+
+    demi_phil.move_to_position("right here#2,2")
+    demi_murray.move_to_position("somewhere else")
+    demi_sam.move_to_position("right here#5,5")
+    @demi_engine.flush_notifications
+
+    # Clear all the login and movement messages
+    murray_ws.sent_data.clear
+    sam_ws.sent_data.clear
+    phil_ws.sent_data.clear
+
+    # Advancing the simulation also flushes notifications
+    @demi_engine.advance_one_tick
+
+    assert_equal [], murray_ws.sent_data
+    assert_equal [], sam_ws.sent_data
+    assert_equal [], phil_ws.sent_data
+
+    demi_phil = @demi_engine.item_by_name("phil")
+    demi_phil.move_to_position("right here#2,3")
+    @demi_engine.flush_notifications
+
+    # Phil and sam should see phil move. But murray shouldn't - he's
+    # in a different room.  Phil's display should pan to match his
+    # position, though.
+    assert_equal [], murray_ws.sent_data
+    assert_equal [[Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE, "phil", { "old_position" => "right here#2,2", "position" => "right here#2,3", "options" => {}}]], sam_ws.parsed_sent_data
+    assert_equal [[Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE, "phil", { "old_position" => "right here#2,2", "position" => "right here#2,3", "options" => {}}],
+                  [Pixiurge::Protocol::Outgoing::DISPLAY_PAN_TO_PIXEL, 64, 96, {}]], phil_ws.parsed_sent_data
+  end
+
   def test_cross_location_movement_visibility
     con = connector
 

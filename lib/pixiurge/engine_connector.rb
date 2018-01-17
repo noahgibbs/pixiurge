@@ -330,8 +330,8 @@ class Pixiurge::EngineConnector
         set_player_backdrop(acting_player, data["new_position"], @displayables[loc_name])
       else
         # Player moved in same location, pan to new position
-        actor_do.move_for_player(acting_player, data["old_position"], data["new_position"], { "duration" => 0.5 })
-        acting_player.send_instant_pan_to_pixel_offset spritesheet[:tilewidth] * x, spritesheet[:tileheight] * y
+        acting_player.move_displayable(actor_do, data["old_position"], data["new_position"])
+        acting_player.pan_to_coordinates(x, y)
       end
     end
 
@@ -344,7 +344,7 @@ class Pixiurge::EngineConnector
       # First case: moving player remained in the same room - update movement for anybody *in* that room
       if data["old_location"] == data["new_location"]
         next unless player_loc_name == data["new_location"]
-        actor_do.move_for_player(player, data["old_position"], data["new_position"], { "duration" => 0.5 })
+        actor_do.move_for_player(player, data["old_position"], data["new_position"], {})
 
         # Second case: moving player changed rooms and we're in the old one
       elsif player_loc_name == data["old_location"]

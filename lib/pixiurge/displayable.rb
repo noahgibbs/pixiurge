@@ -131,7 +131,7 @@ class Pixiurge::Displayable
   # @param new_position [String] The new/ending position string
   # @return [void]
   # @since 0.1.0
-  def move_for_player(player, old_position, new_position)
+  def move_for_player(player, old_position, new_position, options = {})
     raise "Please override this method!"
     #player.message ["displayMoveStackToPixel", self.spritestack[:name], pixel_x, pixel_y, { "duration" => time_to_walk } ]
   end
