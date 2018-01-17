@@ -38,6 +38,10 @@ module Pixiurge::Display
       @built_objects << builder.built_obj
     end
 
+    def particle_source(params)
+      @built_objects << ::Pixiurge::Display::ParticleSource.new(params, name: @item.name, demi_item: @item, engine_connector: @engine_connector)
+    end
+
     def invisible
       @built_objects << ::Pixiurge::Display::Invisible.new(name: @item.name, demi_item: @item, engine_connector: @engine_connector)
     end
