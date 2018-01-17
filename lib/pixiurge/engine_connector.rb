@@ -321,13 +321,6 @@ class Pixiurge::EngineConnector
 
     actor_do.position = data["new_position"]
 
-    # An object just moved to a new location - show it to everybody in
-    # the new location, if it's a displayable location. Except the player whose
-    # body it is, if it's a player.
-    if data["old_location"] != data["new_location"]
-      show_displayable_to_players(actor_do, :except => [@players[data["actor"]]].compact) if loc_do
-    end
-
     # Is it a player that just moved? If so, update them specifically.
     acting_player = @players[data["actor"]]
     if acting_player
