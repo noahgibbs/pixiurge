@@ -54,6 +54,7 @@ DSL
 
     pixi_app = get_pixi_app(demi_engine)  # Initialize @pixi_app and mock websocket
     pixi_app.mem_storage.account_state["bob"] = { "account" => { "username" => "bob", "salt" => "fake_salt", "hashed" => "fake_hash" } }
+    pixi_app.mem_storage.account_state["sam"] = { "account" => { "username" => "sam", "salt" => "fake_salt2", "hashed" => "fake_hash2" } }
 
     @pixi_connector = Pixiurge::EngineConnector.new demi_engine, pixi_app
   end
@@ -99,4 +100,36 @@ DSL
     assert socket_closed, "Pixiurge has closed the old socket after the new socket logged in with the same account"
   end
 
+  def test_multiple_login_allowed_with_multiple_accounts
+    socket_closed = false
+
+    con = connector
+    ws.open
+    ws.on(:close) { socket_closed = true }
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+
+    messages = ws.parsed_sent_data
+    assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_TMX, "right here", "tmx/magecity_cc0_lorestrome.json" ], messages[3]
+    assert_equal 4, ws.sent_data.size
+    ws.clear_sent_data
+
+    # Now, create another login from sam
+    next_ws = additional_websocket
+    next_ws.on(:close) { socket_closed = true }
+    next_ws.open
+    next_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "sam", "bcrypted" => "fake_hash2" } ])
+
+    # We should see login messages and no closing of either socket
+    messages = next_ws.parsed_sent_data
+    assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_TMX, "right here", "tmx/magecity_cc0_lorestrome.json" ], messages[3]
+    assert_equal 4, next_ws.sent_data.size
+
+    assert_equal false, socket_closed
+  end
 end
