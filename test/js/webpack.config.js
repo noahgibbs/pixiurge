@@ -30,7 +30,7 @@ module.exports = {
         extensions: [".web.coffee", ".web.js", ".coffee", ".js"],
         symlinks: true
     },
-    node: {
+    node: {  // This section is a fix for a source-map-support bug: https://github.com/evanw/node-source-map-support/issues/155
         fs: "empty",
         module: "empty"
     }
