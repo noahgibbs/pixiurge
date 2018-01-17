@@ -11,30 +11,27 @@ module Pixiurge::Protocol; end
 #
 # @since 0.1.0
 module Pixiurge::Protocol::Incoming
-  # This is the JSON specifier for registering an account using the
-  # built-in auth protocol. If used, it's the second string entry in
-  # its JSON array. The final entry in the array is a
-  # Hash{String=>String} with the keys "username", "salt" and
-  # "bcrypted".
+  # Register an account using the built-in auth protocol.
+  #
+  # @example [ AUTH_REGISTER_ACCOUNT, { "username" => username, "salt" => salt, "bcrypted" => hash } ]
   #
   # @since 0.1.0
   AUTH_REGISTER_ACCOUNT = "register_account"
 
-  # This is the JSON specifier for logging into an account using the
-  # built-in auth protocol. If used, it's the second string entry in
-  # its JSON array. The final entry in the array is a
-  # Hash{String=>String} with the keys "username" and "bcrypted".
-  # Note that the bcrypted value implicitly uses the salt, which does
-  # not need to be explicitly sent to the server - BCrypt handles
-  # that.
+  # Log into an account using the built-in auth protocol. If used,
+  # it's the second string entry in its JSON array.  Note that the
+  # bcrypted value implicitly uses the salt, which does not need to be
+  # explicitly sent to the server. BCrypt handles that part.
+  #
+  # @example [ AUTH_LOGIN, { "username" => username, "bcrypted" => hash } ]
   #
   # @since 0.1.0
   AUTH_LOGIN = "hashed_login"
 
-  # This is the JSON specifier for logging getting an account's
-  # cryptographic salt using the built-in auth protocol. If used, it's
-  # the second string entry in its JSON array. The final entry in the
-  # array is a Hash{String=>String} with the key "username".
+  # Get an account's cryptographic salt for the built-in auth
+  # protocol.
+  #
+  # @example [ AUTH_GET_SALT, { "username" => username } ]
   #
   # @since 0.1.0
   AUTH_GET_SALT = "get_salt"
@@ -46,76 +43,84 @@ end
 # @since 0.1.0
 module Pixiurge::Protocol::Outgoing
 
-  # This is the JSON message type for a failed registration in the
-  # built-in AuthenticatedApp's protocol. It is an initial string in
-  # its JSON array. There is a Hash{String=>String} following in the
-  # same message. The key "message" holds a human-readable reason for
-  # the failure.
+  # Failed registration in the built-in AuthenticatedApp's
+  # protocol. The key "message" holds a human-readable reason for the
+  # failure.
+  #
+  # @example [ AUTH_FAILED_REGISTRATION, { "message" => "That name already exists" } ]
   #
   # @since 0.1.0
   AUTH_FAILED_REGISTRATION = "failed_registration"
 
-  # This is the JSON message type for a failed login in the built-in
-  # AuthenticatedApp's protocol. It is an initial string in its JSON
-  # array. There is a Hash{String=>String} following in the same
-  # message. The key "message" holds a human-readable reason for the
-  # failure. This message is also sent when getting the user's salt
-  # fails, usually because no such user exists.
+  # Failed login or failure to get login information in the built-in
+  # AuthenticatedApp's protocol. The key "message" holds a
+  # human-readable reason for the failure. This message is sent when
+  # getting the user's salt fails, usually because no such user
+  # exists.
+  #
+  # @example [ AUTH_FAILED_LOGIN, { "message" => "Wrong password" } ]
   #
   # @since 0.1.0
   AUTH_FAILED_LOGIN = "failed_login"
 
-  # This is the JSON message type for a successful registration in the
-  # built-in AuthenticatedApp's protocol. It is an initial string in
-  # its JSON array. The second member of the JSON array is a hash with
-  # the key "username" with the account username as the value.
+  # Successful registration in the built-in AuthenticatedApp's
+  # protocol.
+  #
+  # @example [ AUTH_REGISTRATION, { "username" => username } ]
   #
   # @since 0.1.0
   AUTH_REGISTRATION = "registration"
 
-  # This is the JSON message type for a successful login in the
-  # built-in AuthenticatedApp's protocol. It is an initial string in
-  # its JSON array. The second member of the JSON array is a hash with
-  # the key "username" with the account username as the value.
+  # Successful login in the built-in AuthenticatedApp's protocol.
+  #
+  # @example [ AUTH_LOGIN, { "username" => username } ]
   #
   # @since 0.1.0
   AUTH_LOGIN = "login"
 
-  # This is the JSON message type for a successful query of the salt
-  # in the built-in AuthenticatedApp's protocol. It is an initial
-  # string in its JSON array. The second member of the JSON array is a
-  # hash with the key "salt" with the account's salt as the value.
+  # Successful query of the salt in the built-in AuthenticatedApp's
+  # protocol.
+  #
+  # @example [ AUTH_SALT, { "salt" => cryptographic_salt } ]
   #
   # @since 0.1.0
   AUTH_SALT = "login_salt"
 
-  # Used to show that the socket is being intentionally disconnected.
-  # Possible reasons include a user request to disconnect, another
-  # login from the same account or an administrator requesting the
-  # disconnect. After the message type, there is a hash argument. The
-  # "message" key holds a human-readable message with the reason for
-  # the disconnection.
+  # Let the front end know that the socket is being intentionally
+  # disconnected. Possible reasons include a user request to
+  # disconnect, another login from the same account or an
+  # administrator requesting the disconnect. After the message type,
+  # there is a hash argument. The "message" key holds a human-readable
+  # message with the reason for the disconnection.
+  #
+  # @example [ DISCONNECTION, { "message" => "Administrator has blocked this IP address." } ]
   #
   # @since 0.1.0
   DISCONNECTION = "disconnect"
 
-  # This is the message used to set up an initial display with
-  # appropriate settings. It should normally never be sent a second
-  # time. This should contain display-relevant and server-variable
+  # Set up an initial display with appropriate settings. It should
+  # normally never be sent a second time on the same connection. The
+  # final hash should contain display-relevant and server-variable
   # settings like how fast in milliseconds a tick is.
+  #
+  # @example [ DISPLAY_INIT, { "ms_per_tick" => 300, "height" => 256, "width" => 256 } ]
   #
   # @since 0.1.0
   DISPLAY_INIT = "display_init"
 
-  # This message indicates that all currently shown displayables of
-  # any description should be hidden. Items, agents, locations and
-  # effects are all removed, animations should be cancelled and any
-  # hints or preloads no longer apply.
+  # All currently shown displayables of any description should be
+  # hidden. Items, agents, locations and effects are all removed,
+  # animations should be cancelled and any hints or preloads no longer
+  # apply.
+  #
+  # @example [ DISPLAY_HIDE_ALL ]
   #
   # @since 0.1.0
   DISPLAY_HIDE_ALL = "display_hide_all"
 
   # Hide a single Displayable by name.
+  #
+  # @example [ DISPLAY_HIDE_DISPLAYABLE, "item name" ]
   #
   # @since 0.1.0
   DISPLAY_HIDE_DISPLAYABLE = "display_hide"
@@ -124,6 +129,24 @@ module Pixiurge::Protocol::Outgoing
   # type are a String name for the item and then a Hash of additional
   # details, such as the URL for a TMX item.
   #
+  # @example [ DISPLAY_SHOW_DISPLAYABLE, "my room", { "type" => "tmx", "url" => "tmx/my_room_map.json" } ]
+  #
   # @since 0.1.0
   DISPLAY_SHOW_DISPLAYABLE = "display_show"
+
+  # Move a Displayable object within a location. The arguments that
+  # follow are the Displayable's name, then a hash with the keys
+  # "old_position", "position" and "options".
+  #
+  # @example [ DISPLAY_MOVE_DISPLAYABLE, "item name", { "old_position" => "location_name#23,4", "position" => "location_name#23,5", "options" => { "locomotion" => "brachiating" } } ]
+  #
+  # @since 0.1.0
+  DISPLAY_MOVE_DISPLAYABLE = "display_move"
+
+  # Pan the viewpoint's center to the pixel offset given.
+  #
+  # @example [ DISPLAY_PAN_TO_PIXEL, item_name, x_pixel, y_pixel, options ]
+  #
+  # @since 0.1.0
+  DISPLAY_PAN_TO_PIXEL = "display_pan"
 end
