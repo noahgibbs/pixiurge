@@ -22,6 +22,7 @@ module.exports = {
           { test: /\.coffee$/, loader: "coffee-loader" }
         ]
     },
+    devtool: "source-map",  // Generate source maps
     resolve: {
         modules: [
                   "node_modules"

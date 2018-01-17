@@ -22,3 +22,4 @@ releases/pixiurge-v*pre.*js*
 accounts.json
 accounts.json.old
 pixiurge-*.gem
+test/js/*bundle.js.map
