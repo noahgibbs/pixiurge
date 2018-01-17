@@ -12,7 +12,8 @@ log/*.txt
 incoming_traffic.json
 outgoing_traffic.json
 node_modules
-test/js/*bundle.js
+test/js/test_server/*bundle.js
+test/js/test_server/*bundle.js.map
 releases/pixiurge-combined.*
 releases/*combined*pre.js
 releases/*combined*pre.js.map
@@ -22,4 +23,4 @@ releases/pixiurge-v*pre.*js*
 accounts.json
 accounts.json.old
 pixiurge-*.gem
-test/js/*bundle.js.map
+

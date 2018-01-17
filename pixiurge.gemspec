@@ -28,6 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "yard", "~> 0.9"
   spec.add_development_dependency "redcarpet", "~> 3.4"
   spec.add_development_dependency "github-markdown", "~> 0.6"
+  spec.add_development_dependency "sinatra", "~> 2.0"
 
   spec.add_runtime_dependency "demiurge", "~> 0.4"
   spec.add_runtime_dependency "thin", "~> 1.7"
