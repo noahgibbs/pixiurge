@@ -1,43 +1,29 @@
-require "demiurge/tmx"
-require "pixiurge/displayable"
-
-# A Humanoid corresponds pretty specifically to The Mana Project's idea of a humanoid.
-# It has layers of equipment sprites over a pretty specific base animation.
-# You can get humanoid spritesheets from Mana Project games (The Mana World,
-# Evol Online, etc.) and/or from the Liberated Pixel Cup. Check OpenGameArt
-# for LPC-compatible artwork for more.
+# A Humanoid corresponds pretty specifically to The Mana Project's
+# idea of a humanoid.  It has layers of equipment sprites over a
+# pretty specific base animation.  You can get humanoid spritesheets
+# from Mana Project games (The Mana World, Evol Online, etc.) and/or
+# from the Liberated Pixel Cup. Check OpenGameArt for LPC-compatible
+# artwork for more.
+#
+# @todo Right now the assumptions about image files and animations are
+#   really specific. It's not just specific to Mana Project
+#   conventions or LPC, but even more rigidly the same as Source of
+#   Tales. It should be possible to give a series of images as an
+#   override somehow to use single spritesheets versus multiple
+#   smaller animation spritesheets at the very least.
 #
 # @since 0.1.0
 class Pixiurge::Display::Humanoid < ::Pixiurge::Displayable
-  attr_reader :spritesheet
-  attr_reader :spritestack
-
-  def initialize layers, name:, demi_item:, format: "png", engine_connector:
+  def initialize layers, name:, demi_item:, engine_connector:
     super name: name, demi_item: demi_item, engine_connector: engine_connector
 
-    @format = format
-
-    # This idea of layers and specific animations is *very* specific
-    # to ManaSource-style or Liberated-Pixel-Cup-style humanoid
-    # animations.
-    @layers = layers.map { |layer| layer.is_a?(String) ? { name: layer } : layer }
+    @layers = layers.map { |layer| layer.is_a?(String) ? { "name" => layer } : layer }
     prev_offset = 0
     @layers.each do |layer|
       layer[:filename] ||= layer[:name]  # No filename? Default to name.
       layer[:offset] ||= prev_offset + HUMANOID_IMAGE_OFFSETS[:total]
       prev_offset = layer[:offset]
     end
-
-    @spritesheet = build_spritesheet_json
-    @spritestack = build_spritestack_json
-  end
-
-  def stack_name
-    name
-  end
-
-  def sheet_name
-    "#{name}_spritesheet"
   end
 
   def build_spritesheet_json
@@ -45,7 +31,7 @@ class Pixiurge::Display::Humanoid < ::Pixiurge::Displayable
       [
         {
           :firstgid => HUMANOID_IMAGE_OFFSETS[:walkcycle] + layer[:offset],
-          :image => "/sprites/#{layer[:name]}_walkcycle.#{@format}",
+          :image => "/sprites/#{layer[:name]}_walkcycle.png",
           :imagewidth => 576,
           :imageheight => 256,
           :tilewidth => 64,
@@ -55,7 +41,7 @@ class Pixiurge::Display::Humanoid < ::Pixiurge::Displayable
         },
         {
           :firstgid => HUMANOID_IMAGE_OFFSETS[:hurt] + layer[:offset],
-          :image => "/sprites/#{layer[:name]}_hurt.#{@format}",
+          :image => "/sprites/#{layer[:name]}_hurt.png",
           :imagewidth => 384,
           :imageheight => 64,
           :tilewidth => 64,
@@ -65,7 +51,7 @@ class Pixiurge::Display::Humanoid < ::Pixiurge::Displayable
         },
         {
           :firstgid => HUMANOID_IMAGE_OFFSETS[:slash] + layer[:offset],
-          :image => "/sprites/#{layer[:name]}_slash.#{@format}",
+          :image => "/sprites/#{layer[:name]}_slash.png",
           :imagewidth => 384,
           :imageheight => 256,
           :tilewidth => 64,
@@ -75,7 +61,7 @@ class Pixiurge::Display::Humanoid < ::Pixiurge::Displayable
         },
         {
           :firstgid => HUMANOID_IMAGE_OFFSETS[:spellcast] + layer[:offset],
-          :image => "/sprites/#{layer[:name]}_spellcast.#{@format}",
+          :image => "/sprites/#{layer[:name]}_spellcast.png",
           :imagewidth => 448,
           :imageheight => 256,
           :tilewidth => 64,
