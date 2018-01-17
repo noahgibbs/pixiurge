@@ -1,3 +1,5 @@
+require('source-map-support').install();
+
 const assert = require('assert');
 
 describe('Simple Pixiurge configuration', function() {

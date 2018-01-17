@@ -29,5 +29,9 @@ module.exports = {
         ],
         extensions: [".web.coffee", ".web.js", ".coffee", ".js"],
         symlinks: true
+    },
+    node: {
+        fs: "empty",
+        module: "empty"
     }
 };
