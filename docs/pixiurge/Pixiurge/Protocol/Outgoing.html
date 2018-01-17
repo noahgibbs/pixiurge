@@ -281,6 +281,41 @@ hash with the key &quot;salt&quot; with the account&#39;s salt as the value.</p>
       </dt>
       <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>login_salt</span><span class='tstring_end'>&quot;</span></span></pre></dd>
     
+      <dt id="DISCONNECTION-constant" class="">DISCONNECTION =
+        <div class="docstring">
+  <div class="discussion">
+    <p>Used to show that the socket is being intentionally disconnected.
+Possible reasons include a user request to disconnect, another
+login from the same account or an administrator requesting the
+disconnect. After the message type, there is a hash argument. The
+&quot;message&quot; key holds a human-readable message with the reason for
+the disconnection.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>disconnect</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+    
       <dt id="DISPLAY_INIT-constant" class="">DISPLAY_INIT =
         <div class="docstring">
   <div class="discussion">
@@ -314,14 +349,13 @@ settings like how fast in milliseconds a tick is.</p>
       </dt>
       <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_init</span><span class='tstring_end'>&quot;</span></span></pre></dd>
     
-      <dt id="LOAD_SPRITESHEET-constant" class="">LOAD_SPRITESHEET =
+      <dt id="DISPLAY_HIDE_ALL-constant" class="">DISPLAY_HIDE_ALL =
         <div class="docstring">
   <div class="discussion">
-    <p>This message tells the client to load a JSON spritesheet by name
-as an asset. By passing the asset name (not the full asset), this
-slows down initial loading from an empty cache but speeds up
-future cached requests - it&#39;s hard to cache or compress assets
-that are sent inside Websocket messages.</p>
+    <p>This message indicates that all currently shown displayables of
+any description should be hidden. Items, agents, locations and
+effects are all removed, animations should be cancelled and any
+hints or preloads no longer apply.</p>
 
 
   </div>
@@ -346,12 +380,12 @@ that are sent inside Websocket messages.</p>
 
 </div>
       </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_load_spritesheet</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_hide_all</span><span class='tstring_end'>&quot;</span></span></pre></dd>
     
-      <dt id="UNLOAD_SPRITESHEET-constant" class="">UNLOAD_SPRITESHEET =
+      <dt id="DISPLAY_HIDE-constant" class="">DISPLAY_HIDE =
         <div class="docstring">
   <div class="discussion">
-    <p>This message tells the client a spritesheet is no longer in use.</p>
+    <p>Hide a single Displayable by name.</p>
 
 
   </div>
@@ -376,16 +410,14 @@ that are sent inside Websocket messages.</p>
 
 </div>
       </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_unload_spritesheet</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_hide</span><span class='tstring_end'>&quot;</span></span></pre></dd>
     
-      <dt id="LOAD_SPRITESTACK-constant" class="">LOAD_SPRITESTACK =
+      <dt id="DISPLAY_SHOW_DISPLAYABLE-constant" class="">DISPLAY_SHOW_DISPLAYABLE =
         <div class="docstring">
   <div class="discussion">
-    <p>This message tells the client to load and display a spritestack by
-name as an asset. By passing the asset name (not the full asset),
-this slows down initial loading from an empty cache but speeds up
-future cached requests - it&#39;s hard to cache or compress assets
-that are sent inside Websocket messages.</p>
+    <p>Show a Displayable object. The arguments following the message
+type are a String name for the item and then a Hash of additional
+details, such as the URL for a TMX item.</p>
 
 
   </div>
@@ -410,38 +442,7 @@ that are sent inside Websocket messages.</p>
 
 </div>
       </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_load_spritestack</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-    
-      <dt id="UNLOAD_SPRITESTACK-constant" class="">UNLOAD_SPRITESTACK =
-        <div class="docstring">
-  <div class="discussion">
-    <p>This message tells the client a spritestack is no longer in use
-and should be visually hidden and removed.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div>
-      </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_unload_spritesheet</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>display_show</span><span class='tstring_end'>&quot;</span></span></pre></dd>
     
   </dl>
 

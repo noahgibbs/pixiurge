@@ -103,11 +103,24 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>A Humanoid corresponds pretty specifically to The Mana Project&#39;s idea of a humanoid.
-It has layers of equipment sprites over a pretty specific base animation.
-You can get humanoid spritesheets from Mana Project games (The Mana World,
-Evol Online, etc.) and/or from the Liberated Pixel Cup. Check OpenGameArt
-for LPC-compatible artwork for more.</p>
+    
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>Right now the assumptions about image files and animations are
+really specific. It&#39;s not just specific to Mana Project
+conventions or LPC, but even more rigidly the same as Source of
+Tales. It should be possible to give a series of images as an
+override somehow to use single spritesheets versus multiple
+smaller animation spritesheets at the very least.</p>
+</div>
+  </div>
+
+<p>A Humanoid corresponds pretty specifically to The Mana Project&#39;s
+idea of a humanoid.  It has layers of equipment sprites over a
+pretty specific base animation.  You can get humanoid spritesheets
+from Mana Project games (The Mana World, Evol Online, etc.) and/or
+from the Liberated Pixel Cup. Check OpenGameArt for LPC-compatible
+artwork for more.</p>
 
 
   </div>
@@ -221,68 +234,9 @@ for LPC-compatible artwork for more.</p>
 
 
 
-  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
-  <ul class="summary">
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#spritesheet-instance_method" title="#spritesheet (instance method)">#<strong>spritesheet</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#spritestack-instance_method" title="#spritestack (instance method)">#<strong>spritestack</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-  </ul>
 
 
-
-  
+  <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="../Displayable.html" title="Pixiurge::Displayable (class)">Pixiurge::Displayable</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../Displayable.html#block_height-instance_method" title="Pixiurge::Displayable#block_height (method)">#block_height</a></span>, <span class='object_link'><a href="../Displayable.html#block_width-instance_method" title="Pixiurge::Displayable#block_width (method)">#block_width</a></span>, <span class='object_link'><a href="../Displayable.html#demi_item-instance_method" title="Pixiurge::Displayable#demi_item (method)">#demi_item</a></span>, <span class='object_link'><a href="../Displayable.html#location_block_height-instance_method" title="Pixiurge::Displayable#location_block_height (method)">#location_block_height</a></span>, <span class='object_link'><a href="../Displayable.html#location_block_width-instance_method" title="Pixiurge::Displayable#location_block_width (method)">#location_block_width</a></span>, <span class='object_link'><a href="../Displayable.html#location_displayable-instance_method" title="Pixiurge::Displayable#location_displayable (method)">#location_displayable</a></span>, <span class='object_link'><a href="../Displayable.html#location_name-instance_method" title="Pixiurge::Displayable#location_name (method)">#location_name</a></span>, <span class='object_link'><a href="../Displayable.html#name-instance_method" title="Pixiurge::Displayable#name (method)">#name</a></span>, <span class='object_link'><a href="../Displayable.html#position-instance_method" title="Pixiurge::Displayable#position (method)">#position</a></span>, <span class='object_link'><a href="../Displayable.html#x-instance_method" title="Pixiurge::Displayable#x (method)">#x</a></span>, <span class='object_link'><a href="../Displayable.html#y-instance_method" title="Pixiurge::Displayable#y (method)">#y</a></span></p>
@@ -397,7 +351,7 @@ for LPC-compatible artwork for more.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(layers, name:, demi_item:, format: &quot;png&quot;, engine_connector:)  &#x21d2; Humanoid </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(layers, name:, demi_item:, engine_connector:)  &#x21d2; Humanoid </a>
     
 
     
@@ -466,50 +420,6 @@ for LPC-compatible artwork for more.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#sheet_name-instance_method" title="#sheet_name (instance method)">#<strong>sheet_name</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#stack_name-instance_method" title="#stack_name (instance method)">#<strong>stack_name</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#walk_to_loc_coords-instance_method" title="#walk_to_loc_coords (instance method)">#<strong>walk_to_loc_coords</strong>(location, x, y, options = {})  &#x21d2; Object </a>
     
 
@@ -550,7 +460,7 @@ for LPC-compatible artwork for more.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(layers, name:, demi_item:, format: &quot;png&quot;, engine_connector:)  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::Display::Humanoid (class)">Humanoid</a></span></tt> 
+    #<strong>initialize</strong>(layers, name:, demi_item:, engine_connector:)  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::Display::Humanoid (class)">Humanoid</a></span></tt> 
   
 
   
@@ -587,8 +497,6 @@ for LPC-compatible artwork for more.</p>
       <pre class="lines">
 
 
-15
-16
 17
 18
 19
@@ -599,35 +507,21 @@ for LPC-compatible artwork for more.</p>
 24
 25
 26
-27
-28
-29
-30
-31
-32
-33</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 17</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_layers'>layers</span><span class='comma'>,</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>demi_item:</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>engine_connector:</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_layers'>layers</span><span class='comma'>,</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>demi_item:</span><span class='comma'>,</span> <span class='label'>engine_connector:</span>
   <span class='kw'>super</span> <span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>demi_item:</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='id identifier rubyid_engine_connector'>engine_connector</span>
 
-  <span class='ivar'>@format</span> <span class='op'>=</span> <span class='id identifier rubyid_format'>format</span>
-
-  <span class='comment'># This idea of layers and specific animations is *very* specific
-</span>  <span class='comment'># to ManaSource-style or Liberated-Pixel-Cup-style humanoid
-</span>  <span class='comment'># animations.
-</span>  <span class='ivar'>@layers</span> <span class='op'>=</span> <span class='id identifier rubyid_layers'>layers</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_layer'>layer</span><span class='op'>|</span> <span class='id identifier rubyid_layer'>layer</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='label'>name:</span> <span class='id identifier rubyid_layer'>layer</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='id identifier rubyid_layer'>layer</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@layers</span> <span class='op'>=</span> <span class='id identifier rubyid_layers'>layers</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_layer'>layer</span><span class='op'>|</span> <span class='id identifier rubyid_layer'>layer</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_layer'>layer</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='id identifier rubyid_layer'>layer</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_prev_offset'>prev_offset</span> <span class='op'>=</span> <span class='int'>0</span>
   <span class='ivar'>@layers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_layer'>layer</span><span class='op'>|</span>
     <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:filename</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span>  <span class='comment'># No filename? Default to name.
 </span>    <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span> <span class='op'>||=</span> <span class='id identifier rubyid_prev_offset'>prev_offset</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="#HUMANOID_IMAGE_OFFSETS-constant" title="Pixiurge::Display::Humanoid::HUMANOID_IMAGE_OFFSETS (constant)">HUMANOID_IMAGE_OFFSETS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:total</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_prev_offset'>prev_offset</span> <span class='op'>=</span> <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
-
-  <span class='ivar'>@spritesheet</span> <span class='op'>=</span> <span class='id identifier rubyid_build_spritesheet_json'>build_spritesheet_json</span>
-  <span class='ivar'>@spritestack</span> <span class='op'>=</span> <span class='id identifier rubyid_build_spritestack_json'>build_spritestack_json</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -635,123 +529,6 @@ for LPC-compatible artwork for more.</p>
 </div>
   
 </div>
-
-  <div id="instance_attr_details" class="attr_details">
-    <h2>Instance Attribute Details</h2>
-    
-      
-      <span id=""></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="spritesheet-instance_method">
-  
-    #<strong>spritesheet</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-12
-13
-14</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 12</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_spritesheet'>spritesheet</span>
-  <span class='ivar'>@spritesheet</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="spritestack-instance_method">
-  
-    #<strong>spritestack</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-13
-14
-15</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 13</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_spritestack'>spritestack</span>
-  <span class='ivar'>@spritestack</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 
   <div id="class_method_details" class="method_details_list">
@@ -800,24 +577,24 @@ the same spritesheet.</p>
       <pre class="lines">
 
 
-229
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243</pre>
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_animation_with_offset'>animation_with_offset</span><span class='lparen'>(</span><span class='id identifier rubyid_prefix'>prefix</span><span class='comma'>,</span> <span class='id identifier rubyid_offset'>offset</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_anim'>anim</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -884,21 +661,21 @@ the same spritesheet.</p>
       <pre class="lines">
 
 
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 105</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_animation_messages'>animation_messages</span> <span class='id identifier rubyid_anim_name'>anim_name</span>
   <span class='comment'># For displayStartAnimation
@@ -956,6 +733,20 @@ the same spritesheet.</p>
       <pre class="lines">
 
 
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
 43
 44
 45
@@ -996,31 +787,17 @@ the same spritesheet.</p>
 80
 81
 82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_spritesheet_json'>build_spritesheet_json</span>
   <span class='id identifier rubyid_images'>images</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='ivar'>@layers</span><span class='period'>.</span><span class='id identifier rubyid_zip'>zip</span><span class='lparen'>(</span><span class='int'>0</span><span class='op'>..</span><span class='lparen'>(</span><span class='ivar'>@layers</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>-</span> <span class='int'>1</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_flat_map'>flat_map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_layer'>layer</span><span class='comma'>,</span> <span class='id identifier rubyid_index'>index</span><span class='op'>|</span>
     <span class='lbracket'>[</span>
       <span class='lbrace'>{</span>
         <span class='symbol'>:firstgid</span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#HUMANOID_IMAGE_OFFSETS-constant" title="Pixiurge::Display::Humanoid::HUMANOID_IMAGE_OFFSETS (constant)">HUMANOID_IMAGE_OFFSETS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:walkcycle</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_walkcycle.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@format</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_walkcycle.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
         <span class='symbol'>:imagewidth</span> <span class='op'>=&gt;</span> <span class='int'>576</span><span class='comma'>,</span>
         <span class='symbol'>:imageheight</span> <span class='op'>=&gt;</span> <span class='int'>256</span><span class='comma'>,</span>
         <span class='symbol'>:tilewidth</span> <span class='op'>=&gt;</span> <span class='int'>64</span><span class='comma'>,</span>
@@ -1030,7 +807,7 @@ the same spritesheet.</p>
 </span>      <span class='rbrace'>}</span><span class='comma'>,</span>
       <span class='lbrace'>{</span>
         <span class='symbol'>:firstgid</span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#HUMANOID_IMAGE_OFFSETS-constant" title="Pixiurge::Display::Humanoid::HUMANOID_IMAGE_OFFSETS (constant)">HUMANOID_IMAGE_OFFSETS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:hurt</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_hurt.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@format</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_hurt.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
         <span class='symbol'>:imagewidth</span> <span class='op'>=&gt;</span> <span class='int'>384</span><span class='comma'>,</span>
         <span class='symbol'>:imageheight</span> <span class='op'>=&gt;</span> <span class='int'>64</span><span class='comma'>,</span>
         <span class='symbol'>:tilewidth</span> <span class='op'>=&gt;</span> <span class='int'>64</span><span class='comma'>,</span>
@@ -1040,7 +817,7 @@ the same spritesheet.</p>
       <span class='rbrace'>}</span><span class='comma'>,</span>
       <span class='lbrace'>{</span>
         <span class='symbol'>:firstgid</span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#HUMANOID_IMAGE_OFFSETS-constant" title="Pixiurge::Display::Humanoid::HUMANOID_IMAGE_OFFSETS (constant)">HUMANOID_IMAGE_OFFSETS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:slash</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_slash.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@format</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_slash.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
         <span class='symbol'>:imagewidth</span> <span class='op'>=&gt;</span> <span class='int'>384</span><span class='comma'>,</span>
         <span class='symbol'>:imageheight</span> <span class='op'>=&gt;</span> <span class='int'>256</span><span class='comma'>,</span>
         <span class='symbol'>:tilewidth</span> <span class='op'>=&gt;</span> <span class='int'>64</span><span class='comma'>,</span>
@@ -1050,7 +827,7 @@ the same spritesheet.</p>
       <span class='rbrace'>}</span><span class='comma'>,</span>
       <span class='lbrace'>{</span>
         <span class='symbol'>:firstgid</span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="#HUMANOID_IMAGE_OFFSETS-constant" title="Pixiurge::Display::Humanoid::HUMANOID_IMAGE_OFFSETS (constant)">HUMANOID_IMAGE_OFFSETS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:spellcast</span><span class='rbracket'>]</span> <span class='op'>+</span> <span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:offset</span><span class='rbracket'>]</span><span class='comma'>,</span>
-        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spellcast.</span><span class='embexpr_beg'>#{</span><span class='ivar'>@format</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+        <span class='symbol'>:image</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/sprites/</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_layer'>layer</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spellcast.png</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
         <span class='symbol'>:imagewidth</span> <span class='op'>=&gt;</span> <span class='int'>448</span><span class='comma'>,</span>
         <span class='symbol'>:imageheight</span> <span class='op'>=&gt;</span> <span class='int'>256</span><span class='comma'>,</span>
         <span class='symbol'>:tilewidth</span> <span class='op'>=&gt;</span> <span class='int'>64</span><span class='comma'>,</span>
@@ -1114,28 +891,28 @@ the same spritesheet.</p>
       <pre class="lines">
 
 
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
 99
 100
 101
 102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117</pre>
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_build_spritestack_json'>build_spritestack_json</span>
   <span class='id identifier rubyid_layers'>layers</span> <span class='op'>=</span> <span class='ivar'>@layers</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_layer'>layer</span><span class='op'>|</span>
@@ -1200,6 +977,20 @@ the same spritesheet.</p>
       <pre class="lines">
 
 
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
 132
 133
 134
@@ -1217,24 +1008,10 @@ the same spritesheet.</p>
 146
 147
 148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162
-163</pre>
+149</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_for_player'>move_for_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_loc_name'>old_loc_name</span><span class='comma'>,</span> <span class='id identifier rubyid_old_x'>old_x</span><span class='comma'>,</span> <span class='id identifier rubyid_old_y'>old_y</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>TmxLocation</span><span class='period'>.</span><span class='id identifier rubyid_position_to_loc_coords'>position_to_loc_coords</span><span class='lparen'>(</span><span class='id identifier rubyid_old_position'>old_position</span><span class='rparen'>)</span>
@@ -1312,20 +1089,20 @@ the same spritesheet.</p>
       <pre class="lines">
 
 
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224</pre>
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pixel_coords_for_tile'>pixel_coords_for_tile</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='rparen'>)</span>
   <span class='comment'># When in doubt, hardcode w/ ManaSource values...
@@ -1337,114 +1114,6 @@ the same spritesheet.</p>
     <span class='id identifier rubyid_pixel_y'>pixel_y</span> <span class='op'>=</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_loc_sheet'>loc_sheet</span><span class='lbracket'>[</span><span class='symbol'>:tileheight</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_pixel_x'>pixel_x</span><span class='comma'>,</span> <span class='id identifier rubyid_pixel_y'>pixel_y</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="sheet_name-instance_method">
-  
-    #<strong>sheet_name</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-39
-40
-41</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 39</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_sheet_name'>sheet_name</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>_spritesheet</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="stack_name-instance_method">
-  
-    #<strong>stack_name</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-35
-36
-37</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 35</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_stack_name'>stack_name</span>
-  <span class='id identifier rubyid_name'>name</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1494,6 +1163,20 @@ Options:
       <pre class="lines">
 
 
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
 169
 170
 171
@@ -1523,24 +1206,10 @@ Options:
 195
 196
 197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212</pre>
+198</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/humanoid.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_walk_to_loc_coords'>walk_to_loc_coords</span><span class='lparen'>(</span><span class='id identifier rubyid_location'>location</span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_messages'>messages</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>

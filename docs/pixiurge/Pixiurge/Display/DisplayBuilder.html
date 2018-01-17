@@ -101,12 +101,24 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
+    <p>The DisplayBuilder class handles the Display DSL in Demiurge
+Display blocks for Pixiurge.  It will pull the &quot;display&quot; block
+from a Demiurge item to create a Pixiurge Displayable for it.</p>
+
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'>DisplayBuilder</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Pixiurge::Display::DisplayBuilder#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='id identifier rubyid_connector'>connector</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_displayables'>displayables</span> <span class='op'>=</span> <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_built_objects'>built_objects</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -152,7 +164,92 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>The objects built by this DisplayBuilder object.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#engine_connector-instance_method" title="#engine_connector (instance method)">#<strong>engine_connector</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The EngineConnector in which all this exists.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#item-instance_method" title="#item (instance method)">#<strong>item</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The Demiurge item for which a Displayable is being built.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-instance_method" title="#name (instance method)">#<strong>name</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The item name of the Demiurge item (and thus Displayable) being built.</p>
+</div></span>
   
 </li>
 
@@ -162,37 +259,6 @@
 
 
 
-  
-    <h2>
-      Class Method Summary
-      <small><a href="#" class="summary_toggle">collapse</a></small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#build_displayable-class_method" title="build_displayable (class method)">.<strong>build_displayable</strong>(block)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-    </ul>
   
     <h2>
       Instance Method Summary
@@ -270,6 +336,28 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#particle_source-instance_method" title="#particle_source (instance method)">#<strong>particle_source</strong>(params)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -316,22 +404,32 @@
       <pre class="lines">
 
 
-13
-14
-15
-16
-17
-18
-19
-20</pre>
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span><span class='rparen'>)</span>
-  <span class='ivar'>@item</span> <span class='op'>=</span> <span class='id identifier rubyid_item'>item</span>
-  <span class='ivar'>@built_objects</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='comment'># Several things, such as @item, @name and @engine_connector are intentionally available from the DSL
+</span>  <span class='ivar'>@item</span> <span class='op'>=</span> <span class='id identifier rubyid_item'>item</span>
+  <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
   <span class='ivar'>@engine_connector</span> <span class='op'>=</span> <span class='id identifier rubyid_engine_connector'>engine_connector</span>
+
+  <span class='comment'># Built_objects is a readable attribute to get the final result out
+</span>  <span class='ivar'>@built_objects</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+
   <span class='id identifier rubyid_disp'>disp</span> <span class='op'>=</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get_action'>get_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$display</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>block</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No display action available for DisplayBuilder!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_disp'>disp</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_disp'>disp</span><span class='rparen'>)</span> <span class='comment'># Create the built objects from the block
@@ -359,7 +457,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>The objects built by this DisplayBuilder object</p>
+
 
   </div>
 </div>
@@ -387,12 +486,12 @@
       <pre class="lines">
 
 
-6
-7
-8</pre>
+13
+14
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 6</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_built_objects'>built_objects</span>
   <span class='ivar'>@built_objects</span>
@@ -402,17 +501,12 @@
 </table>
 </div>
     
-  </div>
-
-
-  <div id="class_method_details" class="method_details_list">
-    <h2>Class Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="build_displayable-class_method">
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="engine_connector-instance_method">
   
-    .<strong>build_displayable</strong>(block)  &#x21d2; <tt>Object</tt> 
+    #<strong>engine_connector</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -420,7 +514,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>The EngineConnector in which all this exists</p>
+
 
   </div>
 </div>
@@ -448,17 +543,129 @@
       <pre class="lines">
 
 
-8
-9
-10
-11</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 17</span>
 
-<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build_displayable'>build_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="" title="Pixiurge::Display::DisplayBuilder (class)">DisplayBuilder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Pixiurge::Display::DisplayBuilder#initialize (method)">new</a></span></span>
-  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_engine_connector'>engine_connector</span>
+  <span class='ivar'>@engine_connector</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="item-instance_method">
+  
+    #<strong>item</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The Demiurge item for which a Displayable is being built</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_item'>item</span>
+  <span class='ivar'>@item</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="name-instance_method">
+  
+    #<strong>name</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The item name of the Demiurge item (and thus Displayable) being built</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+19
+20
+21</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 19</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_name'>name</span>
+  <span class='ivar'>@name</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -466,6 +673,7 @@
 </div>
     
   </div>
+
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -510,12 +718,12 @@
       <pre class="lines">
 
 
-28
-29
-30</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_invisible'>invisible</span>
   <span class='ivar'>@built_objects</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Invisible.html" title="Pixiurge::Display::Invisible (class)">Invisible</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Displayable.html#initialize-instance_method" title="Pixiurge::Displayable#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>name:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>demi_item:</span> <span class='ivar'>@item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='ivar'>@engine_connector</span><span class='rparen'>)</span>
@@ -564,19 +772,73 @@
       <pre class="lines">
 
 
-22
-23
-24
-25
-26</pre>
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_manasource_humanoid'>manasource_humanoid</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="HumanoidBuilder.html" title="Pixiurge::Display::HumanoidBuilder (class)">HumanoidBuilder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="HumanoidBuilder.html#initialize-instance_method" title="Pixiurge::Display::HumanoidBuilder#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='ivar'>@engine_connector</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_block_given?'>block_given?</span>
   <span class='ivar'>@built_objects</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_built_obj'>built_obj</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="particle_source-instance_method">
+  
+    #<strong>particle_source</strong>(params)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/dsl.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_particle_source'>particle_source</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span>
+  <span class='ivar'>@built_objects</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ParticleSource.html" title="Pixiurge::Display::ParticleSource (class)">ParticleSource</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ParticleSource.html#initialize-instance_method" title="Pixiurge::Display::ParticleSource#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>demi_item:</span> <span class='ivar'>@item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='ivar'>@engine_connector</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
