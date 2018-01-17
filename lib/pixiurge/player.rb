@@ -133,7 +133,7 @@ class Pixiurge::Player
   #
   # @param x [Integer] The new x pixel coordinate for the center of the display
   # @param y [Integer] The new y pixel coordinate for the center of the display
-  # @parma options [Hash] Options to send to the front end for handling this pan
+  # @param options [Hash] Options to send to the front end for handling this pan
   # @return [void]
   # @since 0.1.0
   def send_instant_pan_to_pixel_offset(x, y, options = {})
