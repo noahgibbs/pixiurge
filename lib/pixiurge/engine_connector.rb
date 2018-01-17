@@ -108,36 +108,48 @@ class Pixiurge::EngineConnector
     { "ms_per_tick" => 300 }
   end
 
+  def displayable_for_item(item)
+    return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
+
+    # See if the item uses a custom Displayable set via the "display"
+    # block in the World Files. If so, use it.
+    disp_action = item.get_action("$display")
+    if disp_action && disp_action["block"] # This special action is used to pass the Display info through to a Display library.
+      builder = Pixiurge::Display::DisplayBuilder.new(item, engine_connector: self)
+      displayables = builder.built_objects
+      raise("Only display one object per agent right now for item #{item.name.inspect}!") if displayables.size > 1
+      raise("No display objects declared for item #{item.name.inspect}!") if displayables.size == 0
+      return displayables[0]  # Exactly one display object. Perfect.
+    end
+
+    if item.is_a?(::Demiurge::Tmx::TmxLocation)
+      return ::Pixiurge::Display::TmxMap.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
+    elsif item.agent?
+      # No Display information? Default to generic guy in a hat.
+      layers = [ "male", "kettle_hat_male", "robe_male" ]
+      return ::Pixiurge::Display::Humanoid.new layers, name: item.name, demi_item: item, engine_connector: self
+    end
+
+    # If we got here, we have no idea how to display this.
+    nil
+  end
+
   def register_engine_item(item)
     return if @displayables[item.name] # Already have this one
-    return if item.zone? # No displayable info for zones (yet?)
-    return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
-    if item.is_a?(::Demiurge::Tmx::TmxLocation)
-      @displayables[item.name] = ::Pixiurge::Display::TmxMap.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
-    elsif item.agent?
-      disp = item.get_action("$display")
-      if disp && disp["block"] # This special action is used to pass the Display info through to a Display library.
-        builder = Pixiurge::Display::DisplayBuilder.new(item, engine_connector: self)
-        displayables = builder.built_objects
-        raise("Only display one object per agent right now for item #{item.name.inspect}!") if displayables.size > 1
-        raise("No display objects declared for item #{item.name.inspect}!") if displayables.size == 0
-        @displayables[item.name] = displayables[0]  # Exactly one display object. Perfect.
-      else
-        # No Display information? Default to generic guy in a hat.
-        layers = [ "male", "kettle_hat_male", "robe_male" ]
-        @displayables[item.name] = ::Pixiurge::Humanoid.new layers, name: item.name, demi_item: item, engine_connector: self
-      end
 
-      # Is this a registration for a player's body?
-      if @players[item.name]
-        player = @players[item.name]
-        player.displayable = @displayables[item.name]
-      end
-
-      show_displayable_to_players(@displayables[item.name])
-    else
-      STDERR.puts "Don't know how to register or display this item: #{item.name.inspect}"
+    displayable = displayable_for_item(item)
+    if displayable
+      @displayables[item.name] = displayable
+      show_displayable_to_players(displayable)
+      return
     end
+
+    # What if there's no Displayable for this item? That might be okay or might not.
+
+    return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
+    return if item.zone? # No displayable info for zones, you're not supposed to see them
+
+    STDERR.puts "Don't know how to register or display this item: #{item.name.inspect}"
   end
 
   def each_player_for_location_name(location_name, &block)
@@ -305,11 +317,10 @@ class Pixiurge::EngineConnector
       STDERR.puts "Moving to a non-displayed location #{loc_name.inspect}, no display object found..."
       return
     end
-    spritesheet = loc_do.spritesheet
 
     actor_do.position = data["new_position"]
 
-    # An object just moved to a new location - show it to everybody in the new location, if it's a displayable loction.
+    # An object just moved to a new location - show it to everybody in the new location, if it's a displayable location.
     if data["old_location"] != data["new_location"]
       show_displayable_to_players(actor_do) if loc_do
     end

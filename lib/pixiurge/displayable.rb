@@ -115,7 +115,7 @@ class Pixiurge::Displayable
   # @return [void]
   # @since 0.1.0
   def hide_from_player(player)
-    player.message Pixiurge::Protocol::Outgoing::HIDE_DISPLAYABLE, self.name
+    player.message Pixiurge::Protocol::Outgoing::DISPLAY_HIDE, self.name
   end
 
   # Animate the motion of this Displayable from an old location to a

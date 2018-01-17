@@ -34,6 +34,9 @@ zone "Engine DSL Zone" do
   tmx_location "right here" do
     manasource_tile_layout "tmx/magecity_cc0_lorestrome.tmx"
   end
+  location "somewhere else" do
+    display { invisible }
+  end
   agent "player template" do
     display do
       # Bob and Sam can be invisible, while Murray and Phil are visible

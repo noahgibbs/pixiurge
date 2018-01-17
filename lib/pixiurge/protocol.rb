@@ -115,6 +115,11 @@ module Pixiurge::Protocol::Outgoing
   # @since 0.1.0
   DISPLAY_HIDE_ALL = "display_hide_all"
 
+  # Hide a single Displayable by name.
+  #
+  # @since 0.1.0
+  DISPLAY_HIDE = "display_hide"
+
   # Show a Displayable object. The arguments following the message
   # type are a String name for the item and then a Hash of additional
   # details, such as the URL for a TMX item.
