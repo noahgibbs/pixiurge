@@ -118,7 +118,7 @@ module Pixiurge::Protocol::Outgoing
   # Hide a single Displayable by name.
   #
   # @since 0.1.0
-  DISPLAY_HIDE = "display_hide"
+  DISPLAY_HIDE_DISPLAYABLE = "display_hide"
 
   # Show a Displayable object. The arguments following the message
   # type are a String name for the item and then a Hash of additional

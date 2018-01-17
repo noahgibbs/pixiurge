@@ -98,19 +98,31 @@ class Pixiurge::Player
   #  y ||= 0
   #  show_displayable(displayable)
   #  message Pixiurge::Protocol::Outgoing::SET_DISPLAYABLE_PIXEL_LOCATION, displayable.name,
-  #    x * self.displayable.location_block_width,
-  #    y * self.displayable.location_block_height, {}
+  #    x * self.displayable.location_displayable.block_width,
+  #    y * self.displayable.location_displayable.block_height, {}
   #  nil
   #end
 
   # This hides a given displayable for this player
   #
+  # @param disp [Pixiurge::Displayable] The displayable object to hide, if it's currently shown
+  # @return [void]
+  # @since 0.1.0
+  def hide_displayable(disp)
+    return unless @currently_shown[disp.name]
+    disp.hide_from_player(self)
+    @currently_shown.delete(disp.name)
+    nil
+  end
+
+  # This hides a given displayable for this player by name
+  #
   # @param item_name [String] The name of the item to hide
   # @return [void]
   # @since 0.1.0
-  def hide_displayable(item_name)
+  def hide_displayable_name(item_name)
     return unless @currently_shown[item_name]
-    @currently_shown.hide_from_player(self)
+    @currently_shown[item_name].hide_from_player(self)
     @currently_shown.delete(item_name)
     nil
   end

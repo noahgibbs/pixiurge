@@ -152,8 +152,9 @@ class Pixiurge::EngineConnector
     STDERR.puts "Don't know how to register or display this item: #{item.name.inspect}"
   end
 
-  def each_player_for_location_name(location_name, &block)
+  def each_player_for_location_name(location_name, options = { :except => [] }, &block)
     @players.each do |player_name, player|
+      next if options[:except].include?(player) || options[:except].include?(player_name)
       if player.displayable && player.displayable.location_name == location_name
         yield(player)
       end
@@ -168,10 +169,10 @@ class Pixiurge::EngineConnector
     end
   end
 
-  def show_displayable_to_players(displayable)
+  def show_displayable_to_players(displayable, options = { :except => []})
     return unless displayable.position # Agents and some other items are allowed to have no position and just be instantiable
     loc_name = displayable.position.split("#")[0]
-    each_player_for_location_name(loc_name) do |player|
+    each_player_for_location_name(loc_name, options) do |player|
       player.show_displayable(displayable)
     end
   end
@@ -320,17 +321,20 @@ class Pixiurge::EngineConnector
 
     actor_do.position = data["new_position"]
 
-    # An object just moved to a new location - show it to everybody in the new location, if it's a displayable location.
+    # An object just moved to a new location - show it to everybody in
+    # the new location, if it's a displayable location. Except the player whose
+    # body it is, if it's a player.
     if data["old_location"] != data["new_location"]
-      show_displayable_to_players(actor_do) if loc_do
+      show_displayable_to_players(actor_do, :except => [@players[data["actor"]]].compact) if loc_do
     end
 
     # Is it a player that just moved? If so, update them specifically.
     acting_player = @players[data["actor"]]
     if acting_player
       if data["old_location"] != data["new_location"]
-        ## Show the new location's sprites to the player who is moving, if the new location has sprites
-        set_player_backdrop(acting_player, data["new_position"], @displayables[loc_name]) if loc_do
+        ## Hide the old location's Displayables and show the new
+        ## location's Displayables to the player who is moving
+        set_player_backdrop(acting_player, data["new_position"], @displayables[loc_name])
       else
         # Player moved in same location, pan to new position
         actor_do.move_for_player(acting_player, data["old_position"], data["new_position"], { "duration" => 0.5 })
@@ -342,21 +346,25 @@ class Pixiurge::EngineConnector
     # players who just saw the item move, disappear or appear.
     @players.each do |player_name, player|
       next if player_name == data["actor"]  # Already handled it if this player is the one moving.
-      player_loc_name = player.displayable ? player.displayable.location_name : nil
-      next unless player_loc_name            # Player has no location? We don't update them.
+      player_loc_name = player.displayable.location_name
 
+      # First case: moving player remained in the same room - update movement for anybody *in* that room
       if data["old_location"] == data["new_location"]
         next unless player_loc_name == data["new_location"]
         actor_do.move_for_player(player, data["old_position"], data["new_position"], { "duration" => 0.5 })
+
+        # Second case: moving player changed rooms and we're in the old one
       elsif player_loc_name == data["old_location"]
         # The item changed rooms and the player is in the old
         # location. Hide the item.
-        actor_do.hide_from_player(player)
+        player.hide_displayable(actor_do)
+
+        # Third case: moving player changed rooms and we're in the new one
       elsif player_loc_name == data["new_location"]
         # The item changed rooms and the player is in the new
         # location. Show the item, if it moved to a displayable
         # location.
-        actor_do.show_to_player(player) if loc_do
+        player.show_displayable(actor_do)
       end
     end
   end

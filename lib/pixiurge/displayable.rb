@@ -36,10 +36,6 @@ class Pixiurge::Displayable
   attr_reader :block_width
   attr_reader :block_height
 
-  # For a tiled-type area, these are the tile height and width of the location (backdrop) of this Displayable in pixels
-  attr_reader :location_block_width
-  attr_reader :location_block_height
-
   # This is the most recently-displayed position of this Displayable
   attr_reader :position
 
@@ -57,6 +53,10 @@ class Pixiurge::Displayable
     raise "Non-matching name and Demiurge name!" if @demi_item && @demi_item.name != name
     @demi_engine = demi_item.engine
     self.position = demi_item.position if demi_item && demi_item.position
+
+    # Most child classes should override this
+    @block_width = 1
+    @block_height = 1
   end
 
   # This method is called when Demiurge is, or may have been,
@@ -87,13 +87,6 @@ class Pixiurge::Displayable
     @location_name, @x, @y = ::Demiurge::TiledLocation.position_to_loc_coords(new_position)
     @location_item = @demi_engine.item_by_name(@location_name)
     @location_displayable = @engine_connector.displayable_by_name(@location_name)
-    if @location_item && @location_item.respond_to?(:tiles)
-      @location_block_width = @location_displayable.block_width
-      @location_block_height = @location_displayable.block_height
-    else
-      @location_block_width = nil
-      @location_block_height = nil
-    end
     nil
   end
 
@@ -115,7 +108,7 @@ class Pixiurge::Displayable
   # @return [void]
   # @since 0.1.0
   def hide_from_player(player)
-    player.message Pixiurge::Protocol::Outgoing::DISPLAY_HIDE, self.name
+    player.message Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, self.name
   end
 
   # Animate the motion of this Displayable from an old location to a
