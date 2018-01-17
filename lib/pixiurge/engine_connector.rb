@@ -148,41 +148,41 @@ class Pixiurge::EngineConnector
     end
   end
 
+  def each_displayable_for_location_name(location_name, &block)
+    @displayables.each do |disp_name, disp|
+      if disp.location_name == location_name
+        yield(disp)
+      end
+    end
+  end
+
   def show_displayable_to_players(displayable)
     return unless displayable.position # Agents and some other items are allowed to have no position and just be instantiable
-    loc_name, x, y = ::Demiurge::TiledLocation.position_to_loc_coords(displayable.position)
+    loc_name = displayable.position.split("#")[0]
     each_player_for_location_name(loc_name) do |player|
-      displayable.show_to_player(player)
-    end
-
-    loc = @engine.item_by_name(loc_name)
-    if loc.is_a?(::Demiurge::Tmx::TmxLocation)
-      @players.each do |player_name, player|
-        if player.displayable.location_name == loc_name
-          # The new displayable and the player are in the same location
-          player.show_tmx_at_position(displayable.name, displayable.entry, displayable.position)
-        end
-      end
+      player.show_displayable(displayable)
     end
   end
 
   def hide_displayable_from_players(displayable, position)
     position ||= displayable.demi_item.position
     return unless position
-    if position  # Agents and some other items are allowed to have no position and just be instantiable
-      loc_name = position.split("#")[0]
-      loc = @engine.item_by_name(loc_name)
-      if loc.is_a?(::Demiurge::Tmx::TmxLocation)
-        @players.each do |player_name, player|
-          if player.displayable.location_name == loc_name
-            # The new agent and the player are in the same location
-            player.hide_sprites(displayable.name)
-          end
-        end
+
+    loc_name = position.split("#")[0]
+    loc = @engine.item_by_name(loc_name)
+    if loc.is_a?(::Demiurge::Tmx::TmxLocation)
+      each_player_for_location_name(loc_name) do |player|
+        player.hide_displayable(displayable.name)
       end
     end
   end
 
+  # @todo Should the backdrop be marked as special somehow? Make it
+  #   clear that it winds up under everything else?  PIXI.js doesn't
+  #   really do Z coordinates for most things, but right now anything
+  #   that gets "lucky" enough to get displayed before the backdrop
+  #   would become permanently invisible. There might be some
+  #   constellation of events where that could happen.
   def set_player_backdrop(player, player_position, location_do)
     loc_name = location_do.name
 
@@ -194,11 +194,9 @@ class Pixiurge::EngineConnector
     y ||= 0
     player.send_instant_pan_to_pixel_offset location_do.block_width * x, location_do.block_height * y
 
-    # Anybody else there? Show them to this player.
-    @displayables.each do |do_name, displayable|
-      if displayable.location_name == loc_name
-        player.show_displayable(displayable)
-      end
+    # Anybody or anything else there? Show them to this player.
+    each_displayable_for_location_name(location_do.name) do |displayable|
+      player.show_displayable(displayable)
     end
   end
 
@@ -213,7 +211,7 @@ class Pixiurge::EngineConnector
 
     # Do we have a display object for that player's location?
     unless loc_do
-      STDERR.puts "This player doesn't seem to be in a known TMX location, instead is in #{loc_name.inspect}!"
+      STDERR.puts "This player doesn't seem to be in a known displayable location, instead is in #{loc_name.inspect}!"
       return
     end
 
@@ -227,9 +225,12 @@ class Pixiurge::EngineConnector
 
   # When new data comes in about things in the engine changing, this is what receives that notification.
   def notified(data)
+    # First, ignore a bunch of notifications we don't care about
     return if data["type"] == Demiurge::Notifications::TickFinished
     return if data["type"] == Demiurge::Notifications::MoveFrom
     return if data["type"] == Demiurge::Notifications::LoadStateStart
+    return if data["type"] == Demiurge::Notifications::LoadWorldVerify
+    return if data["type"] == Demiurge::Notifications::LoadWorldStart
 
     # We subscribe to all events in all locations, and the move-from
     # and move-to have the same fields except location, zone and
@@ -242,6 +243,16 @@ class Pixiurge::EngineConnector
       @displayables.each_value do |displayable|
         displayable.demiurge_reloaded
       end
+      return
+    end
+
+    if data["type"] == Demiurge::Notifications::LoadWorldEnd
+      # Not entirely clear what we do here. Demiurge has just reloaded
+      # the World files, which may result in a bunch of changes...
+      # Though if objects get created, destroyed or moved, that should
+      # get separate notifications which should finish before this
+      # happens. We don't care that they're part of a World Reload --
+      # if we did, we'd track the LoadWorldStart.
       return
     end
 
