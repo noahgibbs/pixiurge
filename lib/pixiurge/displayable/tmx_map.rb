@@ -21,7 +21,8 @@ class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
   # @return [void]
   # @since 0.1.0
   def show_to_player(player)
-    player.message Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_TMX, @name, File.join(@entry["dir"], @entry["tmx_name"] + ".json")
+    player.message Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, @name,
+      { "type" => "tmx", "url" => File.join(@entry["dir"], @entry["tmx_name"] + ".json") }
     nil
   end
 

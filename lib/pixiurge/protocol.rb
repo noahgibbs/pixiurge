@@ -115,9 +115,10 @@ module Pixiurge::Protocol::Outgoing
   # @since 0.1.0
   DISPLAY_HIDE_ALL = "display_hide_all"
 
-  # Show a TMX entity. The arguments following the message type are a
-  # String name for the item and then the URL of the TMX JSON object.
+  # Show a Displayable object. The arguments following the message
+  # type are a String name for the item and then a Hash of additional
+  # details, such as the URL for a TMX item.
   #
   # @since 0.1.0
-  DISPLAY_SHOW_TMX = "display_show_tmx"
+  DISPLAY_SHOW_DISPLAYABLE = "display_show"
 end

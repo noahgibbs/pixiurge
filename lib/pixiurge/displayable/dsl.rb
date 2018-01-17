@@ -1,19 +1,32 @@
-# This Builder class handles the Display DSL in Demiurge Display blocks for Pixiurge.
-#
-# @since 0.1.0
 module Pixiurge::Display
+  # The DisplayBuilder class handles the Display DSL in Demiurge
+  # Display blocks for Pixiurge.  It will pull the "display" block
+  # from a Demiurge item to create a Pixiurge Displayable for it.
+  #
+  # @example
+  #   builder = Pixiurge::Display::DisplayBuilder.new(item, engine_connector: connector)
+  #   displayables = builder.built_objects
+  #
+  # @since 0.1.0
   class DisplayBuilder
+    # The objects built by this DisplayBuilder object
     attr_reader :built_objects
-
-    def self.build_displayable(block)
-      builder = DisplayBuilder.new
-      builder.instance_eval(&block)
-    end
+    # The Demiurge item for which a Displayable is being built
+    attr_reader :item
+    # The EngineConnector in which all this exists
+    attr_reader :engine_connector
+    # The item name of the Demiurge item (and thus Displayable) being built
+    attr_reader :name
 
     def initialize(item, engine_connector:)
+      # Several things, such as @item, @name and @engine_connector are intentionally available from the DSL
       @item = item
-      @built_objects = []
+      @name = item.name
       @engine_connector = engine_connector
+
+      # Built_objects is a readable attribute to get the final result out
+      @built_objects = []
+
       disp = item.get_action("$display")["block"]
       raise("No display action available for DisplayBuilder!") unless disp
       self.instance_eval(&disp) # Create the built objects from the block
@@ -21,7 +34,7 @@ module Pixiurge::Display
 
     def manasource_humanoid(&block)
       builder = HumanoidBuilder.new(@item, engine_connector: @engine_connector)
-      builder.instance_eval(&block)
+      builder.instance_eval(&block) if block_given?
       @built_objects << builder.built_obj
     end
 
