@@ -12,8 +12,8 @@ log/*.txt
 incoming_traffic.json
 outgoing_traffic.json
 node_modules
-test/js/test_server/*bundle.js
-test/js/test_server/*bundle.js.map
+test/js/test_server/public/*bundle.js
+test/js/test_server/public/*bundle.js.map
 releases/pixiurge-combined.*
 releases/*combined*pre.js
 releases/*combined*pre.js.map

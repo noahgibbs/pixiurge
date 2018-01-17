@@ -15,7 +15,7 @@ module.exports = {
              "./pixiurge/pixiurge_display.coffee"
             ]),
     output: {
-        filename: "test/js/test_server/test_bundle.js"
+        filename: "test/js/test_server/public/test_bundle.js"
     },
     module: {
         loaders: [
