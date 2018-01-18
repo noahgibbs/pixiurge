@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>hat_relay</title>
+
+  <script src="pixiurge-0.1.0.min.js"></script>
+
+</head>
+<body>
+
+<script>
+//<![CDATA[
+
+// Not HTTPS already? Redirect to HTTPS.
+if (window.location.protocol != "https:") {
+   window.location.protocol = "https:";
+   window.location.reload();
+}
+
+  $(function(){
+    if(!("WebSocket" in window)) {
+      alert("Sorry, your browser does not appear to support WebSockets. Please use the latest version of your browser, and not any version of Opera Mini.");
+      return;
+    }
+
+    window.hat_relay_game = new Pixiurge();
+    // WSS in the URL means you need to set up secure sockets! See the file "start_script" for details
+    var ws = new WebSocket("wss://localhost:3001/");
+    hat_relay_game.setTransport(new Pixiurge.WebsocketTransport(hat_relay_game, ws));
+    var display = new Pixiurge.Display(hat_relay_game, { container: "#displayarea" });
+    hat_relay_game.setDisplay(display);
+
+    hat_relay_game.setup();
+  });
+
+//]]>
+</script>
+
+<div id="displayarea"></div>
+
+</body>
+</html>
