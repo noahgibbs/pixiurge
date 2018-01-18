@@ -68,6 +68,30 @@ that SSL/TLS will take care of that problem. See example/start_server
 for an example of how to make sure SSL is set up when running your
 server locally.
 
+## Credits
+
+For testing and other purposes I sometimes use CC0 (Creative Commons
+Zero, effectively Public Domain) artwork of various kinds. Luis Zuno
+(ansimuz.com), Daniel Harris (Hyptosis, lorestrome.com) and Kenney
+Vleugels (kenneynl.com, pixeland.io) all have wonderful CC0 work that
+I use. With CC0 I'm not required to credit them and neither are you,
+but it's good karma to pay them if you make money off their work. It's
+also good karma to mention them when you use their work, as I do here.
+
+CC0 is wonderful because I don't have to worry about licensing, at
+all, full stop. Creative Commons licensing in general is awesome - I
+certainly don't mind crediting people for what they do. But I want to
+set any future Pixiurge users up for success, so I try to only use
+assets with the least-restrictive licenses. I remember DikuMUD too
+well, you know?
+
+I do *not* use any of the wonderful free GPL-licensed artwork out
+there because it's incompatible with the MIT license I use for my
+open-source coding. The GPL wasn't really designed for art assets like
+sprites or sound effects and it's not entirely clear how that should
+work. I steer clear of GPL and try to use CC0 where possible because I
+don't want to police all of you or encourage you in illegal directions.
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install
