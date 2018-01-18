@@ -32,7 +32,7 @@ describe('Simple Pixiurge configuration', function() {
 
             pixiurge_game.setup();
             assert.equal(mock_ws, pixiurge_game.getTransport().ws);
-            mock_ws.receive(JSON.stringify([ "game_msg", "displayInit", { width: 640, height: 480 }]));
+            mock_ws.receive(JSON.stringify([ "displayInit", { ms_per_tick: 300, width: 640, height: 480 }]));
         });
     });
 });
