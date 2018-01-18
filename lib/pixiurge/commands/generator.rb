@@ -8,6 +8,7 @@ module Pixiurge
       include Thor::Actions
 
       argument :name
+      argument :pixiurge_dev
 
       def self.source_root
         File.join __dir__, "..", "..", "..", "generator"

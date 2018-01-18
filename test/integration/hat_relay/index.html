@@ -3,19 +3,87 @@
 <head>
   <title>hat_relay</title>
 
-  <script src="pixiurge-0.1.0.min.js"></script>
 
+  <script src="/pixiurge/pixiurge.js"></script>
+  <script src="/pixiurge/pixiurge_websocket.js"></script>
+  <script src="/pixiurge/pixiurge_display.js"></script>
+  <script src="/vendor/jquery-3.2.1.js"></script>
+  <script src="/vendor/bcrypt.js"></script>
+  <script src="/vendor/pixi-4.6.2.js"></script>
+  <script src="/vendor/sha1.js"></script>
+  <script src="/vendor/reconnecting-websocket.js"></script>
+
+
+  <style media="screen" type="text/css">
+    .errdisplay {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
+
+  <h1>hat_relay</h1>
 
 <script>
 //<![CDATA[
 
-// Not HTTPS already? Redirect to HTTPS.
+// Not HTTPS already? Redirect to HTTPS. You need TLS to safely pass around password-equivalent tokens like we do.
 if (window.location.protocol != "https:") {
    window.location.protocol = "https:";
    window.location.reload();
 }
+
+function game_login() {
+  var username = $(".username_field").val();
+  var password = $(".password_field").val();
+  $(".login").hide();  // We started logging in. Let's not do that more than once, though.
+
+  if(password == "") {
+    $(".errdisplay").text("You must set a password to log in!");
+    $(".login").show();
+    return;
+  }
+  if(username == "") {
+    $(".errdisplay").text("You must set a username to log in!");
+    $(".login").show();
+    return;
+  }
+
+  window.hat_relay_game.transport.login(username, password);
+};
+
+function game_logout() {
+  window.hat_relay_game.transport.logout();
+};
+
+function game_register() {
+  var username = $(".username_field").val();
+  var password = $(".password_field").val();
+
+  if(password == "") {
+    $(".errdisplay").text("You must set a password to register an account!");
+    $(".login").show();
+    return;
+  }
+  if(username == "") {
+    $(".errdisplay").text("You must set a username to register an account!");
+    $(".login").show();
+    return;
+  }
+
+  window.hat_relay_game.transport.registerAccount(username, password);
+};
+
+function good_login(username) {
+  $(".login").hide();
+};
+
+function bad_login(reason) {
+  console.log(reason);
+  $(".errdisplay").text("The server couldn't log you in: " + reason);
+  $(".login").show();
+};
 
   $(function(){
     if(!("WebSocket" in window)) {
@@ -24,19 +92,56 @@ if (window.location.protocol != "https:") {
     }
 
     window.hat_relay_game = new Pixiurge();
-    // WSS in the URL means you need to set up secure sockets! See the file "start_script" for details
-    var ws = new WebSocket("wss://localhost:3001/");
+    // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
+    var ws = new ReconnectingWebSocket("wss://localhost:3001/");
     hat_relay_game.setTransport(new Pixiurge.WebsocketTransport(hat_relay_game, ws));
     var display = new Pixiurge.Display(hat_relay_game, { container: "#displayarea" });
-    hat_relay_game.setDisplay(display);
+    hat_relay_game.setMessageHandler("display", display);
 
     hat_relay_game.setup();
+    hat_relay_game.transport.onOpen(function() { hat_relay_game.transport.considerAutoLogin(); });
+    hat_relay_game.transport.onLogin(good_login);
+    hat_relay_game.transport.onFailedLogin(bad_login);
+
+    $(".loginform").submit(function(event) {
+      event.preventDefault();  // Don't trigger normal form handler.
+      game_login();
+    });
+
+    $(".login_button").click(function(event) {
+      event.preventDefault();
+      game_login();
+    });
+
+    $(".register_button").click(function(event) {
+      event.preventDefault();
+      game_register();
+    });
+
   });
 
 //]]>
 </script>
 
+<div id="login" class="login">
+  <p class="errdisplay"></p>
+  <form class="loginform">
+    <label name="username">User Name:</label>
+    <input class="username_field" type="text" name="username"></input>
+
+    <label name="password">Password:</label>
+    <input class="password_field" type="password" name="password"></input>
+
+    <button class="login_button">Log In</button> OR
+    <button type="button" class="register_button">Register a New Account</button>
+  </form>
+</div>
+
 <div id="displayarea"></div>
+
+<ul>
+  <li><a onclick="game_logout();">Log Out</li>
+</ul>
 
 </body>
 </html>

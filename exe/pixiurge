@@ -13,10 +13,6 @@ Where [options] can be empty, or:
 BANNER
 end
 
-if ARGV.size != 1
-  Trollop::die "You must supply exactly one name for your game or application, neither more nor less. Run trollop --help if you need more usage information."
-end
-
 begin
   require 'pixiurge/commands/generator'
 rescue LoadError

@@ -13,11 +13,9 @@ class Pixiurge.WebsocketTransport
     transport = this
     @ws.onmessage = (evt) =>
       data = JSON.parse evt.data
-      if data[0] == "game_msg"
-        return transport.api_handler data[1], data.slice(2)
       if data[0] == "failed_login" || data[0] == "failed_registration"
         if @failed_login_handler?
-          @failed_login_handler(data[1])
+          @failed_login_handler(data[1]["message"])
         else
           console.log "No failed login handler set!"
         @pending_password = false
@@ -26,11 +24,11 @@ class Pixiurge.WebsocketTransport
         return
       if data[0] == "login_salt"
         bcrypt = dcodeIO.bcrypt
-        salt = data[1]
+        salt = data[1]["salt"]
         hashed = bcrypt.hashSync(@pending_password, salt)
         @pending_password = false  # Tried it? Clear it.
         @pending_hash = hashed
-        @sendMessageWithType "auth", "hashed_login", { username: @pending_username, bcrypted: hashed }
+        @sendMessageWithType "hashed_login", { username: @pending_username, bcrypted: hashed }
         return
       if data[0] == "login"
         console.log "Logged in as", data[1]["username"]
@@ -45,9 +43,10 @@ class Pixiurge.WebsocketTransport
           console.log "No login handler set!"
         return
       if data[0] == "registration"
-        consider_auto_login()
+        @considerAutoLogin()
+        return
 
-      return console.log "Unexpected message type: #{data[0]}"
+      return transport.api_handler data[0], data.slice(1)
 
     @ws.onclose = () ->
       console.log "socket closed"
@@ -104,13 +103,13 @@ class Pixiurge.WebsocketTransport
     bcrypt = dcodeIO.bcrypt;
     salt = bcrypt.genSaltSync(10);
     hashed = bcrypt.hashSync(password, salt);
-    @sendMessageWithType("auth", "register_account", { username: username, salt: salt, bcrypted: hashed })
+    @sendMessageWithType("register_account", { username: username, salt: salt, bcrypted: hashed })
 
   login: (username, password, save_login_info = true) ->
     @pending_password = password
     @pending_username = username
     @pending_save_login = save_login_info
-    @sendMessageWithType("auth", "get_salt", { username: username })
+    @sendMessageWithType("get_salt", { username: username })
 
   logout: () ->
     @cookie = 'pixiurge_username=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
@@ -119,5 +118,5 @@ class Pixiurge.WebsocketTransport
   considerAutoLogin: () ->
     cookie_username = @cookie.replace(/(?:(?:^|.*;\s*)pixiurge_username\s*\=\s*([^;]*).*$)|^.*$/, "$1")
     cookie_hash = @cookie.replace(/(?:(?:^|.*;\s*)pixiurge_hash\s*\=\s*([^;]*).*$)|^.*$/, "$1")
-    if cookie_username? && cookie_hash?
-      @sendMessageWithType "auth", "hashed_login", { username: cookie_username, bcrypted: cookie_hash }
+    if cookie_username? && cookie_username != "" && cookie_hash? && cookie_hash != ""
+      @sendMessageWithType "hashed_login", { username: cookie_username, bcrypted: cookie_hash }
