@@ -47,6 +47,17 @@ Or install it yourself as:
 
     $ gem install pixiurge
 
+## Development
+
+To develop a game on Pixiurge, you'll need TLS (secure sockets.) Any
+new Pixiurge game comes with a "start_server" script which will create
+a local self-signed certificate so you're secure from the get-go. But
+you'll need to get your web browser to let you use a self-signed
+certificate with a localhost URL.
+
+I recommend Googling for "Google Chrome self-signed certificate" and
+doing what it says.
+
 ## Usage
 
 Ordinarily you'll use Pixiurge by creating a new game or similar
