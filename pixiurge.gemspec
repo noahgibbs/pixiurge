@@ -38,4 +38,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "therubyracer", "~> 0.12"
   spec.add_runtime_dependency "rack-coffee", "~> 1.0"
   spec.add_runtime_dependency "thor", "~> 0.20"
+  spec.add_runtime_dependency "trollop", "~> 2.1"
 end
