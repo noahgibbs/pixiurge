@@ -25,12 +25,19 @@ class Pixiurge::App
   # in order to provide access to the Pixiurge debug or release Javascript.
   #
   # @param builder [Rack::Builder] The top level of your config.ru Rack Builder
+  # @param options [Hash] Options about Rack middleware
+  # @option options [Boolean] :no_dev_pixiurge Don't automatically host the Pixiurge unminified Javascript at /pixiurge
+  # @option options [Boolean] :no_vendor_pixiurge Don't automatically host the Pixiurge vendor scripts at /vendor
   # @since 0.1.0
-  def rack_builder builder
+  def rack_builder builder, options = {}
+    illegal_opts = options.keys - [ :no_dev_pixiurge, :no_vendor_pixiurge ]
+    raise("Unknown option(s) passed to rack_builder: #{illegal_opts.inspect}!") unless illegal_opts.empty?
     @rack_builder = builder
 
-    coffee_root = File.join(__dir__, "..", "..")
-    @rack_builder.use Rack::Coffee, :root => coffee_root, :urls => "/pixiurge"
+    coffee_root = File.expand_path File.join(__dir__, "..", "..")
+    vendor_root = File.join(coffee_root, "vendor")
+    @rack_builder.use(Rack::Coffee, :root => coffee_root, :urls => ["/pixiurge"]) unless options[:no_dev_pixiurge]
+    @rack_builder.use(Rack::Static, :root => coffee_root, :urls => ["/vendor"]) unless options[:no_vendor_pixiurge]
   end
 
   # Call this to add coffeescript directories for your own app, if you're using
@@ -126,6 +133,7 @@ class Pixiurge::App
         if @root_dir && static_files.include?(env["PATH_INFO"])
           file = env["PATH_INFO"]
           path = File.join(@root_dir, file)
+          # @todo Figure out how to do this with Rack::File instead of File.read
           return [200, {'Content-Type' => 'text/html'}, [File.read(path)]]
         else
           return [404, {}, [""]]

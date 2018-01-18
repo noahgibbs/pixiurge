@@ -11,7 +11,7 @@
 <script>
 //<![CDATA[
 
-// Not HTTPS already? Redirect to HTTPS.
+// Not HTTPS already? Redirect to HTTPS. You need TLS to safely pass around password-equivalent tokens like we do.
 if (window.location.protocol != "https:") {
    window.location.protocol = "https:";
    window.location.reload();
@@ -24,7 +24,7 @@ if (window.location.protocol != "https:") {
     }
 
     window.<%= name %>_game = new Pixiurge();
-    // WSS in the URL means you need to set up secure sockets! See the file "start_script" for details
+    // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
     var ws = new WebSocket("wss://localhost:3001/");
     <%= name %>_game.setTransport(new Pixiurge.WebsocketTransport(<%= name %>_game, ws));
     var display = new Pixiurge.Display(<%= name %>_game, { container: "#displayarea" });
