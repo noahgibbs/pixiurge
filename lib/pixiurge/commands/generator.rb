@@ -15,7 +15,8 @@ module Pixiurge
 
       #desc "new GAMENAME", "Creates a new Pixiurge game (or similar application)"
       def top_level_directory
-        directory "%name%"
+        directory "%name%", :mode => :preserve
+        chmod(name + "/exe/start_server", 0755)
       end
     end
   end
