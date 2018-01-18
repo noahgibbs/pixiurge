@@ -17,5 +17,10 @@ if ARGV.size != 1
   Trollop::die "You must supply exactly one name for your game or application, neither more nor less. Run trollop --help if you need more usage information."
 end
 
-require File.expand_path('lib/pixiurge/commands/generator', Dir.pwd)
+begin
+  require 'pixiurge/commands/generator'
+rescue LoadError
+  require File.expand_path('lib/pixiurge/commands/generator', __dir__ + "/..")
+end
+
 Pixiurge::Commands::Generator.start
