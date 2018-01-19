@@ -12,7 +12,8 @@ module.exports = {
              // Include modular, un-minified Pixiurge to test latest changes
              "./pixiurge/pixiurge.coffee",
              "./pixiurge/pixiurge_websocket.coffee",
-             "./pixiurge/pixiurge_display.coffee"
+             "./pixiurge/pixiurge_display.coffee",
+             "./pixiurge/pixiurge_utils.coffee",
             ]),
     output: {
         filename: "test/js/test_server/public/test_bundle.js"

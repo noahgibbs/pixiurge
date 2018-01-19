@@ -17,6 +17,7 @@ class Pixiurge.CookieLib
 
 class Pixiurge.FakeCookieLib extends Pixiurge.CookieLib
   constructor: () ->
+    super()
     @cookies = {}
 
   getCookie: (name) ->

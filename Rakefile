@@ -28,6 +28,4 @@ task "test:js" do
 end
 
 desc "Run all tests, client and server"
-task "test:all" => [ "test:server", "test:js" ]
-
-#task :default => :test
+task "test" => [ "test:server", "test:js" ]
