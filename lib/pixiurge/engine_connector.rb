@@ -52,6 +52,7 @@ class Pixiurge::EngineConnector
         @app.send("send_event", "player_create_body", username)
         demi_item = @engine.item_by_name(username)
         unless demi_item
+          # Still no body? Either there was no signal handler, or it did nothing.
           STDERR.puts "No player body was created in Demiurge for #{username.inspect}! No login for you!"
           return
         end
@@ -98,7 +99,7 @@ class Pixiurge::EngineConnector
   # @param username [String] The account name to query
   # @return [Pixiurge::Player,nil] The Player object or nil if there isn't one
   # @since 0.1.0
-  def player_for_username(username)
+  def player_by_username(username)
     @players[username]
   end
 

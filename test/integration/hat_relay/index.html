@@ -80,7 +80,6 @@ function good_login(username) {
 };
 
 function bad_login(reason) {
-  console.log(reason);
   $(".errdisplay").text("The server couldn't log you in: " + reason);
   $(".login").show();
 };

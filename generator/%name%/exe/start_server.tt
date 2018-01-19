@@ -22,5 +22,8 @@ if [ ! -f <%= name %>_server.crt ]; then
 fi
 
 # Thin doesn't seem to support HTTP and HTTPS on the same port (fair), but *does* support HTTPS and WSS on the same port.
-thin start -R config.ru -p 3001 --ssl --ssl-disable-verify --ssl-key-file ./<%= name %>_server.key --ssl-cert-file ./<%= name %>_server.crt
-#rerun --dir tmp --pattern restart.txt "thin start -R config.ru -p 3001 --ssl --ssl-disable-verify --ssl-key-file ./<%= name %>_server.key --ssl-cert-file ./<%= name %>_server.crt"
+bundle exec thin start -R config.ru -p 3001 --ssl --ssl-disable-verify --ssl-key-file ./<%= name %>_server.key --ssl-cert-file ./<%= name %>_server.crt
+
+# Sometimes you want to run your server with "rerun" - that makes it easy to restart your production game by updating an empty file called "restart.txt". If you do, make sure to
+# put "rerun" in your Gemfile.
+#bundle exec rerun --dir tmp --pattern restart.txt "thin start -R config.ru -p 3001 --ssl --ssl-disable-verify --ssl-key-file ./<%= name %>_server.key --ssl-cert-file ./<%= name %>_server.crt"

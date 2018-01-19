@@ -41,17 +41,33 @@ class Hat_relay < Pixiurge::AuthenticatedApp
     end
 
     @engine_connector = Pixiurge::EngineConnector.new(@engine, self)
+
   end
 
-  # @todo: There should be a parent-class method that hooks up action names that match to in-Demiurge player actions
-  def on_player_message(websocket, action_name, *args)
-    puts "Got player action: #{action_name.inspect} / #{args.inspect}"
-    player = player_by_websocket(websocket) # LoginUnique defines player_by_websocket and player_by_name
+  # This handler lets you react to Websocket messages sent from this player's browser.
+  def on_player_message(username, action_name, *args)
+    player = @engine_connector.player_by_username(username)
     if action_name == "move"
       player.demi_item.queue_action "move", args[0]
       return
     end
     raise "Unknown player action #{action_name.inspect} with args #{args.inspect}!"
+  end
+
+  # Instantiating a "player template" is a great, simple way to make a
+  # new Demiurge object with interesting behavior, such as the player
+  # actions. But any way you create a Demiurge object is fine.
+  def on_player_create_body(username)
+    player_template = @engine.item_by_name("player template")
+    start_room = @engine.item_by_name("start location")
+    x, y = start_room.tmx_object_coords_by_name("start location")
+    body = @engine.instantiate_new_item(username, player_template, "position" => "start location##{x},#{y}")
+  end
+
+  # This sets up a "logout" action for the body. If you don't have one of those, you probably shouldn't do this.
+  def on_player_logout(username)
+    body = @engine.item_by_name(username)
+    body.run_action("logout") if body && body.get_action("logout")
   end
 
   # Methods you can override for event handling: on_player_login,
