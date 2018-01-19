@@ -12,7 +12,6 @@
   <script src="/vendor/bcrypt.js"></script>
   <script src="/vendor/pixi-4.6.2.js"></script>
   <script src="/vendor/sha1.js"></script>
-  <script src="/vendor/reconnecting-websocket.js"></script>
 <% else %>
   <script src="pixiurge-0.1.0.min.js"></script>
 <% end %>
@@ -95,7 +94,7 @@ function bad_login(reason) {
 
     window.<%= name %>_game = new Pixiurge();
     // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
-    var ws = new ReconnectingWebSocket("wss://localhost:3001/");
+    var ws = new WebSocket("wss://localhost:3001/");
     <%= name %>_game.setTransport(new Pixiurge.WebsocketTransport(<%= name %>_game, ws));
     var display = new Pixiurge.Display(<%= name %>_game, { container: "#displayarea" });
     <%= name %>_game.setMessageHandler("display", display);

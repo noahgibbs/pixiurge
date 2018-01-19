@@ -12,7 +12,6 @@
   <script src="/vendor/bcrypt.js"></script>
   <script src="/vendor/pixi-4.6.2.js"></script>
   <script src="/vendor/sha1.js"></script>
-  <script src="/vendor/reconnecting-websocket.js"></script>
 
 
   <style media="screen" type="text/css">
@@ -93,7 +92,7 @@ function bad_login(reason) {
 
     window.hat_relay_game = new Pixiurge();
     // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
-    var ws = new ReconnectingWebSocket("wss://localhost:3001/");
+    var ws = new WebSocket("wss://localhost:3001/");
     hat_relay_game.setTransport(new Pixiurge.WebsocketTransport(hat_relay_game, ws));
     var display = new Pixiurge.Display(hat_relay_game, { container: "#displayarea" });
     hat_relay_game.setMessageHandler("display", display);
