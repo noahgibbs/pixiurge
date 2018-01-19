@@ -33,8 +33,8 @@ install". You'll need Ruby for this - you already have Ruby installed,
 yes?
 
 Once you have Ruby and Pixiurge installed, you can type "pixiurge new
-game_name" at the command line. Use your own game name instead of
-"game_name". It doesn't need to be final and perfect or anything -
+game\_name" at the command line. Use your own game name instead of
+"game\_name". It doesn't need to be final and perfect or anything -
 again, the programming isn't the hard part, and you'll be able to
 change it later if you need to.
 
@@ -64,6 +64,45 @@ lot like what you want to build.
 
 But right now, there aren't many good examples out there. So you
 probably want to read the documentation, mostly.
+
+### Parts of Everything
+
+There are a lot of things you can do. You won't need to do all of them
+for most games.
+
+Want to make a new *kind* of thing display? First, make sure you know
+what the old ones are -- sometimes you can just use an existing thing
+to do what you want. But if not, you'll need to learn how to add a
+message to Pixiurge's protocol, and write some PIXI.js code to display
+your new thing.
+
+Want to make things *act* a new way? Learn about Demiurge, the
+simulation library. And learn about Ruby if it's new to you. Something
+like "Learn Ruby the Hard Way" or the Pickaxe Book could help you
+figure out Ruby solidly.
+
+For almost anything, you'll need to find or make some assets -
+pictures, sounds, maps. So it's worth picking up the Tiled map editor
+and doing some browsing of OpenGameArt.org. Maybe you can find
+something close to what you want and modify it from there? I like the
+Aseprite editor for making sprites and animations, but there are lots
+of good ones. Photoshop is the gold standard here, but it's not
+especially cheap if you're not a professional.
+
+### The Interface
+
+It's a good idea to make a new Pixiurge app and then just look up the
+pieces of it in the API documentation. That will show you a bunch of
+things you could do. Keep in mind that along with classes and methods,
+there are things like Protocol messages, Notifications and
+Intentions. The CONCEPT documentation for both Pixiurge and Demiurge
+can help a bit with knowing what all the pieces are.
+
+It's not a bad idea to look through the Pixiurge or Demiurge source
+code. There's not a huge amount of it, and it will definitely show you
+what you can do. Also, you may need to add something to
+Pixiurge... Don't be afraid to jump in with a pull request, or even to
+fork your own separate version of Pixiurge for your own game.
 
 ## Philosophical Advice
 

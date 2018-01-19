@@ -1,4 +1,4 @@
-# So You Want to Put It Into Production...
+# So You Want to Put Pixiurge Into Production...
 
 Getting a Websocket-aware game with a Ruby server into production has
 a lot of pieces to get right. It'll help if you've done this sort of
@@ -6,7 +6,7 @@ thing before. But even the pros can use a checklist. I can't provide
 you a fully complete list, but here are some of the things to look
 into for your deployment...
 
-* Pixiurge REQUIRES secure sockets. The dev versions uses a
+* Pixiurge ABSOLUTELY REQUIRES secure sockets. The dev versions uses a
   self-signed certificate, but you'll need a production certificate
   that matches your domain. Otherwise all your users will have to
   manually configure their web browsers to accept self-signed certs,
@@ -33,4 +33,6 @@ into for your deployment...
 
 * A development Pixiurge install sometimes loads a lot of unminified
   Javascript. Make sure it got switched to requiring a single minified
-  release version.
+  release version. In config.ru you can turn off hosting the gem's
+  unminified Pixiurge scripts by passing :no\_dev\_pixiurge and
+  :no\_vendor\_pixiurge to app.rack\_builder, and you should.
