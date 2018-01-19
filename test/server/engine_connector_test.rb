@@ -79,7 +79,7 @@ DSL
 
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
@@ -97,7 +97,7 @@ DSL
 
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
@@ -123,7 +123,7 @@ DSL
 
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
@@ -138,7 +138,7 @@ DSL
     # We should see login messages and no closing of either socket
     messages = next_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, next_ws.sent_data.size  # This would be higher if either of these players had visible bodies - they can't see each other
@@ -171,7 +171,7 @@ DSL
     # Check murray's messages
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "murray" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
@@ -181,7 +181,7 @@ DSL
     # Check sam's messages
     messages = sam_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
@@ -191,7 +191,7 @@ DSL
     # Check phil's messages
     messages = phil_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "phil" } ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
