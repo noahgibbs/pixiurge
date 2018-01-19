@@ -43,7 +43,7 @@ class Pixiurge::Player
     @pan_center_x = 0
     @pan_center_y = 0
 
-    message(Pixiurge::Protocol::Outgoing::DISPLAY_INIT, display_settings )
+    message(Pixiurge::Protocol::Outgoing::DISPLAY_INIT, display_settings.merge("width" => 640, "height" => 480))
   end
 
   # Send a message to the connected browser for this player. This will

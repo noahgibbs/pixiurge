@@ -29,7 +29,7 @@ class Pixiurge.Display
   pixi_setup: () ->
     @exposure = { x: @display_width / 2, y: @display_height / 2, width: @display_width, height: @display_height }
 
-    @pixi_app = PIXI.Application width: @display_width, height: @display_height
+    @pixi_app = new PIXI.Application(width: @display_width, height: @display_height)
     @stage = @pixi_app.stage
     $(@container_spec).append(@pixi_app.view)
     @layer_container = new PIXI.Container

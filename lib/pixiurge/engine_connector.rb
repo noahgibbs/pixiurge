@@ -106,7 +106,9 @@ class Pixiurge::EngineConnector
   private
 
   def display_settings
-    { "ms_per_tick" => 300 }
+    {
+      "ms_per_tick" => 300,
+    }
   end
 
   def displayable_for_item(item)

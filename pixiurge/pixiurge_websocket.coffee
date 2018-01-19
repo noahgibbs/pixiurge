@@ -1,11 +1,12 @@
 class Pixiurge.WebsocketTransport
-  constructor: (@pixiurge, @ws, @cookie = document.cookie) ->
+  constructor: (@pixiurge, @ws, cookie_lib = undefined) ->
     @opened = false
     @ready = false
     @login_handler = false
     @failed_login_handler = false
     @pending_password = false
     @pending_username = false
+    @cookie_lib = cookie_lib || new Pixiurge.CookieLib
     @on_open = false
     @queue = []
 
@@ -33,8 +34,8 @@ class Pixiurge.WebsocketTransport
       if data[0] == "login"
         console.log "Logged in as", data[1]["username"]
         if @pending_save_login && @pending_hash
-          @cookie = "pixiurge_username=#{data[1]["username"]};secure"
-          @cookie = "pixiurge_hash=#{@pending_hash};secure"
+          @cookie_lib.setCookie("pixiurge_username", data[1]["username"])
+          @cookie_lib.setCookie("pixiurge_hash", @pending_hash)
           @pending_hash = false
         @logged_in_as = data[1]["username"]
         if @login_handler?
@@ -46,7 +47,7 @@ class Pixiurge.WebsocketTransport
         @considerAutoLogin()
         return
 
-      return transport.api_handler data[0], data.slice(1)
+      return transport.message_handler data[0], data.slice(1)
 
     @ws.onclose = () ->
       console.log "socket closed"
@@ -96,9 +97,6 @@ class Pixiurge.WebsocketTransport
     if @opened?
       @on_open()  # Already open? Call it.
 
-  api_handler: (msg_type, args) ->
-    @message_handler msg_type, args
-
   registerAccount: (username, password) ->
     bcrypt = dcodeIO.bcrypt;
     salt = bcrypt.genSaltSync(10);
@@ -112,11 +110,11 @@ class Pixiurge.WebsocketTransport
     @sendMessageWithType("get_salt", { username: username })
 
   logout: () ->
-    @cookie = 'pixiurge_username=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-    @cookie = 'pixiurge_hash=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+    @cookie_lib.deleteCookie('pixiurge_username')
+    @cookie_lib.deleteCookie('pixiurge_hash')
 
   considerAutoLogin: () ->
-    cookie_username = @cookie.replace(/(?:(?:^|.*;\s*)pixiurge_username\s*\=\s*([^;]*).*$)|^.*$/, "$1")
-    cookie_hash = @cookie.replace(/(?:(?:^|.*;\s*)pixiurge_hash\s*\=\s*([^;]*).*$)|^.*$/, "$1")
+    cookie_username = @cookie_lib.getCookie("pixiurge_username")
+    cookie_hash = @cookie_lib.getCookie("pixiurge_hash")
     if cookie_username? && cookie_username != "" && cookie_hash? && cookie_hash != ""
       @sendMessageWithType "hashed_login", { username: cookie_username, bcrypted: cookie_hash }
