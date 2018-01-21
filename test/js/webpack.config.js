@@ -8,13 +8,7 @@ module.exports = {
     entry: glob.sync("./test/js/*test.js")
     .concat(glob.sync("./vendor/dev/*.js"))
     .concat(glob.sync("./test/jshelper/*.js"))
-    .concat([
-             // Include modular, un-minified Pixiurge to test latest changes
-             "./pixiurge/pixiurge.coffee",
-             "./pixiurge/pixiurge_websocket.coffee",
-             "./pixiurge/pixiurge_display.coffee",
-             "./pixiurge/pixiurge_utils.coffee",
-            ]),
+    .concat(glob.sync("./pixiurge/pixiurge*.coffee")),
     output: {
         filename: "test/js/test_server/public/test_bundle.js"
     },
