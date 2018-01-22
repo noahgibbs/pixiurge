@@ -30,14 +30,20 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   #     ],
   #     animations: {
   #       funny_walk: { frames: [ 1, 2, 3, 4, 5 ], after: "loop" },
-  #       second_anim: { frames: [ 7, 2, 4, 1, 6 ] },
+  #       second_anim: { frames: [ 7, 2, 4, 1, 6 ], after: "funny_walk" },
   #       third_anim: { frames: [
   #         { tileset: "name1", x: 0, y: 0, width: 32, height: 32, duration: 100 },
   #         { frame_id: 7, duration: 150 },
   #         { tileset: "name2", x: 32, y: 96, width: 32, height: 32, duration: 50 },
   #         7,
   #         15
-  #       ], after: "loop" }
+  #       ], after: "loop" },
+  #       fourth_anim: {
+  #         frames: [1, 7, 4, 19], after: [
+  #           { name: "funny_walk", "chance" 1.0 },
+  #           { name: "second_anim", chance: 4 },
+  #           { name: "third_anim" } ]
+  #       }
   #     }
   #     animation: "funny_walk"
   # }
@@ -55,9 +61,21 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   # Properties for animations: frames, after (opt). Frames is an array.
   # each element may be an integer, in which case it's a frame ID
 
-  # The default value for "after" is "stop". Special values for
-  # "after" are "loop" and "stop". It can also be set to the name of
-  # another animation in the same TileAnimatedSprite.
+  # The "after" property determines what happens after the given
+  # frames have finished displaying. The default value of "stop" means
+  # that the sprite stays on the last frame and doesn't change
+  # again. A value of "loop" means the sprite will go back to the
+  # first frame in the current named animation.  You can also set it
+  # to the name of another animation - in the example above, you could
+  # set "after" to "funny_walk", for instance. You can also set
+  # "after" to an array of objects. If you do, these are all _choices_
+  # for what happens when the named animation completes. The default
+  # "chance" is 1.0, and all chances will be summed to determine what
+  # the chance is out of - in order words, if you have four entries
+  # with a chance of 1.0, each will have a 1/4 chance of being chosen
+  # next. If you change one of them to have a chance of 2.0, then it
+  # will have a 2/5ths chance and each other animation will have a 1/5
+  # chance of being picked.
 
   # The "tileset" property of an animation gives the default tileset
   # for any frame that doesn't specify. The default value is the first
@@ -140,4 +158,16 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
 
   animationComplete: () ->
     if @animations[@current_animation].after != "stop"
-      @startAnimation @animations[@current_animation].after
+      after = @animations[@current_animation].after
+      if typeof(after) == "string"
+        @startAnimation after
+      else
+        chances = 0.0
+        for item in after
+          chances += (item.chance || 1.0)
+        r = Math.random() * chances
+        for item in after
+          r -= (item.chance || 1.0)
+          if r < 0
+            return @startAnimation(item.name)
+        @startAnimation(after[0].name)
