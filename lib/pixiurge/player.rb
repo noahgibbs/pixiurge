@@ -43,7 +43,20 @@ class Pixiurge::Player
     @pan_center_x = 0
     @pan_center_y = 0
 
-    message(Pixiurge::Protocol::Outgoing::DISPLAY_INIT, display_settings.merge("width" => 640, "height" => 480))
+    display_init_message(display_settings)
+  end
+
+  # Send the message to initialize the display. If you want to send
+  # additional settings or customize existing settings like display
+  # width and height per player, this is a pretty good place to do
+  # that. This is normally called by the Player constructor.
+  #
+  # @param display_settings [Hash] The display settings to send, if unmodified
+  # @return [void]
+  # @since 0.1.0
+  def display_init_message(display_settings)
+    message(Pixiurge::Protocol::Outgoing::DISPLAY_INIT, display_settings)
+    nil
   end
 
   # Send a message to the connected browser for this player. This will

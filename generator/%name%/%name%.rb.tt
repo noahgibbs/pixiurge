@@ -1,8 +1,6 @@
 require "pixiurge"
 require "demiurge"
 
-CANVAS_WIDTH = 640
-CANVAS_HEIGHT = 480
 TICK_MILLISECONDS = 300
 TICKS_PER_SAVE = (60 * 1000 / TICK_MILLISECONDS)  # Every 1 minute
 
@@ -40,7 +38,7 @@ class <%= name.capitalize %> < Pixiurge::AuthenticatedApp
       puts "No last statefile found, starting from World Files."
     end
 
-    @engine_connector = Pixiurge::EngineConnector.new(@engine, self)
+    @engine_connector = Pixiurge::EngineConnector.new(@engine, self, :default_width => 800, :default_height => 600)
 
     # You can set up handlers as shown below with inherited methods or
     # you can use on_event("event name") here. They do the same thing.

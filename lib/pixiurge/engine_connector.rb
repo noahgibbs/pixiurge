@@ -19,12 +19,17 @@ class Pixiurge::EngineConnector
   #
   # @param demi_engine [Demiurge::Engine] The Demiurge engine for world simulation
   # @param pixi_app [Pixiurge::App] The Pixiurge App for assets and network interactions
+  # @param options [Hash] Options for the EngineConnector
+  # @option options [Integer] :default_width Default width for display if unspecified
+  # @option options [Integer] :default_height Default height for display if unspecified
   # @since 0.1.0
-  def initialize(demi_engine, pixi_app)
+  def initialize(demi_engine, pixi_app, options = {})
     @engine = demi_engine
     @app = pixi_app
     @players = {}      # Mapping of player name strings to Player objects (not Displayable objects or Demiurge items)
     @displayables = {} # Mapping of item names to Display objects such as Humanoids
+    @default_width = options[:default_width] || 640
+    @default_height = options[:default_height] || 480
 
     # First, subscribe to the engine and create local display copies of the various engine items.
 
@@ -107,6 +112,8 @@ class Pixiurge::EngineConnector
 
   def display_settings
     {
+      "width" => @default_width,
+      "height" => @default_height,
       "ms_per_tick" => 300,
     }
   end
