@@ -45,6 +45,10 @@ module Pixiurge::Display
     def invisible
       @built_objects << ::Pixiurge::Display::Invisible.new(name: @item.name, demi_item: @item, engine_connector: @engine_connector)
     end
+
+    def tile_animated_sprite(params)
+      @built_objects << ::Pixiurge::Display::TileAnimatedSprite.new(params, name: @item.name, demi_item: @item, engine_connector: @engine_connector)
+    end
   end
 
   class HumanoidBuilder

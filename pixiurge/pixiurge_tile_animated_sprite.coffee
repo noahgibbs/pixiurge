@@ -1,0 +1,143 @@
+# This sprite accepts and loads multiple tilemaps and handles
+# appropriate frames and animation timing. The supplied information is
+# used to create textures for a PIXI.extras.AnimatedSprite.
+class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
+
+  # Every Pixiurge Displayable takes a Pixiurge Display object, an
+  # item name and a hash of item data, but each Displayable subtype
+  # decides on the format of its own item data. The TileAnimatedSprite
+  # uses the following format:
+
+  # params: {
+  #     tilesets: [
+  #       {
+  #         name: "name1",
+  #         url: "https://first_url.com/path",
+  #         tile_width: 32,
+  #         tile_height: 32,
+  #       },
+  #       {
+  #         name: "name2",
+  #         url: "https://second_url.com/path",
+  #         tile_width: 32,
+  #         tile_height: 32,
+  #         first_frame_id: 37,   # Frame ID of the first tile in this tileset
+  #         spacing: 3, # Optional field, default 0
+  #         margin: 2,  # Optional field, default 0
+  #         reg_x: 16,  # Optional field for anchor/registration x coord, default 0
+  #         reg_y: 16,  # Optional field for anchor/registration y coord, default 0
+  #       }
+  #     ],
+  #     animations: {
+  #       funny_walk: { frames: [ 1, 2, 3, 4, 5 ], after: "loop" },
+  #       second_anim: { frames: [ 7, 2, 4, 1, 6 ] },
+  #       third_anim: { frames: [
+  #         { tileset: "name1", x: 0, y: 0, width: 32, height: 32, duration: 100 },
+  #         { frame_id: 7, duration: 150 },
+  #         { tileset: "name2", x: 32, y: 96, width: 32, height: 32, duration: 50 },
+  #         7,
+  #         15
+  #       ], after: "loop" }
+  #     }
+  #     animation: "funny_walk"
+  # }
+
+  # For tilesets, the url property is where to load the tileset
+  # from. The tile_width, tile_height, spacing and margin define the
+  # size and location of the frames within a tileset. The
+  # first_frame_id defaults to 1 for the first tileset and gives the
+  # frame ID (number) for the very first frame number of that
+  # tileset. For later tilesets, the frame numbering begins with the
+  # next unused frame ID - so a tileset with room for 24 images
+  # followed by a tileset with room for 6 images will have frame IDs
+  # between 1 and 30 unless one of them sets first_frame_id.
+
+  # Properties for animations: frames, after (opt). Frames is an array.
+  # each element may be an integer, in which case it's a frame ID
+
+  # The default value for "after" is "stop". Special values for
+  # "after" are "loop" and "stop". It can also be set to the name of
+  # another animation in the same TileAnimatedSprite.
+
+  # The "tileset" property of an animation gives the default tileset
+  # for any frame that doesn't specify. The default value is the first
+  # tileset.
+
+  # The "frames" property of an animation is an array of frame
+  # specifications. A frame can be a number, which is a frame number
+  # as defined by the tilesets. A frame can also be a structure with a
+  # duration and frame_id. Or it can be a structure with a duration,
+  # an x and y coordinate for the upper left corner, a width and
+  # height, and a tileset name.
+
+  constructor: (pixi_display, item_name, item_data) ->
+    super(pixi_display, item_name, item_data)
+
+    images = tileset.url for tileset in item_data.params.tilesets
+    @tilesets = item_data.params.tilesets
+
+    @loader = new PIXI.loaders.Loader();
+    @loader.add(images).load(() => @imagesLoaded())
+
+  imagesLoaded: () ->
+    ts_base_textures = {}
+    for tileset in @tilesets
+      tileset.texture = @loader.resources[tileset.url].texture
+      ts_base_textures[tileset.name] = tileset.texture.baseTexture
+
+    # First, figure out the tile IDs
+    tile_frame_definitions = Pixiurge.TileUtils.calculate_frames(@tilesets)
+
+    @animations = {}
+    # Next, we need to convert each animation to AnimatedSprite's format - an array of structures, each with "texture" and "time" fields.
+    for animation_name, animation_struct of @item_data.params.animations
+      anim_frames = []
+      for frame in animation_struct.frames
+        if typeof frame == "number"
+          [x, y, tile_width, tile_height, tileset_name, reg_x, reg_y] = tile_frame_definitions[frame]
+          rect = new PIXI.Rectangle(x, y, tile_width, tile_height)
+          tex = new PIXI.Texture ts_base_textures[tileset_name], rect
+          anim_frames.push time: 100, texture: tex
+        else if typeof frame == "object" && frame.frame_id?
+          [x, y, tile_width, tile_height, tileset_name, reg_x, reg_y] = tile_frame_definitions[frame.frame_id]
+          rect = new PIXI.Rectangle(x, y, tile_width, tile_height)
+          tex = new PIXI.Texture ts_base_textures[tileset_name], rect
+          duration = if frame.duration? then frame.duration else 100
+          anim_frames.push time: duration, texture: tex
+        else if typeof frame == "object"
+          tileset_name = if frame.tileset? then frame.tileset else @tilesets[0].name
+          rect = new PIXI.Rectangle(frame.x, frame.y, frame.width, frame.height)
+          tex = new PIXI.Texture ts_base_textures[tileset_name], rect
+          duration = if frame.duration? then frame.duration else 100
+          anim_frames.push time: duration, texture: tex
+        else
+          console.log "Unrecognized animation frame format in TileAnimatedSprite!", frame
+
+      after = if animation_struct.after? then animation_struct.after else "stop"
+      @animations[animation_name] = { frames: anim_frames, after: after }
+
+    # Create the AnimatedSprite with the textures for the first animation
+    @current_animation = @item_data.params.animation
+    unless @current_animation?
+      console.log "No current animation set for TileAnimatedSprite!"
+    console.log "ANIMATEDSPRITE CONSTRUCTOR", @current_animation, @animations[@current_animation]
+    @sprite = new PIXI.extras.AnimatedSprite(@animations[@current_animation].frames)
+    this_pixiurge_sprite = this
+    @sprite.onComplete = () => this_pixiurge_sprite.animationComplete()
+
+    @pixi_display.stage.addChild @sprite
+    @startAnimation @current_animation
+
+  startAnimation: (name) ->
+    @current_animation = name
+    @sprite.stop()
+    @sprite.textures = @animations[@current_animation].frames
+    if @animations[@current_animation].after == "loop"
+      @sprite.loop = true
+    else
+      @sprite.loop = false
+    @sprite.gotoAndPlay(0)
+
+  animationComplete: () ->
+    if @animations[@current_animation].after != "stop"
+      @startAnimation @animations[@current_animation].after

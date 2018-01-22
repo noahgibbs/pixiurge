@@ -85,7 +85,17 @@ zone "admin zone" do
     end
 
     display do
-      particle_source "shape" => "oval"
+      tile_animated_sprite tilesets: [{
+          url: "/sprites/female_tilesheet.png",
+          tile_width: 80,
+          tile_height: 110,
+        }],
+      animations: {
+        stand: { after: "loop", frames: [ { frame_id: 1, duration: 5000 }, { frame_id: 24, duration: 1000 }, { frame_id: 1, duration: 5000 }, { frame_id: 23, duration: 1000 } ] },
+        walk: { after: "loop", frames: [ { frame_id: 10, duration: 250 }, { frame_id: 11, duration: 250 } ] },
+        jump: { after: "stand", frames: [ { frame_id: 1, duration: 250 }, { frame_id: 2, duration: 250 }, { frame_id: 4, duration: 250 } ] },
+      },
+      animation: "stand"
     end
   end
 end
