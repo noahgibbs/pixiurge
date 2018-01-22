@@ -78,6 +78,7 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
 
     @loader = new PIXI.loaders.Loader();
     @loader.add(images).load(() => @imagesLoaded())
+    # @todo: how to make sure we can put this at a specific spot in the draw order, even if the load is slow
 
   imagesLoaded: () ->
     ts_base_textures = {}

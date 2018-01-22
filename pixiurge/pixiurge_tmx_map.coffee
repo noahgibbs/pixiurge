@@ -6,6 +6,10 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
     @loader = new PIXI.loaders.Loader()
     @loader.add(@url).load(() => @jsonLoaded())
 
+    # Reserve our spot in the display order, even if the loader is slow
+    @world = new PIXI.Container()
+    @pixi_display.stage.addChild @world
+
   # This is actually the "destroy" method for this Displayable
   hide: () ->
 
@@ -39,17 +43,15 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
     tile_frame_definitions = Pixiurge.TileUtils.calculate_frames(tileset_spec)
     textureByGID = {}
 
-    world = new PIXI.Container()
+    @world.tileWidth = tiledJSON.tilewidth
+    @world.tileHeight = tiledJSON.tileheight
 
-    world.tileWidth = tiledJSON.tilewidth
-    world.tileHeight = tiledJSON.tileheight
-
-    world.worldWidth = tiledJSON.width * tiledJSON.tilewidth
-    world.worldHeight = tiledJSON.height * tiledJSON.tileheight
+    @world.worldWidth = tiledJSON.width * tiledJSON.tilewidth
+    @world.worldHeight = tiledJSON.height * tiledJSON.tileheight
 
     # @todo Change interface?
-    world.widthInTiles = tiledJSON.width;
-    world.heightInTiles = tiledJSON.height;
+    @world.widthInTiles = tiledJSON.width;
+    @world.heightInTiles = tiledJSON.height;
 
     for tiledLayer in tiledJSON.layers
       if tiledLayer.type == "tilelayer" && tiledLayer.name != "Collision" && tiledLayer.name != "collision"
@@ -64,17 +66,17 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
 
         # Copy any other properties or keys into layer?
 
-        world.addChild layer.container
+        @world.addChild layer.container
 
         # @todo Should we break up large layers into multiple containers to facilitate quick rendering of a small chunk in a small viewport?
 
         for gid, index in tiledLayer.data
           if gid != 0  # A 0 GID means no tile is there
-            mapColumn = index % world.widthInTiles
-            mapRow = Math.floor(index / world.widthInTiles)
+            mapColumn = index % @world.widthInTiles
+            mapRow = Math.floor(index / @world.widthInTiles)
 
-            mapX = mapColumn * world.tileWidth
-            mapY = mapRow * world.tileHeight
+            mapX = mapColumn * @world.tileWidth
+            mapY = mapRow * @world.tileHeight
 
             # regX and regY are for variable pivots - important for oversize terrain tiles in Fringe layers and similar
             [ tileX, tileY, tileWidth, tileHeight, imageName, regX, regY ] = tile_frame_definitions[gid]
@@ -94,5 +96,3 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
             sprite.y = mapY
             sprite.pivot = new PIXI.Point(regX, regY)
             layer.container.addChild sprite
-
-    @pixi_display.stage.addChild world
