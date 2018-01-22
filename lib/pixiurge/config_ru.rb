@@ -174,6 +174,8 @@ module Pixiurge::Middleware
 
     # The Rack .call method for middleware.
     #
+    # @todo Actually use the supplied cache!
+    #
     # @since 0.1.0
     def call(env)
       # If no TMX path is matched, forward the call to the next middleware

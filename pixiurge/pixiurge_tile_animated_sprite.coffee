@@ -120,7 +120,6 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
     @current_animation = @item_data.params.animation
     unless @current_animation?
       console.log "No current animation set for TileAnimatedSprite!"
-    console.log "ANIMATEDSPRITE CONSTRUCTOR", @current_animation, @animations[@current_animation]
     @sprite = new PIXI.extras.AnimatedSprite(@animations[@current_animation].frames)
     this_pixiurge_sprite = this
     @sprite.onComplete = () => this_pixiurge_sprite.animationComplete()

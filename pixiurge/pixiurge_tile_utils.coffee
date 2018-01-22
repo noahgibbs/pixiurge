@@ -17,10 +17,9 @@ Pixiurge.TileUtils = {
   #       texture: secondTextureObject,
   #       tile_width: 32,
   #       tile_height: 32,
+  #       first_frame_id: 7,  # Optional field, default 1
   #       spacing: 3, # Optional field, default 0
   #       margin: 2,  # Optional field, default 0
-  #       oversize_width: 64,  # Optional field for 'oversize' tilesets
-  #       oversize_height: 96, # Optional field for 'oversize' tilesets
   #       reg_x: 0,  # Optional field for pivot/registration x coord, default 0
   #       reg_y: 0,  # Optional field for pivot/registration y coord, default 0
   #     }
