@@ -5,12 +5,22 @@
 #
 # @since 0.1.0
 class Pixiurge::Display::Invisible < Pixiurge::Displayable
-  def show_to_player(player)
+  # Do nothing to display an Invisible object
+  #
+  # @since 0.1.0
+  def messages_to_show_player(player)
+    []
   end
 
+  # Do nothing to hide an Invisible object
+  #
+  # @since 0.1.0
   def hide_from_player(player)
   end
 
+  # Do nothing to move an Invisible object
+  #
+  # @since 0.1.0
   def move_for_player(player, old_pos, new_pos, options)
   end
 end

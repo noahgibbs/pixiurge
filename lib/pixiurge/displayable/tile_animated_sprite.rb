@@ -89,11 +89,10 @@ class Pixiurge::Display::TileAnimatedSprite < Pixiurge::Displayable
   # Show this Displayable to a player.
   #
   # @param player [Pixiurge::Player] The player to show this Displayable to
-  # @return [void]
+  # @return [Array] Messages to show the TileAnimatedSprite via JSON
   # @since 0.1.0
-  def show_to_player(player)
-    player.message(Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, @name, { "type" => "tile_animated_sprite", "params" => @parameters } )
-    nil
+  def messages_to_show_player(player)
+    [ { "type" => "tile_animated_sprite", "params" => @parameters } ]
   end
 
   private

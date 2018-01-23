@@ -24,18 +24,27 @@ class Pixiurge::Displayable
   # Most recently-displayed coordinate and location. This can vary
   # significantly from the Demiurge item's location during a long
   # series of movement notifications - the Demiurge item may already
-  # be at the final location, while the notifications go one at a
-  # time through the places in between.
+  # be at the final location, while the notifications go one at a time
+  # through the places in between. In general the EngineConnector will
+  # assign these coordinates and tell the Displayable to play a
+  # movement animation, but the Displayable can't easily know exactly
+  # what happens when.
   attr_reader :x              # Most recently drawn coordinates
   attr_reader :y
   attr_reader :location_name  # Most recently drawn Demiurge location name
   attr_reader :location_displayable
 
-  # For a tiled-type area, these are the tile height and width of this Displayable in pixels
+  # For a tiled-type area, {#block_width} and {#block_height} are the
+  # tile height and width of this Displayable in pixels.  This isn't
+  # the tile size of this object's location - it's the tile size of
+  # this object itself for any items that might move inside of it or
+  # on top of it.
   attr_reader :block_width
   attr_reader :block_height
 
-  # This is the most recently-displayed position of this Displayable
+  # This is the most recently-displayed position of this
+  # Displayable. When it changes, fields like {#x} and
+  # {#location_name} get updated automatically.
   attr_reader :position
 
   # Constructor
@@ -67,13 +76,34 @@ class Pixiurge::Displayable
     nil
   end
 
-  # Show this Displayable to a player, generally by sending messages.
+  # Show this Displayable to a player by sending a
+  # DISPLAY_SHOW_DISPLAYABLE message.  Be very careful overriding this
+  # method - a Displayable that uses something other than a single
+  # DISPLAY_SHOW_DISPLAYABLE may not work properly if put inside a
+  # {Pixiurge::Container} or other Displayable that contains other
+  # Displayables.
   #
   # @param player [Pixiurge::Player] The player to show this Displayable to
   # @return [void]
   # @since 0.1.0
   def show_to_player(player)
-    raise "Override Displayable#show_to_player!"
+    msgs = messages_to_show_player(player)
+    return if msgs.nil? || msgs.empty?
+    player.message(Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, @name, *msgs)
+  end
+
+  # Return zero or more messages for {#show_to_player}. An empty array
+  # of messages mean "don't show" or "no messages are required to
+  # show." The primary reason for this having an independent existence
+  # is for containers and other Displayables that can contain other
+  # Displayables - this is a way "hide" this Displayable inside
+  # another one.
+  #
+  # @param player [Pixiurge::Player] The player to show this Displayable to
+  # @return [Array] A JSON-serializable Array of messages which are used to show the Displayable to this player
+  # @since 0.1.0
+  def messages_to_show_player(player)
+    raise "Override #messages_to_show_player when inheriting from Pixiurge::Displayable!"
   end
 
   # Hide this Displayable from a player. The default method assumes

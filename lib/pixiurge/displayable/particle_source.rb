@@ -21,10 +21,9 @@ class Pixiurge::Display::ParticleSource < Pixiurge::Displayable
   # Show this Displayable to a player.
   #
   # @param player [Pixiurge::Player] The player to show this Displayable to
-  # @return [void]
+  # @return [Array] Message(s) to show this object to the player
   # @since 0.1.0
-  def show_to_player(player)
-    player.message(Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, @name, { "type" => "particle_source", "params" => @particle_parameters } )
-    nil
+  def messages_to_show_player(player)
+    [ { "type" => "particle_source", "params" => @particle_parameters } ]
   end
 end

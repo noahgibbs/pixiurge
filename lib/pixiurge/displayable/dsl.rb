@@ -40,6 +40,20 @@ module Pixiurge::Display
       self.instance_eval(&disp) # Create the built objects from the block
     end
 
+    private
+    # This adds a built object to the internal array. The parent class
+    # doesn't do anything fancy with this, but child classes may (see
+    # {Pixiurge::Display::ContainerBuilder}).
+    #
+    # @param obj [Pixiurge::Displayable] The Displayable object that has been built
+    # @return [void]
+    # @since 0.1.0
+    def add_built_object(obj)
+      @built_objects << obj
+      nil
+    end
+    public
+
     # Create a Displayable container holding one or more other
     # Displayables.
     #
@@ -47,11 +61,11 @@ module Pixiurge::Display
     # @return [void]
     # @since 0.1.0
     def container(&block)
-      builder = DisplayBuilder.new(item, engine_connector: @engine_connector)
+      builder = ::Pixiurge::Display::ContainerBuilder.new(item, engine_connector: @engine_connector)
       raise("Display container must supply a block!") unless block_given?
       builder.instance_eval(&block)
       raise("Display container must contain at least one item!") if builder.built_objects.empty?
-      @built_objects << ::Pixurge::Display::Container.new(builder.built_objects, name: @name, engine_connector: @engine_connector)
+      add_built_object ::Pixurge::Display::Container.new(builder.built_objects, name: @name, engine_connector: @engine_connector)
     end
 
     # Create a Displayable particle source according to the passed
@@ -61,7 +75,7 @@ module Pixiurge::Display
     # @return [void]
     # @since 0.1.0
     def particle_source(params)
-      @built_objects << ::Pixiurge::Display::ParticleSource.new(params, name: @name, engine_connector: @engine_connector)
+      add_built_object ::Pixiurge::Display::ParticleSource.new(params, name: @name, engine_connector: @engine_connector)
     end
 
     # Create an invisible Displayable - not only does it not show up
@@ -72,7 +86,7 @@ module Pixiurge::Display
     # @return [void]
     # @since 0.1.0
     def invisible
-      @built_objects << ::Pixiurge::Display::Invisible.new(name: @name, engine_connector: @engine_connector)
+      add_built_object ::Pixiurge::Display::Invisible.new(name: @name, engine_connector: @engine_connector)
     end
 
     # Create a {Pixiurge::TileAnimatedSprite} as the given
@@ -87,7 +101,37 @@ module Pixiurge::Display
     # @return [void]
     # @since 0.1.0
     def tile_animated_sprite(params)
-      @built_objects << ::Pixiurge::Display::TileAnimatedSprite.new(params, name: @name, engine_connector: @engine_connector)
+      add_built_object ::Pixiurge::Display::TileAnimatedSprite.new(params, name: @name, engine_connector: @engine_connector)
+    end
+  end
+
+  class ContainerBuilder < DisplayBuilder
+    # Constructor. This takes a Demiurge item, which supplies the
+    # Displayable's name unless a different name is supplied by
+    # keyword.
+    #
+    # @param item [Demiurge::StateItem] The Demiurge item corresponding to the Displayable
+    # @param name [String] This Displayable's name, which must either be the same as the name of the Demiurge item or correspond to no other Demiurge item
+    # @param engine_connector [Pixiurge::EngineConnector] The EngineConnector containing this Displayable
+    # @since 0.1.0
+    def initialize(item, name:, engine_connector:)
+      # We pass a nil item to this, which means that's what the DSL
+      # will see. We'll be incrementing the name for each successive
+      # Displayable, which is how we'll keep from having two with the
+      # same name.
+      super(item, name: name, engine_connector: engine_connector)
+
+      @original_name = name
+      @count = 1
+      @name = "#{@original_name}@#{@count}"
+    end
+
+    private
+    # We need to increment the name for each so that each Displayable gets a unique name.
+    def add_built_object object
+      super
+      @count += 1
+      @name = "%s@%03d" % [@original_name, @count]
     end
   end
 end

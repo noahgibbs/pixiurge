@@ -15,15 +15,13 @@ class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
     @block_height = @entry["tileheight"]
   end
 
-  # Send messages to display the TMX object.
+  # Messages to display the TMX object.
   #
   # @param player [Pixiurge::Player] The player to show this Displayable to
-  # @return [void]
+  # @return [Array] Message to send to player
   # @since 0.1.0
-  def show_to_player(player)
-    player.message Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, @name,
-      { "type" => "tmx", "url" => File.join(@entry["dir"], @entry["tmx_name"] + ".json") }
-    nil
+  def messages_to_show_player(player)
+    [ { "type" => "tmx", "url" => File.join(@entry["dir"], @entry["tmx_name"] + ".json") } ]
   end
 
 end
