@@ -18,7 +18,15 @@ module Pixiurge::Display
     # The item name of the Demiurge item (and thus Displayable) being built
     attr_reader :name
 
-    def initialize(item, engine_connector:)
+    # Constructor. This takes a Demiurge item, which supplies the
+    # Displayable's name unless a different name is supplied by
+    # keyword.
+    #
+    # @param item [Demiurge::StateItem] The Demiurge item corresponding to the Displayable
+    # @param name [String] This Displayable's name, which must either be the same as the name of the Demiurge item or correspond to no other Demiurge item
+    # @param engine_connector [Pixiurge::EngineConnector] The EngineConnector containing this Displayable
+    # @since 0.1.0
+    def initialize(item, name: item.name, engine_connector:)
       # Several things, such as @item, @name and @engine_connector are intentionally available from the DSL
       @item = item
       @name = item.name
@@ -32,38 +40,54 @@ module Pixiurge::Display
       self.instance_eval(&disp) # Create the built objects from the block
     end
 
-    def manasource_humanoid(&block)
-      builder = HumanoidBuilder.new(@item, engine_connector: @engine_connector)
-      builder.instance_eval(&block) if block_given?
-      @built_objects << builder.built_obj
+    # Create a Displayable container holding one or more other
+    # Displayables.
+    #
+    # @yield An additional Displayable DSL block which creates one or more additional Displayables
+    # @return [void]
+    # @since 0.1.0
+    def container(&block)
+      builder = DisplayBuilder.new(item, engine_connector: @engine_connector)
+      raise("Display container must supply a block!") unless block_given?
+      builder.instance_eval(&block)
+      raise("Display container must contain at least one item!") if builder.built_objects.empty?
+      @built_objects << ::Pixurge::Display::Container.new(builder.built_objects, name: @name, engine_connector: @engine_connector)
     end
 
+    # Create a Displayable particle source according to the passed
+    # particle parameters.
+    #
+    # @param params [Hash] A hash of particle parameters
+    # @return [void]
+    # @since 0.1.0
     def particle_source(params)
-      @built_objects << ::Pixiurge::Display::ParticleSource.new(params, name: @item.name, demi_item: @item, engine_connector: @engine_connector)
+      @built_objects << ::Pixiurge::Display::ParticleSource.new(params, name: @name, engine_connector: @engine_connector)
     end
 
+    # Create an invisible Displayable - not only does it not show up
+    # on the screen, but it sends no messages to the players.  If you
+    # want no Displayable for something, this is the closest
+    # equivalent.
+    #
+    # @return [void]
+    # @since 0.1.0
     def invisible
-      @built_objects << ::Pixiurge::Display::Invisible.new(name: @item.name, demi_item: @item, engine_connector: @engine_connector)
+      @built_objects << ::Pixiurge::Display::Invisible.new(name: @name, engine_connector: @engine_connector)
     end
 
+    # Create a {Pixiurge::TileAnimatedSprite} as the given
+    # Displayable. These sprites show animations from tilesheets, and
+    # can transition continuously between multiple animations for
+    # things like standing-and-idle animations.
+    #
+    # For details of the parameters, see
+    # {Pixiurge::TileAnimatedSprite}.
+    #
+    # @param params [Hash] Parameters for the TileAnimatedSprite
+    # @return [void]
+    # @since 0.1.0
     def tile_animated_sprite(params)
-      @built_objects << ::Pixiurge::Display::TileAnimatedSprite.new(params, name: @item.name, demi_item: @item, engine_connector: @engine_connector)
-    end
-  end
-
-  class HumanoidBuilder
-    def initialize(agent, engine_connector:)
-      @agent = agent  # Demiurge Agent item
-      @engine_connector = engine_connector
-      @layers = [ "male", "robe_male" ] # Default appearance, if not given
-    end
-
-    def layers(*layer_names)
-      @layers = (layer_names).flatten
-    end
-
-    def built_obj
-      ::Pixiurge::Display::Humanoid.new @layers, name: @agent.name, demi_item: @agent, engine_connector: @engine_connector
+      @built_objects << ::Pixiurge::Display::TileAnimatedSprite.new(params, name: @name, engine_connector: @engine_connector)
     end
   end
 end

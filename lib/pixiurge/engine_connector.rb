@@ -133,11 +133,11 @@ class Pixiurge::EngineConnector
     end
 
     if item.is_a?(::Demiurge::Tmx::TmxLocation)
-      return ::Pixiurge::Display::TmxMap.new demi_item: item, name: item.name, engine_connector: self  # Build a Pixiurge location
+      return ::Pixiurge::Display::TmxMap.new item.tile_cache_entry, name: item.name, engine_connector: self  # Build a Pixiurge location
     elsif item.agent?
       # No Display information? Default to generic guy in a hat.
       layers = [ "male", "kettle_hat_male", "robe_male" ]
-      return ::Pixiurge::Display::Humanoid.new layers, name: item.name, demi_item: item, engine_connector: self
+      raise "Nope! Haven't implemented a default displayable for agents yet!"
     end
 
     # If we got here, we have no idea how to display this.
@@ -150,6 +150,7 @@ class Pixiurge::EngineConnector
     displayable = displayable_for_item(item)
     if displayable
       @displayables[item.name] = displayable
+      displayable.position = item.position if item.position
       show_displayable_to_players(displayable)
       return
     end
@@ -263,9 +264,7 @@ class Pixiurge::EngineConnector
     end
 
     if data["type"] == Demiurge::Notifications::LoadStateEnd
-      @displayables.each_value do |displayable|
-        displayable.demiurge_reloaded
-      end
+      # What to do here? Displayables don't care about this any more. Does anything in Pixiurge?
       return
     end
 

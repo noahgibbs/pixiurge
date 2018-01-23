@@ -19,7 +19,6 @@ module Pixiurge::Display; end
 # @see file:CONCEPTS.md
 # @since 0.1.0
 class Pixiurge::Displayable
-  attr_reader :demi_item   # Demiurge item that this displays
   attr_reader :name        # Name, which should be the same as the Demiurge item name if there is one.
 
   # Most recently-displayed coordinate and location. This can vary
@@ -41,37 +40,16 @@ class Pixiurge::Displayable
 
   # Constructor
   #
-  # @param demi_item [Demiurge::StateItem] A Demiurge StateItem for this Displayable to indicate
   # @param name [String] The Demiurge item name for this Displayable
   # @param engine_connector [Pixiurge::EngineConnector] The Pixiurge EngineConnector this Displayable belongs to
   # @since 0.1.0
-  def initialize demi_item:, name:, engine_connector:
+  def initialize name:, engine_connector:
     @name = name
-    @demi_item = demi_item
-    @demi_name = demi_item.name  # Usually the same as @name
     @engine_connector = engine_connector
-    raise "Non-matching name and Demiurge name!" if @demi_item && @demi_item.name != name
-    @demi_engine = demi_item.engine
-    self.position = demi_item.position if demi_item && demi_item.position
 
     # Most child classes should override this
     @block_width = 1
     @block_height = 1
-  end
-
-  # This method is called when Demiurge is, or may have been,
-  # reloaded.  Demiurge item names, handlers and so on stay the same
-  # and state is preserved. But StateItems are reinstantiated and must
-  # be looked up again. This method updates only this single
-  # Displayable, so it must be called on all Displayables, normally by
-  # the EngineConnector.
-  #
-  # @return [void]
-  # @since 0.1.0
-  def demiurge_reloaded
-    @demi_item = @demi_engine.item_by_name(@demi_name)
-    @location_item = @demi_engine.item_by_name(@location_name)
-    @location_displayable = @engine_connector.displayable_by_name(@location_name)
   end
 
   # Move this Displayable to a new position. This is normally done by
@@ -85,7 +63,6 @@ class Pixiurge::Displayable
   def position=(new_position)
     @position = new_position
     @location_name, @x, @y = ::Demiurge::TiledLocation.position_to_loc_coords(new_position)
-    @location_item = @demi_engine.item_by_name(@location_name)
     @location_displayable = @engine_connector.displayable_by_name(@location_name)
     nil
   end
@@ -132,7 +109,6 @@ class Pixiurge::Displayable
   # @return [void]
   # @since 0.1.0
   def move_for_player(player, old_position, new_position, options = {})
-    raise "Please override this method!"
-    #player.message ["displayMoveStackToPixel", self.spritestack[:name], pixel_x, pixel_y, { "duration" => time_to_walk } ]
+    player.message( Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE, @name, { "old_position" => old_position, "position" => new_position, "options" => options } )
   end
 end

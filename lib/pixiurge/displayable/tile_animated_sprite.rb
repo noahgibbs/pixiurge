@@ -80,9 +80,10 @@ class Pixiurge::Display::TileAnimatedSprite < Pixiurge::Displayable
   # @param name [String] The Demiurge item name for this Displayable
   # @param engine_connector [Pixiurge::EngineConnector] The Pixiurge EngineConnector this Displayable belongs to
   # @since 0.1.0
-  def initialize parameters, demi_item:, name:, engine_connector:
+  def initialize parameters, name:, engine_connector:
     @parameters = parameters
-    super(demi_item: demi_item, name: name, engine_connector: engine_connector)
+    check_parameters
+    super(name: name, engine_connector: engine_connector)
   end
 
   # Show this Displayable to a player.
@@ -95,18 +96,8 @@ class Pixiurge::Display::TileAnimatedSprite < Pixiurge::Displayable
     nil
   end
 
-  # See the parent method #{Pixiurge::Displayable#move_for_player} for
-  # more general information on this method.
-  #
-  # This displayable doesn't have to do anything special to move, it
-  # just moves.
-  #
-  # @param player [Pixiurge::Player] The player to show
-  # @param old_position [String] The old/beginning position string
-  # @param new_position [String] The new/ending position string
-  # @return [void]
-  # @since 0.1.0
-  def move_for_player(player, old_position, new_position, options)
-    player.message( Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE, @name, { "old_position" => old_position, "position" => new_position, "options" => options } )
+  private
+
+  def check_parameters
   end
 end
