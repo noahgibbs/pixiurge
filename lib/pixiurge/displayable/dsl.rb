@@ -103,6 +103,18 @@ module Pixiurge::Display
     def tile_animated_sprite(params)
       add_built_object ::Pixiurge::Display::TileAnimatedSprite.new(params, name: @name, engine_connector: @engine_connector)
     end
+
+    # Create a TMX tilemap as the given Displayable. The given TMX
+    # filename will be quietly converted to JSON behind the scenes and
+    # sent with a separate AJAX loader request.
+    #
+    # @param filename [String] The server-side relative filename for the TMX file
+    # @return [void]
+    # @since 0.1.0
+    def tmx_map(filename, options = {})
+      cache_entry = Demiurge::Tmx::TmxLocation.default_cache.cache_entry("manasource", filename)
+      add_built_object ::Pixiurge::Display::TmxMap.new(cache_entry, name: @name, engine_connector: @engine_connector)
+    end
   end
 
   class ContainerBuilder < DisplayBuilder

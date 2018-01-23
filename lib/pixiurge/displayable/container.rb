@@ -17,7 +17,6 @@ class Pixiurge::Display::Container < Pixiurge::Displayable
   # @since 0.1.0
   def initialize displayables, name:, engine_connector:
     @contents = displayables
-    @particle_parameters = particle_parameters
     super(name: name, engine_connector: engine_connector)
   end
 

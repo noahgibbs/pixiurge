@@ -14,14 +14,15 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
   hide: () ->
 
   jsonLoaded: () ->
-    tiledJSON = @loader.resources[@url].data
+    tmxCacheEntry = @loader.resources[@url].data
     @loader.reset()
-    tilesetImages = (tileset.image for tileset in tiledJSON.tilesets)
+    tilesetImages = (tileset.image for tileset in tmxCacheEntry.map.tilesets)
 
-    @loader.add(tilesetImages).load(() => @makeTiledWorld(tiledJSON))
+    @loader.add(tilesetImages).load(() => @makeTiledWorld(tmxCacheEntry))
 
   # Parts of this are adapted from kittykatattack's tileUtilities
-  makeTiledWorld: (tiledJSON) ->
+  makeTiledWorld: (tmxCacheEntry) ->
+    tiledJSON = tmxCacheEntry.map
     tileset_spec = []
     base_texture_by_tileset = {}
     for tileset in tiledJSON.tilesets

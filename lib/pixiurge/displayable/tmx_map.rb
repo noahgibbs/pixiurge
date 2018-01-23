@@ -21,7 +21,7 @@ class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
   # @return [Array] Message to send to player
   # @since 0.1.0
   def messages_to_show_player(player)
-    [ { "type" => "tmx", "url" => File.join(@entry["dir"], @entry["tmx_name"] + ".json") } ]
+    [ { "type" => "tmx", "url" => @entry["filename"] } ]
   end
 
 end

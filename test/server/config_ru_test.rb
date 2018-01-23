@@ -62,7 +62,7 @@ class ConfigRuTest < Minitest::Test
   # accounting for. First, let's test the basic "convert TMX to JSON"
   # version.
   def test_can_serve_tmx_as_manasource_cached_json
-    get '/tmx/magecity_cc0_lorestrome.mana.json'
+    get '/tmx/magecity_cc0_lorestrome.manasource.json'
     assert last_response.ok?
     rack_exported_version = MultiJson.load(last_response.body)
     assert rack_exported_version["collision"], "Parsed ManaSource-style TMX with a collision layer"

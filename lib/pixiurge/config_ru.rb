@@ -184,7 +184,7 @@ module Pixiurge::Middleware
 
       local_path = File.join(@root, env["PATH_INFO"])
 
-      # Check for a .tmx.json, .mana.json or .conv.json
+      # Check for a .tmx.json, .manasource.json or .conv.json
       json_local_path = local_path.sub(/\.([^.]+)\.json$/, ".tmx")
       subformat = $1
       existing = [local_path, json_local_path].detect { |f| File.exists?(f) }
@@ -199,13 +199,13 @@ module Pixiurge::Middleware
           json_contents = tmx_map.export_to_string :filename => existing, :format => :json
           return [200, { "type" => "application/json" }, [ json_contents ] ]
         elsif subformat == "tmx"
-          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("tmx", existing)) ]
+          return [200, { "type" => "application/json" }, [ MultiJson.dump(@cache.tmx_entry("tmx", existing)) ] ]
         elsif subformat == "tmxpretty"
-          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("tmx", existing), :pretty => true) ]
-        elsif subformat == "mana"
-          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("manasource", existing)) ]
-        elsif subformat == "manapretty"
-          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("manasource", existing), :pretty => true) ]
+          return [200, { "type" => "application/json" }, [ MultiJson.dump(@cache.tmx_entry("tmx", existing), :pretty => true) ] ]
+        elsif subformat == "manasource"
+          return [200, { "type" => "application/json" }, [ MultiJson.dump(@cache.tmx_entry("manasource", existing)) ] ]
+        elsif subformat == "manasourcepretty"
+          return [200, { "type" => "application/json" }, [ MultiJson.dump(@cache.tmx_entry("manasource", existing), :pretty => true) ] ]
         else
           # Okay, no clue what they're asking for even though we have a matching .tmx file.
           return [404, {}, [""]]
