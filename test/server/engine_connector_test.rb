@@ -80,7 +80,7 @@ DSL
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
 
@@ -98,7 +98,7 @@ DSL
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
     ws.clear_sent_data
@@ -124,7 +124,7 @@ DSL
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
     ws.clear_sent_data
@@ -139,7 +139,7 @@ DSL
     messages = next_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, next_ws.sent_data.size  # This would be higher if either of these players had visible bodies - they can't see each other
 
@@ -172,7 +172,7 @@ DSL
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "murray" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[5]
@@ -182,7 +182,7 @@ DSL
     messages = sam_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[5]
@@ -192,7 +192,7 @@ DSL
     messages = phil_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "phil" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[5]
@@ -281,11 +281,11 @@ DSL
 
     # Both murray and sam should see phil leave
     messages = murray_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "phil" ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
     assert_equal 1, murray_ws.sent_data.size
     murray_ws.sent_data.clear
     messages = sam_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "phil" ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
     assert_equal 1, sam_ws.sent_data.size
     sam_ws.sent_data.clear
 
@@ -293,10 +293,10 @@ DSL
     # get hidden individually and a hide-all, then showing himself
     # Note that his new room is invisible and doesn't get shown.
     messages = phil_ws.parsed_sent_data
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[3]
+    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
+    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
+    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "params" => { "shape" => "square" } } ], messages[4]
     assert_equal 5, messages.size
     phil_ws.sent_data.clear
@@ -308,8 +308,8 @@ DSL
     # invisible), and then everybody shown, including himself and the
     # new room.
     messages = phil_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "phil" ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[1]
 
     assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "params" => { "shape" => "square" } } ]), "Phil should see himself shown when entering the room"
     assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ]), "Phil should see murray shown when entering the room"
@@ -339,10 +339,10 @@ DSL
 
     # But sam sees the old room disappear... But the new room doesn't appear, it's invisible.
     messages = sam_ws.parsed_sent_data
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[3]
+    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
+    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
+    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[3]
     sam_ws.sent_data.clear
 
     demi_sam.move_to_position("right here")
@@ -354,7 +354,7 @@ DSL
 
     # Sam sees the new room appear, including murray and phil
     messages = sam_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[0]
     assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "params" => { "shape" => "square" } } ]), "Phil should see himself shown when entering the room"
     assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "params" => { "shape" => "square" } } ]), "Phil should see murray shown when entering the room"
     assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"

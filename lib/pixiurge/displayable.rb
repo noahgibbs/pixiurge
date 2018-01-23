@@ -114,8 +114,8 @@ class Pixiurge::Displayable
   # @param player [Pixiurge::Player] The player to hide this Displayable from
   # @return [void]
   # @since 0.1.0
-  def hide_from_player(player)
-    player.message Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_DISPLAYABLE, self.name
+  def destroy_for_player(player)
+    player.message Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, self.name
   end
 
   # Animate the motion of this Displayable from an old location to a

@@ -4,18 +4,10 @@
 messageMap = {
   "display_init": "initMessage",
   "display_show": "showDisplayable",
-  "display_hide": "hideDisplayable",
-  "display_hide_all": "hideAllDisplayables",
-  #"displayNewSpriteStack": "newSpriteStack",
-  #"displayHideSpriteStack": "hideSpriteStack",
-  #"displayStartAnimation": "startAnimation",
+  "display_destroy": "destroyDisplayable",
+  "display_destroy_all": "destroyAllDisplayables",
   "display_move": "moveStackTo",
-  #"displayTeleportStackTo": "teleportStackTo",
-  #"display_move_pixel": "moveStackToPixel",
-  #"displayTeleportStackToPixel": "teleportStackToPixel",
   "display_pan": "panToPixel",
-  #"displayPanToPixel": "panToPixel",
-  #"displayTextAnimOverStack": "textOverStack",
 }
 
 class Pixiurge.Display
@@ -71,15 +63,15 @@ class Pixiurge.Display
     @displayables[item_name] = new klass(this, item_name, item_data)
 
   # This destroys this Displayable - it won't be referenced by name again, ever
-  hideDisplayable: (item_name) ->
+  destroyDisplayable: (item_name) ->
     if @displayables[item_name]
-      @displayables[item_name].hide()
+      @displayables[item_name].destroy()
       @displayables.delete(item_name)
 
   # This destroys all Displayables and invalidates any hints or preloads
-  hideAllDisplayables: () ->
+  destroyAllDisplayables: () ->
     for item_name, displayable of @displayables
-      displayable.hide()
+      displayable.destroy()
     @displayables = {}
 
   klass_for_type: (item_type) ->

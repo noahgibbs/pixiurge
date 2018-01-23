@@ -76,7 +76,7 @@ class Pixiurge::Player
   end
 
   # Show this Displayable to the player and track that it has been
-  # shown. A later {#hide_displayable} or {#hide_all_displayables}
+  # shown. A later {#destroy_displayable} or {#destroy_all_displayables}
   # call will normally be needed eventually to cause the displayable
   # to disappear and be unloaded from the browser - this will usually
   # happen automatically if the player changes locations in such a way
@@ -92,7 +92,7 @@ class Pixiurge::Player
   end
 
   ## Show this Displayable to the player and track that it has been
-  ## shown. A later {#hide_displayable} or {#hide_all_displayables}
+  ## shown. A later {#destroy_displayable} or {#destroy_all_displayables}
   ## call will normally be needed eventually to cause the displayable
   ## to disappear and be unloaded from the browser - this will usually
   ## happen automatically if the player changes locations in such a way
@@ -116,40 +116,40 @@ class Pixiurge::Player
   #  nil
   #end
 
-  # This hides a given displayable for this player
+  # This destroys a given displayable for this player
   #
-  # @param disp [Pixiurge::Displayable] The displayable object to hide, if it's currently shown
+  # @param disp [Pixiurge::Displayable] The displayable object to destroy, if it's currently shown
   # @return [void]
   # @since 0.1.0
-  def hide_displayable(disp)
+  def destroy_displayable(disp)
     return unless @currently_shown[disp.name]
-    disp.hide_from_player(self)
+    disp.destroy_for_player(self)
     @currently_shown.delete(disp.name)
     nil
   end
 
-  # This hides a given displayable for this player by name
+  # This destroys a given displayable for this player by name
   #
-  # @param item_name [String] The name of the item to hide
+  # @param item_name [String] The name of the item to destroy
   # @return [void]
   # @since 0.1.0
-  def hide_displayable_name(item_name)
+  def destroy_displayable_name(item_name)
     return unless @currently_shown[item_name]
-    @currently_shown[item_name].hide_from_player(self)
+    @currently_shown[item_name].destroy_for_player(self)
     @currently_shown.delete(item_name)
     nil
   end
 
-  # Hide all displayables, including foregrounds and backdrops.
+  # Destroy all displayables, including foregrounds and backdrops.
   #
   # @return [void]
   # @since 0.1.0
-  def hide_all_displayables
+  def destroy_all_displayables
     @currently_shown.each do |item_name, displayable|
-      displayable.hide_from_player(self)
+      displayable.destroy_for_player(self)
     end
     # Let the front end know: hints, preloads and whatnot... Clear it all.
-    self.message Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL
+    self.message Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL
     @currently_shown = {}
     nil
   end

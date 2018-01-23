@@ -196,7 +196,7 @@ class Pixiurge::EngineConnector
     loc = @engine.item_by_name(loc_name)
     if loc.is_a?(::Demiurge::Tmx::TmxLocation)
       each_player_for_location_name(loc_name) do |player|
-        player.hide_displayable(displayable.name)
+        player.destroy_displayable(displayable.name)
       end
     end
   end
@@ -211,7 +211,7 @@ class Pixiurge::EngineConnector
     loc_name = location_do.name
 
     # Show the location's sprites
-    player.hide_all_displayables
+    player.destroy_all_displayables
     player.show_displayable(location_do)
     x, y = ::Demiurge::TiledLocation.position_to_coords(player_position)
     x ||= 0
@@ -359,7 +359,7 @@ class Pixiurge::EngineConnector
       elsif player_loc_name == data["old_location"]
         # The item changed rooms and the player is in the old
         # location. Hide the item.
-        player.hide_displayable(actor_do)
+        player.destroy_displayable(actor_do)
 
         # Third case: moving player changed rooms and we're in the new one
       elsif player_loc_name == data["new_location"]

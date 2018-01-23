@@ -4,4 +4,5 @@ class Pixiurge.Displayable
 
   show: () ->
 
-  hide: () ->
+  destroy: () ->
+    throw("Implement me!")

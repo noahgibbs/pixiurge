@@ -15,7 +15,7 @@ class Pixiurge::Display::Invisible < Pixiurge::Displayable
   # Do nothing to hide an Invisible object
   #
   # @since 0.1.0
-  def hide_from_player(player)
+  def destroy_for_player(player)
   end
 
   # Do nothing to move an Invisible object

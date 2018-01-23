@@ -113,17 +113,17 @@ module Pixiurge::Protocol::Outgoing
   # animations should be cancelled and any hints or preloads no longer
   # apply.
   #
-  # @example [ DISPLAY_HIDE_ALL ]
+  # @example [ DISPLAY_DESTROY_ALL ]
   #
   # @since 0.1.0
-  DISPLAY_HIDE_ALL = "display_hide_all"
+  DISPLAY_DESTROY_ALL = "display_destroy_all"
 
-  # Hide a single Displayable by name.
+  # Destroy a single Displayable by name.
   #
-  # @example [ DISPLAY_HIDE_DISPLAYABLE, "item name" ]
+  # @example [ DISPLAY_DESTROY_DISPLAYABLE, "item name" ]
   #
   # @since 0.1.0
-  DISPLAY_HIDE_DISPLAYABLE = "display_hide"
+  DISPLAY_DESTROY_DISPLAYABLE = "display_destroy"
 
   # Show a Displayable object. The arguments following the message
   # type are a String name for the item and then a Hash of additional
