@@ -40,11 +40,31 @@ class ConfigRuTest < Minitest::Test
 
   # Realistically, my JSON exporter isn't perfect. There are more
   # differences between TMX XML and JSON formats than I'm properly
-  # accounting for.
+  # accounting for. First, let's test the basic "convert TMX to JSON"
+  # version.
   def test_can_serve_tmx_as_json
-    get '/tmx/magecity_cc0_lorestrome.json'
+    get '/tmx/magecity_cc0_lorestrome.conv.json'
     assert last_response.ok?
     rack_exported_version = MultiJson.load(last_response.body)
     assert_equal 7, rack_exported_version["layers"].select { |l| l["type"] == "tilelayer" }.size
+  end
+
+  # This converts to a full TMX cache entry.
+  def test_can_serve_tmx_as_cached_json
+    get '/tmx/magecity_cc0_lorestrome.tmx.json'
+    assert last_response.ok?
+    rack_exported_version = MultiJson.load(last_response.body)
+    assert_equal 7, rack_exported_version["map"]["layers"].select { |l| l["type"] == "tilelayer" }.size
+  end
+
+  # Realistically, my JSON exporter isn't perfect. There are more
+  # differences between TMX XML and JSON formats than I'm properly
+  # accounting for. First, let's test the basic "convert TMX to JSON"
+  # version.
+  def test_can_serve_tmx_as_manasource_cached_json
+    get '/tmx/magecity_cc0_lorestrome.mana.json'
+    assert last_response.ok?
+    rack_exported_version = MultiJson.load(last_response.body)
+    assert rack_exported_version["collision"], "Parsed ManaSource-style TMX with a collision layer"
   end
 end

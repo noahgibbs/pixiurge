@@ -174,25 +174,42 @@ module Pixiurge::Middleware
 
     # The Rack .call method for middleware.
     #
-    # @todo Actually use the supplied cache!
-    #
     # @since 0.1.0
     def call(env)
       # If no TMX path is matched, forward the call to the next middleware
       call_root = matches_url(env["PATH_INFO"])
       return @app.call(env) unless call_root
 
-      # Okay, a TMX root was matched...
+      # Okay, a TMX directory was matched...
 
       local_path = File.join(@root, env["PATH_INFO"])
-      json_local_path = local_path.sub(/\.json$/, ".tmx")
+
+      # Check for a .tmx.json, .mana.json or .conv.json
+      json_local_path = local_path.sub(/\.([^.]+)\.json$/, ".tmx")
+      subformat = $1
       existing = [local_path, json_local_path].detect { |f| File.exists?(f) }
       unless existing
         return [404, {}, [""]]
       else
-        tmx_map = Tmx.load(existing)
-        json_contents = tmx_map.export_to_string :filename => existing, :format => :json
-        return [200, { "type" => "application/json" }, [ json_contents ] ]
+        if existing == local_path
+          # Whatever it is, it's a path that literally exists right there.
+          return [ 200, {}, Rack::File.new(existing) ]
+        elsif subformat == "conv"
+          tmx_map = Tmx.load(existing)
+          json_contents = tmx_map.export_to_string :filename => existing, :format => :json
+          return [200, { "type" => "application/json" }, [ json_contents ] ]
+        elsif subformat == "tmx"
+          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("tmx", existing)) ]
+        elsif subformat == "tmxpretty"
+          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("tmx", existing), :pretty => true) ]
+        elsif subformat == "mana"
+          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("manasource", existing)) ]
+        elsif subformat == "manapretty"
+          return [200, { "type" => "application/json" }, MultiJson.dump(@cache.tmx_entry("manasource", existing), :pretty => true) ]
+        else
+          # Okay, no clue what they're asking for even though we have a matching .tmx file.
+          return [404, {}, [""]]
+        end
       end
     end
 
