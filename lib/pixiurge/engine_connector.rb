@@ -27,7 +27,7 @@ class Pixiurge::EngineConnector
     @engine = demi_engine
     @app = pixi_app
     @players = {}      # Mapping of player name strings to Player objects (not Displayable objects or Demiurge items)
-    @displayables = {} # Mapping of item names to Display objects such as Humanoids
+    @displayables = {} # Mapping of item names to the original registered source, and display objects such as TileAnimatedSprites
     @default_width = options[:default_width] || 640
     @default_height = options[:default_height] || 480
 
@@ -65,14 +65,14 @@ class Pixiurge::EngineConnector
         demi_item.run_action("create") if demi_item.get_action("create")
         # Now register the player's body with the EngineConnector to make sure we have a Displayable for it
         register_engine_item(demi_item)
-        displayable = @displayables[username]
+        displayable = @displayables[username][:displayable]
         unless(displayable)
           raise "No displayable item was created for user #{username}'s body!"
         end
       end
       demi_item.run_action("login") if demi_item.get_action("login")
       ws = @app.websocket_for_username username
-      displayable = @displayables[username]
+      displayable = @displayables[username][:displayable]
       player = Pixiurge::Player.new websocket: ws, name: username, displayable: displayable, display_settings: display_settings, engine_connector: self
       add_player(player)
     end
@@ -95,7 +95,7 @@ class Pixiurge::EngineConnector
   # @return [Pixiurge::Displayable, nil] The Displayable equivalent item or nil if there isn't one.
   # @since 0.1.0
   def displayable_by_name(item_name)
-    @displayables[item_name]
+    @displayables[item_name][:displayable]
   end
 
   # Query for a Player object by account name, which should match the
@@ -117,6 +117,8 @@ class Pixiurge::EngineConnector
       "ms_per_tick" => 300,
     }
   end
+
+  public
 
   def displayable_for_item(item)
     return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
@@ -145,11 +147,14 @@ class Pixiurge::EngineConnector
   end
 
   def register_engine_item(item)
-    return if @displayables[item.name] # Already have this one
+    if @displayables[item.name] # Already have this one
+      return if @displayables[item.name][:source] == :demiurge  # Duplicate registration, it's fine
+      raise "Displayable name #{item.name.inspect} is already used by source object #{@displayables[item.name][:source].inspect}! Can't re-register as #{item.inspect}!"
+    end
 
     displayable = displayable_for_item(item)
     if displayable
-      @displayables[item.name] = displayable
+      @displayables[item.name] = { displayable: displayable, source: :demiurge }
       displayable.position = item.position if item.position
       show_displayable_to_players(displayable)
       return
@@ -163,6 +168,33 @@ class Pixiurge::EngineConnector
     STDERR.puts "Don't know how to register or display this item: #{item.name.inspect}"
   end
 
+  # This method adds a new Displayable object which does *not*
+  # correspond to a Demiurge item.  This is useful for Displayables
+  # for non-Demiurge objects such as dialog boxes or title screens,
+  # and for components of larger objects (e.g. a player's shadow)
+  # which are *attached* to a Demiure item but don't really
+  # *represent* a Demiurge item.
+  #
+  # Among other things this reserves a name for the Displayable in the
+  # EngineConnector.  A Displayable isn't allowed to share a name with
+  # any other Displayable nor with any item in the Demiurge engine.
+  # For this reason, a common convention for "sub-Displayables" is to
+  # use the parent Displayable's name followed by an at-sign and a
+  # name or number. The at-sign isn't a legal character for Demiurge
+  # item names, so this makes it clear what the "attached" item is and
+  # guarantees uniqueness.
+  #
+  # @param object [Pixiurge::Displayable] The new Displayable to register
+  # @return [void]
+  # @since 0.1.0
+  def register_displayable_object(object)
+    if @displayables[object.name] # Already have this one
+      return if @displayables[object.name][:source] == object  # Duplicate registration, which is fine
+      raise "Already have a Displayable named #{object.name.inspect} registered by #{@displayables[object.name][:source].inspect}! Can't re-register as Displayable #{object.inspect}!"
+    end
+    @displayables[object.name] = { displayable: object, source: object }
+  end
+
   def each_player_for_location_name(location_name, options = { :except => [] }, &block)
     @players.each do |player_name, player|
       next if options[:except].include?(player) || options[:except].include?(player_name)
@@ -173,7 +205,8 @@ class Pixiurge::EngineConnector
   end
 
   def each_displayable_for_location_name(location_name, &block)
-    @displayables.each do |disp_name, disp|
+    @displayables.each do |disp_name, disp_hash|
+      disp = disp_hash[:displayable]
       if disp.location_name == location_name
         yield(disp)
       end
@@ -231,7 +264,7 @@ class Pixiurge::EngineConnector
     end
     loc_name = player.displayable.location_name
     player_position = player.displayable.position
-    loc_do = @displayables[loc_name]
+    loc_do = @displayables[loc_name][:displayable]
 
     # Do we have a display object for that player's location?
     unless loc_do
@@ -298,7 +331,7 @@ class Pixiurge::EngineConnector
     if data["type"] == "speech"
       text = data["words"] || "ADD WORDS TO SPEECH NOTIFICATION!"
       speaker = @engine.item_by_name(data["actor"])
-      body = @displayables[data["actor"]]
+      body = @displayables[data["actor"]][:displayable]
       speaker_loc_name = speaker.location_name
       @players.each do |player_name, player_obj|
         player_loc_name = player_obj.displayable.location_name
@@ -319,10 +352,10 @@ class Pixiurge::EngineConnector
   end
 
   def notified_of_move_to(data)
-    actor_do = @displayables[data["actor"]]
+    actor_do = @displayables[data["actor"]][:displayable]
     x, y = ::Demiurge::TiledLocation.position_to_coords(data["new_position"])
     loc_name = data["new_location"]
-    loc_do = @displayables[loc_name]
+    loc_do = @displayables[loc_name][:displayable]
     unless loc_do
       STDERR.puts "Moving to a non-displayed location #{loc_name.inspect}, no display object found..."
       return
@@ -336,7 +369,7 @@ class Pixiurge::EngineConnector
       if data["old_location"] != data["new_location"]
         ## Hide the old location's Displayables and show the new
         ## location's Displayables to the player who is moving
-        set_player_backdrop(acting_player, data["new_position"], @displayables[loc_name])
+        set_player_backdrop(acting_player, data["new_position"], @displayables[loc_name][:displayable])
       else
         # Player moved in same location, pan to new position
         acting_player.move_displayable(actor_do, data["old_position"], data["new_position"])
