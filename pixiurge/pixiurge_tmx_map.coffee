@@ -22,6 +22,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
 
   # Parts of this are adapted from kittykatattack's tileUtilities
   makeTiledWorld: (tmxCacheEntry) ->
+    layers = tmxCacheEntry.tile_layers.sort (l1, l2) -> l1.z - l2.z
     tiledJSON = tmxCacheEntry.map
     tileset_spec = []
     base_texture_by_tileset = {}
@@ -54,8 +55,8 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
     @world.widthInTiles = tiledJSON.width;
     @world.heightInTiles = tiledJSON.height;
 
-    for tiledLayer in tiledJSON.layers
-      if tiledLayer.type == "tilelayer" && tiledLayer.name != "Collision" && tiledLayer.name != "collision"
+    for tiledLayer in layers
+      if tiledLayer.type == "tilelayer"
 
         layer = {
           name: tiledLayer.name,
