@@ -1,6 +1,7 @@
 GIT
-  remote: git@github.com:shawn42/tmx.git
-  revision: 9c1948e586781610b926b6019db21e0894118d33
+  remote: git@github.com:noahgibbs/tmx.git
+  revision: 556ba7a23ca66a16830283240dffaec19ed14c40
+  branch: add-exporters
   specs:
     tmx (0.1.5)
       multi_json (~> 1.0)

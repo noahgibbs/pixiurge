@@ -2,4 +2,4 @@ source "https://rubygems.org"
 
 gem "pixiurge", "~>0.1.0", :path => "../../.."
 gem "demiurge", "~>0.4", :path => "../../../../demiurge"
-gem "tmx", :git => "git@github.com:shawn42/tmx.git"
+gem "tmx", :git => "git@github.com:noahgibbs/tmx.git", :branch => "add-exporters"
