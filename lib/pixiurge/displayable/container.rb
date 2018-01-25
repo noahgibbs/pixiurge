@@ -17,6 +17,7 @@ class Pixiurge::Display::Container < Pixiurge::Displayable
   # @since 0.1.0
   def initialize displayables, name:, engine_connector:
     @contents = displayables
+    @displayable_type = "container"
     super(name: name, engine_connector: engine_connector)
   end
 
@@ -27,6 +28,9 @@ class Pixiurge::Display::Container < Pixiurge::Displayable
   # @since 0.1.0
   def messages_to_show_player(player)
     show_contents_msgs = @contents.map { |d| d.messages_to_show_player(player).merge(name: d.name) }
-    [ { "type" => "container", "contents" => show_contents_msgs } ]
+
+    messages = super
+    messages[0].merge!({ "contents" => show_contents_msgs })
+    messages
   end
 end

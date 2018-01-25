@@ -19,7 +19,13 @@ module Pixiurge::Display; end
 # @see file:CONCEPTS.md
 # @since 0.1.0
 class Pixiurge::Displayable
-  attr_reader :name        # Name, which should be the same as the Demiurge item name if there is one.
+  # Name, which should be the same as the Demiurge item name if there is one.
+  attr_reader :name
+
+  # You can't just be a "Displayable", you need a concrete child
+  # class. Each child class gets a string to represent it in the
+  # network protocol.
+  attr_reader :displayable_type
 
   # Most recently-displayed coordinate and location. This can vary
   # significantly from the Demiurge item's location during a long
@@ -29,9 +35,9 @@ class Pixiurge::Displayable
   # assign these coordinates and tell the Displayable to play a
   # movement animation, but the Displayable can't easily know exactly
   # what happens when.
-  attr_reader :x              # Most recently drawn coordinates
+  attr_reader :x
   attr_reader :y
-  attr_reader :location_name  # Most recently drawn Demiurge location name
+  attr_reader :location_name
   attr_reader :location_displayable
 
   # For a tiled-type area, {#block_width} and {#block_height} are the
@@ -99,11 +105,24 @@ class Pixiurge::Displayable
   # Displayables - this is a way "hide" this Displayable inside
   # another one.
   #
+  # The specific {Displayable#messages_to_show_player} superclass
+  # method is for parent-class information. A child class will either
+  # replace this information or supplement it, depending. Calling
+  # "super" in a child implementation isn't mandatory but may be
+  # useful.
+  #
   # @param player [Pixiurge::Player] The player to show this Displayable to
   # @return [Array] A JSON-serializable Array of messages which are used to show the Displayable to this player
   # @since 0.1.0
   def messages_to_show_player(player)
-    raise "Override #messages_to_show_player when inheriting from Pixiurge::Displayable!"
+    [{
+      "type" => @displayable_type,
+      "displayable" => {
+        "x" => @x,
+        "y" => @y,
+        "position" => @position,
+      }
+    }]
   end
 
   # Hide this Displayable from a player. The default method assumes

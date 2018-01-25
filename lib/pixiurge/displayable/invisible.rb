@@ -5,7 +5,17 @@
 #
 # @since 0.1.0
 class Pixiurge::Display::Invisible < Pixiurge::Displayable
-  # Do nothing to display an Invisible object
+  # Constructor
+  #
+  # @param name [String] The Demiurge item name for this Displayable
+  # @param engine_connector [Pixiurge::EngineConnector] The Pixiurge EngineConnector this Displayable belongs to
+  # @since 0.1.0
+  def initialize name:, engine_connector:
+    super
+    @displayable_type = "invisible"  # This should never go over the network, though...
+  end
+
+  # Do nothing to display an Invisible object, don't call super
   #
   # @since 0.1.0
   def messages_to_show_player(player)

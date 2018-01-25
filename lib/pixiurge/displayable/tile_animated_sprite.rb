@@ -82,6 +82,7 @@ class Pixiurge::Display::TileAnimatedSprite < Pixiurge::Displayable
   # @since 0.1.0
   def initialize parameters, name:, engine_connector:
     @parameters = parameters
+    @displayable_type = "tile_animated_sprite"
     check_parameters
     super(name: name, engine_connector: engine_connector)
   end
@@ -92,7 +93,9 @@ class Pixiurge::Display::TileAnimatedSprite < Pixiurge::Displayable
   # @return [Array] Messages to show the TileAnimatedSprite via JSON
   # @since 0.1.0
   def messages_to_show_player(player)
-    [ { "type" => "tile_animated_sprite", "params" => @parameters } ]
+    messages = super
+    messages[0].merge!({ "params" => @parameters })
+    messages
   end
 
   private

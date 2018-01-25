@@ -10,6 +10,7 @@ class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
   # @since 0.1.0
   def initialize(tile_cache_entry, name:, engine_connector:)
     super(name: name, engine_connector: engine_connector)
+    @displayable_type = "tmx"
     @entry = tile_cache_entry
     @block_width = @entry["tilewidth"]
     @block_height = @entry["tileheight"]
@@ -21,7 +22,10 @@ class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
   # @return [Array] Message to send to player
   # @since 0.1.0
   def messages_to_show_player(player)
-    [ { "type" => "tmx", "url" => @entry["filename"] } ]
+    # Currently TMX maps do not deign to send mere transforms. That
+    # may change if we need to put several of them together into a
+    # single layer.
+    [ { "type" => @displayable_type, "url" => @entry["filename"] } ]
   end
 
 end

@@ -15,6 +15,7 @@ class Pixiurge::Display::ParticleSource < Pixiurge::Displayable
   # @since 0.1.0
   def initialize particle_parameters, name:, engine_connector:
     @particle_parameters = particle_parameters
+    @displayable_type = "particle_source"
     super(name: name, engine_connector: engine_connector)
   end
 
@@ -24,6 +25,8 @@ class Pixiurge::Display::ParticleSource < Pixiurge::Displayable
   # @return [Array] Message(s) to show this object to the player
   # @since 0.1.0
   def messages_to_show_player(player)
-    [ { "type" => "particle_source", "params" => @particle_parameters } ]
+    messages = super
+    messages[0].merge!({ "params" => @particle_parameters })
+    messages
   end
 end
