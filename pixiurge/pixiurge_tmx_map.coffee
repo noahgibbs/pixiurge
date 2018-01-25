@@ -1,6 +1,6 @@
 class Pixiurge.TmxMap extends Pixiurge.Displayable
-  constructor: (pixi_display, item_name, item_data) ->
-    super(pixi_display, item_name, item_data)
+  constructor: (parent_container, item_name, item_data) ->
+    super(parent_container, item_name, item_data)
 
     @url = item_data.url
     @loader = new PIXI.loaders.Loader()
@@ -8,7 +8,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
 
     # Reserve our spot in the display order, even if the loader is slow
     @world = new PIXI.Container()
-    @pixi_display.stage.addChild @world
+    @parent_container.addChild @world
 
   # This is actually the "destroy" method for this Displayable
   hide: () ->

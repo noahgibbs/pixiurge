@@ -116,12 +116,14 @@ class Pixiurge::Displayable
   # @since 0.1.0
   def messages_to_show_player(player)
     [{
-      "type" => @displayable_type,
-      "displayable" => {
-        "x" => @x,
-        "y" => @y,
-        "position" => @position,
-      }
+        "type" => @displayable_type,
+        "displayable" => {
+          "x" => @x,
+          "y" => @y,
+          "location_block_width" => @location_displayable ? @location_displayable.block_width : nil,
+          "location_block_height" => @location_displayable ? @location_displayable.block_height : nil,
+          "position" => @position,
+        }
     }]
   end
 

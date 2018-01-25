@@ -88,8 +88,8 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   # an x and y coordinate for the upper left corner, a width and
   # height, and a tileset name.
 
-  constructor: (pixi_display, item_name, item_data) ->
-    super(pixi_display, item_name, item_data)
+  constructor: (parent_container, item_name, item_data) ->
+    super(parent_container, item_name, item_data)
 
     images = tileset.url for tileset in item_data.params.tilesets
     @tilesets = item_data.params.tilesets
@@ -143,7 +143,12 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
     this_pixiurge_sprite = this
     @sprite.onComplete = () => this_pixiurge_sprite.animationComplete()
 
-    @pixi_display.stage.addChild @sprite
+    disp_data = @item_data.displayable
+    if disp_data.x? && disp_data.x && disp_data.y? && disp_data.y
+      @sprite.x = disp_data.x * disp_data.location_block_width
+      @sprite.y = disp_data.y * disp_data.location_block_height
+
+    @parent_container.addChild @sprite
     @startAnimation @current_animation
 
   startAnimation: (name) ->

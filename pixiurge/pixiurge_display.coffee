@@ -30,6 +30,13 @@ class Pixiurge.Display
     @stage = @pixi_app.stage
     $(@container_spec).append(@pixi_app.view)
 
+    # Later figure out Z-ordering: http://pixijs.io/examples/#/layers/zorder.js
+    @layers_container = new PIXI.Container
+    @stage.addChild @layers_container
+    @fringe_container = new PIXI.Container
+    @fringe_container.z = 0
+    @layers_container.addChild @fringe_container
+
     #createjs.Ticker.timingMode = createjs.Ticker.RAF
     #createjs.Ticker.addEventListener "tick", (event) =>
     #  @stage.update event
@@ -50,6 +57,10 @@ class Pixiurge.Display
 
   panToPixel: (x, y) ->
     @exposure = { x: x, y: y, width: @display_width, height: @display_height }
+    left_x = @exposure.x - (@exposure.width - @display_width / 2)
+    upper_y = @exposure.y - (@exposure.height - @display_height / 2)
+    @layers_container.x = -left_x
+    @layers_container.y = -upper_y
 
   showDisplayable: (item_name, item_data) ->
     if @displayables[item_name]
@@ -60,7 +71,7 @@ class Pixiurge.Display
     unless klass?
       console.log "Couldn't find a class for item type: #{item_type}!", item_type, @item_klasses
       return
-    @displayables[item_name] = new klass(this, item_name, item_data)
+    @displayables[item_name] = new klass(@layers_container, item_name, item_data)
 
   # This destroys this Displayable - it won't be referenced by name again, ever
   destroyDisplayable: (item_name) ->
