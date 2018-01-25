@@ -55,6 +55,14 @@ DSL
     EngineConnectorTestApp.new engine, options
   end
 
+  def setup
+    super  # Destroy @pixi_app and @ws
+
+    # Now destroy the connector and engine (see #connector)
+    @pixi_connector = nil
+    @demi_engine = nil
+  end
+
   def connector
     return @pixi_connector if @pixi_connector
 

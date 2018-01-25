@@ -79,6 +79,7 @@ class WebSocketTest < Minitest::Test
   attr_reader :pixi_app
 
   def setup
+    # Destroy any older @pixi_app or @ws (websocket) before each test
     @pixi_app = nil
     @ws = nil
   end
