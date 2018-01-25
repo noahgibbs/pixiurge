@@ -12,6 +12,7 @@ require "pixiurge"
 app = Pixiurge::App.new
 app.rack_builder self
 app.root_dir __dir__
+app.root_redirect '/index.html'
 app.coffeescript_dirs "coffee"
 app.static_dirs "static"
 app.static_files "bobo.txt"

@@ -79,6 +79,16 @@ class Pixiurge::App
     @static_files.concat [*files].flatten
   end
 
+  # To serve some specific file from the root, a redirect is one
+  # possibility. This will redirect from "/" to the given URL
+  # with an HTTP status 302.
+  #
+  # @param url [String] The URL to redirect to
+  # @since 0.1.0
+  def root_redirect url
+    @root_redirect = url
+  end
+
   # The Tiled map editor strongly prefers keeping its map data in TMX,
   # an XML-based format. Unfortunately, JSON is *much* better for use by
   # Javascript. Since TMX has a standard JSON export format, we
@@ -130,6 +140,9 @@ class Pixiurge::App
         ws = Faye::WebSocket.new(env)
         return websocket_handler(ws).rack_response
       else
+        if @root_redirect && env["PATH_INFO"] == "/"
+          return [302, { 'Location' => @root_redirect }, [] ]
+        end
         if @root_dir && static_files.include?(env["PATH_INFO"])
           file = env["PATH_INFO"]
           path = File.join(@root_dir, file)

@@ -38,6 +38,12 @@ class ConfigRuTest < Minitest::Test
     assert last_response.body["function"], "Make sure the CoffeeScript is compiled to Javascript"
   end
 
+  def test_root_redirect
+    get '/'
+    assert last_response.status == 302
+    assert last_response.headers['Location'] == '/index.html'
+  end
+
   # Realistically, my JSON exporter isn't perfect. There are more
   # differences between TMX XML and JSON formats than I'm properly
   # accounting for. First, let's test the basic "convert TMX to JSON"
