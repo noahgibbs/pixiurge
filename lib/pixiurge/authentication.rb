@@ -50,22 +50,30 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
   # Regex for what usernames are allowed
   USERNAME_REGEX = /\A[a-zA-Z0-9]+\Z/
 
+  # Legal options to pass to Pixiurge::AuthenticatedApp#new
+  INIT_OPTIONS = Pixiurge::App::INIT_OPTIONS + [ :accounts_file, :storage ]
+
   # Constructor
   #
   # @param options [Hash] Options to configure app behavior
-  # @option options [String] accounts_file JSON file to hold the accounts. Defaults to "accounts.json".
-  # @option options [Pixiurge::Authentication::AccountStorage] storage An object to hold the accounts matching the AccountStorage interface
-  # @option options [Boolean] debug Whether to print debug output
-  # @option options [Boolean] record_traffic Whether to record incoming and outgoing websocket traffic to logfiles
-  # @option options [String] incoming_traffic_logfile Pathname to record incoming websocket traffic
-  # @option options [String] outgoing_traffic_logfile Pathname to record outgoing websocket traffic
+  # @option options [String] :accounts_file JSON file to hold the accounts. Defaults to "accounts.json".
+  # @option options [Pixiurge::Authentication::AccountStorage] :storage An object to hold the accounts matching the AccountStorage interface
+  # @option options [Boolean] :debug Whether to print debug output
+  # @option options [Boolean] :record_traffic Whether to record incoming and outgoing websocket traffic to logfiles
+  # @option options [String] :incoming_traffic_logfile Pathname to record incoming websocket traffic
+  # @option options [String] :outgoing_traffic_logfile Pathname to record outgoing websocket traffic
   # @return [void]
   # @since 0.1.0
-  def initialize(options = { "debug" => false, "record_traffic" => false,
-                   "incoming_traffic_logfile" => "log/incoming_traffic.json", "outgoing_traffic_logfile" => "log/outgoing_traffic.json",
-                   "accounts_file" => "accounts.json" })
-    super
-    @storage = options["storage"] || Pixiurge::Authentication::FileAccountStorage.new(options["accounts_file"] || "accounts.json")
+  def initialize(options = { :debug => false, :record_traffic => false,
+                   :incoming_traffic_logfile => "log/incoming_traffic.json", :outgoing_traffic_logfile => "log/outgoing_traffic.json",
+                   :accounts_file => "accounts.json", :storage => nil })
+    illegal_options = options.keys - INIT_OPTIONS
+    raise("Illegal options passed to AuthenticatedApp.new: #{illegal_options.inspect}!") unless illegal_options.empty?
+
+    sub_opt = {}  # TODO: use Hash#slice when I'm ready to restrict to higher Ruby versions
+    ::Pixiurge::App::INIT_OPTIONS.each { |opt| sub_opt[opt] = options[opt] }
+    super sub_opt
+    @storage = options[:storage] || Pixiurge::Authentication::FileAccountStorage.new(options[:accounts_file] || "accounts.json")
     @username_for_websocket = {}
     @websocket_for_username = {}
     nil

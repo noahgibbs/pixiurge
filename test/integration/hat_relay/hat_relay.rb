@@ -1,45 +1,48 @@
 require "pixiurge"
 require "demiurge"
 
-TICK_MILLISECONDS = 300
-TICKS_PER_SAVE = (60 * 1000 / TICK_MILLISECONDS)  # Every 1 minute
+# Get the absolute path for the game root
+PIXI_APP_ROOT = File.expand_path(__dir__)
 
 class Hat_relay < Pixiurge::AuthenticatedApp
   def initialize
-    # Ruby extensions in the World Files? Load them.
-    Dir["#{__dir__}/world/extensions/**/*.rb"].sort.each do |ruby_ext|
-      require_relative ruby_ext
-    end
-    @engine = Demiurge::DSL.engine_from_dsl_files *Dir["world/**/*.rb"]
-
     # Configure Pixiurge AuthenticatedApp
     options = {
-      "debug" => false,
-      "record_traffic" => false,
-      "incoming_traffic_logfile" => "log/incoming_traffic.json",
-      "outgoing_traffic_logfile" => "log/outgoing_traffic.json",
-      "accounts_file" => "accounts.json"
+      :debug => false,
+      :record_traffic => false,
+      :incoming_traffic_logfile => "log/incoming_traffic.json",
+      :outgoing_traffic_logfile => "log/outgoing_traffic.json",
+      :accounts_file => "#{__dir__}/accounts.json"
     }
     super(options)
 
-    # If we restore state, we should do it before the EngineSync is
-    # created.  Otherwise we have to replay a lot of "new item"
-    # notifications or otherwise register a bunch of state with the
-    # EngineSync.
-    # @todo Sort this list by modification date
-    last_statefile = [ "state/shutdown_statefile.json", "state/periodic_statefile.json", "state/error_statefile.json" ].detect do |f|
-      File.exist?(f)
-    end
-    if last_statefile
-      puts "Restoring state data from #{last_statefile.inspect}."
-      state_data = MultiJson.load File.read(last_statefile)
-      @engine.load_state_from_dump(state_data)
-    else
-      puts "No last statefile found, starting from World Files."
-    end
+    # We should restore from the most recent JSON statefile in the
+    # state directory By default we use modification time instead of
+    # creation time because if the same filename gets written
+    # repeatedly, we *do* want it to count as the most recent.
+    last_statefile = (Dir["state/*.json"].sort_by { |f| File.mtime(f) })[-1]
 
-    @engine_connector = Pixiurge::EngineConnector.new(@engine, self, :default_width => 800, :default_height => 600)
+    # Options for the EngineConnector
+    options = {
+      # Where are the Demiurge World Files?
+      :engine_dsl_dir => "#{PIXI_APP_ROOT}/world",
 
+      # Restore state from the last available statefile, if any
+      #:engine_restore_statefile => last_statefile,
+
+      # Configure automatic statedumps
+      :autosave_ticks => 600,
+      :autosave_path => "state/autosave_%TICKS%.json",
+
+      # If not configured, default to this window size in the browser
+      :default_width => 800,
+      :default_height => 600,
+    }
+    @engine_connector = Pixiurge::EngineConnector.new(self, options)
+    @engine = @engine_connector.engine
+
+    # You can set up handlers as shown below with inherited methods or
+    # you can use on_event("event name") here. They do the same thing.
   end
 
   # This handler lets you react to Websocket messages sent from this player's browser.

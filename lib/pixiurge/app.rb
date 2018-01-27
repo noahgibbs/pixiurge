@@ -277,20 +277,32 @@ class Pixiurge::App
 
   EVENTS = [ "player_login", "player_logout", "player_create_body", "player_message", "player_reconnect", "open", "close", "error", "message", "login" ]
 
+  # Legal options to pass to Pixiurge::App.new
+  INIT_OPTIONS = [ :debug, :record_traffic, :incoming_traffic_logfile, :outgoing_traffic_logfile ]
+
   # Constructor for Pixiurge App base class.
   #
+  # Debugging options:
+  #
+  # * :debug - whether to print debugging messages
+  # * :record_traffic - whether to write network messages to a JSON logfile
+  # * :incoming_traffic_logfile - the logfile for client-to-server traffic
+  # * :outgoing_traffic_logfile - the logfile for server-to-client traffic
+  #
   # @param options [Hash] Options to configure app behavior
-  # @option options [Boolean] debug Whether to print debug output
-  # @option options [Boolean] record_traffic Whether to record incoming and outgoing websocket traffic to logfiles
-  # @option options [String] incoming_traffic_logfile Pathname to record incoming websocket traffic
-  # @option options [String] outgoing_traffic_logfile Pathname to record outgoing websocket traffic
+  # @option options [Boolean] :debug Whether to print debug output
+  # @option options [Boolean] :record_traffic Whether to record incoming and outgoing websocket traffic to logfiles
+  # @option options [String] :incoming_traffic_logfile Pathname to record incoming websocket traffic
+  # @option options [String] :outgoing_traffic_logfile Pathname to record outgoing websocket traffic
   # @since 0.1.0
-  def initialize(options = { "debug" => false, "record_traffic" => false,
-                   "incoming_traffic_logfile" => "log/incoming_traffic.json", "outgoing_traffic_logfile" => "log/outgoing_traffic.json" })
-    @debug = options["debug"]
-    @record_traffic = options["record_traffic"]
-    @incoming_traffic_logfile = options["incoming_traffic_logfile"] || "log/incoming_traffic.json"
-    @outgoing_traffic_logfile = options["outgoing_traffic_logfile"] || "log/outgoing_traffic.json"
+  def initialize(options = { :debug => false, :record_traffic => false,
+                   :incoming_traffic_logfile => "log/incoming_traffic.json", :outgoing_traffic_logfile => "log/outgoing_traffic.json" })
+    illegal_options = options.keys - INIT_OPTIONS
+    raise("Illegal options passed to Pixiurge::App#new: {illegal_options.inspect}!") unless illegal_options.empty?
+    @debug = options[:debug]
+    @record_traffic = options[:record_traffic]
+    @incoming_traffic_logfile = options[:incoming_traffic_logfile] || "log/incoming_traffic.json"
+    @outgoing_traffic_logfile = options[:outgoing_traffic_logfile] || "log/outgoing_traffic.json"
     @event_handlers = {}
   end
 

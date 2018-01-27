@@ -10,7 +10,7 @@ class EngineConnectorTestApp < Pixiurge::AuthenticatedApp
 
     # For this test, use memory-only storage with an accessor so we can mess with it.
     @mem_storage = Pixiurge::Authentication::MemStorage.new
-    super(options.merge({ "storage" => @mem_storage }))
+    super(options.merge({ :storage => @mem_storage }))
 
     on_event("player_message") do |username, action_name, *args|
     end
@@ -77,7 +77,7 @@ DSL
         "murray" => { "account" => { "username" => "murray", "salt" => "fake_salt3", "hashed" => "fake_hash3" } },
         "phil" => { "account" => { "username" => "phil", "salt" => "fake_salt4", "hashed" => "fake_hash4" } } })
 
-    @pixi_connector = Pixiurge::EngineConnector.new @demi_engine, pixi_app
+    @pixi_connector = Pixiurge::EngineConnector.new pixi_app, :engine => @demi_engine
   end
 
   def test_basic_connector_creation

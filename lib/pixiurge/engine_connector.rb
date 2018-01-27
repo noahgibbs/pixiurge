@@ -1,4 +1,5 @@
 require "demiurge"
+require "faye/websocket"
 
 # A single EngineConnector runs on the server, sending messages about
 # the game world to the various player connections. An EngineConnector
@@ -14,22 +15,181 @@ class Pixiurge::EngineConnector
   attr_reader :engine
   attr_reader :app
 
-  # Constructor. Set up the EngineConnector as a gateway between the
-  # demi_engine and the pixi_app.
+  # Legal simulation-related hash options for {#initialize}
+  SIMULATION_OPTIONS = [ :engine, :engine_text, :engine_files, :engine_dsl_dir, :engine_restore_statefile, :ms_per_tick, :autosave_ticks, :autosave_path ]
+
+  # Legal hash options for {#initialize}
+  CONSTRUCTOR_OPTIONS = SIMULATION_OPTIONS + [ :default_width, :default_height, :no_start_simulation ]
+
+  # Constructor. Create the EngineConnector, which will act as a
+  # gateway between the simulation engine and the network and
+  # authorization interfaces (a.k.a. "the app".) The engine and any
+  # additional settings will be configured after the object is
+  # allocated.
   #
-  # @param demi_engine [Demiurge::Engine] The Demiurge engine for world simulation
+  # Unless the :no_start_simulation option is true,
+  # {#start_simulation} will be called with the appropriate
+  # simulation-related options to create the simulation engine.
+  #
+  # @see #start_simulation
   # @param pixi_app [Pixiurge::App] The Pixiurge App for assets and network interactions
   # @param options [Hash] Options for the EngineConnector
   # @option options [Integer] :default_width Default width for display if unspecified
   # @option options [Integer] :default_height Default height for display if unspecified
+  # @option options [Boolean] :no_start_simulation Don't allocate an engine or start the simulation - that will be handled later or outside Pixiurge
+  # @option options [Demiurge::Engine] :engine Demiurge simulation engine; if this option is passed, use it instead of creating a new one
+  # @option options [Array] :engine_text Array of 2-element arrays, each with a filename followed by World File DSL; passed to {Demiurge::DSL.engine_from_dsl_text} to create engine
+  # @option options [Array] :engine_files Array of filenames of World File DSL code; passed to {Demiurge::DSL.engine_from_dsl_files} to create engine.
+  # @option options [String] :engine_dsl_dir Path to a directory containing DSL files and (optionally) DSL Ruby extensions
+  # @option options [String] :engine_restore_statefile Path to most recent statedump file, which will be restored to the engine state
+  # @option options [Integer] :ms_per_tick How many milliseconds should occur between simulation ticks
+  # @option options [Integer] :autosave_ticks Dump state automatically every time this many ticks occur; set to 0 for no automatic state-dump; defaults to 600
+  # @option options [String] :autosave_path Write the autosave to this path; you can use %TICKS% in the path for a number of ticks completed; defaults to "state/autosave_%TICKS%.json"
   # @since 0.1.0
-  def initialize(demi_engine, pixi_app, options = {})
-    @engine = demi_engine
+  def initialize(pixi_app, options = {})
+    illegal_options = options.keys - CONSTRUCTOR_OPTIONS
+    raise("Illegal options passed to EngineConnector#initialize: #{illegal_options.inspect}!") unless illegal_options.empty?
+
     @app = pixi_app
     @players = {}      # Mapping of player name strings to Player objects (not Displayable objects or Demiurge items)
     @displayables = {} # Mapping of item names to the original registered source, and display objects such as TileAnimatedSprites
     @default_width = options[:default_width] || 640
     @default_height = options[:default_height] || 480
+    @ms_per_tick = 500
+
+    unless options[:no_start_simulation]
+      # @todo Replace this with Hash#slice and require a higher minimum Ruby version
+      sim_options = {}
+      SIMULATION_OPTIONS.each { |opt| options.has_key?(opt) && sim_options[opt] = options[opt] }
+      start_simulation(sim_options)
+    end
+  end
+
+  # Make sure the simulation is running. Supply parameters about how
+  # exactly that should happen. You can pass in a constructed engine,
+  # or parameters for how to create one.
+  #
+  # You should pass in up to one of :engine, :engine_text,
+  # :engine_files or :engine_dsl_dir to create the Engine or use a
+  # created Engine. If you don't pass one, Pixiurge will assume an
+  # :engine_dsl_dir of "world" under the {#root_dir}.
+  #
+  # A DSL directory, if one is included, will assume that any Ruby
+  # file under an extensions directory or subdirectory will be loaded
+  # directly as Ruby code. Any Ruby file *not* under an extensions
+  # directory or subdirectory will be loaded as Demiurge World File
+  # DSL.
+  #
+  # By default the Demiurge Engine will run at 2 ticks per second, or
+  # 500 milliseconds per tick. You can alter this with the
+  # :ms_per_tick option.
+  #
+  # By default, Pixiurge will save state automatically every 600 ticks
+  # into a timestamped file in the "state" subdirectory. The
+  # :autosave_ticks option can be set to a number of ticks for how
+  # often to save, or 0 for no autosave. You can set it to 0 and
+  # configure an autosave yourself by subscribing to the
+  # {Demiurge::Notifications::TickFinished} notification as well. The
+  # :autosave_path option says where to put the autosave file when it
+  # occurs. The substring "%TICKS%" will be replaced with the number
+  # of ticks completed if it is part of the :autosave_path.
+  #
+  # @param options [Hash] Options for how to run the Demiurge engine.
+  # @option options [Demiurge::Engine] :engine Demiurge simulation engine; if this option is passed, use it instead of creating a new one
+  # @option options [Array] :engine_text Array of 2-element arrays, each with a filename followed by World File DSL; passed to {Demiurge::DSL.engine_from_dsl_text} to create engine
+  # @option options [Array] :engine_files Array of filenames of World File DSL code; passed to {Demiurge::DSL.engine_from_dsl_files} to create engine.
+  # @option options [String] :engine_dsl_dir Path to a directory containing DSL files and (optionally) DSL Ruby extensions
+  # @option options [String] :engine_restore_statefile Path to most recent statedump file, which will be restored to the engine state
+  # @option options [Integer] :ms_per_tick How many milliseconds should occur between simulation ticks
+  # @option options [Integer] :autosave_ticks Dump state automatically every time this many ticks occur; set to 0 for no automatic state-dump; defaults to 600
+  # @option options [String] :autosave_path Write the autosave to this path; you can use %TICKS% in the path for a number of ticks completed; defaults to "state/autosave_%TICKS%.json"
+  # @since 0.1.0
+  # @return [void]
+  def start_simulation(options = {})
+    raise("Simulation is already configured!") if @engine_configured || @engine_started
+
+    illegal_options = options.keys - SIMULATION_OPTIONS
+    raise "Passed illegal options to #start_simulation! #{illegal_options.inspect}" unless illegal_options.empty?
+
+    if options[:engine]
+      engine = options[:engine]
+    elsif options[:engine_text]
+      engine = Demiurge::DSL.engine_from_dsl_text options[:engine_text]
+    elsif options[:engine_files]
+      engine = Demiurge::DSL.engine_from_dsl_files options[:engine_files]
+    else
+      dsl_dir = options[:engine_dsl_dir] || File.join(@root_dir, "world")
+
+      # Require all Ruby extensions under the World dir
+      ruby_extensions = Dir["#{dsl_dir}/**/extensions/**/*.rb"]
+      ruby_extensions.each { |filename| require filename }
+
+      # Load all Worldfile non-Ruby-extension files as World File DSL
+      dsl_files = Dir["#{dsl_dir}/**/*.rb"] - ruby_extensions
+      engine = Demiurge::DSL.engine_from_dsl_files *dsl_files
+    end
+
+    @ms_per_tick = options[:ms_per_tick] || 500
+    @autosave_ticks = options[:autosave_ticks] || 600
+    @autosave_path = options[:autosave_path] || "state/autosave_%TICKS%.json"
+
+    # Subscribe to notifications and sync up with all existing engine
+    # objects before we actually start the simulation.
+    hook_up_engine(engine)
+
+    if options[:engine_restore_statefile]
+      last_statefile = options[:engine_restore_statefile]
+      puts "Restoring state data from #{last_statefile.inspect}."
+      state_data = MultiJson.load File.read(last_statefile)
+      @engine.load_state_from_dump(state_data)
+    end
+    @engine_configured = true
+
+    #start_engine_periodic_timer
+  end
+
+  # It's hard to tell where to call this. It appears that somebody is
+  # stopping the event loop if it's called too early.
+  #
+  # @api private
+  def start_engine_periodic_timer
+
+    ## This is the EventMachine ensure_reactor_running idiom, as pulled from Faye::WebSocket
+    #unless EventMachine.reactor_running?
+    #  puts "Starting EventMachine reactor thread..."
+    #  @reactor_thread = Thread.new { EventMachine.run; STDERR.puts "SHOULD NEVER GET HERE, SOMEBODY STOPPED THE EVENT LOOP!" }
+    #  Thread.pass until EventMachine.reactor_running?
+    #end
+
+    @engine_started = true
+    EM.add_periodic_timer(0.001 * @ms_per_tick) do
+      # Step game content forward by one tick
+      begin
+        @engine.advance_one_tick
+        counter += 1
+        if @autosave_ticks != 0 && counter % @autosave_ticks == 0
+          puts "Writing periodic statefile, every #{@autosave_ticks.inspect} ticks..."
+          ss = @engine.structured_state
+          statefile = @autosave_path.sub("%TICKS%", @engine.state["ticks"])
+          File.open(state, "w") do |f|
+            f.print MultiJson.dump(ss, :pretty => true)
+          end
+        end
+      rescue
+        STDERR.puts "Error trace:\n#{$!.message}\n#{$!.backtrace.join("\n")}"
+        STDERR.puts "Error when advancing engine state. Dumping state, skipping tick."
+        ss = @engine.structured_state
+        File.open("state/error_statefile.json", "w") do |f|
+          f.print MultiJson.dump(ss, :pretty => true)
+        end
+      end
+    end
+  end
+
+  private
+
+  def hook_up_engine(engine)
+    @engine = engine
 
     # First, subscribe to the engine and create local display copies of the various engine items.
 
@@ -84,6 +244,8 @@ class Pixiurge::EngineConnector
     @app.on_event "player_message" do |username, msg_type, *args|
     end
   end
+
+  public
 
   # Query for a Displayable object by Demiurge item name. This is
   # useful when trying to map a Demiurge location into a displayable

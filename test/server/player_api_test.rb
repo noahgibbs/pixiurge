@@ -5,7 +5,7 @@ class PlayerApiTestApp < Pixiurge::AuthenticatedApp
 
   def initialize(options = {})
     @mem_storage = Pixiurge::Authentication::MemStorage.new
-    super(options.merge({ "storage" => @mem_storage }))
+    super(options.merge({ :storage => @mem_storage }))
   end
 
 end
