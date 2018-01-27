@@ -8,13 +8,12 @@ module Pixiurge
       include Thor::Actions
 
       argument :name
-      argument :pixiurge_dev
 
       def self.source_root
         File.join __dir__, "..", "..", "..", "generator"
       end
 
-      #desc "new GAMENAME", "Creates a new Pixiurge game (or similar application)"
+      #desc "new GAMENAME", "Creates a new Pixiurge game or application"
       def top_level_directory
         directory "%name%", :mode => :preserve
         chmod(name + "/exe/start_server", 0755)
