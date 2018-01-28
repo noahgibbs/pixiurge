@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title><%= name %></title>
+  <title><%= human_name %></title>
 
   <!-- For dev, include all the JavaScript individually -->
   <script src="/pixiurge/pixiurge.js"></script>
@@ -28,7 +28,7 @@
 </head>
 <body>
 
-  <h1><%= name %></h1>
+  <h1><%= human_name %></h1>
 
 <script>
 //<![CDATA[
@@ -55,11 +55,11 @@ function game_login() {
     return;
   }
 
-  window.<%= name %>_game.transport.login(username, password);
+  window.<%= snakecase_name %>_game.transport.login(username, password);
 };
 
 function game_logout() {
-  window.<%= name %>_game.transport.logout();
+  window.<%= snakecase_name %>_game.transport.logout();
 };
 
 function game_register() {
@@ -77,7 +77,7 @@ function game_register() {
     return;
   }
 
-  window.<%= name %>_game.transport.registerAccount(username, password);
+  window.<%= snakecase_name %>_game.transport.registerAccount(username, password);
 };
 
 function good_login(username) {
@@ -95,17 +95,17 @@ function bad_login(reason) {
       return;
     }
 
-    window.<%= name %>_game = new Pixiurge();
+    window.<%= snakecase_name %>_game = new Pixiurge();
     // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
     var ws = new WebSocket("wss://localhost:3001/");
-    <%= name %>_game.setTransport(new Pixiurge.WebsocketTransport(<%= name %>_game, ws));
-    var display = new Pixiurge.Display(<%= name %>_game, { container: "#displayarea" });
-    <%= name %>_game.setMessageHandler("display", display);
+    <%= snakecase_name %>_game.setTransport(new Pixiurge.WebsocketTransport(<%= snakecase_name %>_game, ws));
+    var display = new Pixiurge.Display(<%= snakecase_name %>_game, { container: "#displayarea" });
+    <%= snakecase_name %>_game.setMessageHandler("display", display);
 
-    <%= name %>_game.setup();
-    <%= name %>_game.transport.onOpen(function() { <%= name %>_game.transport.considerAutoLogin(); });
-    <%= name %>_game.transport.onLogin(good_login);
-    <%= name %>_game.transport.onFailedLogin(bad_login);
+    <%= snakecase_name %>_game.setup();
+    <%= snakecase_name %>_game.transport.onOpen(function() { <%= snakecase_name %>_game.transport.considerAutoLogin(); });
+    <%= snakecase_name %>_game.transport.onLogin(good_login);
+    <%= snakecase_name %>_game.transport.onFailedLogin(bad_login);
 
     $(".loginform").submit(function(event) {
       event.preventDefault();  // Don't trigger normal form handler.

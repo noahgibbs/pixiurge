@@ -10,13 +10,13 @@ EM.error_handler do |e|
   STDERR.puts "ERROR: #{e.message}\n#{e.backtrace.join "\n"}\n"
 end
 
-require_relative "./<%= name %>.rb"
+require_relative "./<%= snakecase_name %>.rb"
 
-app = <%= name.capitalize %>.new
+app = <%= camelcase_name %>.new
 app.rack_builder self
 app.root_dir __dir__
 app.root_redirect "/index.html"
-#app.coffeescript_dirs "<%= name %>"  # Optional for CoffeeScript front-end files
+#app.coffeescript_dirs "<%= snakecase_name %>"  # Optional for CoffeeScript front-end files
 #app.static_dirs "tiles", "sprites", "vendor_js", "ui", "static"   # Optional for any static front-end files such as graphics, sounds, HTML or scripts
 app.static_files "index.html"  # Optional for individual static files
 
