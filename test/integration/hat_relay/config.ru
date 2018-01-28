@@ -15,7 +15,7 @@ end
 
 require_relative "./hat_relay.rb"
 
-app = Hat_relay.new
+app = HatRelay.new
 app.rack_builder self
 app.root_dir __dir__
 app.root_redirect "/index.html"

@@ -1,10 +1,9 @@
 require "pixiurge"
 require "demiurge"
 
-# Get the absolute path for the game root
 PIXI_APP_ROOT = File.expand_path(__dir__)
 
-class Hat_relay < Pixiurge::AuthenticatedApp
+class HatRelay < Pixiurge::AuthenticatedApp
   def initialize
     # Configure Pixiurge AuthenticatedApp
     options = {

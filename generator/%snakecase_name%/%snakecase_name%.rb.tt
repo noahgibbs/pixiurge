@@ -1,10 +1,9 @@
 require "pixiurge"
 require "demiurge"
 
-TICK_MILLISECONDS = 300
-TICKS_PER_SAVE = (60 * 1000 / TICK_MILLISECONDS)  # Every 1 minute
+PIXI_APP_ROOT = File.expand_path(__dir__)
 
-class <%= name.capitalize %> < Pixiurge::AuthenticatedApp
+class <%= camelcase_name %> < Pixiurge::AuthenticatedApp
   def initialize
     # Configure Pixiurge AuthenticatedApp
     options = {
