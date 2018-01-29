@@ -72,7 +72,7 @@ class Pixiurge::EngineConnector
   # You should pass in up to one of :engine, :engine_text,
   # :engine_files or :engine_dsl_dir to create the Engine or use a
   # created Engine. If you don't pass one, Pixiurge will assume an
-  # :engine_dsl_dir of "world" under the {#root_dir}.
+  # :engine_dsl_dir of "world" under the {Pixiurge::App#root_dir}.
   #
   # A DSL directory, if one is included, will assume that any Ruby
   # file under an extensions directory or subdirectory will be loaded

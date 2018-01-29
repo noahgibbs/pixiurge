@@ -6,15 +6,15 @@ into a nice playable game in many people's web browsers.
 
 Pixiurge is somewhat inspired by Rails: it tries to be
 batteries-included, opinionated and friendly to new users. And while
-there's definitely some "Ruby magic" happening, it's well-documented
-and tries to get out of your way.
+there's definitely some "Ruby magic" happening, Pixiurge's magic is
+well-documented and tries to get out of your way.
 
 Inside, Pixiurge has several major components: the simulation, the
 network server and the in-browser front end. Obviously there are many
 smaller components inside these and connecting them. But it's useful
-for you to think of Pixiurge as a sort of connector between the major
-components. It will also be simpler for you to learn one or two
-components at a time instead of everything all at once.
+for you to think of Pixiurge as a sort of connector between these
+major components. It will also be simpler for you to learn Pixiurge
+one or two components at a time instead of everything all at once.
 
 Pixiurge runs its simulation and displays the results in the browser
 continually. It accepts control information from the browsers and
@@ -33,6 +33,13 @@ sizes.  Pixiurge uses the ManaSource-specific subformat of TMX files
 and Tiled editor data. See http://mapeditor.org for more about Tiled.
 
 ## Software Architecture
+
+It's useful to think of Pixiurge with several "clouds" talking to
+each other - there are things that happen entirely in the front end,
+such as playing "idle" animations for a player or a fountain of
+particles... Which don't necessarily involve the server at all. But
+sometimes an event goes from the front end to the back end, crossing
+the border between the two components.
 
 The Demiurge engine runs inside a Ruby EventMachine server which uses
 Websockets to talk to the connected browsers. This is usually the same
@@ -304,16 +311,17 @@ going to want to rebuild in order to scale out game simulation - Ruby
 is *not* going to build you the equivalent of Crysis, though it might
 build the equivalent of the WoW game servers.
 
-So why build in Ruby? For the same reason Rails does. Server-side
-processor time is cheap. If you can trade cheap computer time for
-expensive human time, do that.
+So why build in Ruby? For the same reason you build in
+Rails. Server-side processor time is cheap. If you can trade cheap
+computer time for expensive human time, do that. Not just to save
+money, but to build your initial game quickly and get players.
 
 Why build in Javascript? Because web browsers are everywhere and
 that's going to stay true. Because by *far* the widest audience is
 browser apps, and that's going to be true for a long time. Because I
 don't much care about building AAA-style high-performance "whoah, the
 graphics" games, but I care a *lot* about reaching people and talking
-to them.
+to them. I hope you do too.
 
 ### Network Round Trips
 

@@ -107,9 +107,12 @@ class Pixiurge::App
   # in the future, the plan is to submit pull requests to the tmx gem
   # until its approximation of Tiled's behavior is good enough.
   #
+  # If the final argument appears to be a Hash, it will be treated as
+  # an options hash. If it contains the key :cache, the value of that
+  # key should be a {Demiurge::Tmx::TileCache} to use when querying
+  # TMX data. It defaults to TmxLocation.default_cache.
+  #
   # @param dirs [String, Array<String>] One or more directories to serve TMX files from
-  # @param options [Hash] Optional final options after directories
-  # @option options [Demiurge::Tmx::TileCache] Optional TMX TileCache to use; defaults to TmxLocation.default_cache
   # @return [void]
   # @since 0.1.0
   def tmx_dirs *dirs

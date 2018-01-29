@@ -74,9 +74,7 @@ class Pixiurge::Display::TileAnimatedSprite < Pixiurge::Displayable
   # an x and y coordinate for the upper left corner, a width and
   # height, and a tileset name.
   #
-  #
   # @param parameters [Hash] A JSON-serializable hash of  options to pass to the front end
-  # @param demi_item [Demiurge::StateItem] A Demiurge StateItem for this Displayable to indicate
   # @param name [String] The Demiurge item name for this Displayable
   # @param engine_connector [Pixiurge::EngineConnector] The Pixiurge EngineConnector this Displayable belongs to
   # @since 0.1.0
