@@ -13,6 +13,7 @@ messageMap = {
 class Pixiurge.Display
   constructor: (@pixiurge, options = {}) ->
     @displayables = {}
+    @display_event_handlers = {}
 
     @container_spec = options["container"] || "body"
     @item_klasses = {
@@ -36,10 +37,6 @@ class Pixiurge.Display
     @fringe_container = new PIXI.Container
     @fringe_container.z = 0
     @layers_container.addChild @fringe_container
-
-    #createjs.Ticker.timingMode = createjs.Ticker.RAF
-    #createjs.Ticker.addEventListener "tick", (event) =>
-    #  @stage.update event
 
   message: (msgName, argArray) ->
     handler = messageMap[msgName]
@@ -66,14 +63,23 @@ class Pixiurge.Display
     if @displayables[item_name]
       console.log "Item name '#{item_name}' already exists!"
       return
-    item_type = item_data.type
-    klass = @klass_for_type(item_type)
-    unless klass?
-      console.log "Couldn't find a class for item type: #{item_type}!", item_type, @item_klasses
+    displayable = @createDisplayableFromMessages(@layers_container, item_name, item_data)
+    unless displayable? && displayable
+      console.log "Got back undefined or false displayable from creation: #{displayable}", displayable
       return
-    @displayables[item_name] = new klass(@layers_container, item_name, item_data)
+    @displayables[item_name] = displayable
 
-  # This destroys this Displayable - it won't be referenced by name again, ever
+  createDisplayableFromMessages: (parent_container, item_name, item_data) ->
+    item_type = item_data.type
+    klass = @item_klasses[item_type]
+    unless klass?
+      klasses = (key for key, val of @item_klasses)
+      console.log "Couldn't find a class for item type: #{item_type}! Legal types:", klasses
+      return undefined
+    new klass(pixi_display: this, parent_container: parent_container, displayable_name: item_name, displayable_data: item_data)
+
+  # This destroys this Displayable - it won't be referenced by name
+  # again, ever (unless you recreate it.)
   destroyDisplayable: (item_name) ->
     if @displayables[item_name]
       @displayables[item_name].destroy()
@@ -85,25 +91,18 @@ class Pixiurge.Display
       displayable.destroy()
     @displayables = {}
 
-  klass_for_type: (item_type) ->
-    @item_klasses[item_type]
+  onDisplayEvent: (event, object_name, handler) ->
+    unless @display_event_handlers[event]?
+      @display_event_handlers[event] = { any: [] }
+    @display_event_handlers[event].any.push(handler)
+    unless @display_event_handlers[event][object_name]?
+      @display_event_handlers[event][object_name] = []
+    @display_event_handlers[event][object_name].push(handler)
 
-
-  #panToPixel: (new_exp_x, new_exp_y, options) ->
-  #  duration = options.duration || 1.0
-  #  createjs.Tween.get(@exposure)
-  #    .to({x: new_exp_x, y: new_exp_y}, duration * 1000.0, createjs.Ease.linear)
-  #    .addEventListener "change", () =>
-  #      for name, stack of @spritestacks
-  #        stack.handleExposure()
-  #    .call (tween) =>
-  #      @exposure.x = new_exp_x
-  #      @exposure.y = new_exp_y
-  #
-  #textOverStack: (stack, text, options = {}) ->
-  #  stack = @spritestacks[stack]
-  #  duration = options.duration || 5.0
-  #  text_x = stack.x - @exposure.x + @display_width / 2
-  #  text_y = stack.y - @exposure.y + @display_height / 2 - 32 # Add a fudge factor for ManaSource humanoids having a weird registration point for right now...
-  #
-  #  new DCJS.CreatejsDisplay.TextAnim(@stage, text, { x: text_x, y: text_y, color: options.color, font: options.font, duration: options.duration || 5.0 } )
+  sendDisplayEvent: (event, object_name, data) ->
+    unless @display_event_handlers[event]?
+      return
+    for handler in @display_event_handlers[event].any
+      handler(event, object_name, data)
+    for handler in (@display_event_handlers[object_name] || [])
+      handler(event, object_name, data)

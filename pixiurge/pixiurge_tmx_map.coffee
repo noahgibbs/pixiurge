@@ -1,8 +1,8 @@
 class Pixiurge.TmxMap extends Pixiurge.Displayable
-  constructor: (parent_container, item_name, item_data) ->
-    super(parent_container, item_name, item_data)
+  constructor: (data_hash) ->
+    super(data_hash)
 
-    @url = item_data.url
+    @url = @displayable_data.url
     @loader = new PIXI.loaders.Loader()
     @loader.add(@url).load(() => @jsonLoaded())
 

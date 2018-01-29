@@ -88,11 +88,11 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   # an x and y coordinate for the upper left corner, a width and
   # height, and a tileset name.
 
-  constructor: (parent_container, item_name, item_data) ->
-    super(parent_container, item_name, item_data)
+  constructor: (data_hash) ->
+    super(data_hash)
 
-    images = tileset.url for tileset in item_data.params.tilesets
-    @tilesets = item_data.params.tilesets
+    images = tileset.url for tileset in @displayable_data.params.tilesets
+    @tilesets = @displayable_data.params.tilesets
 
     @loader = new PIXI.loaders.Loader();
     @loader.add(images).load(() => @imagesLoaded())
@@ -109,7 +109,7 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
 
     @animations = {}
     # Next, we need to convert each animation to AnimatedSprite's format - an array of structures, each with "texture" and "time" fields.
-    for animation_name, animation_struct of @item_data.params.animations
+    for animation_name, animation_struct of @displayable_data.params.animations
       anim_frames = []
       for frame in animation_struct.frames
         if typeof frame == "number"
@@ -132,24 +132,58 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
         else
           console.log "Unrecognized animation frame format in TileAnimatedSprite!", frame
 
+      # The "after" fields will be handled later in @addDisplaySignalHandlers
       after = if animation_struct.after? then animation_struct.after else "stop"
       @animations[animation_name] = { frames: anim_frames, after: after }
 
     # Create the AnimatedSprite with the textures for the first animation
-    @current_animation = @item_data.params.animation
+    @current_animation = @displayable_data.params.animation
     unless @current_animation?
       console.log "No current animation set for TileAnimatedSprite!"
     @sprite = new PIXI.extras.AnimatedSprite(@animations[@current_animation].frames)
     this_pixiurge_sprite = this
     @sprite.onComplete = () => this_pixiurge_sprite.animationComplete()
 
-    disp_data = @item_data.displayable
+    disp_data = @displayable_data.displayable
     if disp_data.x? && disp_data.x && disp_data.y? && disp_data.y
       @sprite.x = disp_data.x * disp_data.location_block_width
       @sprite.y = disp_data.y * disp_data.location_block_height
 
+    @addDisplaySignalHandlers()
+
     @parent_container.addChild @sprite
     @startAnimation @current_animation
+
+  addDisplaySignalHandlers: () ->
+    for animation_name, animation of @animations
+      @pixi_display.onDisplayEvent "animationEnd", @displayable_name, (animEnd, dispName, eventData) =>
+        anim = @animations[eventData.animation]
+        if anim? && anim && anim.after? && anim.after
+          @executeFrontEndEventCode(anim.after)
+
+  # This needs to be generalized, get some new operations and move into the parent class
+  executeFrontEndEventCode: (code) ->
+    if code == "stop"
+      return
+    # We shouldn't normally get an animationEnd for a looped animation
+    if code == "loop"
+      return @startAnimation(@current_animation)
+    if typeof(code) == "string"
+      return @startAnimation(code)
+    if typeof(code) == "object"
+      chances = 0.0
+      for item in code
+        chances += (item.chance || 1.0)
+      r = Math.random() * chances
+      for item in code
+        r -= (item.chance || 1.0)
+        if r <= 0.0
+          return @startAnimation(item.name)
+
+      # Fallthrough - some kind of numerical error or other edge case?
+      console.log "Unexpected remainder: #{r}", r
+      return @startAnimation(code[0].name)
+    console.log "Unrecognized code for front-end event:", code
 
   startAnimation: (name) ->
     @current_animation = name
@@ -162,17 +196,4 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
     @sprite.gotoAndPlay(0)
 
   animationComplete: () ->
-    if @animations[@current_animation].after != "stop"
-      after = @animations[@current_animation].after
-      if typeof(after) == "string"
-        @startAnimation after
-      else
-        chances = 0.0
-        for item in after
-          chances += (item.chance || 1.0)
-        r = Math.random() * chances
-        for item in after
-          r -= (item.chance || 1.0)
-          if r < 0
-            return @startAnimation(item.name)
-        @startAnimation(after[0].name)
+    @sendDisplayEvent("animationEnd", { animation: @current_animation })
