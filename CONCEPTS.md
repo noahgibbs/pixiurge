@@ -36,9 +36,9 @@ and Tiled editor data. See http://mapeditor.org for more about Tiled.
 
 <img src="https://noahgibbs.github.io/pixiurge/images/pixiurge_architecture_2018_01.png"> </img>
 
-It's useful to think of Pixiurge with several "clouds" talking to
-each other - there are things that happen entirely in the front end,
-such as playing "idle" animations for a player or a fountain of
+It's useful to think of Pixiurge with several major components talking
+to each other - there are things that happen entirely in the front
+end, such as playing "idle" animations for a player or a fountain of
 particles... Which don't necessarily involve the server at all. But
 sometimes an event goes from the front end to the back end, crossing
 the border between the two components.

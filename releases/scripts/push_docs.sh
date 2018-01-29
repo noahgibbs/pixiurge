@@ -27,6 +27,6 @@ git diff --cached --numstat | grep "\<1\t1\t" | grep -v "class_list.html" | cut 
 git commit -m "Update docs with latest source changes"
 
 echo "Clear one-line changes to the docs directory..."
-gc docs/
+git checkout docs/
 
 echo "Review the created commit using 'git log -p', then push it upstream."
