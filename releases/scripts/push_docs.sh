@@ -25,6 +25,8 @@ git add docs/demiurge docs/pixiurge
 # A one-line change is always that... except for class_list.html files.
 git diff --cached --numstat | grep "\<1\t1\t" | grep -v "class_list.html" | cut -f 3 | xargs git reset
 git commit -m "Update docs with latest source changes"
+
+echo "Clear one-line changes to the docs directory..."
 gc docs/
 
-echo Review the created commit using 'git log -p', then push it upstream.
+echo "Review the created commit using 'git log -p', then push it upstream."
