@@ -57,42 +57,44 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-Hacking+Demiurge">Hacking Demiurge</h1>
+      <div id="content"><div id='filecontents'><h1>Hacking Demiurge</h1>
 
-<p>When in doubt: read the source, tests and examples of course, just like any
-other code.</p>
+<p>When in doubt: read the source, tests and examples of course, just
+like any other code.</p>
 
-<h2 id="label-State+and+JSON">State and JSON</h2>
+<h2>State and JSON</h2>
 
-<p>Demiurge is architected in such a way that StateItems contain logic about
-how to manipulate state. StateItems contain current state and can calculate
-new Intentions and apply Actions.</p>
+<p>Demiurge is architected in such a way that StateItems contain logic
+about how to manipulate state. StateItems contain current state and
+can calculate new Intentions and apply Actions.</p>
 
-<p>State can be serialized and swapped out at any time, so StateItems must be
-able to be disposable and replaceable. Since it&#39;s hard to serialize a
-procedure as JSON, generally StateItems define actions in their World Files
-or Ruby code, and the StateItem contains the names of the actions. The
-actual Ruby procedures are either part of the StateItem subclass Ruby code
-or they&#39;re stored as a proc in the engine itself.</p>
+<p>State can be serialized and swapped out at any time, so StateItems
+must be able to be disposable and replaceable. Since it&#39;s hard to
+serialize a procedure as JSON, generally StateItems define actions in
+their World Files or Ruby code, and the StateItem contains the names
+of the actions. The actual Ruby procedures are either part of the
+StateItem subclass Ruby code or they&#39;re stored as a proc in the engine
+itself.</p>
 
 <p>Similarly, serialized state data often contains item names rather than
-actual items. Names are easily serialized and easily handled with a minimum
-of fuss, while structures and code are both messy.</p>
+actual items. Names are easily serialized and easily handled with a
+minimum of fuss, while structures and code are both messy.</p>
 
-<h2 id="label-Zones+and+Top-Level+State">Zones and Top-Level State</h2>
+<h2>Zones and Top-Level State</h2>
 
-<p>If every StateItem was guaranteed a call every tick, simulation would slow
-to a crawl very rapidly as the world expanded. Instead, certain top-level
-StateItems called “zones” are guaranteed to be called every tick and they
-decide how to manage the flow of execution to their contents.</p>
+<p>If every StateItem was guaranteed a call every tick, simulation would
+slow to a crawl very rapidly as the world expanded. Instead, certain
+top-level StateItems called &quot;zones&quot; are guaranteed to be called every
+tick and they decide how to manage the flow of execution to their
+contents.</p>
 
-<p>In general, a Zone manages whether to call various sub-items or agents, or
-whether to only call them sometimes, or whether to quiesce them completely.</p>
+<p>In general, a Zone manages whether to call various sub-items or
+agents, or whether to only call them sometimes, or whether to quiesce
+them completely.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:05 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

@@ -87,8 +87,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>This module contains the Builder classes that parse the World File DSL.</p>
+    <p>This module contains the Builder classes that parse the World File DSL.</p>
 
 
   </div>
@@ -104,8 +103,7 @@
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -154,8 +152,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This is a primary method for creating a new Demiurge Engine.</p>
+    <span class="summary_desc"><div class='inline'><p>This is a primary method for creating a new Demiurge Engine.</p>
 </div></span>
   
 </li>
@@ -178,9 +175,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method takes either strings containing World File DSL text, or
-name/string pairs.</p>
+    <span class="summary_desc"><div class='inline'><p>This method takes either strings containing World File DSL text, or name/string pairs.</p>
 </div></span>
   
 </li>
@@ -206,12 +201,11 @@ name/string pairs.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This is a primary method for creating a new Demiurge Engine. It should be
-passed a list of filenames to load World File DSL from. It will return a
-fully-configured Engine which has called finished_init. If the Engine
-should load from an existing state-dump, that can be accomplished via
-load_state_from_dump.</p>
+    <p>This is a primary method for creating a new Demiurge Engine. It
+should be passed a list of filenames to load World File DSL
+from. It will return a fully-configured Engine which has called
+finished_init. If the Engine should load from an existing
+state-dump, that can be accomplished via load_state_from_dump.</p>
 
 
   </div>
@@ -230,8 +224,7 @@ load_state_from_dump.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>An array of filenames, suitable for calling File.read on</p>
+        <div class='inline'><p>An array of filenames, suitable for calling File.read on</p>
 </div>
       
     </li>
@@ -249,8 +242,7 @@ load_state_from_dump.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A configured Engine</p>
+        <div class='inline'><p>A configured Engine</p>
 </div>
       
     </li>
@@ -276,8 +268,7 @@ load_state_from_dump.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -299,7 +290,7 @@ load_state_from_dump.</p>
       <pre class="code"><span class="info file"># File 'lib/demiurge/dsl.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_engine_from_dsl_files'>engine_from_dsl_files</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filenames'>filenames</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_filename_string_pairs'>filename_string_pairs</span> <span class='op'>=</span> <span class='id identifier rubyid_filenames'>filenames</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fn'>fn</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fn'>fn</span><span class='comma'>,</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_fn'>fn</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_filename_string_pairs'>filename_string_pairs</span> <span class='op'>=</span> <span class='id identifier rubyid_filenames'>filenames</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fn'>fn</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fn'>fn</span><span class='comma'>,</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_fn'>fn</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_engine_from_dsl_text'>engine_from_dsl_text</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_filename_string_pairs'>filename_string_pairs</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -318,10 +309,9 @@ load_state_from_dump.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This method takes either strings containing World File DSL text, or
-name/string pairs. If a pair is supplied, the name gives the origin of the
-text for error messages.</p>
+    <p>This method takes either strings containing World File DSL text,
+or name/string pairs. If a pair is supplied, the name gives the
+origin of the text for error messages.</p>
 
 
   </div>
@@ -340,9 +330,7 @@ text for error messages.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Either an array of chunks of DSL text, or an Array of two-element Arrays.
-Each two-element Array is a String name followed by a String of DSL text</p>
+        <div class='inline'><p>Either an array of chunks of DSL text, or an Array of two-element Arrays. Each two-element Array is a String name followed by a String of DSL text</p>
 </div>
       
     </li>
@@ -360,8 +348,7 @@ Each two-element Array is a String name followed by a String of DSL text</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A configured Engine</p>
+        <div class='inline'><p>A configured Engine</p>
 </div>
       
     </li>
@@ -387,8 +374,7 @@ Each two-element Array is a String name followed by a String of DSL text</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -451,7 +437,7 @@ Each two-element Array is a String name followed by a String of DSL text</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:05 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

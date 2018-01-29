@@ -57,32 +57,31 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-Demiurge+World+Files">Demiurge World Files</h1>
+      <div id="content"><div id='filecontents'><h1>Demiurge World Files</h1>
 
-<p>Demiurge includes a very convenient Ruby DSL (Domain-Specific Language) for
-declaring your zones, locations, agents and so on. These are referred to as
-World Files, and are by far the easiest and most common way to create a
-simulation using Demiurge.</p>
+<p>Demiurge includes a very convenient Ruby DSL (Domain-Specific
+Language) for declaring your zones, locations, agents and so on. These
+are referred to as World Files, and are by far the easiest and most
+common way to create a simulation using Demiurge.</p>
 
 <p>Unfortunately, the Builder classes in the API documentation aren&#39;t a
-great way to document the World File syntax and how to use it. There are
-some good examples, but many of them are either too complicated, or
-intentionally weird. For instance, the test/ directory is full of World
-File examples that are designed to test weird corner cases or generate
-errors or both.</p>
+great way to document the World File syntax and how to use it. There
+are some good examples, but many of them are either too complicated,
+or intentionally weird. For instance, the test/ directory is full of
+World File examples that are designed to test weird corner cases or
+generate errors or both.</p>
 
 <p>This is a quick guide to using World Files. It&#39;s not full and
-comprehensive. But it may provide a kick-start, after which the Builder
-classes won&#39;t seem quite so bizarre and inscrutable.</p>
+comprehensive. But it may provide a kick-start, after which the
+Builder classes won&#39;t seem quite so bizarre and inscrutable.</p>
 
-<p>Normally World Files are stored in a directory in your game. I like calling
-it “world”. If you used multiple Demiurge engines for some reason,
-you&#39;d probably want to store their two sets of World Files in two
-different directories. But for a single Engine, you&#39;d normally want a
-single directory of World Files.</p>
+<p>Normally World Files are stored in a directory in your game. I like
+calling it &quot;world&quot;. If you used multiple Demiurge engines for some
+reason, you&#39;d probably want to store their two sets of World Files in
+two different directories.  But for a single Engine, you&#39;d normally
+want a single directory of World Files.</p>
 
-<h2 id="label-Getting+Started">Getting Started</h2>
+<h2>Getting Started</h2>
 
 <p>Your game will need to load its World Files somehow. Here&#39;s a good
 simple example of how to do that:</p>
@@ -93,15 +92,15 @@ simple example of how to do that:</p>
 <span class='ivar'>@engine</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='period'>.</span><span class='id identifier rubyid_engine_from_dsl_files'>engine_from_dsl_files</span> <span class='op'>*</span><span class='const'>Dir</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>world/*.rb</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 </code></pre>
 
-<p>This example doesn&#39;t try to do any kind of sorting to load the files in
-a particular order. In other words, you&#39;ll need to do something fancier
-if your game gets big.</p>
+<p>This example doesn&#39;t try to do any kind of sorting to load the files
+in a particular order. In other words, you&#39;ll need to do something
+fancier if your game gets big.</p>
 
-<p>It also assumes that all your World Files are in the top-level directory,
-which won&#39;t stay true for long either. So: you can start with this
-example, but you&#39;ll need to change it later.</p>
+<p>It also assumes that all your World Files are in the top-level
+directory, which won&#39;t stay true for long either. So: you can start
+with this example, but you&#39;ll need to change it later.</p>
 
-<h2 id="label-Your+First+Zone">Your First Zone</h2>
+<h2>Your First Zone</h2>
 
 <p>Here&#39;s an example file containing a very simple zone for use with
 Demiurge-CreateJS:</p>
@@ -114,10 +113,10 @@ Demiurge-CreateJS:</p>
 <span class='kw'>end</span>
 </code></pre>
 
-<p>If you&#39;re using Demiurge-CreateJS (aka DCJS) then you&#39;ll probably
-want to use 2D tile-based locations, also called TmxLocations. Those are
-the ones you can generate using the Tiled map editor. See Demiurge-CreateJS
-for more details.</p>
+<p>If you&#39;re using Demiurge-CreateJS (aka DCJS) then you&#39;ll probably want
+to use 2D tile-based locations, also called TmxLocations. Those are
+the ones you can generate using the Tiled map editor. See
+Demiurge-CreateJS for more details.</p>
 
 <p>If you&#39;re using Demiurge on your own projects without DCJS, you can do
 that too. Here&#39;s an example administrative zone containing a player
@@ -147,11 +146,11 @@ definition:</p>
 <span class='kw'>end</span>
 </code></pre>
 
-<p>You can create interesting object interactions with actions. You can see a
-few actions above, but they&#39;re just the tip of the iceberg. Here&#39;s
-a fun example where an agent can kick some stones down a cliff and
-they&#39;ll start a mini-avalanche. The bigger the initial kick, the bigger
-(by far) the total number of stones falling down:</p>
+<p>You can create interesting object interactions with actions. You can
+see a few actions above, but they&#39;re just the tip of the iceberg.
+Here&#39;s a fun example where an agent can kick some stones down a cliff
+and they&#39;ll start a mini-avalanche. The bigger the initial kick, the
+bigger (by far) the total number of stones falling down:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_zone'>zone</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>echoing cliffs</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
   <span class='id identifier rubyid_location'>location</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cliffside</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>do</span>
@@ -172,32 +171,34 @@ they&#39;ll start a mini-avalanche. The bigger the initial kick, the bigger
 
 <p>Each action block (the do/end part) is just Ruby code, so you can do
 whatever Ruby can do there. The hard part is just figuring out what
-information you can work with, and what you&#39;re allowed to do with it.
-The methods above called “notification”, “action” and “dump_state” above
-are all standard and can be found in the BlockRunner classes - that&#39;s
-AgentBlockRunner, ActionItemBlockRunner and EngineBlockRunner, depending on
-how you run it. Agents get the AgentBlockRunner, ActionItems get the
-ActionItemBlockRunner, and you only get the EngineBlockRunner if you
-specifically pass the “:engine_code” option to your action.</p>
+information you can work with, and what you&#39;re allowed to do with
+it. The methods above called &quot;notification&quot;, &quot;action&quot; and &quot;dump_state&quot;
+above are all standard and can be found in the BlockRunner classes -
+that&#39;s AgentBlockRunner, ActionItemBlockRunner and EngineBlockRunner,
+depending on how you run it. Agents get the AgentBlockRunner,
+ActionItems get the ActionItemBlockRunner, and you only get the
+EngineBlockRunner if you specifically pass the &quot;:engine_code&quot; option
+to your action.</p>
 
-<h2 id="label-Security">Security</h2>
+<h2>Security</h2>
 
 <p>There&#39;s a SECURITY guide in its own file. But the short version is:
 keep in mind that World Files are <em>not</em> secure. You should read
-through any World File that somebody else gives you completely before you
-add it to your game. A bad World File can steal your in-game passwords and
-code. It can even attack other programs running on the same server as your
-game (which might be your home computer, where you do your banking.) It can
-send somebody else your data, and it can download other code from the
-Internet if it&#39;s connected to the Internet.</p>
+through any World File that somebody else gives you completely before
+you add it to your game. A bad World File can steal your in-game
+passwords and code. It can even attack other programs running on the
+same server as your game (which might be your home computer, where you
+do your banking.) It can send somebody else your data, and it can
+download other code from the Internet if it&#39;s connected to the
+Internet.</p>
 
 <p>Do <em>not</em> accept unknown World Files from other people. It&#39;s like
-running a downloaded .EXE on a Windows machine - it can do whatever your
-computer can, and you really shouldn&#39;t let it.</p>
+running a downloaded .EXE on a Windows machine - it can do whatever
+your computer can, and you really shouldn&#39;t let it.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:05 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

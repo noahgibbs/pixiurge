@@ -112,18 +112,18 @@
 
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'>
-<p>There is a bit of weirdness in how this intention handles <span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#allowed? (method)">#allowed?</a></span> and
-<span class='object_link'><a href="#offer-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#offer (method)">#offer</a></span>. We want to be able to queue an action on the same tick that we
-execute it if the agent is idle. So we count this intention as #allowed?
-even if the queue is empty, then silent-cancel the intention during
-<span class='object_link'><a href="#offer-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#offer (method)">#offer</a></span> if nobody has added anything to it. If you see a lot of cancel
-notifications from this object with “silent” set, now you know why.</p>
+    <div class='inline'><p>There is a bit of weirdness in how this intention handles
+<span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#allowed? (method)">#allowed?</a></span> and <span class='object_link'><a href="#offer-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#offer (method)">#offer</a></span>. We want to be able to queue an action
+on the same tick that we execute it if the agent is idle. So we
+count this intention as #allowed?  even if the queue is empty,
+then silent-cancel the intention during <span class='object_link'><a href="#offer-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#offer (method)">#offer</a></span> if nobody has
+added anything to it. If you see a lot of cancel notifications
+from this object with &quot;silent&quot; set, now you know why.</p>
 </div>
   </div>
 
-
-<p>An AgentActionIntention is how the agent takes queued actions each tick.</p>
+<p>An AgentActionIntention is how the agent takes queued actions each
+tick.</p>
 
 
   </div>
@@ -160,8 +160,7 @@ notifications from this object with “silent” set, now you know why.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The queued action name this Intention will next take.</p>
+    <span class="summary_desc"><div class='inline'><p>The queued action name this Intention will next take.</p>
 </div></span>
   
 </li>
@@ -189,8 +188,7 @@ notifications from this object with “silent” set, now you know why.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The agent to whom this Intention applies.</p>
+    <span class="summary_desc"><div class='inline'><p>The agent to whom this Intention applies.</p>
 </div></span>
   
 </li>
@@ -231,9 +229,7 @@ notifications from this object with “silent” set, now you know why.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This action is allowed if the agent is not busy, or will become not-busy
-soon.</p>
+    <span class="summary_desc"><div class='inline'><p>This action is allowed if the agent is not busy, or will become not-busy soon.</p>
 </div></span>
   
 </li>
@@ -256,8 +252,7 @@ soon.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>If the agent can do so, take the action in question.</p>
+    <span class="summary_desc"><div class='inline'><p>If the agent can do so, take the action in question.</p>
 </div></span>
   
 </li>
@@ -280,8 +275,7 @@ soon.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Send out a notification to indicate this ActionIntention was applied.</p>
+    <span class="summary_desc"><div class='inline'><p>Send out a notification to indicate this ActionIntention was applied.</p>
 </div></span>
   
 </li>
@@ -304,8 +298,7 @@ soon.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Send out a notification to indicate this ActionIntention was cancelled.</p>
+    <span class="summary_desc"><div class='inline'><p>Send out a notification to indicate this ActionIntention was cancelled.</p>
 </div></span>
   
 </li>
@@ -330,8 +323,7 @@ soon.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Constructor.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor.</p>
 </div></span>
   
 </li>
@@ -354,8 +346,7 @@ soon.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>An action being pulled from the action queue is offered normally.</p>
+    <span class="summary_desc"><div class='inline'><p>An action being pulled from the action queue is offered normally.</p>
 </div></span>
   
 </li>
@@ -399,7 +390,6 @@ soon.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Constructor. Takes an agent name and an engine</p>
 
 
@@ -427,15 +417,15 @@ soon.</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165</pre>
+167
+168
+169
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_engine'>engine</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_engine'>engine</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -470,7 +460,6 @@ soon.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Returns The queued action name this Intention will next take</p>
 
 
@@ -489,8 +478,7 @@ soon.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The queued action name this Intention will next take</p>
+        <div class='inline'><p>The queued action name this Intention will next take</p>
 </div>
       
     </li>
@@ -503,12 +491,12 @@ soon.</p>
       <pre class="lines">
 
 
-157
-158
-159</pre>
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_action_name'>action_name</span>
   <span class='ivar'>@action_name</span>
@@ -535,7 +523,6 @@ soon.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Returns The agent to whom this Intention applies</p>
 
 
@@ -554,8 +541,7 @@ soon.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The agent to whom this Intention applies</p>
+        <div class='inline'><p>The agent to whom this Intention applies</p>
 </div>
       
     </li>
@@ -568,12 +554,12 @@ soon.</p>
       <pre class="lines">
 
 
-155
-156
-157</pre>
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_agent'>agent</span>
   <span class='ivar'>@agent</span>
@@ -605,9 +591,7 @@ soon.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
-<p>This action is allowed if the agent is not busy, or will become not-busy
-soon</p>
+<p>This action is allowed if the agent is not busy, or will become not-busy soon</p>
 
 
   </div>
@@ -634,13 +618,6 @@ soon</p>
       <pre class="lines">
 
 
-186
-187
-188
-189
-190
-191
-192
 193
 194
 195
@@ -652,10 +629,17 @@ soon</p>
 201
 202
 203
-204</pre>
+204
+205
+206
+207
+208
+209
+210
+211</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 193</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_allowed?'>allowed?</span>
   <span class='comment'># If the agent&#39;s busy state will clear this turn, this action
@@ -696,7 +680,6 @@ soon</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>If the agent can do so, take the action in question.</p>
 
 
@@ -711,13 +694,6 @@ soon</p>
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
 214
 215
 216
@@ -725,10 +701,17 @@ soon</p>
 218
 219
 220
-221</pre>
+221
+222
+223
+224
+225
+226
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 214</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>busy</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>0</span> <span class='op'>||</span> <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>queued_actions</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -765,8 +748,8 @@ soon</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Send out a notification to indicate this ActionIntention was applied.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Send out a notification to indicate this ActionIntention was
+applied.</p>
 
 
   </div>
@@ -782,8 +765,7 @@ soon</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -796,13 +778,6 @@ soon</p>
       <pre class="lines">
 
 
-254
-255
-256
-257
-258
-259
-260
 261
 262
 263
@@ -810,10 +785,17 @@ soon</p>
 265
 266
 267
-268</pre>
+268
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply_notification'>apply_notification</span>
   <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span>
@@ -850,10 +832,9 @@ soon</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Send out a notification to indicate this ActionIntention was cancelled. If
-“silent” is set to true in the cancellation info, no notification will be
-sent.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Send out a notification to indicate this ActionIntention was
+cancelled. If &quot;silent&quot; is set to true in the cancellation info,
+no notification will be sent.</p>
 
 
   </div>
@@ -869,8 +850,7 @@ sent.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -883,13 +863,6 @@ sent.</p>
       <pre class="lines">
 
 
-229
-230
-231
-232
-233
-234
-235
 236
 237
 238
@@ -901,10 +874,17 @@ sent.</p>
 244
 245
 246
-247</pre>
+247
+248
+249
+250
+251
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 229</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 236</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cancel_notification'>cancel_notification</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@cancelled_info</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@cancelled_info</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>silent</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -945,7 +925,6 @@ sent.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>An action being pulled from the action queue is offered normally.</p>
 
 
@@ -960,13 +939,6 @@ sent.</p>
       <pre class="lines">
 
 
-168
-169
-170
-171
-172
-173
-174
 175
 176
 177
@@ -975,10 +947,17 @@ sent.</p>
 180
 181
 182
-183</pre>
+183
+184
+185
+186
+187
+188
+189
+190</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 175</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_offer'>offer</span>
   <span class='comment'># Don&#39;t offer the action if it&#39;s going to be a no-op.
@@ -1006,7 +985,7 @@ sent.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:09 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

@@ -101,20 +101,20 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>An Intention is an unresolved event. Some part of the simulated world
-“wishes” to take an action. This need not be a sentient being - any change
-to the world should occur with an Intention then being resolved into
-changes in state and events – or not. It&#39;s also possible for an
-intention to resolve to nothing at all. For instance, an intention to move
-in an impossible direction could simply resolve with no movement, no state
-change and no event.</p>
+    <p>An Intention is an unresolved event. Some part of the simulated
+world &quot;wishes&quot; to take an action. This need not be a sentient
+being - any change to the world should occur with an Intention
+then being resolved into changes in state and events -- or
+not. It&#39;s also possible for an intention to resolve to nothing at
+all. For instance, an intention to move in an impossible direction
+could simply resolve with no movement, no state change and no event.</p>
 
-<p>Intentions go through verification, resolution and eventually notification.</p>
+<p>Intentions go through verification, resolution and eventually
+notification.</p>
 
-<p>Intentions are not, in general, serializable. They normally persist for
-only a single tick. To persist an intention for most StateItems, consider
-persisting action names instead.</p>
+<p>Intentions are not, in general, serializable. They normally
+persist for only a single tick. To persist an intention for most StateItems,
+consider persisting action names instead.</p>
 
 <p>For more details about Intention, see <a href="../file.CONCEPTS.html" title="CONCEPTS">CONCEPTS</a>.</p>
 
@@ -132,8 +132,7 @@ persisting action names instead.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -176,9 +175,7 @@ persisting action names instead.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method allows child classes of Intention to check whether they should
-happen at all.</p>
+    <span class="summary_desc"><div class='inline'><p>This method allows child classes of Intention to check whether they should happen at all.</p>
 </div></span>
   
 </li>
@@ -201,9 +198,7 @@ happen at all.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method tells the Intention that it has successfully occurred and it
-should modify StateItems accordingly.</p>
+    <span class="summary_desc"><div class='inline'><p>This method tells the Intention that it has successfully occurred and it should modify StateItems accordingly.</p>
 </div></span>
   
 </li>
@@ -226,8 +221,7 @@ should modify StateItems accordingly.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Intentions should send an apply notice when they are successfully applied.</p>
+    <span class="summary_desc"><div class='inline'><p>Intentions should send an apply notice when they are successfully applied.</p>
 </div></span>
   
 </li>
@@ -250,8 +244,7 @@ should modify StateItems accordingly.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This cancels the intention, and gives the reason for the cancellation.</p>
+    <span class="summary_desc"><div class='inline'><p>This cancels the intention, and gives the reason for the cancellation.</p>
 </div></span>
   
 </li>
@@ -274,8 +267,7 @@ should modify StateItems accordingly.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Most intentions will send a cancellation notice when they are cancelled.</p>
+    <span class="summary_desc"><div class='inline'><p>Most intentions will send a cancellation notice when they are cancelled.</p>
 </div></span>
   
 </li>
@@ -298,8 +290,7 @@ should modify StateItems accordingly.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This returns whether this intention has been cancelled.</p>
+    <span class="summary_desc"><div class='inline'><p>This returns whether this intention has been cancelled.</p>
 </div></span>
   
 </li>
@@ -324,9 +315,7 @@ should modify StateItems accordingly.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Subclasses of intention can require all sorts of constructor arguments to
-specify what the intention is.</p>
+    <span class="summary_desc"><div class='inline'><p>Subclasses of intention can require all sorts of constructor arguments to specify what the intention is.</p>
 </div></span>
   
 </li>
@@ -349,9 +338,7 @@ specify what the intention is.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>When an Intention is “offered”, that means appropriate other entities have
-a chance to modify or cancel the intention.</p>
+    <span class="summary_desc"><div class='inline'><p>When an Intention is &quot;offered&quot;, that means appropriate other entities have a chance to modify or cancel the intention.</p>
 </div></span>
   
 </li>
@@ -374,8 +361,7 @@ a chance to modify or cancel the intention.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This is a normally-private part of the Tick cycle.</p>
+    <span class="summary_desc"><div class='inline'><p>This is a normally-private part of the Tick cycle.</p>
 </div></span>
   
 </li>
@@ -398,8 +384,7 @@ a chance to modify or cancel the intention.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Subclasses of intention can require all sorts of constructor arguments to
+    <p>Subclasses of intention can require all sorts of constructor arguments to
 specify what the intention is. But the engine should always be supplied.</p>
 
 
@@ -419,8 +404,7 @@ specify what the intention is. But the engine should always be supplied.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The engine this Intention is part of.</p>
+        <div class='inline'><p>The engine this Intention is part of.</p>
 </div>
       
     </li>
@@ -436,8 +420,7 @@ specify what the intention is. But the engine should always be supplied.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -487,12 +470,12 @@ specify what the intention is. But the engine should always be supplied.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This method allows child classes of Intention to check whether they should
-happen at all. If this method returns false, the intention will self-cancel
-without sending a notification and quietly not occur. The method exists
-primarily to allow “illegal” intentions like walking through a wall or
-drinking nonexistent water to quietly not happen without the rest of the
+    <p>This method allows child classes of Intention to check whether
+they should happen at all. If this method returns false, the
+intention will self-cancel without sending a notification and
+quietly not occur. The method exists primarily to allow
+&quot;illegal&quot; intentions like walking through a wall or drinking
+nonexistent water to quietly not happen without the rest of the
 simulation responding to them in any way.</p>
 
 
@@ -511,9 +494,7 @@ simulation responding to them in any way.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>If this method returns false, the Intention will quietly self-cancel before
-the offer phase.</p>
+        <div class='inline'><p>If this method returns false, the Intention will quietly self-cancel before the offer phase.</p>
 </div>
       
     </li>
@@ -528,8 +509,7 @@ the offer phase.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -568,11 +548,11 @@ the offer phase.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This method tells the Intention that it has successfully occurred and it
-should modify StateItems accordingly. Normally this will only be called
-after <span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::Intention#allowed? (method)">#allowed?</a></span> and <span class='object_link'><a href="#offer-instance_method" title="Demiurge::Intention#offer (method)">#offer</a></span> have completed, and other items have had a
-chance to modify or cancel this Intention.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method tells the Intention that it has successfully
+occurred and it should modify StateItems accordingly. Normally
+this will only be called after <span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::Intention#allowed? (method)">#allowed?</a></span> and <span class='object_link'><a href="#offer-instance_method" title="Demiurge::Intention#offer (method)">#offer</a></span> have
+completed, and other items have had a chance to modify or cancel
+this Intention.</p>
 
 
   </div>
@@ -588,8 +568,7 @@ chance to modify or cancel this Intention.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -628,10 +607,9 @@ chance to modify or cancel this Intention.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Intentions should send an apply notice when they are successfully applied.
-<span class='object_link'><a href="#apply_notification-instance_method" title="Demiurge::Intention#apply_notification (method)">#apply_notification</a></span> can be overridden by child classes to send more
-specific information.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Intentions should send an apply notice when they are
+successfully applied. <span class='object_link'><a href="#apply_notification-instance_method" title="Demiurge::Intention#apply_notification (method)">#apply_notification</a></span> can be overridden by
+child classes to send more specific information.</p>
 
 
   </div>
@@ -647,8 +625,7 @@ specific information.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -701,8 +678,8 @@ specific information.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This cancels the intention, and gives the reason for the cancellation.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This cancels the intention, and gives the reason for the
+cancellation.</p>
 
 
   </div>
@@ -721,8 +698,7 @@ specific information.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A human-readable reason this action was cancelled</p>
+        <div class='inline'><p>A human-readable reason this action was cancelled</p>
 </div>
       
     </li>
@@ -739,8 +715,7 @@ specific information.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A String-keyed Hash of additional information about the cancellation</p>
+        <div class='inline'><p>A String-keyed Hash of additional information about the cancellation</p>
 </div>
       
     </li>
@@ -756,8 +731,7 @@ specific information.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -806,20 +780,21 @@ specific information.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Most intentions will send a cancellation notice when they are cancelled. By
-default, this will include who cancelled the intention and why.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Most intentions will send a cancellation notice when they are
+cancelled. By default, this will include who cancelled the
+intention and why.</p>
 
-<p>If the cancellation info Hash includes “silent” with a true value, by
-default no notification will be sent out. This is to avoid an avalache of
-notifications for common cancelled intentions that happen nearly every
-tick. Examples include an agent&#39;s action queue being empty so it
-cancels its intention. These are normal operation and nobody is likely to
-need notification every tick that they didn&#39;t ask to do anything so
+<p>If the cancellation info Hash includes &quot;silent&quot; with a true
+value, by default no notification will be sent out. This is to
+avoid an avalache of notifications for common cancelled
+intentions that happen nearly every tick. Examples include an
+agent&#39;s action queue being empty so it cancels its intention.
+These are normal operation and nobody is likely to need
+notification every tick that they didn&#39;t ask to do anything so
 they didn&#39;t.</p>
 
-<p><span class='object_link'><a href="#cancel_notification-instance_method" title="Demiurge::Intention#cancel_notification (method)">#cancel_notification</a></span> can be overridden by child classes for more specific
-cancel notifications.</p>
+<p><span class='object_link'><a href="#cancel_notification-instance_method" title="Demiurge::Intention#cancel_notification (method)">#cancel_notification</a></span> can be overridden by child classes
+for more specific cancel notifications.</p>
 
 
   </div>
@@ -835,8 +810,7 @@ cancel notifications.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -895,8 +869,7 @@ cancel notifications.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This returns whether this intention has been cancelled.</p>
+    <p>This returns whether this intention has been cancelled.</p>
 
 
   </div>
@@ -914,8 +887,7 @@ cancel notifications.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Whether the notification is cancelled.</p>
+        <div class='inline'><p>Whether the notification is cancelled.</p>
 </div>
       
     </li>
@@ -930,8 +902,7 @@ cancel notifications.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -973,17 +944,16 @@ cancel notifications.</p>
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'>
-<p>This method changed signature in 0.2.0 to stop taking an intention ID.</p>
+    <div class='inline'><p>This method changed signature in 0.2.0 to stop taking an intention ID.</p>
 </div>
   </div>
 
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>When an Intention is “offered”, that means appropriate other entities have
-a chance to modify or cancel the intention. For instance, a movement action
-in a room should be offered to that room, which may trigger a special
-action (e.g. trap) or change the destination of the action (e.g. exits,
-slippery ice, spinning spaces.)</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>When an Intention is &quot;offered&quot;, that means appropriate other
+entities have a chance to modify or cancel the intention. For
+instance, a movement action in a room should be offered to that
+room, which may trigger a special action (e.g. trap) or change
+the destination of the action (e.g. exits, slippery ice,
+spinning spaces.)</p>
 
 
   </div>
@@ -1006,8 +976,7 @@ slippery ice, spinning spaces.)</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1053,13 +1022,11 @@ slippery ice, spinning spaces.)</p>
 
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'>
-<p>This method changed signature in 0.2.0 to stop taking an intention ID.</p>
+    <div class='inline'><p>This method changed signature in 0.2.0 to stop taking an intention ID.</p>
 </div>
   </div>
 
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>This is a normally-private part of the Tick cycle. It checks the
+<p class="note returns_void">This method returns an undefined value.</p><p>This is a normally-private part of the Tick cycle. It checks the
 <span class='object_link'><a href="#allowed%3F-instance_method" title="Demiurge::Intention#allowed? (method)">#allowed?</a></span> and <span class='object_link'><a href="#offer-instance_method" title="Demiurge::Intention#offer (method)">#offer</a></span> phases for this one specific Intention.</p>
 
 
@@ -1076,8 +1043,7 @@ slippery ice, spinning spaces.)</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1122,7 +1088,7 @@ slippery ice, spinning spaces.)</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:10 2018 by
+  Generated on Mon Jan 29 15:15:22 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

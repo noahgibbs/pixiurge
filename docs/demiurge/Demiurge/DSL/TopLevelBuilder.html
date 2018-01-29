@@ -101,9 +101,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>This is the top-level DSL Builder class, for parsing the top syntactic
-level of the World Files.</p>
+    <p>This is the top-level DSL Builder class, for parsing the top syntactic level of the World Files.</p>
 
 
   </div>
@@ -119,8 +117,7 @@ level of the World Files.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -134,9 +131,7 @@ level of the World Files.</p>
       <dt id="types-classvariable" class="">@@types =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This is the private structure of type names that are registered with the
-Demiurge World File DSL</p>
+    <p>This is the private structure of type names that are registered with the Demiurge World File DSL</p>
 
 
   </div>
@@ -152,8 +147,7 @@ Demiurge World File DSL</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -197,9 +191,7 @@ Demiurge World File DSL</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>It&#39;s hard to figure out where and how to register types and plugins for
-the World File format.</p>
+    <span class="summary_desc"><div class='inline'><p>It&#39;s hard to figure out where and how to register types and plugins for the World File format.</p>
 </div></span>
   
 </li>
@@ -231,8 +223,7 @@ the World File format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Return the built Engine, but first call the .finished_init callback.</p>
+    <span class="summary_desc"><div class='inline'><p>Return the built Engine, but first call the .finished_init callback.</p>
 </div></span>
   
 </li>
@@ -255,8 +246,7 @@ the World File format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>For now, this just declares an InertStateItem for a given name.</p>
+    <span class="summary_desc"><div class='inline'><p>For now, this just declares an InertStateItem for a given name.</p>
 </div></span>
   
 </li>
@@ -281,8 +271,7 @@ the World File format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Constructor for a new set of World Files and their top-level state.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor for a new set of World Files and their top-level state.</p>
 </div></span>
   
 </li>
@@ -305,8 +294,7 @@ the World File format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Start a new Zone block, using a ZoneBuilder.</p>
+    <span class="summary_desc"><div class='inline'><p>Start a new Zone block, using a ZoneBuilder.</p>
 </div></span>
   
 </li>
@@ -329,8 +317,7 @@ the World File format.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Constructor for a new set of World Files and their top-level state.</p>
+    <p>Constructor for a new set of World Files and their top-level state.</p>
 
 
   </div>
@@ -346,8 +333,7 @@ the World File format.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -395,16 +381,16 @@ the World File format.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>It&#39;s hard to figure out where and how to register types and plugins for
-the World File format. By their nature, they need to be in place before an
-Engine exists, so that&#39;s not the right place. If they didn&#39;t exist
-before engines, we&#39;d somehow need to register them with each engine as
-it was created. Since Engines keep track of that, that&#39;s exactly the
-same problem we&#39;re trying to solve, just for the Engine builder. And it
-seems like “register this plugin with Demiurge World Files” is more of a
-process-global operation than a per-Engine operation. So these wind up in
-awkward spots.</p>
+    <p>It&#39;s hard to figure out where and how to register types and
+plugins for the World File format. By their nature, they need to
+be in place before an Engine exists, so that&#39;s not the right
+place. If they didn&#39;t exist before engines, we&#39;d somehow need to
+register them with each engine as it was created. Since Engines
+keep track of that, that&#39;s exactly the same problem we&#39;re trying
+to solve, just for the Engine builder. And it seems like
+&quot;register this plugin with Demiurge World Files&quot; is more of a
+process-global operation than a per-Engine operation.  So these
+wind up in awkward spots.</p>
 
 
   </div>
@@ -420,8 +406,7 @@ awkward spots.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -474,10 +459,9 @@ awkward spots.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Return the built Engine, but first call the .finished_init callback. This
-will make sure that cached and duplicated data structures are properly
-filled in.</p>
+    <p>Return the built Engine, but first call the .finished_init
+callback. This will make sure that cached and duplicated data
+structures are properly filled in.</p>
 
 
   </div>
@@ -493,8 +477,7 @@ filled in.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -535,13 +518,14 @@ filled in.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>For now, this just declares an InertStateItem for a given name. It
-doesn&#39;t change the behavior at all. It just keeps that item name from
-being “orphaned” state that doesn&#39;t correspond to any state item.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>For now, this just declares an InertStateItem for a given name.
+It doesn&#39;t change the behavior at all. It just keeps that item
+name from being &quot;orphaned&quot; state that doesn&#39;t correspond to any
+state item.</p>
 
-<p>Later, this may be a way to describe how important or transitory state is -
-is it reset like a zone? Completely transient? Cleared per reboot?</p>
+<p>Later, this may be a way to describe how important or transitory
+state is - is it reset like a zone? Completely transient?
+Cleared per reboot?</p>
 
 
   </div>
@@ -560,8 +544,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The item name for scoping the state in the Engine</p>
+        <div class='inline'><p>The item name for scoping the state in the Engine</p>
 </div>
       
     </li>
@@ -578,8 +561,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Options about the InertStateItem</p>
+        <div class='inline'><p>Options about the InertStateItem</p>
 </div>
       
     </li>
@@ -601,8 +583,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The zone this InertStateItem considers itself to be in, defaults to “admin”</p>
+            &mdash; <div class='inline'><p>The zone this InertStateItem considers itself to be in, defaults to &quot;admin&quot;</p>
 </div>
           
         </li>
@@ -614,8 +595,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The initial state Hash</p>
+            &mdash; <div class='inline'><p>The initial state Hash</p>
 </div>
           
         </li>
@@ -627,8 +607,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The object type to instantiate, if not InertStateItem</p>
+            &mdash; <div class='inline'><p>The object type to instantiate, if not InertStateItem</p>
 </div>
           
         </li>
@@ -645,8 +624,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -695,8 +673,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Start a new Zone block, using a ZoneBuilder.</p>
+    <p>Start a new Zone block, using a ZoneBuilder.</p>
 
 
   </div>
@@ -712,8 +689,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -768,7 +744,7 @@ is it reset like a zone? Completely transient? Cleared per reboot?</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:07 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

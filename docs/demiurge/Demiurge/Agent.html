@@ -105,17 +105,17 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Agents correspond roughly to “mobiles” in many games. An agent isn&#39;t
-particularly different from other Demiurge objects, but it&#39;s useful to
-have some helper classes for things like pathfinding. Also, humans expect
-agents to have some finite ability to perform actions over time, so
-it&#39;s nice to regulate how much an agent can get done and how “busy” it
-is. This keeps an AI agent from just queueing up 30 move intentions and
-crossing the room in a single tick, for instance. It does <em>not</em> keep
-that same AI from having an intentional 30-square move that works in a
-single tick, but it slows the rate of actions. Agents get a single “real”
-intention, unlike, say, rooms, which can have lots going on at once.</p>
+    <p>Agents correspond roughly to &quot;mobiles&quot; in many games. An agent
+isn&#39;t particularly different from other Demiurge objects, but it&#39;s
+useful to have some helper classes for things like pathfinding.
+Also, humans expect agents to have some finite ability to perform
+actions over time, so it&#39;s nice to regulate how much an agent can
+get done and how &quot;busy&quot; it is. This keeps an AI agent from just
+queueing up 30 move intentions and crossing the room in a single
+tick, for instance. It does <em>not</em> keep that same AI from having an
+intentional 30-square move that works in a single tick, but it
+slows the rate of actions. Agents get a single &quot;real&quot; intention,
+unlike, say, rooms, which can have lots going on at once.</p>
 
 
   </div>
@@ -131,8 +131,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -186,8 +185,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>An Agent is, indeed, an Agent.</p>
+    <span class="summary_desc"><div class='inline'><p>An Agent is, indeed, an Agent.</p>
 </div></span>
   
 </li>
@@ -210,8 +208,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Any queued actions waiting to occur will be discarded.</p>
+    <span class="summary_desc"><div class='inline'><p>Any queued actions waiting to occur will be discarded.</p>
 </div></span>
   
 </li>
@@ -258,8 +255,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>A new instance of Agent.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of Agent.</p>
 </div></span>
   
 </li>
@@ -282,8 +278,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Calculate the agent&#39;s intentions for the following tick.</p>
+    <span class="summary_desc"><div class='inline'><p>Calculate the agent&#39;s intentions for the following tick.</p>
 </div></span>
   
 </li>
@@ -292,7 +287,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#move_to_position-instance_method" title="#move_to_position (instance method)">#<strong>move_to_position</strong>(pos)  &#x21d2; void </a>
+      <a href="#move_to_position-instance_method" title="#move_to_position (instance method)">#<strong>move_to_position</strong>(pos, options = {})  &#x21d2; void </a>
     
 
     
@@ -306,8 +301,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method will move the agent and notify about that change.</p>
+    <span class="summary_desc"><div class='inline'><p>This method will move the agent and notify about that change.</p>
 </div></span>
   
 </li>
@@ -330,9 +324,7 @@ intention, unlike, say, rooms, which can have lots going on at once.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Queue an action to be run after previous actions are complete, and when the
-agent is no longer busy from taking them.</p>
+    <span class="summary_desc"><div class='inline'><p>Queue an action to be run after previous actions are complete, and when the agent is no longer busy from taking them.</p>
 </div></span>
   
 </li>
@@ -377,8 +369,7 @@ agent is no longer busy from taking them.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns a new instance of Agent</p>
+    <p>Returns a new instance of Agent</p>
 
 
   </div>
@@ -394,8 +385,7 @@ agent is no longer busy from taking them.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -445,8 +435,7 @@ agent is no longer busy from taking them.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>An Agent is, indeed, an Agent.</p>
+    <p>An Agent is, indeed, an Agent.</p>
 
 
   </div>
@@ -464,8 +453,7 @@ agent is no longer busy from taking them.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Return true for Agent and its subclasses.</p>
+        <div class='inline'><p>Return true for Agent and its subclasses.</p>
 </div>
       
     </li>
@@ -480,8 +468,7 @@ agent is no longer busy from taking them.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -520,8 +507,7 @@ agent is no longer busy from taking them.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Any queued actions waiting to occur will be discarded.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Any queued actions waiting to occur will be discarded.</p>
 
 
   </div>
@@ -537,8 +523,7 @@ agent is no longer busy from taking them.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -551,13 +536,13 @@ agent is no longer busy from taking them.</p>
       <pre class="lines">
 
 
-102
-103
-104
-105</pre>
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_intention_queue'>clear_intention_queue</span>
   <span class='id identifier rubyid_state'>state</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>queued_actions</span><span class='tstring_end'>&quot;</span></span>
@@ -594,8 +579,7 @@ agent is no longer busy from taking them.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -638,8 +622,7 @@ agent is no longer busy from taking them.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Calculate the agent&#39;s intentions for the following tick. These
+    <p>Calculate the agent&#39;s intentions for the following tick. These
 Intentions can potentially trigger other Intentions.</p>
 
 
@@ -658,8 +641,7 @@ Intentions can potentially trigger other Intentions.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The Intentions for the (first part of the) following tick.</p>
+        <div class='inline'><p>The Intentions for the (first part of the) following tick.</p>
 </div>
       
     </li>
@@ -674,8 +656,7 @@ Intentions can potentially trigger other Intentions.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -688,13 +669,13 @@ Intentions can potentially trigger other Intentions.</p>
       <pre class="lines">
 
 
-76
-77
-78
-79</pre>
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_intentions_for_next_step'>intentions_for_next_step</span>
   <span class='id identifier rubyid_agent_action'>agent_action</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="AgentInternal.html" title="Demiurge::AgentInternal (module)">AgentInternal</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="AgentInternal/AgentActionIntention.html" title="Demiurge::AgentInternal::AgentActionIntention (class)">AgentActionIntention</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="AgentInternal/AgentActionIntention.html#initialize-instance_method" title="Demiurge::AgentInternal::AgentActionIntention#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='ivar'>@name</span><span class='comma'>,</span> <span class='id identifier rubyid_engine'>engine</span><span class='rparen'>)</span>
@@ -708,7 +689,7 @@ Intentions can potentially trigger other Intentions.</p>
       <div class="method_details ">
   <h3 class="signature " id="move_to_position-instance_method">
   
-    #<strong>move_to_position</strong>(pos)  &#x21d2; <tt>void</tt> 
+    #<strong>move_to_position</strong>(pos, options = {})  &#x21d2; <tt>void</tt> 
   
 
   
@@ -716,13 +697,12 @@ Intentions can potentially trigger other Intentions.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This method will move the agent and notify about that change. It
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method will move the agent and notify about that change. It
 doesn&#39;t use an intention or an agent&#39;s action queue, and it
 doesn&#39;t wait for a tick to happen. It just does it. The method
-<em>does</em> handle exits and generally allows the location to respond.
-But it&#39;s assumed that the offer cycle, if it needs to happen, has
-happened already.</p>
+<em>does</em> handle exits and generally allows the location to
+respond.  But it&#39;s assumed that the offer cycle, if it needs to
+happen, has happened already.</p>
 
 
   </div>
@@ -741,8 +721,24 @@ happened already.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A position string to move to</p>
+        <div class='inline'><p>A position string to move to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>A hash of how to do the movement; Demiurge doesn&#39;t internally use this hash, but your World Files or display library may do so</p>
 </div>
       
     </li>
@@ -758,8 +754,7 @@ happened already.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -772,7 +767,6 @@ happened already.</p>
       <pre class="lines">
 
 
-48
 49
 50
 51
@@ -793,20 +787,33 @@ happened already.</p>
 66
 67
 68
-69</pre>
+69
+70
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 49</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_move_to_position'>move_to_position</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_move_to_position'>move_to_position</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_old_pos'>old_pos</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
   <span class='id identifier rubyid_old_loc'>old_loc</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span>
   <span class='id identifier rubyid_old_zone_name'>old_zone_name</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_zone_name'>zone_name</span>
   <span class='id identifier rubyid_expected_new_loc'>expected_new_loc</span> <span class='op'>=</span> <span class='id identifier rubyid_pos'>pos</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
 
-  <span class='kw'>if</span> <span class='id identifier rubyid_expected_new_loc'>expected_new_loc</span> <span class='op'>==</span> <span class='id identifier rubyid_old_loc'>old_loc</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_old_loc'>old_loc</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errors.html" title="Demiurge::Errors (module)">Errors</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errors/LocationNameNotFoundError.html" title="Demiurge::Errors::LocationNameNotFoundError (class)">LocationNameNotFoundError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Errors/Exception.html#initialize-instance_method" title="Demiurge::Errors::Exception#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Item </span><span class='embexpr_beg'>#{</span><span class='ivar'>@name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> has an old location name (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_old_loc'>old_loc</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>) with no matching location object!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                                                            <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>item_name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@name</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location_name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_old_loc'>old_loc</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>moving_to</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_pos'>pos</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+                                                            <span class='label'>execution_context:</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_execution_context'>execution_context</span><span class='rparen'>)</span><span class='semicolon'>;</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_old_loc'>old_loc</span> <span class='op'>!=</span> <span class='kw'>nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_expected_new_loc'>expected_new_loc</span> <span class='op'>==</span> <span class='id identifier rubyid_old_loc'>old_loc</span>
     <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_item_change_position'>item_change_position</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_old_pos'>old_pos</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
-  <span class='kw'>else</span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_old_loc'>old_loc</span> <span class='op'>!=</span> <span class='kw'>nil</span>
     <span class='comment'># This also handles zone changes.
 </span>    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_location'>location</span><span class='period'>.</span><span class='id identifier rubyid_item_change_location'>item_change_location</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_old_pos'>old_pos</span><span class='comma'>,</span> <span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -817,7 +824,7 @@ happened already.</p>
 
   <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>old_position:</span> <span class='id identifier rubyid_old_pos'>old_pos</span><span class='comma'>,</span> <span class='label'>old_location:</span> <span class='id identifier rubyid_old_loc'>old_loc</span><span class='comma'>,</span> <span class='label'>new_position:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='comma'>,</span> <span class='label'>new_location:</span> <span class='id identifier rubyid_new_loc'>new_loc</span> <span class='rbrace'>}</span><span class='comma'>,</span>
                               <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Demiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#MoveFrom-constant" title="Demiurge::Notifications::MoveFrom (constant)">MoveFrom</a></span></span><span class='comma'>,</span> <span class='label'>zone:</span> <span class='id identifier rubyid_old_zone_name'>old_zone_name</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='id identifier rubyid_old_loc'>old_loc</span><span class='comma'>,</span> <span class='label'>actor:</span> <span class='ivar'>@name</span><span class='comma'>,</span> <span class='label'>include_context:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-  <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>old_position:</span> <span class='id identifier rubyid_old_pos'>old_pos</span><span class='comma'>,</span> <span class='label'>old_location:</span> <span class='id identifier rubyid_old_loc'>old_loc</span><span class='comma'>,</span> <span class='label'>new_position:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='comma'>,</span> <span class='label'>new_location:</span> <span class='id identifier rubyid_new_loc'>new_loc</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_send_notification'>send_notification</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='label'>old_position:</span> <span class='id identifier rubyid_old_pos'>old_pos</span><span class='comma'>,</span> <span class='label'>old_location:</span> <span class='id identifier rubyid_old_loc'>old_loc</span><span class='comma'>,</span> <span class='label'>new_position:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='comma'>,</span> <span class='label'>new_location:</span> <span class='id identifier rubyid_new_loc'>new_loc</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='id identifier rubyid_options'>options</span> <span class='rbrace'>}</span><span class='comma'>,</span>
                               <span class='label'>type:</span> <span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Demiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#MoveTo-constant" title="Demiurge::Notifications::MoveTo (constant)">MoveTo</a></span></span><span class='comma'>,</span> <span class='label'>zone:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_zone_name'>zone_name</span><span class='comma'>,</span> <span class='label'>location:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span><span class='comma'>,</span> <span class='label'>actor:</span> <span class='ivar'>@name</span><span class='comma'>,</span> <span class='label'>include_context:</span> <span class='kw'>true</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -836,11 +843,10 @@ happened already.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Queue an action to be run after previous actions are complete, and when the
-agent is no longer busy from taking them. The action queue entry is
-assigned a unique-per-agent queue number, which is returned from this
-action.</p>
+    <p>Queue an action to be run after previous actions are complete,
+and when the agent is no longer busy from taking them. The
+action queue entry is assigned a unique-per-agent queue number,
+which is returned from this action.</p>
 
 
   </div>
@@ -859,8 +865,7 @@ action.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The name of the action to take when possible</p>
+        <div class='inline'><p>The name of the action to take when possible</p>
 </div>
       
     </li>
@@ -875,8 +880,7 @@ action.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Additional arguments to pass to the action&#39;s code block</p>
+        <div class='inline'><p>Additional arguments to pass to the action&#39;s code block</p>
 </div>
       
     </li>
@@ -894,9 +898,7 @@ action.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Returns the queue number for this action - note that queue numbers are only
-unique per-agent</p>
+        <div class='inline'><p>Returns the queue number for this action - note that queue numbers are only unique per-agent</p>
 </div>
       
     </li>
@@ -924,8 +926,7 @@ unique per-agent</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -938,16 +939,16 @@ unique per-agent</p>
       <pre class="lines">
 
 
-90
-91
-92
-93
-94
-95
-96</pre>
+97
+98
+99
+100
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_queue_action'>queue_action</span><span class='lparen'>(</span><span class='id identifier rubyid_action_name'>action_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errors.html" title="Demiurge::Errors (module)">Errors</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Errors/NoSuchActionError.html" title="Demiurge::Errors::NoSuchActionError (class)">NoSuchActionError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Errors/Exception.html#initialize-instance_method" title="Demiurge::Errors::Exception#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Not an action: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_action_name'>action_name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>action_name</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_action_name'>action_name</span> <span class='rbrace'>}</span><span class='comma'>,</span>
@@ -966,7 +967,7 @@ unique per-agent</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:08 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

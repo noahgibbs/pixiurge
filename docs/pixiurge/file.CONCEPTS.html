@@ -65,15 +65,15 @@ into a nice playable game in many people&#39;s web browsers.</p>
 
 <p>Pixiurge is somewhat inspired by Rails: it tries to be
 batteries-included, opinionated and friendly to new users. And while
-there&#39;s definitely some &quot;Ruby magic&quot; happening, it&#39;s well-documented
-and tries to get out of your way.</p>
+there&#39;s definitely some &quot;Ruby magic&quot; happening, Pixiurge&#39;s magic is
+well-documented and tries to get out of your way.</p>
 
 <p>Inside, Pixiurge has several major components: the simulation, the
 network server and the in-browser front end. Obviously there are many
 smaller components inside these and connecting them. But it&#39;s useful
-for you to think of Pixiurge as a sort of connector between the major
-components. It will also be simpler for you to learn one or two
-components at a time instead of everything all at once.</p>
+for you to think of Pixiurge as a sort of connector between these
+major components. It will also be simpler for you to learn Pixiurge
+one or two components at a time instead of everything all at once.</p>
 
 <p>Pixiurge runs its simulation and displays the results in the browser
 continually. It accepts control information from the browsers and
@@ -92,6 +92,13 @@ sizes.  Pixiurge uses the ManaSource-specific subformat of TMX files
 and Tiled editor data. See <a href="http://mapeditor.org">http://mapeditor.org</a> for more about Tiled.</p>
 
 <h2>Software Architecture</h2>
+
+<p>It&#39;s useful to think of Pixiurge with several &quot;clouds&quot; talking to
+each other - there are things that happen entirely in the front end,
+such as playing &quot;idle&quot; animations for a player or a fountain of
+particles... Which don&#39;t necessarily involve the server at all. But
+sometimes an event goes from the front end to the back end, crossing
+the border between the two components.</p>
 
 <p>The Demiurge engine runs inside a Ruby EventMachine server which uses
 Websockets to talk to the connected browsers. This is usually the same
@@ -363,16 +370,17 @@ going to want to rebuild in order to scale out game simulation - Ruby
 is <em>not</em> going to build you the equivalent of Crysis, though it might
 build the equivalent of the WoW game servers.</p>
 
-<p>So why build in Ruby? For the same reason Rails does. Server-side
-processor time is cheap. If you can trade cheap computer time for
-expensive human time, do that.</p>
+<p>So why build in Ruby? For the same reason you build in
+Rails. Server-side processor time is cheap. If you can trade cheap
+computer time for expensive human time, do that. Not just to save
+money, but to build your initial game quickly and get players.</p>
 
 <p>Why build in Javascript? Because web browsers are everywhere and
 that&#39;s going to stay true. Because by <em>far</em> the widest audience is
 browser apps, and that&#39;s going to be true for a long time. Because I
 don&#39;t much care about building AAA-style high-performance &quot;whoah, the
 graphics&quot; games, but I care a <em>lot</em> about reaching people and talking
-to them.</p>
+to them. I hope you do too.</p>
 
 <h3>Network Round Trips</h3>
 
@@ -436,7 +444,7 @@ instead.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jan 29 15:15:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

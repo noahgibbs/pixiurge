@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Exception: Demiurge::Errors::RetryableError
+  Exception: Demiurge::Errors::LocationNameNotFoundError
   
     &mdash; Demiurge API Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "Demiurge::Errors::RetryableError";
+  pathId = "Demiurge::Errors::LocationNameNotFoundError";
   relpath = '../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../_index.html">Index (R)</a> &raquo;
+    <a href="../../_index.html">Index (L)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Errors.html" title="Demiurge::Errors (module)">Errors</a></span></span>
      &raquo; 
-    <span class="title">RetryableError</span>
+    <span class="title">LocationNameNotFoundError</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Exception: Demiurge::Errors::RetryableError
+      <div id="content"><h1>Exception: Demiurge::Errors::LocationNameNotFoundError
   
   
   
@@ -69,7 +69,7 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="Exception.html" title="Demiurge::Errors::Exception (class)">Exception</a></span></span>
+      <span class="inheritName"><span class='object_link'><a href="BadScriptError.html" title="Demiurge::Errors::BadScriptError (class)">BadScriptError</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
@@ -78,7 +78,9 @@
           
             <li class="next"><span class='object_link'><a href="Exception.html" title="Demiurge::Errors::Exception (class)">Exception</a></span></li>
           
-            <li class="next">Demiurge::Errors::RetryableError</li>
+            <li class="next"><span class='object_link'><a href="BadScriptError.html" title="Demiurge::Errors::BadScriptError (class)">BadScriptError</a></span></li>
+          
+            <li class="next">Demiurge::Errors::LocationNameNotFoundError</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -105,9 +107,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>A RetryableError or its subclasses normally indicate an error that
-is likely to be transient, and where retrying the tick is a
-reasonable attempt at a solution.</p>
+    <p>It&#39;s possible for bad or outdated location names to slip into the
+object state in various ways, such as outdated state files or
+incorrect actions or engine code. Sometimes this can only be
+detected some time later, after the fact. This error indicates our
+belief that this situation has occurred.</p>
 
 
   </div>
@@ -123,7 +127,7 @@ reasonable attempt at a solution.</p>
       
       
         
-        <div class='inline'><p>0.0.1</p>
+        <div class='inline'><p>0.4.0</p>
 </div>
       
     </li>
@@ -143,6 +147,12 @@ reasonable attempt at a solution.</p>
 
 
 
+  
+  
+  
+  
+  
+  
   
   
   

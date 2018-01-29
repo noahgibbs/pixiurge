@@ -238,7 +238,7 @@ player just draws and updates what it is told to.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#hide_all_displayables-instance_method" title="#hide_all_displayables (instance method)">#<strong>hide_all_displayables</strong>  &#x21d2; void </a>
+      <a href="#destroy_all_displayables-instance_method" title="#destroy_all_displayables (instance method)">#<strong>destroy_all_displayables</strong>  &#x21d2; void </a>
     
 
     
@@ -252,7 +252,7 @@ player just draws and updates what it is told to.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Hide all displayables, including foregrounds and backdrops.</p>
+    <span class="summary_desc"><div class='inline'><p>Destroy all displayables, including foregrounds and backdrops.</p>
 </div></span>
   
 </li>
@@ -261,7 +261,7 @@ player just draws and updates what it is told to.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#hide_displayable-instance_method" title="#hide_displayable (instance method)">#<strong>hide_displayable</strong>(item_name)  &#x21d2; void </a>
+      <a href="#destroy_displayable-instance_method" title="#destroy_displayable (instance method)">#<strong>destroy_displayable</strong>(disp)  &#x21d2; void </a>
     
 
     
@@ -275,7 +275,53 @@ player just draws and updates what it is told to.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>This hides a given displayable for this player.</p>
+    <span class="summary_desc"><div class='inline'><p>This destroys a given displayable for this player.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#destroy_displayable_name-instance_method" title="#destroy_displayable_name (instance method)">#<strong>destroy_displayable_name</strong>(item_name)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This destroys a given displayable for this player by name.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#display_init_message-instance_method" title="#display_init_message (instance method)">#<strong>display_init_message</strong>(display_settings)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Send the message to initialize the display.</p>
 </div></span>
   
 </li>
@@ -324,6 +370,52 @@ player just draws and updates what it is told to.</p>
 
   
     <span class="summary_desc"><div class='inline'><p>Send a message to the connected browser for this player.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_displayable-instance_method" title="#move_displayable (instance method)">#<strong>move_displayable</strong>(displayable, old_position, new_position, options = {})  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Move the given Displayable from the old to the new position for the given player.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pan_to_coordinates-instance_method" title="#pan_to_coordinates (instance method)">#<strong>pan_to_coordinates</strong>(x, y, options = {})  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Pan the display to a coordinate offset in the current backdrop.</p>
 </div></span>
   
 </li>
@@ -540,7 +632,7 @@ normally called by the EngineConnector.</p>
 </span>  <span class='ivar'>@pan_center_x</span> <span class='op'>=</span> <span class='int'>0</span>
   <span class='ivar'>@pan_center_y</span> <span class='op'>=</span> <span class='int'>0</span>
 
-  <span class='id identifier rubyid_message'>message</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_INIT-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_INIT (constant)">DISPLAY_INIT</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_display_settings'>display_settings</span> <span class='rparen'>)</span>
+  <span class='id identifier rubyid_display_init_message'>display_init_message</span><span class='lparen'>(</span><span class='id identifier rubyid_display_settings'>display_settings</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -731,9 +823,9 @@ normally called by the EngineConnector.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="hide_all_displayables-instance_method">
+  <h3 class="signature first" id="destroy_all_displayables-instance_method">
   
-    #<strong>hide_all_displayables</strong>  &#x21d2; <tt>void</tt> 
+    #<strong>destroy_all_displayables</strong>  &#x21d2; <tt>void</tt> 
   
 
   
@@ -741,7 +833,7 @@ normally called by the EngineConnector.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Hide all displayables, including foregrounds and backdrops.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Destroy all displayables, including foregrounds and backdrops.</p>
 
 
   </div>
@@ -770,25 +862,25 @@ normally called by the EngineConnector.</p>
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+147
+148
+149
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 147</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_hide_all_displayables'>hide_all_displayables</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_destroy_all_displayables'>destroy_all_displayables</span>
   <span class='ivar'>@currently_shown</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_item_name'>item_name</span><span class='comma'>,</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='op'>|</span>
-    <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_hide_from_player'>hide_from_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_destroy_for_player'>destroy_for_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
   <span class='comment'># Let the front end know: hints, preloads and whatnot... Clear it all.
-</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_HIDE_ALL-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_HIDE_ALL (constant)">DISPLAY_HIDE_ALL</a></span></span>
+</span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_DESTROY_ALL-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL (constant)">DISPLAY_DESTROY_ALL</a></span></span>
   <span class='ivar'>@currently_shown</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
@@ -798,9 +890,9 @@ normally called by the EngineConnector.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="hide_displayable-instance_method">
+  <h3 class="signature " id="destroy_displayable-instance_method">
   
-    #<strong>hide_displayable</strong>(item_name)  &#x21d2; <tt>void</tt> 
+    #<strong>destroy_displayable</strong>(disp)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -808,7 +900,87 @@ normally called by the EngineConnector.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>This hides a given displayable for this player</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This destroys a given displayable for this player</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>disp</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Displayable.html" title="Pixiurge::Displayable (class)">Pixiurge::Displayable</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The displayable object to destroy, if it&#39;s currently shown</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+124
+125
+126
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 124</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_destroy_displayable'>destroy_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_disp'>disp</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_disp'>disp</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_disp'>disp</span><span class='period'>.</span><span class='id identifier rubyid_destroy_for_player'>destroy_for_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='ivar'>@currently_shown</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_disp'>disp</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="destroy_displayable_name-instance_method">
+  
+    #<strong>destroy_displayable_name</strong>(item_name)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This destroys a given displayable for this player by name</p>
 
 
   </div>
@@ -827,7 +999,7 @@ normally called by the EngineConnector.</p>
       
       
         &mdash;
-        <div class='inline'><p>The name of the item to hide</p>
+        <div class='inline'><p>The name of the item to destroy</p>
 </div>
       
     </li>
@@ -856,20 +1028,99 @@ normally called by the EngineConnector.</p>
       <pre class="lines">
 
 
-111
-112
-113
-114
-115
-116</pre>
+136
+137
+138
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 136</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_hide_displayable'>hide_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_destroy_displayable_name'>destroy_displayable_name</span><span class='lparen'>(</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rbracket'>]</span>
-  <span class='ivar'>@currently_shown</span><span class='period'>.</span><span class='id identifier rubyid_hide_from_player'>hide_from_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_destroy_for_player'>destroy_for_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
   <span class='ivar'>@currently_shown</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="display_init_message-instance_method">
+  
+    #<strong>display_init_message</strong>(display_settings)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Send the message to initialize the display. If you want to send
+additional settings or customize existing settings like display
+width and height per player, this is a pretty good place to do
+that. This is normally called by the Player constructor.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>display_settings</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The display settings to send, if unmodified</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_display_init_message'>display_init_message</span><span class='lparen'>(</span><span class='id identifier rubyid_display_settings'>display_settings</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_message'>message</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_INIT-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_INIT (constant)">DISPLAY_INIT</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_display_settings'>display_settings</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -953,22 +1204,263 @@ Pixiurge app.</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63</pre>
+70
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message'>message</span><span class='lparen'>(</span><span class='id identifier rubyid_msg_name'>msg_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_out_str'>out_str</span> <span class='op'>=</span> <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span> <span class='lbracket'>[</span> <span class='id identifier rubyid_msg_name'>msg_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span> <span class='rbracket'>]</span>
   <span class='id identifier rubyid_record_traffic'>record_traffic</span> <span class='op'>=</span> <span class='ivar'>@engine_connector</span><span class='period'>.</span><span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_record_traffic'>record_traffic</span>
   <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='ivar'>@engine_connector</span><span class='period'>.</span><span class='id identifier rubyid_app'>app</span><span class='period'>.</span><span class='id identifier rubyid_outgoing_traffic_logfile'>outgoing_traffic_logfile</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span> <span class='id identifier rubyid_out_str'>out_str</span> <span class='op'>+</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_record_traffic'>record_traffic</span>
   <span class='ivar'>@websocket</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span> <span class='id identifier rubyid_out_str'>out_str</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_displayable-instance_method">
+  
+    #<strong>move_displayable</strong>(displayable, old_position, new_position, options = {})  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Move the given Displayable from the old to the new position for
+the given player. Options can be supplied to change the nature of
+the movement in Displayable-specific ways. For instance, there may
+be a difference between teleporting, swimming, walking and
+running, or it may be possible to supply a speed or a duration.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>displayable</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Displayable.html" title="Pixiurge::Displayable (class)">Pixiurge::Displayable</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The currently-shown Displayable to be moved</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>old_position</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The old position string within the same location</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>new_position</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new position string within the same location</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash{String=&gt;String}</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>JSON-serializable hash of options to pass to the Displayable</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+169
+170
+171
+172
+173
+174</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 169</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_displayable'>move_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_move_for_player'>move_for_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pan_to_coordinates-instance_method">
+  
+    #<strong>pan_to_coordinates</strong>(x, y, options = {})  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>Pan the display to a coordinate offset in the current backdrop.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new x block coordinate for the center of the display</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The new y block coordinate for the center of the display</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Options to send to the front end for handling this pan</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+198
+199
+200
+201
+202</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 198</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_pan_to_coordinates'>pan_to_coordinates</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_loc'>loc</span> <span class='op'>=</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_location_displayable'>location_displayable</span>
+  <span class='id identifier rubyid_send_instant_pan_to_pixel_offset'>send_instant_pan_to_pixel_offset</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span> <span class='op'>*</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_block_width'>block_width</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>*</span> <span class='id identifier rubyid_loc'>loc</span><span class='period'>.</span><span class='id identifier rubyid_block_height'>block_height</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1026,6 +1518,23 @@ Pixiurge app.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Options to send to the front end for handling this pan</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Since:</p>
@@ -1050,22 +1559,22 @@ Pixiurge app.</p>
       <pre class="lines">
 
 
-139
-140
-141
-142
-143
-144
-145</pre>
+183
+184
+185
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_send_instant_pan_to_pixel_offset'>send_instant_pan_to_pixel_offset</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>==</span> <span class='ivar'>@pan_center_x</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>==</span> <span class='ivar'>@pan_center_y</span>
   <span class='ivar'>@pan_center_x</span> <span class='op'>=</span> <span class='id identifier rubyid_x'>x</span>
   <span class='ivar'>@pan_center_y</span> <span class='op'>=</span> <span class='id identifier rubyid_y'>y</span>
-  <span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'>PAN_TO_PIXEL</span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
+  <span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_PAN_TO_PIXEL-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_PAN_TO_PIXEL (constant)">DISPLAY_PAN_TO_PIXEL</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1085,7 +1594,7 @@ Pixiurge app.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Show this Displayable to the player and track that it has been
-shown. A later <span class='object_link'><a href="#hide_displayable-instance_method" title="Pixiurge::Player#hide_displayable (method)">#hide_displayable</a></span> or <span class='object_link'><a href="#hide_all_displayables-instance_method" title="Pixiurge::Player#hide_all_displayables (method)">#hide_all_displayables</a></span>
+shown. A later <span class='object_link'><a href="#destroy_displayable-instance_method" title="Pixiurge::Player#destroy_displayable (method)">#destroy_displayable</a></span> or <span class='object_link'><a href="#destroy_all_displayables-instance_method" title="Pixiurge::Player#destroy_all_displayables (method)">#destroy_all_displayables</a></span>
 call will normally be needed eventually to cause the displayable
 to disappear and be unloaded from the browser - this will usually
 happen automatically if the player changes locations in such a way
@@ -1137,14 +1646,14 @@ as to lose previous visibility.</p>
       <pre class="lines">
 
 
-75
-76
-77
-78
-79</pre>
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_displayable'>show_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_show_to_player'>show_to_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
@@ -1161,7 +1670,7 @@ as to lose previous visibility.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jan 29 15:15:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

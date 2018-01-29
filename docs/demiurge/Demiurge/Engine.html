@@ -108,14 +108,14 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>The Engine class encapsulates one “world” of simulation. This includes
-state and code for all items, subscriptions to various events and the
-ability to reload state or code at a later point. It is entirely possible
-to have multiple Engine objects containing different objects and
-subscriptions which are unrelated to each other. If Engines share
-references in common, that sharing is ordinarily a bug. Currently only
-registered <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (module)">DSL</a></span> Object Types should be shared.</p>
+    <p>The Engine class encapsulates one &quot;world&quot; of simulation. This
+includes state and code for all items, subscriptions to various
+events and the ability to reload state or code at a later point.
+It is entirely possible to have multiple Engine objects containing
+different objects and subscriptions which are unrelated to each
+other. If Engines share references in common, that sharing is
+ordinarily a bug. Currently only registered <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (module)">DSL</a></span> Object
+Types should be shared.</p>
 
 
   </div>
@@ -131,8 +131,7 @@ registered <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (mo
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -168,8 +167,7 @@ registered <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (mo
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The current execution context for notifications and logging.</p>
+    <span class="summary_desc"><div class='inline'><p>The current execution context for notifications and logging.</p>
 </div></span>
   
 </li>
@@ -197,9 +195,7 @@ registered <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (mo
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The number of ticks that have occurred since the beginning of this
-Engine&#39;s history.</p>
+    <span class="summary_desc"><div class='inline'><p>The number of ticks that have occurred since the beginning of this Engine&#39;s history.</p>
 </div></span>
   
 </li>
@@ -235,8 +231,7 @@ Engine&#39;s history.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Fetch an action for an ActionItem that&#39;s stored in the engine.</p>
+    <span class="summary_desc"><div class='inline'><p>Fetch an action for an ActionItem that&#39;s stored in the engine.</p>
 </div></span>
   
 </li>
@@ -259,8 +254,7 @@ Engine&#39;s history.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Fetch actions for an ActionItem that&#39;s stored in the engine.</p>
+    <span class="summary_desc"><div class='inline'><p>Fetch actions for an ActionItem that&#39;s stored in the engine.</p>
 </div></span>
   
 </li>
@@ -283,9 +277,7 @@ Engine&#39;s history.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Send a warning that something unfortunate but not continuity-threatening
-has occurred.</p>
+    <span class="summary_desc"><div class='inline'><p>Send a warning that something unfortunate but not continuity-threatening has occurred.</p>
 </div></span>
   
 </li>
@@ -308,9 +300,7 @@ has occurred.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Perform all necessary operations and phases for one “tick” of virtual time
-to pass in the Engine.</p>
+    <span class="summary_desc"><div class='inline'><p>Perform all necessary operations and phases for one &quot;tick&quot; of virtual time to pass in the Engine.</p>
 </div></span>
   
 </li>
@@ -333,8 +323,7 @@ to pass in the Engine.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Fetch all actions for all items in an internal format.</p>
+    <span class="summary_desc"><div class='inline'><p>Fetch all actions for all items in an internal format.</p>
 </div></span>
   
 </li>
@@ -357,8 +346,7 @@ to pass in the Engine.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get an array of all registered names for all items.</p>
+    <span class="summary_desc"><div class='inline'><p>Get an array of all registered names for all items.</p>
 </div></span>
   
 </li>
@@ -381,9 +369,7 @@ to pass in the Engine.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The “finished_init” callback on Demiurge items exists to allow items to
-finalize their structure relative to other items.</p>
+    <span class="summary_desc"><div class='inline'><p>The &quot;finished_init&quot; callback on Demiurge items exists to allow items to finalize their structure relative to other items.</p>
 </div></span>
   
 </li>
@@ -406,9 +392,7 @@ finalize their structure relative to other items.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Send out all pending <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>s in the <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>
-queue.</p>
+    <span class="summary_desc"><div class='inline'><p>Send out all pending <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>s in the <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span> queue.</p>
 </div></span>
   
 </li>
@@ -431,8 +415,7 @@ queue.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Send out any pending notifications that have been queued.</p>
+    <span class="summary_desc"><div class='inline'><p>Send out any pending notifications that have been queued.</p>
 </div></span>
   
 </li>
@@ -455,9 +438,7 @@ queue.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get an intention ID which is guaranteed to never be returned by this method
-again.</p>
+    <span class="summary_desc"><div class='inline'><p>Get an intention ID which is guaranteed to never be returned by this method again.</p>
 </div></span>
   
 </li>
@@ -480,9 +461,7 @@ again.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get a StateItem type that is registered with this Engine, using the
-registered name for that type.</p>
+    <span class="summary_desc"><div class='inline'><p>Get a StateItem type that is registered with this Engine, using the registered name for that type.</p>
 </div></span>
   
 </li>
@@ -507,8 +486,7 @@ registered name for that type.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This is the constructor for a new Engine object.</p>
+    <span class="summary_desc"><div class='inline'><p>This is the constructor for a new Engine object.</p>
 </div></span>
   
 </li>
@@ -531,10 +509,7 @@ registered name for that type.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method creates a new StateItem based on an existing parent StateItem,
-and will retain some level of linkage to that parent StateItem afterward as
-well.</p>
+    <span class="summary_desc"><div class='inline'><p>This method creates a new StateItem based on an existing parent StateItem, and will retain some level of linkage to that parent StateItem afterward as well.</p>
 </div></span>
   
 </li>
@@ -557,8 +532,7 @@ well.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get a StateItem by its registered unique name.</p>
+    <span class="summary_desc"><div class='inline'><p>Get a StateItem by its registered unique name.</p>
 </div></span>
   
 </li>
@@ -581,9 +555,7 @@ well.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This loads the Engine&#39;s state from structured <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span>
-state that has been serialized.</p>
+    <span class="summary_desc"><div class='inline'><p>This loads the Engine&#39;s state from structured <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> state that has been serialized.</p>
 </div></span>
   
 </li>
@@ -606,9 +578,7 @@ state that has been serialized.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Calculate the intentions for the next round of the Intention phase of a
-tick.</p>
+    <span class="summary_desc"><div class='inline'><p>Calculate the intentions for the next round of the Intention phase of a tick.</p>
 </div></span>
   
 </li>
@@ -631,9 +601,7 @@ tick.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Certain context can be important to notifications, errors, logging and
-other admin-available information.</p>
+    <span class="summary_desc"><div class='inline'><p>Certain context can be important to notifications, errors, logging and other admin-available information.</p>
 </div></span>
   
 </li>
@@ -656,8 +624,7 @@ other admin-available information.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Add an intention to the Engine&#39;s Intention queue.</p>
+    <span class="summary_desc"><div class='inline'><p>Add an intention to the Engine&#39;s Intention queue.</p>
 </div></span>
   
 </li>
@@ -680,8 +647,7 @@ other admin-available information.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Queue all Intentions for all registered items for the current tick.</p>
+    <span class="summary_desc"><div class='inline'><p>Queue all Intentions for all registered items for the current tick.</p>
 </div></span>
   
 </li>
@@ -704,9 +670,7 @@ other admin-available information.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>StateItems are transient and can be created, recreated or destroyed without
-warning.</p>
+    <span class="summary_desc"><div class='inline'><p>StateItems are transient and can be created, recreated or destroyed without warning.</p>
 </div></span>
   
 </li>
@@ -729,8 +693,7 @@ warning.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Register a new StateItem.</p>
+    <span class="summary_desc"><div class='inline'><p>Register a new StateItem.</p>
 </div></span>
   
 </li>
@@ -753,9 +716,7 @@ warning.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Register a new StateItem type with a name that will be used in structured
-<span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> dumps.</p>
+    <span class="summary_desc"><div class='inline'><p>Register a new StateItem type with a name that will be used in structured <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> dumps.</p>
 </div></span>
   
 </li>
@@ -778,8 +739,7 @@ warning.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method loads new World File code into an existing engine.</p>
+    <span class="summary_desc"><div class='inline'><p>This method loads new World File code into an existing engine.</p>
 </div></span>
   
 </li>
@@ -802,8 +762,7 @@ warning.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method loads new World File code into an existing engine.</p>
+    <span class="summary_desc"><div class='inline'><p>This method loads new World File code into an existing engine.</p>
 </div></span>
   
 </li>
@@ -826,9 +785,7 @@ warning.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Replace actions for an item with other, potentially quite different,
-actions.</p>
+    <span class="summary_desc"><div class='inline'><p>Replace actions for an item with other, potentially quite different, actions.</p>
 </div></span>
   
 </li>
@@ -851,8 +808,7 @@ actions.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Queue a notification to be sent later by the engine.</p>
+    <span class="summary_desc"><div class='inline'><p>Queue a notification to be sent later by the engine.</p>
 </div></span>
   
 </li>
@@ -875,9 +831,7 @@ actions.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method dumps the Engine&#39;s state in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span>
-structured array format.</p>
+    <span class="summary_desc"><div class='inline'><p>This method dumps the Engine&#39;s state in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured array format.</p>
 </div></span>
   
 </li>
@@ -900,8 +854,7 @@ structured array format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method &#39;subscribes&#39; a block to various types of notifications.</p>
+    <span class="summary_desc"><div class='inline'><p>This method &#39;subscribes&#39; a block to various types of notifications.</p>
 </div></span>
   
 </li>
@@ -924,8 +877,7 @@ structured array format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method unregisters a StateItem from the engine.</p>
+    <span class="summary_desc"><div class='inline'><p>This method unregisters a StateItem from the engine.</p>
 </div></span>
   
 </li>
@@ -948,9 +900,7 @@ structured array format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>When you subscribe to a notification with <span class='object_link'><a href="#subscribe_to_notifications-instance_method" title="Demiurge::Engine#subscribe_to_notifications (method)">#subscribe_to_notifications</a></span>,
-you may optionally pass a non-nil tracker with the subscription.</p>
+    <span class="summary_desc"><div class='inline'><p>When you subscribe to a notification with <span class='object_link'><a href="#subscribe_to_notifications-instance_method" title="Demiurge::Engine#subscribe_to_notifications (method)">#subscribe_to_notifications</a></span>, you may optionally pass a non-nil tracker with the subscription.</p>
 </div></span>
   
 </li>
@@ -973,8 +923,7 @@ you may optionally pass a non-nil tracker with the subscription.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Determine whether the item name is basically allowable.</p>
+    <span class="summary_desc"><div class='inline'><p>Determine whether the item name is basically allowable.</p>
 </div></span>
   
 </li>
@@ -997,8 +946,7 @@ you may optionally pass a non-nil tracker with the subscription.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get an Array of StateItems that are top-level <span class='object_link'><a href="Zone.html" title="Demiurge::Zone (class)">Zone</a></span> items.</p>
+    <span class="summary_desc"><div class='inline'><p>Get an Array of StateItems that are top-level <span class='object_link'><a href="Zone.html" title="Demiurge::Zone (class)">Zone</a></span> items.</p>
 </div></span>
   
 </li>
@@ -1032,10 +980,9 @@ you may optionally pass a non-nil tracker with the subscription.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This is the constructor for a new Engine object. Most frequently this will
-be called by <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (module)">DSL</a></span> or another external source which will also
-supply item types and initial state.</p>
+    <p>This is the constructor for a new Engine object. Most frequently
+this will be called by <span class='object_link'><a href="DSL.html" title="Demiurge::DSL (module)">DSL</a></span> or another external
+source which will also supply item types and initial state.</p>
 
 
   </div>
@@ -1054,9 +1001,7 @@ supply item types and initial state.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A name/value hash of item types supported by this engine&#39;s
-serialization.</p>
+        <div class='inline'><p>A name/value hash of item types supported by this engine&#39;s serialization.</p>
 </div>
       
     </li>
@@ -1071,9 +1016,7 @@ serialization.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>An array of serialized Demiurge items in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured
-array format.</p>
+        <div class='inline'><p>An array of serialized Demiurge items in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured array format.</p>
 </div>
       
     </li>
@@ -1089,8 +1032,7 @@ array format.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1178,8 +1120,7 @@ array format.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns The current execution context for notifications and logging.</p>
+    <p>Returns The current execution context for notifications and logging.</p>
 
 
   </div>
@@ -1197,8 +1138,7 @@ array format.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The current execution context for notifications and logging.</p>
+        <div class='inline'><p>The current execution context for notifications and logging.</p>
 </div>
       
     </li>
@@ -1213,8 +1153,7 @@ array format.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -1255,9 +1194,7 @@ array format.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns The number of ticks that have occurred since the beginning of this
-Engine&#39;s history.</p>
+    <p>Returns The number of ticks that have occurred since the beginning of this Engine&#39;s history.</p>
 
 
   </div>
@@ -1275,9 +1212,7 @@ Engine&#39;s history.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The number of ticks that have occurred since the beginning of this
-Engine&#39;s history.</p>
+        <div class='inline'><p>The number of ticks that have occurred since the beginning of this Engine&#39;s history.</p>
 </div>
       
     </li>
@@ -1292,8 +1227,7 @@ Engine&#39;s history.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1343,7 +1277,6 @@ Engine&#39;s history.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Fetch an action for an ActionItem that&#39;s stored in the engine.</p>
 
 
@@ -1360,8 +1293,7 @@ Engine&#39;s history.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1404,7 +1336,6 @@ Engine&#39;s history.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Fetch actions for an ActionItem that&#39;s stored in the engine.</p>
 
 
@@ -1421,8 +1352,7 @@ Engine&#39;s history.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1461,13 +1391,13 @@ Engine&#39;s history.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Send a warning that something unfortunate but not continuity-threatening
-has occurred. The problem isn&#39;t bad enough to warrant raising an
-exception, but it&#39;s bad enough that we should collect data about the
-problem. The warning normally indicates a problem in user-supplied code,
-current state, or the Demiurge gem itself. These warnings can be subscribed
-to with the notification type <span class='object_link'><a href="Notifications.html#AdminWarning-constant" title="Demiurge::Notifications::AdminWarning (constant)">Notifications::AdminWarning</a></span>.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Send a warning that something unfortunate but not
+continuity-threatening has occurred. The problem isn&#39;t bad
+enough to warrant raising an exception, but it&#39;s bad enough that
+we should collect data about the problem. The warning normally
+indicates a problem in user-supplied code, current state, or the
+Demiurge gem itself. These warnings can be subscribed to with
+the notification type <span class='object_link'><a href="Notifications.html#AdminWarning-constant" title="Demiurge::Notifications::AdminWarning (constant)">Notifications::AdminWarning</a></span>.</p>
 
 
   </div>
@@ -1486,8 +1416,7 @@ to with the notification type <span class='object_link'><a href="Notifications.h
       
       
         &mdash;
-        <div class='inline'>
-<p>A user-readable log message indicating the problem that occurred</p>
+        <div class='inline'><p>A user-readable log message indicating the problem that occurred</p>
 </div>
       
     </li>
@@ -1504,9 +1433,7 @@ to with the notification type <span class='object_link'><a href="Notifications.h
       
       
         &mdash;
-        <div class='inline'>
-<p>A hash of additional fields that indicate the nature of the problem being
-reported</p>
+        <div class='inline'><p>A hash of additional fields that indicate the nature of the problem being reported</p>
 </div>
       
     </li>
@@ -1528,8 +1455,7 @@ reported</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The name of the item causing the problem</p>
+            &mdash; <div class='inline'><p>The name of the item causing the problem</p>
 </div>
           
         </li>
@@ -1541,8 +1467,7 @@ reported</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The name of the zone where the problem is located, if known</p>
+            &mdash; <div class='inline'><p>The name of the zone where the problem is located, if known</p>
 </div>
           
         </li>
@@ -1559,8 +1484,7 @@ reported</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1601,9 +1525,8 @@ reported</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Perform all necessary operations and phases for one “tick” of virtual time
-to pass in the Engine.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Perform all necessary operations and phases for one &quot;tick&quot; of
+virtual time to pass in the Engine.</p>
 
 
   </div>
@@ -1619,8 +1542,7 @@ to pass in the Engine.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1671,7 +1593,6 @@ to pass in the Engine.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Fetch all actions for all items in an internal format.</p>
 
 
@@ -1688,8 +1609,7 @@ to pass in the Engine.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1728,8 +1648,7 @@ to pass in the Engine.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get an array of all registered names for all items.</p>
+    <p>Get an array of all registered names for all items.</p>
 
 
   </div>
@@ -1747,8 +1666,7 @@ to pass in the Engine.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>All registered item names for this <span class='object_link'><a href="" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></p>
+        <div class='inline'><p>All registered item names for this <span class='object_link'><a href="" title="Demiurge::Engine (class)">Demiurge::Engine</a></span></p>
 </div>
       
     </li>
@@ -1763,8 +1681,7 @@ to pass in the Engine.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1803,18 +1720,18 @@ to pass in the Engine.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>The “finished_init” callback on Demiurge items exists to allow items to
-finalize their structure relative to other items. For instance, containers
-can ensure that their list of contents is identical to the set of items
-that list the container as their location. This cannot be done until the
-container is certain that all items have been added to the engine. The
-#finished_init engine method calls StateItem#finished_init on
-any items that respond to that callback. Normally
-<span class='object_link'><a href="#finished_init-instance_method" title="Demiurge::Engine#finished_init (method)">#finished_init</a></span> should be called when a new Engine is
-created, but not when restoring one from a state dump. This method should
-not be called multiple times, and the Engine will try not to allow multiple
-calls.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>The &quot;finished_init&quot; callback on Demiurge items exists to allow
+items to finalize their structure relative to other items. For
+instance, containers can ensure that their list of contents is
+identical to the set of items that list the container as their
+location.  This cannot be done until the container is certain
+that all items have been added to the engine. The #finished_init
+engine method calls StateItem#finished_init on any
+items that respond to that callback. Normally
+<span class='object_link'><a href="#finished_init-instance_method" title="Demiurge::Engine#finished_init (method)">#finished_init</a></span> should be called when a new
+Engine is created, but not when restoring one from a state
+dump. This method should not be called multiple times, and the
+Engine will try not to allow multiple calls.</p>
 
 
   </div>
@@ -1830,8 +1747,7 @@ calls.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1874,11 +1790,10 @@ calls.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Send out all pending <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>s in the <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>
-queue. This will ordinarily happen at least once per tick in any case.
-Calling this method outside the Engine&#39;s Intention phase of a tick may
-cause unexpected results.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Send out all pending <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>s in the
+<span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span> queue. This will ordinarily happen at
+least once per tick in any case. Calling this method outside the
+Engine&#39;s Intention phase of a tick may cause unexpected results.</p>
 
 
   </div>
@@ -1894,8 +1809,7 @@ cause unexpected results.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1986,12 +1900,12 @@ cause unexpected results.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Send out any pending notifications that have been queued. This will
-normally happen at least once per tick in any case, but may happen more
-often. If this occurs during the Engine&#39;s tick, certain ordering issues
-may occur. Normally it&#39;s best to let the Engine call this method during
-the tick, and to only call it manually when no tick is occurring.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Send out any pending notifications that have been queued. This
+will normally happen at least once per tick in any case, but may
+happen more often.  If this occurs during the Engine&#39;s tick,
+certain ordering issues may occur. Normally it&#39;s best to let the
+Engine call this method during the tick, and to only call it
+manually when no tick is occurring.</p>
 
 
   </div>
@@ -2007,8 +1921,7 @@ the tick, and to only call it manually when no tick is occurring.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2101,10 +2014,9 @@ the tick, and to only call it manually when no tick is occurring.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
-<p>Get an intention ID which is guaranteed to never be returned by this method
-again. It&#39;s not important that it be consecutive or otherwise special,
-just that it be unique.</p>
+<p>Get an intention ID which is guaranteed to never be returned by
+this method again. It&#39;s not important that it be consecutive or
+otherwise special, just that it be unique.</p>
 
 
   </div>
@@ -2122,8 +2034,7 @@ just that it be unique.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The new intention ID</p>
+        <div class='inline'><p>The new intention ID</p>
 </div>
       
     </li>
@@ -2138,8 +2049,7 @@ just that it be unique.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -2180,9 +2090,7 @@ just that it be unique.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get a StateItem type that is registered with this Engine, using the
-registered name for that type.</p>
+    <p>Get a StateItem type that is registered with this Engine, using the registered name for that type.</p>
 
 
   </div>
@@ -2201,8 +2109,7 @@ registered name for that type.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The registered type name for this class object</p>
+        <div class='inline'><p>The registered type name for this class object</p>
 </div>
       
     </li>
@@ -2220,8 +2127,7 @@ registered name for that type.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A StateItem Class object</p>
+        <div class='inline'><p>A StateItem Class object</p>
 </div>
       
     </li>
@@ -2236,8 +2142,7 @@ registered name for that type.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2278,20 +2183,19 @@ registered name for that type.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This method creates a new StateItem based on an existing parent StateItem,
-and will retain some level of linkage to that parent StateItem afterward as
-well. This provides a simple form of action inheritance and data
-inheritance.</p>
+    <p>This method creates a new StateItem based on an existing parent
+StateItem, and will retain some level of linkage to that parent
+StateItem afterward as well. This provides a simple form of
+action inheritance and data inheritance.</p>
 
-<p>The new child item will begin with a copy of the parent&#39;s state which
-can then be overridden. There will not be a longer-term link to the
-parent&#39;s state, and any later state changes in the parent or child will
-not affect each other.</p>
+<p>The new child item will begin with a copy of the parent&#39;s state
+which can then be overridden. There will not be a longer-term
+link to the parent&#39;s state, and any later state changes in the
+parent or child will not affect each other.</p>
 
 <p>There <em>will</em> be a longer-term link to the parent&#39;s actions, and
-any action not overridden in the child item will fall back to the
-parent&#39;s action of the same name.</p>
+any action not overridden in the child item will fall back to
+the parent&#39;s action of the same name.</p>
 
 
   </div>
@@ -2310,8 +2214,7 @@ parent&#39;s action of the same name.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The new item name to register with the engine</p>
+        <div class='inline'><p>The new item name to register with the engine</p>
 </div>
       
     </li>
@@ -2326,8 +2229,7 @@ parent&#39;s action of the same name.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The parent StateItem</p>
+        <div class='inline'><p>The parent StateItem</p>
 </div>
       
     </li>
@@ -2344,8 +2246,7 @@ parent&#39;s action of the same name.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Additional state data for the child</p>
+        <div class='inline'><p>Additional state data for the child</p>
 </div>
       
     </li>
@@ -2363,8 +2264,7 @@ parent&#39;s action of the same name.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The newly-created StateItem which has been registered with the engine</p>
+        <div class='inline'><p>The newly-created StateItem which has been registered with the engine</p>
 </div>
       
     </li>
@@ -2379,8 +2279,7 @@ parent&#39;s action of the same name.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2453,8 +2352,7 @@ parent&#39;s action of the same name.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get a StateItem by its registered unique name.</p>
+    <p>Get a StateItem by its registered unique name.</p>
 
 
   </div>
@@ -2473,8 +2371,7 @@ parent&#39;s action of the same name.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The name registered with the <span class='object_link'><a href="" title="Demiurge::Engine (class)">Demiurge::Engine</a></span> for this item</p>
+        <div class='inline'><p>The name registered with the <span class='object_link'><a href="" title="Demiurge::Engine (class)">Demiurge::Engine</a></span> for this item</p>
 </div>
       
     </li>
@@ -2492,8 +2389,7 @@ parent&#39;s action of the same name.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The StateItem corresponding to this name or nil</p>
+        <div class='inline'><p>The StateItem corresponding to this name or nil</p>
 </div>
       
     </li>
@@ -2508,8 +2404,7 @@ parent&#39;s action of the same name.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2548,20 +2443,20 @@ parent&#39;s action of the same name.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This loads the Engine&#39;s state from structured <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span>
-state that has been serialized. This method handles reinitializing,
-signaling and whatnot. Use this method to restore state from a JSON dump or
-a hypothetical scenario that didn&#39;t work out.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This loads the Engine&#39;s state from structured
+<span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> state that has been serialized. This
+method handles reinitializing, signaling and whatnot. Use this
+method to restore state from a JSON dump or a hypothetical
+scenario that didn&#39;t work out.</p>
 
-<p>Note that this does <em>not</em> update code from Ruby files or otherwise
-handle any changes in the World Files. For that, use
+<p>Note that this does <em>not</em> update code from Ruby files or
+otherwise handle any changes in the World Files. For that, use
 <span class='object_link'><a href="#reload_from_dsl_files-instance_method" title="Demiurge::Engine#reload_from_dsl_files (method)">#reload_from_dsl_files</a></span> or <span class='object_link'><a href="#reload_from_dsl_text-instance_method" title="Demiurge::Engine#reload_from_dsl_text (method)">#reload_from_dsl_text</a></span>.</p>
 
-<p>You can only reload state or World Files for a running engine, never both.
-If you want to reload <em>both</em>, make a new engine and use it, or
-reload the two in an order of your choice. Keep in mind that some World
-File changes can rename state items.</p>
+<p>You can only reload state or World Files for a running engine,
+never both. If you want to reload <em>both</em>, make a new engine and
+use it, or reload the two in an order of your choice. Keep in
+mind that some World File changes can rename state items.</p>
 
 
   </div>
@@ -2580,8 +2475,7 @@ File changes can rename state items.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p><span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured state in the form of Ruby objects</p>
+        <div class='inline'><p><span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured state in the form of Ruby objects</p>
 </div>
       
     </li>
@@ -2610,8 +2504,7 @@ File changes can rename state items.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2658,11 +2551,11 @@ File changes can rename state items.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Calculate the intentions for the next round of the Intention phase of a
-tick. This is not necessarily the same as all Intentions for the next tick
-- sometimes an executed <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span> will queue more
-<span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>s to run during the same phase of the same tick.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Calculate the intentions for the next round of the Intention
+phase of a tick.  This is not necessarily the same as all
+Intentions for the next tick - sometimes an executed
+<span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span> will queue more <span class='object_link'><a href="Intention.html" title="Demiurge::Intention (class)">Intention</a></span>s to
+run during the same phase of the same tick.</p>
 
 
   </div>
@@ -2678,8 +2571,7 @@ tick. This is not necessarily the same as all Intentions for the next tick
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2722,11 +2614,11 @@ tick. This is not necessarily the same as all Intentions for the next tick
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Certain context can be important to notifications, errors, logging and
-other admin-available information. For instance: the current zone-in-tick
-(if any), a current item taking an action and so on. This context can be
-attached to notifications, admin warnings, system logging and similar.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Certain context can be important to notifications, errors,
+logging and other admin-available information.  For instance:
+the current zone-in-tick (if any), a current item taking an
+action and so on. This context can be attached to notifications,
+admin warnings, system logging and similar.</p>
 
 
   </div>
@@ -2759,8 +2651,7 @@ attached to notifications, admin warnings, system logging and similar.</p>
       
       
         
-        <div class='inline'>
-<p>Evaluate the following block with the given context set</p>
+        <div class='inline'><p>Evaluate the following block with the given context set</p>
 </div>
       
     </li>
@@ -2775,8 +2666,7 @@ attached to notifications, admin warnings, system logging and similar.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -2821,14 +2711,14 @@ attached to notifications, admin warnings, system logging and similar.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Add an intention to the Engine&#39;s Intention queue. If this method is
-called during the Intention phase of a tick, the intention should be
-excecuted during this tick in standard order. If the method is called
-outside the Intention phase of a tick, the Intention will normally be
-executed during the soonest upcoming Intention phase. Queued intentions are
-subject to approval, cancellation and other normal operations that
-Intentions undergo before being executed.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Add an intention to the Engine&#39;s Intention queue. If this method
+is called during the Intention phase of a tick, the intention
+should be excecuted during this tick in standard order. If the
+method is called outside the Intention phase of a tick, the
+Intention will normally be executed during the soonest upcoming
+Intention phase. Queued intentions are subject to approval,
+cancellation and other normal operations that Intentions undergo
+before being executed.</p>
 
 
   </div>
@@ -2847,8 +2737,7 @@ Intentions undergo before being executed.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The intention to be queued</p>
+        <div class='inline'><p>The intention to be queued</p>
 </div>
       
     </li>
@@ -2864,8 +2753,7 @@ Intentions undergo before being executed.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2906,8 +2794,7 @@ Intentions undergo before being executed.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Queue all Intentions for all registered items for the current tick.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Queue all Intentions for all registered items for the current tick.</p>
 
 
   </div>
@@ -2923,8 +2810,7 @@ Intentions undergo before being executed.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -2963,14 +2849,14 @@ Intentions undergo before being executed.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>StateItems are transient and can be created, recreated or destroyed without
-warning. They need to be hooked up to the various Ruby code for their
-actions. The code for actions isn&#39;t serialized. Instead, each action is
-referred to by name, and the engine loads up all the item-name/action-name
-combinations when it reads the Ruby World Files. This means an action can
-be referred to by its name when serialized, but the actual code changes any
-time the world files are reloaded.</p>
+    <p>StateItems are transient and can be created, recreated or
+destroyed without warning. They need to be hooked up to the
+various Ruby code for their actions. The code for actions isn&#39;t
+serialized. Instead, each action is referred to by name, and the
+engine loads up all the item-name/action-name combinations when
+it reads the Ruby World Files. This means an action can be
+referred to by its name when serialized, but the actual code
+changes any time the world files are reloaded.</p>
 
 
   </div>
@@ -2986,8 +2872,7 @@ time the world files are reloaded.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -3062,8 +2947,7 @@ time the world files are reloaded.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Register a new StateItem</p>
+    <p>Register a new StateItem</p>
 
 
   </div>
@@ -3096,8 +2980,7 @@ time the world files are reloaded.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The same item</p>
+        <div class='inline'><p>The same item</p>
 </div>
       
     </li>
@@ -3112,8 +2995,7 @@ time the world files are reloaded.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -3174,9 +3056,7 @@ time the world files are reloaded.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Register a new StateItem type with a name that will be used in structured
-<span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> dumps.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Register a new StateItem type with a name that will be used in structured <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> dumps.</p>
 
 
   </div>
@@ -3195,8 +3075,7 @@ time the world files are reloaded.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The name to use when registering this type</p>
+        <div class='inline'><p>The name to use when registering this type</p>
 </div>
       
     </li>
@@ -3211,8 +3090,7 @@ time the world files are reloaded.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The StateItem class to register with this name</p>
+        <div class='inline'><p>The StateItem class to register with this name</p>
 </div>
       
     </li>
@@ -3228,8 +3106,7 @@ time the world files are reloaded.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -3276,14 +3153,14 @@ time the world files are reloaded.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This method loads new World File code into an existing engine. It should be
-passed a list of filenames, normally roughly the same list that was passed
-to Demiurge::DSL.engine_from_dsl_files to create the engine initially.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method loads new World File code into an existing engine.  It
+should be passed a list of filenames, normally roughly the same
+list that was passed to Demiurge::DSL.engine_from_dsl_files to
+create the engine initially.</p>
 
-<p>See <span class='object_link'><a href="#reload_from_dsl_text-instance_method" title="Demiurge::Engine#reload_from_dsl_text (method)">#reload_from_dsl_text</a></span> for more details and allowed options. It is
-identical in operation except for taking code as parameters instead of
-filenames.</p>
+<p>See <span class='object_link'><a href="#reload_from_dsl_text-instance_method" title="Demiurge::Engine#reload_from_dsl_text (method)">#reload_from_dsl_text</a></span> for more details and allowed
+options. It is identical in operation except for taking code as
+parameters instead of filenames.</p>
 
 
   </div>
@@ -3302,8 +3179,7 @@ filenames.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>An array of filenames, suitable for calling File.read on</p>
+        <div class='inline'><p>An array of filenames, suitable for calling File.read on</p>
 </div>
       
     </li>
@@ -3318,8 +3194,7 @@ filenames.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>An optional hash of options for modifying the behavior of the reload</p>
+        <div class='inline'><p>An optional hash of options for modifying the behavior of the reload</p>
 </div>
       
     </li>
@@ -3341,8 +3216,7 @@ filenames.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Only see if the new engine code would load, don&#39;t replace any code.</p>
+            &mdash; <div class='inline'><p>Only see if the new engine code would load, don&#39;t replace any code.</p>
 </div>
           
         </li>
@@ -3354,8 +3228,7 @@ filenames.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Attempt to guess about renamed objects</p>
+            &mdash; <div class='inline'><p>Attempt to guess about renamed objects</p>
 </div>
           
         </li>
@@ -3367,8 +3240,7 @@ filenames.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Don&#39;t allow adding new StateItems, raise an error instead</p>
+            &mdash; <div class='inline'><p>Don&#39;t allow adding new StateItems, raise an error instead</p>
 </div>
           
         </li>
@@ -3380,8 +3252,7 @@ filenames.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Don&#39;t allow removing StateItems, raise an error instead</p>
+            &mdash; <div class='inline'><p>Don&#39;t allow removing StateItems, raise an error instead</p>
 </div>
           
         </li>
@@ -3411,8 +3282,7 @@ filenames.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -3453,47 +3323,44 @@ filenames.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This method loads new World File code into an existing engine. It should be
-passed a list of “specs”, normally roughly the same list that was passed to
-Demiurge::DSL.engine_from_dsl_files to create the engine initially. A
-“spec” is either a single string of World File DSL code, or a two-element
-array of the form: [“label”, “code”]. Each is a string. “Code” is World
-File DSL Ruby code, while “label” is the name that will be used in stack
-traces.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method loads new World File code into an existing engine.  It
+should be passed a list of &quot;specs&quot;, normally roughly the same list
+that was passed to Demiurge::DSL.engine_from_dsl_files to create
+the engine initially. A &quot;spec&quot; is either a single string of World
+File DSL code, or a two-element array of the form: [&quot;label&quot;,
+&quot;code&quot;]. Each is a string. &quot;Code&quot; is World File DSL Ruby code,
+while &quot;label&quot; is the name that will be used in stack traces.</p>
 
 <p>Options:</p>
-<ul><li>
-<p>verify_only - only check for errors, don&#39;t load the new code into the
-engine, aka “dry run mode”</p>
-</li><li>
-<p>guessing_okay - attempt to notice renames and modify old state to new state
-accordingly</p>
-</li><li>
-<p>no_addition - if any new StateItem would be created, raise a
-NonMatchingStateError</p>
-</li><li>
-<p>no_removal - if any StateItem would be removed, raise a
-NonMatchingStateError</p>
-</li></ul>
 
-<p>Note that if “guessing_okay” is turned on, certain cases where same-type or
-(in the future) similar-type items are added and removed may be “guessed”
-as renames rather than treated as addition or removal.</p>
+<ul>
+<li>verify_only - only check for errors, don&#39;t load the new code into the engine, aka &quot;dry run mode&quot;</li>
+<li>guessing_okay - attempt to notice renames and modify old state to new state accordingly</li>
+<li>no_addition - if any new StateItem would be created, raise a NonMatchingStateError</li>
+<li>no_removal - if any StateItem would be removed, raise a NonMatchingStateError</li>
+</ul>
 
-<p>Where the files and world objects are essentially the same, this should
-reload any code changes into the engine. Where they are different, the
-method will try to determine the best match between the new and old state,
-but may fail at doing so.</p>
+<p>Note that if &quot;guessing_okay&quot; is turned on, certain cases where
+same-type or (in the future) similar-type items are added and
+removed may be &quot;guessed&quot; as renames rather than treated as
+addition or removal.</p>
+
+<p>Where the files and world objects are
+essentially the same, this should reload any code changes into the
+engine. Where they are different, the method will try to determine
+the best match between the new and old state, but may fail at
+doing so.</p>
 
 <p>Ordinarily, this method should be called on a fully-configured,
-fully-initialized engine with its full state loaded, in between ticks.</p>
+fully-initialized engine with its full state loaded, in between
+ticks.</p>
 
-<p>When in doubt, it&#39;s better to save state and reload the engine from
-nothing. This gives far better opportunities for a human to determine what
-changes have occurred and manually fix any errors. A game&#39;s current
-state is a complex thing and a computer simply cannot correctly determine
-all possible changes to it in a useful way.</p>
+<p>When in doubt, it&#39;s better to save state and reload the engine
+from nothing. This gives far better opportunities for a human to
+determine what changes have occurred and manually fix any errors.
+A game&#39;s current state is a complex thing and a computer simply
+cannot correctly determine all possible changes to it in a useful
+way.</p>
 
 
   </div>
@@ -3512,8 +3379,7 @@ all possible changes to it in a useful way.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>An array of specs, see above</p>
+        <div class='inline'><p>An array of specs, see above</p>
 </div>
       
     </li>
@@ -3528,8 +3394,7 @@ all possible changes to it in a useful way.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>An optional hash of options for modifying the behavior of the reload</p>
+        <div class='inline'><p>An optional hash of options for modifying the behavior of the reload</p>
 </div>
       
     </li>
@@ -3551,8 +3416,7 @@ all possible changes to it in a useful way.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Only see if the new engine code would load, don&#39;t replace any code.</p>
+            &mdash; <div class='inline'><p>Only see if the new engine code would load, don&#39;t replace any code.</p>
 </div>
           
         </li>
@@ -3564,8 +3428,7 @@ all possible changes to it in a useful way.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Attempt to guess about renamed objects</p>
+            &mdash; <div class='inline'><p>Attempt to guess about renamed objects</p>
 </div>
           
         </li>
@@ -3577,8 +3440,7 @@ all possible changes to it in a useful way.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Don&#39;t allow adding new StateItems, raise an error instead</p>
+            &mdash; <div class='inline'><p>Don&#39;t allow adding new StateItems, raise an error instead</p>
 </div>
           
         </li>
@@ -3590,8 +3452,7 @@ all possible changes to it in a useful way.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>Don&#39;t allow removing StateItems, raise an error instead</p>
+            &mdash; <div class='inline'><p>Don&#39;t allow removing StateItems, raise an error instead</p>
 </div>
           
         </li>
@@ -3621,8 +3482,7 @@ all possible changes to it in a useful way.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -3811,9 +3671,9 @@ all possible changes to it in a useful way.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Replace actions for an item with other, potentially quite different,
-actions. This is normally done to reload engine state from World Files.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Replace actions for an item with other, potentially quite
+different, actions. This is normally done to reload engine state
+from World Files.</p>
 
 
   </div>
@@ -3829,8 +3689,7 @@ actions. This is normally done to reload engine state from World Files.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -3871,11 +3730,10 @@ actions. This is normally done to reload engine state from World Files.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Queue a notification to be sent later by the engine. The notification must
-include at least type, zone, location and actor and may include a hash of
-additional data, which should be serializable to JSON (i.e. use only basic
-data types.)</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Queue a notification to be sent later by the engine. The
+notification must include at least type, zone, location and
+actor and may include a hash of additional data, which should be
+serializable to JSON (i.e. use only basic data types.)</p>
 
 
   </div>
@@ -3894,8 +3752,7 @@ data types.)</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The notification type of this notification</p>
+        <div class='inline'><p>The notification type of this notification</p>
 </div>
       
     </li>
@@ -3910,9 +3767,7 @@ data types.)</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The zone name for this notification. The special “admin” zone name is used
-for engine-wide events</p>
+        <div class='inline'><p>The zone name for this notification. The special &quot;admin&quot; zone name is used for engine-wide events</p>
 </div>
       
     </li>
@@ -3927,8 +3782,7 @@ for engine-wide events</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The location name for this notification, or nil if no location</p>
+        <div class='inline'><p>The location name for this notification, or nil if no location</p>
 </div>
       
     </li>
@@ -3943,9 +3797,7 @@ for engine-wide events</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The name of the acting item for this notification, or nil if no item is
-acting</p>
+        <div class='inline'><p>The name of the acting item for this notification, or nil if no item is acting</p>
 </div>
       
     </li>
@@ -3962,9 +3814,7 @@ acting</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Additional data about this notification; please use String keys for the
-Hash</p>
+        <div class='inline'><p>Additional data about this notification; please use String keys for the Hash</p>
 </div>
       
     </li>
@@ -3980,8 +3830,7 @@ Hash</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4052,10 +3901,10 @@ Hash</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This method dumps the Engine&#39;s state in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span>
-structured array format. This method is how one would normally collect a
-full state dump of the engine suitable for later restoration.</p>
+    <p>This method dumps the Engine&#39;s state in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span>
+structured array format.  This method is how one would normally
+collect a full state dump of the engine suitable for later
+restoration.</p>
 
 
   </div>
@@ -4076,8 +3925,7 @@ full state dump of the engine suitable for later restoration.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Options for dumping state</p>
+        <div class='inline'><p>Options for dumping state</p>
 </div>
       
     </li>
@@ -4097,9 +3945,7 @@ full state dump of the engine suitable for later restoration.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>If true, copy the serialized state rather than allowing any links into
-StateItem objects. This reduces performance but increases security.</p>
+            &mdash; <div class='inline'><p>If true, copy the serialized state rather than allowing any links into StateItem objects. This reduces performance but increases security.</p>
 </div>
           
         </li>
@@ -4118,8 +3964,7 @@ StateItem objects. This reduces performance but increases security.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The engine&#39;s state in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured array format</p>
+        <div class='inline'><p>The engine&#39;s state in <span class='object_link'><a href="StateItem.html" title="Demiurge::StateItem (class)">StateItem</a></span> structured array format</p>
 </div>
       
     </li>
@@ -4141,8 +3986,7 @@ StateItem objects. This reduces performance but increases security.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4189,45 +4033,43 @@ StateItem objects. This reduces performance but increases security.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This method &#39;subscribes&#39; a block to various types of notifications.
-The block will be called with the notifications when they occur. A
-“specifier” for this method means either the special symbol
-<code>:all</code> or an Array of Symbols or Strings to show what values a
-notification may have for the given field. For fields that might indicate
-Demiurge items such as “zone” or “actor” the value should be the Demiurge
-item <em>name</em>, not the item itself.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method &#39;subscribes&#39; a block to various types of
+notifications. The block will be called with the notifications
+when they occur. A &quot;specifier&quot; for this method means either the
+special symbol +:all+ or an Array of Symbols or Strings to show
+what values a notification may have for the given field. For
+fields that might indicate Demiurge items such as &quot;zone&quot; or
+&quot;actor&quot; the value should be the Demiurge item <em>name</em>, not the
+item itself.</p>
 
-<p>When a notification occurs that matches the subscription, the given block
-will be called with a hash of data about that notification.</p>
+<p>When a notification occurs that matches the subscription, the
+given block will be called with a hash of data about that
+notification.</p>
 
-<p>The tracker is supplied to allow later unsubscribes. Pass a unique tracker
-object (usually a String or Symbol) when subscribing, then pass in the same
-one when unsubscribing.</p>
+<p>The tracker is supplied to allow later unsubscribes. Pass a
+unique tracker object (usually a String or Symbol) when
+subscribing, then pass in the same one when unsubscribing.</p>
 
-<p>At a minimum, subscriptions should include a zone to avoid subscribing to
-all such notifications everywhere in the engine. Engine-wide subscriptions
-become very inefficient very quickly.</p>
+<p>At a minimum, subscriptions should include a zone to avoid
+subscribing to all such notifications everywhere in the engine.
+Engine-wide subscriptions become very inefficient very quickly.</p>
 
-<p>Notifications only have a few mandatory fields - type, actor, zone and
-location. The location and/or actor can be nil in some cases, and the zone
-can be “admin” for engine-wide events. If you wish to subscribe based on
-other properties of the notification then you&#39;ll need to pass a custom
-predicate to check each notification. A “predicate” just means it&#39;s a
-proc that returns true or false, depending whether a notification matches.</p>
+<p>Notifications only have a few mandatory fields - type, actor,
+zone and location. The location and/or actor can be nil in some
+cases, and the zone can be &quot;admin&quot; for engine-wide events. If
+you wish to subscribe based on other properties of the
+notification then you&#39;ll need to pass a custom predicate to
+check each notification. A &quot;predicate&quot; just means it&#39;s a proc
+that returns true or false, depending whether a notification
+matches.</p>
 
-<p>subscribe_to_notifications(zone: “my zone name”, location: “my location”) {
-|h| puts “Got #Demiurge::Engine.hh.inspect!” }</p>
+<p>subscribe_to_notifications(zone: &quot;my zone name&quot;, location: &quot;my location&quot;) { |h| puts &quot;Got #Demiurge::Engine.hh.inspect!&quot; }</p>
 
-<p>subscribe_to_notifications(zone: “my zone”, type: “say”) { |h| puts
-“Somebody said something!” }</p>
+<p>subscribe_to_notifications(zone: &quot;my zone&quot;, type: &quot;say&quot;) { |h| puts &quot;Somebody said something!&quot; }</p>
 
-<p>subscribe_to_notifications(zone: [“one”, “two”, “three”], type: “move_to”,
-actor: “bozo the clown”, tracker: “bozo move tracker”) { |h| bozo_move(h) }</p>
+<p>subscribe_to_notifications(zone: [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;], type: &quot;move_to&quot;, actor: &quot;bozo the clown&quot;, tracker: &quot;bozo move tracker&quot;) { |h| bozo_move(h) }</p>
 
-<p>subscribe_to_notifications(zone: “green field”, type: “joyous dance”,
-predicate: proc { |h| <a href=""info"">h</a>[“subtype”] == “butterfly
-wiggle” }) { |h| process(h) }</p>
+<p>subscribe_to_notifications(zone: &quot;green field&quot;, type: &quot;joyous dance&quot;, predicate: proc { |h| h[&quot;info&quot;][&quot;subtype&quot;] == &quot;butterfly wiggle&quot; }) { |h| process(h) }</p>
 
 
   </div>
@@ -4238,30 +4080,25 @@ wiggle” }) { |h| process(h) }</p>
     <p class="tag_title">Examples:</p>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Subscribe to all notification types at a particular location</p>
+        <p class="example_title"><div class='inline'><p>Subscribe to all notification types at a particular location</p>
 </div></p>
       
       <pre class="example code"><code></code></pre>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Subscribe to all “say” notifications in my same zone</p>
+        <p class="example_title"><div class='inline'><p>Subscribe to all &quot;say&quot; notifications in my same zone</p>
 </div></p>
       
       <pre class="example code"><code></code></pre>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Subscribe to all move_to notifications for a specific actor, with a tracker
-for future unsubscription</p>
+        <p class="example_title"><div class='inline'><p>Subscribe to all move_to notifications for a specific actor, with a tracker for future unsubscription</p>
 </div></p>
       
       <pre class="example code"><code></code></pre>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Subscribe to notifications matching a custom predicate</p>
+        <p class="example_title"><div class='inline'><p>Subscribe to notifications matching a custom predicate</p>
 </div></p>
       
       <pre class="example code"><code></code></pre>
@@ -4280,8 +4117,7 @@ for future unsubscription</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A specifier for what Demiurge notification names to subscribe to</p>
+        <div class='inline'><p>A specifier for what Demiurge notification names to subscribe to</p>
 </div>
       
     </li>
@@ -4296,8 +4132,7 @@ for future unsubscription</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A specifier for what Zone names match this subscription</p>
+        <div class='inline'><p>A specifier for what Zone names match this subscription</p>
 </div>
       
     </li>
@@ -4312,8 +4147,7 @@ for future unsubscription</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A specifier for what location names match this subscription</p>
+        <div class='inline'><p>A specifier for what location names match this subscription</p>
 </div>
       
     </li>
@@ -4328,8 +4162,7 @@ for future unsubscription</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Call this proc on each notification to see if it matches this subscription</p>
+        <div class='inline'><p>Call this proc on each notification to see if it matches this subscription</p>
 </div>
       
     </li>
@@ -4344,9 +4177,7 @@ for future unsubscription</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>A specifier for what Demiurge item name(s) must be the actor in a
-notification to match this subscription</p>
+        <div class='inline'><p>A specifier for what Demiurge item name(s) must be the actor in a notification to match this subscription</p>
 </div>
       
     </li>
@@ -4361,11 +4192,7 @@ notification to match this subscription</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>To unsubscribe from this notification later, pass in the same tracker to
-<span class='object_link'><a href="#unsubscribe_from_notifications-instance_method" title="Demiurge::Engine#unsubscribe_from_notifications (method)">#unsubscribe_from_notifications</a></span>, or another object that is +==+ to this
-tracker. A tracker is most often a String or Symbol. If the tracker is nil,
-you can&#39;t ever unsubscribe.</p>
+        <div class='inline'><p>To unsubscribe from this notification later, pass in the same tracker to <span class='object_link'><a href="#unsubscribe_from_notifications-instance_method" title="Demiurge::Engine#unsubscribe_from_notifications (method)">#unsubscribe_from_notifications</a></span>, or another object that is +==+ to this tracker. A tracker is most often a String or Symbol. If the tracker is nil, you can&#39;t ever unsubscribe.</p>
 </div>
       
     </li>
@@ -4381,8 +4208,7 @@ you can&#39;t ever unsubscribe.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4443,11 +4269,10 @@ you can&#39;t ever unsubscribe.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>This method unregisters a StateItem from the engine. The method assumes
-other items don&#39;t refer to the item being unregistered.
-<span class='object_link'><a href="#unregister_state_item-instance_method" title="Demiurge::Engine#unregister_state_item (method)">#unregister_state_item</a></span> will try to perform basic cleanup, but calling it
-<em>can</em> leave dangling references.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>This method unregisters a StateItem from the engine. The method
+assumes other items don&#39;t refer to the item being
+unregistered. <span class='object_link'><a href="#unregister_state_item-instance_method" title="Demiurge::Engine#unregister_state_item (method)">#unregister_state_item</a></span> will try to perform basic
+cleanup, but calling it <em>can</em> leave dangling references.</p>
 
 
   </div>
@@ -4466,8 +4291,7 @@ other items don&#39;t refer to the item being unregistered.
       
       
         &mdash;
-        <div class='inline'>
-<p>The item to unregister</p>
+        <div class='inline'><p>The item to unregister</p>
 </div>
       
     </li>
@@ -4483,8 +4307,7 @@ other items don&#39;t refer to the item being unregistered.
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4535,14 +4358,14 @@ other items don&#39;t refer to the item being unregistered.
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>When you subscribe to a notification with <span class='object_link'><a href="#subscribe_to_notifications-instance_method" title="Demiurge::Engine#subscribe_to_notifications (method)">#subscribe_to_notifications</a></span>,
-you may optionally pass a non-nil tracker with the subscription. If you
-pass that tracker to this method, it will unsubscribe you from that
-notification. Multiple subscriptions can use the same tracker and they will
-all be unsubscribed at once. For that reason, you should use a unique
-tracker if you do <em>not</em> want other code to be able to unsubscribe
-you from notifications.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>When you subscribe to a notification with
+<span class='object_link'><a href="#subscribe_to_notifications-instance_method" title="Demiurge::Engine#subscribe_to_notifications (method)">#subscribe_to_notifications</a></span>, you may optionally pass a non-nil
+tracker with the subscription.  If you pass that tracker to this
+method, it will unsubscribe you from that notification. Multiple
+subscriptions can use the same tracker and they will all be
+unsubscribed at once. For that reason, you should use a unique
+tracker if you do <em>not</em> want other code to be able to
+unsubscribe you from notifications.</p>
 
 
   </div>
@@ -4561,8 +4384,7 @@ you from notifications.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The tracker from which to unsubscribe</p>
+        <div class='inline'><p>The tracker from which to unsubscribe</p>
 </div>
       
     </li>
@@ -4578,8 +4400,7 @@ you from notifications.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4620,8 +4441,7 @@ you from notifications.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Determine whether the item name is basically allowable.</p>
+    <p>Determine whether the item name is basically allowable.</p>
 
 
   </div>
@@ -4640,8 +4460,7 @@ you from notifications.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>String The item name to check</p>
+        <div class='inline'><p>String The item name to check</p>
 </div>
       
     </li>
@@ -4659,8 +4478,7 @@ you from notifications.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Whether the item name is valid, just in terms of its characters.</p>
+        <div class='inline'><p>Whether the item name is valid, just in terms of its characters.</p>
 </div>
       
     </li>
@@ -4675,8 +4493,7 @@ you from notifications.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4715,8 +4532,7 @@ you from notifications.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get an Array of StateItems that are top-level <span class='object_link'><a href="Zone.html" title="Demiurge::Zone (class)">Zone</a></span> items.</p>
+    <p>Get an Array of StateItems that are top-level <span class='object_link'><a href="Zone.html" title="Demiurge::Zone (class)">Zone</a></span> items.</p>
 
 
   </div>
@@ -4734,8 +4550,7 @@ you from notifications.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>All registered StateItems that are treated as <span class='object_link'><a href="Zone.html" title="Demiurge::Zone (class)">Zone</a></span> items</p>
+        <div class='inline'><p>All registered StateItems that are treated as <span class='object_link'><a href="Zone.html" title="Demiurge::Zone (class)">Zone</a></span> items</p>
 </div>
       
     </li>
@@ -4750,8 +4565,7 @@ you from notifications.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -4784,7 +4598,7 @@ you from notifications.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:07 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

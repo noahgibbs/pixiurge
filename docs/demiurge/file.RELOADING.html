@@ -57,102 +57,102 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-Reloading-2C+Debugging+and+Demiurge+Engines">Reloading, Debugging and Demiurge Engines</h1>
+      <div id="content"><div id='filecontents'><h1>Reloading, Debugging and Demiurge Engines</h1>
 
-<p>Demiurge tries to make it easy to reload World Files in development.
-What&#39;s so complicated about that?</p>
+<p>Demiurge tries to make it easy to reload World Files in
+development. What&#39;s so complicated about that?</p>
 
 <p>Where possible, Demiurge tries to just keep the same zones, locations,
-agents and so on with the same action names. If you change the code for
-something that already exists, great! Demiurge can easily put that together
-and give you the new code.</p>
+agents and so on with the same action names. If you change the code
+for something that already exists, great! Demiurge can easily put that
+together and give you the new code.</p>
 
 <p>Fabulous. All done, right?</p>
 
-<p>Nope. What if you rename a zone? You probably don&#39;t <em>want</em>
-Demiurge to try to guess that based on the line in the file, or the new
-name. If it gets it right 60% of the time (which is optimistic)… Well, what
+<p>Nope. What if you rename a zone? You probably don&#39;t <em>want</em> Demiurge to
+try to guess that based on the line in the file, or the new name. If
+it gets it right 60% of the time (which is optimistic)... Well, what
 about the other 40%? Also, you won&#39;t be in the habit of noticing and
 fixing it, which will occasionally be <em>really</em> bad.</p>
 
-<p>So: expect this to be okay for development. Do <em>not</em> expect it to
-work perfectly, nor for you to be able to test a bunch of development
+<p>So: expect this to be okay for development. Do <em>not</em> expect it to work
+perfectly, nor for you to be able to test a bunch of development
 changes with incremental reloads and then have it work perfectly in
 production later.</p>
 
-<p>State is hard. Reloading is hard. Demiurge has some ways to help a little.
-But this is all still hard.</p>
+<p>State is hard. Reloading is hard. Demiurge has some ways to help a
+little. But this is all still hard.</p>
 
-<h2 id="label-Resetting">Resetting</h2>
+<h2>Resetting</h2>
 
-<h2 id="label-Simple+Best+Practices">Simple Best Practices</h2>
+<h2>Simple Best Practices</h2>
 
-<p>When Demiurge loads your World Files, it has to execute them as Ruby code.
-That means if you do something as a side effect (print to console, write a
-file) it gets done every time. So try not to do that.</p>
+<p>When Demiurge loads your World Files, it has to execute them as Ruby
+code. That means if you do something as a side effect (print to
+console, write a file) it gets done every time. So try not to do that.</p>
 
-<h2 id="label-What+Makes+This+Easier-3F">What Makes This Easier?</h2>
+<h2>What Makes This Easier?</h2>
 
-<p>Players love big persistent games like Minecraft where everything they do
-persists forever and they can make huge changes to the game. And yet there
-are very few games like that. Why?</p>
+<p>Players love big persistent games like Minecraft where everything they
+do persists forever and they can make huge changes to the game. And
+yet there are very few games like that. Why?</p>
 
-<p>Partly because it&#39;s really, really hard to <em>test</em> changes to a
-world like that. Wouldn&#39;t it be cool if you could add new
-lava-or-water-type blocks to Minecraft and change how they worked? Maybe
-you could make some kind of slime-or-pudding block that poured and flowed
-like that? And then make pudding sculptures, like those wonderful towers or
+<p>Partly because it&#39;s really, really hard to <em>test</em> changes to a world
+like that. Wouldn&#39;t it be cool if you could add new lava-or-water-type
+blocks to Minecraft and change how they worked? Maybe you could make
+some kind of slime-or-pudding block that poured and flowed like that?
+And then make pudding sculptures, like those wonderful towers or
 fortresses you make with water or lava pouring over them in Minecraft
-Creative Mode? Now, think about how you&#39;d <em>test</em> those changes
-in a big persistent Minecraft-type world where everybody was building stuff
+Creative Mode? Now, think about how you&#39;d <em>test</em> those changes in a
+big persistent Minecraft-type world where everybody was building stuff
 all the time.</p>
 
 <p>(For the same reason, a Minecraft MMO would be a <em>gigantic</em> pain to
 create. Just sayin&#39;.)</p>
 
-<p>If you were making changes to how the pudding blocks worked, you&#39;d have
-players <em>howling</em> every time the flow changed and their fortresses
-looked different. You can&#39;t just put that out there and then mess with
-it – the “mess with it” part is really hard in a big persistent world.
-Players get really attached to every small change.</p>
+<p>If you were making changes to how the pudding blocks worked, you&#39;d
+have players <em>howling</em> every time the flow changed and their
+fortresses looked different. You can&#39;t just put that out there and
+then mess with it -- the &quot;mess with it&quot; part is really hard in a big
+persistent world. Players get really attached to every small change.</p>
 
-<p>So what do you do? Well, one thing is to wipe the slate clean, regularly.
-Minecraft doesn&#39;t guarantee that you know exactly where every skeleton
-or creeper is, and mostly you don&#39;t expect to. Most games are even more
-like that – World of Warcraft knows where monsters <em>spawn</em> and it
-knows their <em>routes</em>, but you don&#39;t expect to come back an hour
-later and see anything you did persist. Dropped items disappear, killed
-monsters come back.</p>
+<p>So what do you do? Well, one thing is to wipe the slate clean,
+regularly. Minecraft doesn&#39;t guarantee that you know exactly where
+every skeleton or creeper is, and mostly you don&#39;t expect to. Most
+games are even more like that -- World of Warcraft knows where
+monsters <em>spawn</em> and it knows their <em>routes</em>, but you don&#39;t expect to
+come back an hour later and see anything you did persist. Dropped
+items disappear, killed monsters come back.</p>
 
-<p>By having a lot of non-persisted state (information the game is allowed to
-wipe clean), you leave room for making changes. If an admin messes around
-with exactly how monsters spawn (how many? what timing? do they roam around
-a little? where?) that doesn&#39;t feel like a big deal – you&#39;re used
-to that information getting reset constantly, and little changes to it feel
-like window dressing. You forgot exactly which monsters you killed thirty
-seconds after you killed them because you don&#39;t <em>expect</em> that to
-be useful to remember. The spawn points might be important - especially if
-you&#39;re used to sneaking past them or quietly taking a route that keeps
-you out of the way of the big nasties. But even changing those spawn points
-feels “fair” - it&#39;s different from losing track of, say, how much gold
-your character currently has, or exactly which blocks you put where in
-Minecraft to make a shelter.</p>
+<p>By having a lot of non-persisted state (information the game is
+allowed to wipe clean), you leave room for making changes. If an admin
+messes around with exactly how monsters spawn (how many? what timing?
+do they roam around a little? where?) that doesn&#39;t feel like a big
+deal -- you&#39;re used to that information getting reset constantly, and
+little changes to it feel like window dressing. You forgot exactly
+which monsters you killed thirty seconds after you killed them because
+you don&#39;t <em>expect</em> that to be useful to remember. The spawn points
+might be important - especially if you&#39;re used to sneaking past them
+or quietly taking a route that keeps you out of the way of the big
+nasties. But even changing those spawn points feels &quot;fair&quot; - it&#39;s
+different from losing track of, say, how much gold your character
+currently has, or exactly which blocks you put where in Minecraft to
+make a shelter.</p>
 
 <p>In general, you should make it clear when there&#39;s information you
 won&#39;t be persisting. If you need to wipe out dropped weapons on the
 floor (you probably do) then start that decay process <em>early</em> - you
-want folks to know it&#39;s possible so that it&#39;s not a horrible
-surprise when it happens.</p>
+want folks to know it&#39;s possible so that it&#39;s not a horrible surprise
+when it happens.</p>
 
-<p>And you want to persist as little information as you can get away with. Any
-part of the game world that you (the admin) are allowed to play with or
-reset is information you don&#39;t need to keep intact as precious player
-data.</p>
+<p>And you want to persist as little information as you can get away
+with. Any part of the game world that you (the admin) are allowed to
+play with or reset is information you don&#39;t need to keep intact as
+precious player data.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:05 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

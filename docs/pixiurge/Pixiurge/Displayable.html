@@ -143,7 +143,7 @@ inherit from this class.</p>
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="Display/Humanoid.html" title="Pixiurge::Display::Humanoid (class)">Pixiurge::Display::Humanoid</a></span>, <span class='object_link'><a href="Display/Invisible.html" title="Pixiurge::Display::Invisible (class)">Pixiurge::Display::Invisible</a></span>, <span class='object_link'><a href="Display/ParticleSource.html" title="Pixiurge::Display::ParticleSource (class)">Pixiurge::Display::ParticleSource</a></span>, <span class='object_link'><a href="Display/TmxMap.html" title="Pixiurge::Display::TmxMap (class)">Pixiurge::Display::TmxMap</a></span></p>
+  <p class="children"><span class='object_link'><a href="Display/Container.html" title="Pixiurge::Display::Container (class)">Pixiurge::Display::Container</a></span>, <span class='object_link'><a href="Display/Invisible.html" title="Pixiurge::Display::Invisible (class)">Pixiurge::Display::Invisible</a></span>, <span class='object_link'><a href="Display/ParticleSource.html" title="Pixiurge::Display::ParticleSource (class)">Pixiurge::Display::ParticleSource</a></span>, <span class='object_link'><a href="Display/TileAnimatedSprite.html" title="Pixiurge::Display::TileAnimatedSprite (class)">Pixiurge::Display::TileAnimatedSprite</a></span>, <span class='object_link'><a href="Display/TmxMap.html" title="Pixiurge::Display::TmxMap (class)">Pixiurge::Display::TmxMap</a></span></p>
 </div>
 
 
@@ -201,7 +201,7 @@ inherit from this class.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>For a tiled-type area, these are the tile height and width of this Displayable in pixels.</p>
+    <span class="summary_desc"><div class='inline'><p>For a tiled-type area, <span class='object_link'><a href="#block_width-instance_method" title="Pixiurge::Displayable#block_width (method)">#block_width</a></span> and <span class='object_link'><a href="#block_height-instance_method" title="Pixiurge::Displayable#block_height (method)">#block_height</a></span> are the tile height and width of this Displayable in pixels.</p>
 </div></span>
   
 </li>
@@ -210,7 +210,7 @@ inherit from this class.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#demi_item-instance_method" title="#demi_item (instance method)">#<strong>demi_item</strong>  &#x21d2; Object </a>
+      <a href="#displayable_type-instance_method" title="#displayable_type (instance method)">#<strong>displayable_type</strong>  &#x21d2; Object </a>
     
 
     
@@ -229,62 +229,7 @@ inherit from this class.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Demiurge item that this displays.</p>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#location_block_height-instance_method" title="#location_block_height (instance method)">#<strong>location_block_height</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#location_block_width-instance_method" title="#location_block_width (instance method)">#<strong>location_block_width</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>For a tiled-type area, these are the tile height and width of the location (backdrop) of this Displayable in pixels.</p>
+    <span class="summary_desc"><div class='inline'><p>You can&#39;t just be a &quot;Displayable&quot;, you need a concrete child class.</p>
 </div></span>
   
 </li>
@@ -339,8 +284,7 @@ inherit from this class.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Most recently drawn Demiurge location name.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -470,30 +414,7 @@ inherit from this class.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#demiurge_reloaded-instance_method" title="#demiurge_reloaded (instance method)">#<strong>demiurge_reloaded</strong>  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>This method is called when Demiurge is, or may have been, reloaded.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#hide_from_player-instance_method" title="#hide_from_player (instance method)">#<strong>hide_from_player</strong>(player)  &#x21d2; void </a>
+      <a href="#destroy_for_player-instance_method" title="#destroy_for_player (instance method)">#<strong>destroy_for_player</strong>(player)  &#x21d2; void </a>
     
 
     
@@ -516,7 +437,7 @@ inherit from this class.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(demi_item:, name:, engine_connector:)  &#x21d2; Displayable </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name:, engine_connector:)  &#x21d2; Displayable </a>
     
 
     
@@ -541,7 +462,30 @@ inherit from this class.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#move_for_player-instance_method" title="#move_for_player (instance method)">#<strong>move_for_player</strong>(player, old_position, new_position)  &#x21d2; void </a>
+      <a href="#messages_to_show_player-instance_method" title="#messages_to_show_player (instance method)">#<strong>messages_to_show_player</strong>(player)  &#x21d2; Array </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Return zero or more messages for <span class='object_link'><a href="#show_to_player-instance_method" title="Pixiurge::Displayable#show_to_player (method)">#show_to_player</a></span>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_for_player-instance_method" title="#move_for_player (instance method)">#<strong>move_for_player</strong>(player, old_position, new_position, options = {})  &#x21d2; void </a>
     
 
     
@@ -578,7 +522,7 @@ inherit from this class.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Show this Displayable to a player, generally by sending messages.</p>
+    <span class="summary_desc"><div class='inline'><p>Show this Displayable to a player by sending a DISPLAY_SHOW_DISPLAYABLE message.</p>
 </div></span>
   
 </li>
@@ -593,7 +537,7 @@ inherit from this class.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(demi_item:, name:, engine_connector:)  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::Displayable (class)">Displayable</a></span></tt> 
+    #<strong>initialize</strong>(name:, engine_connector:)  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::Displayable (class)">Displayable</a></span></tt> 
   
 
   
@@ -609,21 +553,6 @@ inherit from this class.</p>
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
-  
-    <li>
-      
-        <span class='name'>demi_item</span>
-      
-      
-        <span class='type'>(<tt>Demiurge::StateItem</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>A Demiurge StateItem for this Displayable to indicate</p>
-</div>
-      
-    </li>
   
     <li>
       
@@ -679,27 +608,25 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-52
-53
-54
-55
-56
-57
-58
-59
-60</pre>
+61
+62
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 61</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='label'>demi_item:</span><span class='comma'>,</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>engine_connector:</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>engine_connector:</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
-  <span class='ivar'>@demi_item</span> <span class='op'>=</span> <span class='id identifier rubyid_demi_item'>demi_item</span>
-  <span class='ivar'>@demi_name</span> <span class='op'>=</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>  <span class='comment'># Usually the same as @name
-</span>  <span class='ivar'>@engine_connector</span> <span class='op'>=</span> <span class='id identifier rubyid_engine_connector'>engine_connector</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Non-matching name and Demiurge name!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='ivar'>@demi_item</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@demi_item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span> <span class='op'>!=</span> <span class='id identifier rubyid_name'>name</span>
-  <span class='ivar'>@demi_engine</span> <span class='op'>=</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_engine'>engine</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='kw'>if</span> <span class='id identifier rubyid_demi_item'>demi_item</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
+  <span class='ivar'>@engine_connector</span> <span class='op'>=</span> <span class='id identifier rubyid_engine_connector'>engine_connector</span>
+
+  <span class='comment'># Most child classes should override this
+</span>  <span class='ivar'>@block_width</span> <span class='op'>=</span> <span class='int'>1</span>
+  <span class='ivar'>@block_height</span> <span class='op'>=</span> <span class='int'>1</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -752,12 +679,12 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_block_height'>block_height</span>
   <span class='ivar'>@block_height</span>
@@ -780,7 +707,11 @@ inherit from this class.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>For a tiled-type area, these are the tile height and width of this Displayable in pixels</p>
+    <p>For a tiled-type area, <span class='object_link'><a href="#block_width-instance_method" title="Pixiurge::Displayable#block_width (method)">#block_width</a></span> and <span class='object_link'><a href="#block_height-instance_method" title="Pixiurge::Displayable#block_height (method)">#block_height</a></span> are the
+tile height and width of this Displayable in pixels.  This isn&#39;t
+the tile size of this object&#39;s location - it&#39;s the tile size of
+this object itself for any items that might move inside of it or
+on top of it.</p>
 
 
   </div>
@@ -809,12 +740,12 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-36
-37
-38</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_block_width'>block_width</span>
   <span class='ivar'>@block_width</span>
@@ -827,9 +758,9 @@ inherit from this class.</p>
       
       <span id=""></span>
       <div class="method_details ">
-  <h3 class="signature " id="demi_item-instance_method">
+  <h3 class="signature " id="displayable_type-instance_method">
   
-    #<strong>demi_item</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+    #<strong>displayable_type</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -837,7 +768,9 @@ inherit from this class.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Demiurge item that this displays</p>
+    <p>You can&#39;t just be a &quot;Displayable&quot;, you need a concrete child
+class. Each child class gets a string to represent it in the
+network protocol.</p>
 
 
   </div>
@@ -866,128 +799,15 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-22
-23
-24</pre>
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 28</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_demi_item'>demi_item</span>
-  <span class='ivar'>@demi_item</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="location_block_height-instance_method">
-  
-    #<strong>location_block_height</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-41
-42
-43</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 41</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_location_block_height'>location_block_height</span>
-  <span class='ivar'>@location_block_height</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="location_block_width-instance_method">
-  
-    #<strong>location_block_width</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p>For a tiled-type area, these are the tile height and width of the location (backdrop) of this Displayable in pixels</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-40
-41
-42</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 40</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_location_block_width'>location_block_width</span>
-  <span class='ivar'>@location_block_width</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_displayable_type'>displayable_type</span>
+  <span class='ivar'>@displayable_type</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1035,12 +855,12 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_location_displayable'>location_displayable</span>
   <span class='ivar'>@location_displayable</span>
@@ -1063,8 +883,7 @@ inherit from this class.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Most recently drawn Demiurge location name</p>
-
+    
 
   </div>
 </div>
@@ -1092,12 +911,12 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-32
-33
-34</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_location_name'>location_name</span>
   <span class='ivar'>@location_name</span>
@@ -1177,7 +996,9 @@ inherit from this class.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>This is the most recently-displayed position of this Displayable</p>
+    <p>This is the most recently-displayed position of this
+Displayable. When it changes, fields like <span class='object_link'><a href="#x-instance_method" title="Pixiurge::Displayable#x (method)">#x</a></span> and
+<span class='object_link'><a href="#location_name-instance_method" title="Pixiurge::Displayable#location_name (method)">#location_name</a></span> get updated automatically.</p>
 
 
   </div>
@@ -1206,12 +1027,12 @@ inherit from this class.</p>
       <pre class="lines">
 
 
-44
-45
-46</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_position'>position</span>
   <span class='ivar'>@position</span>
@@ -1237,8 +1058,11 @@ inherit from this class.</p>
     <p>Most recently-displayed coordinate and location. This can vary
 significantly from the Demiurge item&#39;s location during a long
 series of movement notifications - the Demiurge item may already
-be at the final location, while the notifications go one at a
-time through the places in between.</p>
+be at the final location, while the notifications go one at a time
+through the places in between. In general the EngineConnector will
+assign these coordinates and tell the Displayable to play a
+movement animation, but the Displayable can&#39;t easily know exactly
+what happens when.</p>
 
 
   </div>
@@ -1267,12 +1091,12 @@ time through the places in between.</p>
       <pre class="lines">
 
 
-30
-31
-32</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_x'>x</span>
   <span class='ivar'>@x</span>
@@ -1323,12 +1147,12 @@ time through the places in between.</p>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_y'>y</span>
   <span class='ivar'>@y</span>
@@ -1346,73 +1170,9 @@ time through the places in between.</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="demiurge_reloaded-instance_method">
+  <h3 class="signature first" id="destroy_for_player-instance_method">
   
-    #<strong>demiurge_reloaded</strong>  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>This method is called when Demiurge is, or may have been,
-reloaded.  Demiurge item names, handlers and so on stay the same
-and state is preserved. But StateItems are reinstantiated and must
-be looked up again. This method updates only this single
-Displayable, so it must be called on all Displayables, normally by
-the EngineConnector.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-71
-72
-73
-74
-75</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 71</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_demiurge_reloaded'>demiurge_reloaded</span>
-  <span class='ivar'>@demi_item</span> <span class='op'>=</span> <span class='ivar'>@demi_engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='ivar'>@demi_name</span><span class='rparen'>)</span>
-  <span class='ivar'>@location_item</span> <span class='op'>=</span> <span class='ivar'>@demi_engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='ivar'>@location_name</span><span class='rparen'>)</span>
-  <span class='ivar'>@location_displayable</span> <span class='op'>=</span> <span class='ivar'>@engine_connector</span><span class='period'>.</span><span class='id identifier rubyid_displayable_by_name'>displayable_by_name</span><span class='lparen'>(</span><span class='ivar'>@location_name</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="hide_from_player-instance_method">
-  
-    #<strong>hide_from_player</strong>(player)  &#x21d2; <tt>void</tt> 
+    #<strong>destroy_for_player</strong>(player)  &#x21d2; <tt>void</tt> 
   
 
   
@@ -1471,15 +1231,135 @@ this method in a subclass.</p>
       <pre class="lines">
 
 
+138
+139
+140</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 138</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_destroy_for_player'>destroy_for_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_DESTROY_DISPLAYABLE-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE (constant)">DISPLAY_DESTROY_DISPLAYABLE</a></span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="messages_to_show_player-instance_method">
+  
+    #<strong>messages_to_show_player</strong>(player)  &#x21d2; <tt>Array</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Return zero or more messages for <span class='object_link'><a href="#show_to_player-instance_method" title="Pixiurge::Displayable#show_to_player (method)">#show_to_player</a></span>. An empty array
+of messages mean &quot;don&#39;t show&quot; or &quot;no messages are required to
+show.&quot; The primary reason for this having an independent existence
+is for containers and other Displayables that can contain other
+Displayables - this is a way &quot;hide&quot; this Displayable inside
+another one.</p>
+
+<p>The specific <span class='object_link'><a href="#messages_to_show_player-instance_method" title="Pixiurge::Displayable#messages_to_show_player (method)">#messages_to_show_player</a></span> superclass
+method is for parent-class information. A child class will either
+replace this information or supplement it, depending. Calling
+&quot;super&quot; in a child implementation isn&#39;t mandatory but may be
+useful.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>player</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Player.html" title="Pixiurge::Player (class)">Pixiurge::Player</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The player to show this Displayable to</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A JSON-serializable Array of messages which are used to show the Displayable to this player</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 117
 118
-119</pre>
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 117</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_hide_from_player'>hide_from_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_HIDE-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_HIDE (constant)">DISPLAY_HIDE</a></span></span><span class='comma'>,</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_messages_to_show_player'>messages_to_show_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@displayable_type</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>displayable</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>x</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@x</span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@y</span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location_block_width</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@location_displayable</span> <span class='op'>?</span> <span class='ivar'>@location_displayable</span><span class='period'>.</span><span class='id identifier rubyid_block_width'>block_width</span> <span class='op'>:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>location_block_height</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@location_displayable</span> <span class='op'>?</span> <span class='ivar'>@location_displayable</span><span class='period'>.</span><span class='id identifier rubyid_block_height'>block_height</span> <span class='op'>:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>position</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@position</span><span class='comma'>,</span>
+      <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1489,7 +1369,7 @@ this method in a subclass.</p>
       <div class="method_details ">
   <h3 class="signature " id="move_for_player-instance_method">
   
-    #<strong>move_for_player</strong>(player, old_position, new_position)  &#x21d2; <tt>void</tt> 
+    #<strong>move_for_player</strong>(player, old_position, new_position, options = {})  &#x21d2; <tt>void</tt> 
   
 
   
@@ -1588,18 +1468,16 @@ missed an animation, for example.</p>
       <pre class="lines">
 
 
-141
-142
-143
-144</pre>
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 141</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 162</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_move_for_player'>move_for_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please override this method!</span><span class='tstring_end'>&quot;</span></span>
-  <span class='comment'>#player.message [&quot;displayMoveStackToPixel&quot;, self.spritestack[:name], pixel_x, pixel_y, { &quot;duration&quot; =&gt; time_to_walk } ]
-</span><span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_move_for_player'>move_for_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='lparen'>(</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_MOVE_DISPLAYABLE-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_MOVE_DISPLAYABLE (constant)">DISPLAY_MOVE_DISPLAYABLE</a></span></span><span class='comma'>,</span> <span class='ivar'>@name</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>old_position</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>position</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>options</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span> <span class='rbrace'>}</span> <span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1616,7 +1494,12 @@ missed an animation, for example.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>Show this Displayable to a player, generally by sending messages.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Show this Displayable to a player by sending a
+DISPLAY_SHOW_DISPLAYABLE message.  Be very careful overriding this
+method - a Displayable that uses something other than a single
+DISPLAY_SHOW_DISPLAYABLE may not work properly if put inside a
+Container or other Displayable that contains other
+Displayables.</p>
 
 
   </div>
@@ -1664,15 +1547,19 @@ missed an animation, for example.</p>
       <pre class="lines">
 
 
-105
-106
-107</pre>
+95
+96
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_to_player'>show_to_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Override Displayable#show_to_player!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_msgs'>msgs</span> <span class='op'>=</span> <span class='id identifier rubyid_messages_to_show_player'>messages_to_show_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_msgs'>msgs</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_msgs'>msgs</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_SHOW_DISPLAYABLE-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE (constant)">DISPLAY_SHOW_DISPLAYABLE</a></span></span><span class='comma'>,</span> <span class='ivar'>@name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_msgs'>msgs</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1684,7 +1571,7 @@ missed an animation, for example.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jan 29 15:15:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

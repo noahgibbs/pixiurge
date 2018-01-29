@@ -109,9 +109,8 @@
   <strong>This class is part of a private API.</strong>
   You should avoid using this class if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>This is a BlockRunner for an agent&#39;s actions - it will be used if
-“engine_code” isn&#39;t set and the item for the action is an agent.</p>
+&quot;engine_code&quot; isn&#39;t set and the item for the action is an agent.</p>
 
 
   </div>
@@ -127,8 +126,7 @@
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -177,8 +175,7 @@
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Dump the engine&#39;s state as JSON, as an admin-only action.</p>
+    <span class="summary_desc"><div class='inline'><p>Dump the engine&#39;s state as JSON, as an admin-only action.</p>
 </div></span>
   
 </li>
@@ -187,7 +184,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#move_to_instant-instance_method" title="#move_to_instant (instance method)">#<strong>move_to_instant</strong>(position)  &#x21d2; void </a>
+      <a href="#move_to_instant-instance_method" title="#move_to_instant (instance method)">#<strong>move_to_instant</strong>(position, options = {})  &#x21d2; void </a>
     
 
     
@@ -201,8 +198,7 @@
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Move the agent to a specific position immediately.</p>
+    <span class="summary_desc"><div class='inline'><p>Move the agent to a specific position immediately.</p>
 </div></span>
   
 </li>
@@ -225,8 +221,7 @@
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Queue an action for this agent, to be performed during the next tick.</p>
+    <span class="summary_desc"><div class='inline'><p>Queue an action for this agent, to be performed during the next tick.</p>
 </div></span>
   
 </li>
@@ -284,8 +279,7 @@
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Dump the engine&#39;s state as JSON, as an admin-only action.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Dump the engine&#39;s state as JSON, as an admin-only action.</p>
 
 
   </div>
@@ -306,8 +300,7 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The filename to dump state to.</p>
+        <div class='inline'><p>The filename to dump state to.</p>
 </div>
       
     </li>
@@ -323,8 +316,7 @@
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -337,7 +329,6 @@
       <pre class="lines">
 
 
-408
 409
 410
 411
@@ -348,10 +339,11 @@
 416
 417
 418
-419</pre>
+419
+420</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/action_item.rb', line 408</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/action_item.rb', line 409</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dump_state'>dump_state</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>statedump.json</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>admin</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='comment'># Admin-only command
@@ -373,7 +365,7 @@
       <div class="method_details ">
   <h3 class="signature " id="move_to_instant-instance_method">
   
-    #<strong>move_to_instant</strong>(position)  &#x21d2; <tt>void</tt> 
+    #<strong>move_to_instant</strong>(position, options = {})  &#x21d2; <tt>void</tt> 
   
 
   
@@ -385,9 +377,8 @@
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Move the agent to a specific position immediately. Don&#39;t play a walking
-animation or anything. Just put it where it needs to be.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Move the agent to a specific position immediately. Don&#39;t play a
+walking animation or anything. Just put it where it needs to be.</p>
 
 
   </div>
@@ -406,8 +397,24 @@ animation or anything. Just put it where it needs to be.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The position to move to</p>
+        <div class='inline'><p>The position to move to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>A Hash of <em>how</em> the item moves there; this can be checked by your World Files or display library, though Demiurge won&#39;t use it directly.</p>
 </div>
       
     </li>
@@ -423,8 +430,7 @@ animation or anything. Just put it where it needs to be.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -437,7 +443,6 @@ animation or anything. Just put it where it needs to be.</p>
       <pre class="lines">
 
 
-367
 368
 369
 370
@@ -450,12 +455,13 @@ animation or anything. Just put it where it needs to be.</p>
 377
 378
 379
-380</pre>
+380
+381</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/action_item.rb', line 367</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/action_item.rb', line 368</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_move_to_instant'>move_to_instant</span><span class='lparen'>(</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_move_to_instant'>move_to_instant</span><span class='lparen'>(</span><span class='id identifier rubyid_position'>position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='comment'># TODO: We don&#39;t have a great way to do this for non-agent entities. How does &quot;accomodate&quot; work for non-agents?
 </span>  <span class='comment'># This may be app-specific.
 </span>
@@ -489,8 +495,8 @@ animation or anything. Just put it where it needs to be.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-<p class="note returns_void">This method returns an undefined value.</p>
-<p>Queue an action for this agent, to be performed during the next tick.</p>
+<p class="note returns_void">This method returns an undefined value.</p><p>Queue an action for this agent, to be performed during the next
+tick.</p>
 
 
   </div>
@@ -509,8 +515,7 @@ animation or anything. Just put it where it needs to be.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The action name to queue up</p>
+        <div class='inline'><p>The action name to queue up</p>
 </div>
       
     </li>
@@ -525,8 +530,7 @@ animation or anything. Just put it where it needs to be.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Additional arguments to pass to the action block</p>
+        <div class='inline'><p>Additional arguments to pass to the action block</p>
 </div>
       
     </li>
@@ -542,8 +546,7 @@ animation or anything. Just put it where it needs to be.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -556,7 +559,6 @@ animation or anything. Just put it where it needs to be.</p>
       <pre class="lines">
 
 
-389
 390
 391
 392
@@ -568,10 +570,11 @@ animation or anything. Just put it where it needs to be.</p>
 398
 399
 400
-401</pre>
+401
+402</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/action_item.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/action_item.rb', line 390</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_queue_action'>queue_action</span><span class='lparen'>(</span><span class='id identifier rubyid_action_name'>action_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Demiurge.html" title="Demiurge (module)">Demiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Agent.html" title="Demiurge::Agent (class)">Agent</a></span></span><span class='rparen'>)</span>
@@ -596,7 +599,7 @@ animation or anything. Just put it where it needs to be.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:11 2018 by
+  Generated on Mon Jan 29 15:15:22 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

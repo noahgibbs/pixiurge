@@ -110,14 +110,12 @@
 
   <div class="note todo">
     <strong>TODO:</strong>
-    <div class='inline'>
-<p>Merge this with the AgentActionIntention used for taking queued actions</p>
+    <div class='inline'><p>Merge this with the AgentActionIntention used for taking queued actions</p>
 </div>
   </div>
 
-
-<p>The AgentMaintenanceIntention reduces the level of “busy”-ness of the agent
-on each tick.</p>
+<p>The AgentMaintenanceIntention reduces the level of &quot;busy&quot;-ness of
+the agent on each tick.</p>
 
 
   </div>
@@ -157,8 +155,7 @@ on each tick.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>An AgentMaintenanceIntention is always considered to be allowed.</p>
+    <span class="summary_desc"><div class='inline'><p>An AgentMaintenanceIntention is always considered to be allowed.</p>
 </div></span>
   
 </li>
@@ -181,8 +178,7 @@ on each tick.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Reduce the amount of busy-ness.</p>
+    <span class="summary_desc"><div class='inline'><p>Reduce the amount of busy-ness.</p>
 </div></span>
   
 </li>
@@ -207,8 +203,7 @@ on each tick.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Constructor.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor.</p>
 </div></span>
   
 </li>
@@ -231,9 +226,7 @@ on each tick.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Normally, the agent&#39;s maintenance intention can&#39;t be blocked,
-cancelled or modified.</p>
+    <span class="summary_desc"><div class='inline'><p>Normally, the agent&#39;s maintenance intention can&#39;t be blocked, cancelled or modified.</p>
 </div></span>
   
 </li>
@@ -271,7 +264,6 @@ cancelled or modified.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Constructor. Takes an engine and agent name.</p>
 
 
@@ -286,13 +278,13 @@ cancelled or modified.</p>
       <pre class="lines">
 
 
-119
-120
-121
-122</pre>
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 119</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_engine'>engine</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
@@ -325,7 +317,6 @@ cancelled or modified.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>An AgentMaintenanceIntention is always considered to be allowed.</p>
 
 
@@ -353,12 +344,12 @@ cancelled or modified.</p>
       <pre class="lines">
 
 
-130
-131
-132</pre>
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_allowed?'>allowed?</span>
   <span class='kw'>true</span>
@@ -383,7 +374,6 @@ cancelled or modified.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Reduce the amount of busy-ness.</p>
 
 
@@ -398,13 +388,13 @@ cancelled or modified.</p>
       <pre class="lines">
 
 
-135
-136
-137
-138</pre>
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span>
   <span class='id identifier rubyid_agent'>agent</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='ivar'>@name</span><span class='rparen'>)</span>
@@ -430,7 +420,6 @@ cancelled or modified.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Normally, the agent&#39;s maintenance intention can&#39;t be blocked,
 cancelled or modified.</p>
 
@@ -446,11 +435,11 @@ cancelled or modified.</p>
       <pre class="lines">
 
 
-126
-127</pre>
+133
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_offer'>offer</span>
 <span class='kw'>end</span></pre>
@@ -464,7 +453,7 @@ cancelled or modified.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:08 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

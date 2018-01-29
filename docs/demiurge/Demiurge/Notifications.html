@@ -85,12 +85,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Notifications use string identifiers as names. It&#39;s legal to use
-strings directly, but then typos can go undetected. This also serves as a
-list of what notifications are normally available. Application-specific
-notifications should define their own notification constants, either in
-this module or another one.</p>
+    <p>Notifications use string identifiers as names. It&#39;s legal to use
+strings directly, but then typos can go undetected.  This also
+serves as a list of what notifications are normally
+available. Application-specific notifications should define their
+own notification constants, either in this module or another one.</p>
 
 
   </div>
@@ -106,8 +105,7 @@ this module or another one.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -121,9 +119,8 @@ this module or another one.</p>
       <dt id="AdminWarning-constant" class="">AdminWarning =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification is sent when something is misconfigured, but not in a
-continuity-threatening way.</p>
+    <p>This notification is sent when something is misconfigured, but
+not in a continuity-threatening way.</p>
 
 
   </div>
@@ -139,8 +136,7 @@ continuity-threatening way.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -154,8 +150,7 @@ continuity-threatening way.</p>
       <dt id="TickFinished-constant" class="">TickFinished =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification indicates that a tick has completed.</p>
+    <p>This notification indicates that a tick has completed.</p>
 
 
   </div>
@@ -171,8 +166,7 @@ continuity-threatening way.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -186,9 +180,8 @@ continuity-threatening way.</p>
       <dt id="NewItem-constant" class="">NewItem =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification indicates that a new item has been registered by the
-engine.</p>
+    <p>This notification indicates that a new item has been registered
+by the engine.</p>
 
 
   </div>
@@ -204,8 +197,7 @@ engine.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -219,9 +211,8 @@ engine.</p>
       <dt id="LoadStateStart-constant" class="">LoadStateStart =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification means that state loading has begun into an initialized
-engine.</p>
+    <p>This notification means that state loading has begun into an
+initialized engine.</p>
 
 
   </div>
@@ -237,8 +228,7 @@ engine.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -252,9 +242,8 @@ engine.</p>
       <dt id="LoadStateEnd-constant" class="">LoadStateEnd =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification means that state loading has finished in an initialized
-engine.</p>
+    <p>This notification means that state loading has finished in an
+initialized engine.</p>
 
 
   </div>
@@ -270,8 +259,7 @@ engine.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -285,9 +273,9 @@ engine.</p>
       <dt id="LoadWorldVerify-constant" class="">LoadWorldVerify =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification is sent when a World File reload is preparing to start.
-This will be sent on verify-only reloads as well as normal reloads.</p>
+    <p>This notification is sent when a World File reload is preparing
+to start.  This will be sent on verify-only reloads as well as
+normal reloads.</p>
 
 
   </div>
@@ -303,8 +291,7 @@ This will be sent on verify-only reloads as well as normal reloads.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -318,9 +305,40 @@ This will be sent on verify-only reloads as well as normal reloads.</p>
       <dt id="LoadWorldStart-constant" class="">LoadWorldStart =
         <div class="docstring">
   <div class="discussion">
+    <p>This notification is sent when a World File reload has
+successfully verified and has begun loading. Verify-only reloads
+do not send this signal.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>load_world_start</span><span class='tstring_end'>&quot;</span></span></pre></dd>
     
-<p>This notification is sent when a World File reload has successfully
-verified and has begun loading. Verify-only reloads do not send this
+      <dt id="LoadWorldEnd-constant" class="">LoadWorldEnd =
+        <div class="docstring">
+  <div class="discussion">
+    <p>This notification is sent when a World File reload has
+successfully completed. Verify-only reloads do not send this
 signal.</p>
 
 
@@ -337,41 +355,7 @@ signal.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div>
-      </dt>
-      <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>load_world_start</span><span class='tstring_end'>&quot;</span></span></pre></dd>
-    
-      <dt id="LoadWorldEnd-constant" class="">LoadWorldEnd =
-        <div class="docstring">
-  <div class="discussion">
-    
-<p>This notification is sent when a World File reload has successfully
-completed. Verify-only reloads do not send this signal.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -385,13 +369,11 @@ completed. Verify-only reloads do not send this signal.</p>
       <dt id="MoveFrom-constant" class="">MoveFrom =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification is sent when an agent moves between positions, locations
-and/or zones. This notification goes out at the old location and zone,
-which may be the same as the new.</p>
+    <p>This notification is sent when an agent moves between positions,
+locations and/or zones. This notification goes out at the old
+location and zone, which may be the same as the new.</p>
 
-<p>Fields: new_position (String), old_position (String), new_location
-(String), old_location (String), zone (String)</p>
+<p>Fields: new_position (String), old_position (String), new_location (String), old_location (String), zone (String)</p>
 
 
   </div>
@@ -407,8 +389,7 @@ which may be the same as the new.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -422,13 +403,11 @@ which may be the same as the new.</p>
       <dt id="MoveTo-constant" class="">MoveTo =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification is sent when an agent moves between positions, locations
-and/or zones. This notification goes out at the new location and zone,
-which may be the same as the old.</p>
+    <p>This notification is sent when an agent moves between positions,
+locations and/or zones. This notification goes out at the new
+location and zone, which may be the same as the old.</p>
 
-<p>Fields: new_position (String), old_position (String), new_location
-(String), old_location (String), zone (String)</p>
+<p>Fields: new_position (String), old_position (String), new_location (String), old_location (String), zone (String)</p>
 
 
   </div>
@@ -444,8 +423,7 @@ which may be the same as the old.</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -459,11 +437,9 @@ which may be the same as the old.</p>
       <dt id="IntentionCancelled-constant" class="">IntentionCancelled =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification is sent when an intention has been cancelled.</p>
+    <p>This notification is sent when an intention has been cancelled.</p>
 
-<p>Fields: reason (String), by (Array&lt;String&gt;), id (Integer),
-intention_type (String), info (Hash)</p>
+<p>Fields: reason (String), by (Array<String>), id (Integer), intention_type (String), info (Hash)</p>
 
 
   </div>
@@ -479,8 +455,7 @@ intention_type (String), info (Hash)</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -494,8 +469,7 @@ intention_type (String), info (Hash)</p>
       <dt id="IntentionApplied-constant" class="">IntentionApplied =
         <div class="docstring">
   <div class="discussion">
-    
-<p>This notification is sent when an intention is successfully applied.</p>
+    <p>This notification is sent when an intention is successfully applied.</p>
 
 <p>Fields: id (Integer), intention_type (String), info (Hash)</p>
 
@@ -513,8 +487,7 @@ intention_type (String), info (Hash)</p>
       
       
         
-        <div class='inline'>
-<p>0.2.0</p>
+        <div class='inline'><p>0.2.0</p>
 </div>
       
     </li>
@@ -538,7 +511,7 @@ intention_type (String), info (Hash)</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:06 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

@@ -105,17 +105,17 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>A BadScriptError will normally not benefit from retrying. Instead, one or
-more scripts associated with this error is presumed to be bad or outdated.
-The primary thing to do with BadScriptErrors is to accumulate and count
-them and possibly to deactivate one or more bad scripts. Error counting can
-allow an administrator to locate (or guess) the bad script in question and
-disable one or more scripts to remove the problem. While it&#39;s
-technically possible to disable bad scripts automatically, that may
-sometimes have distressing side effects when a script was intended to run
-and didn&#39;t. It may also have false positives where a misbehaving script
-“frames” a correct script by causing errors downstream.</p>
+    <p>A BadScriptError will normally not benefit from retrying. Instead,
+one or more scripts (World Files and/or action code) associated
+with this error is presumed to be bad or outdated. The primary
+thing to do with BadScriptErrors is to accumulate and count them
+and possibly to deactivate one or more pieces of bad code or
+in-world areas containing them. Error counting can allow an
+administrator to locate (or guess) the bad script in question and
+disable one or more objects to remove the problem. While it&#39;s
+technically possible to disable bad scripts automatically, that
+will sometimes function incorrectly. At best it can sometimes
+help, and at worst it can cause severe damage.</p>
 
 
   </div>
@@ -131,8 +131,7 @@ and didn&#39;t. It may also have false positives where a misbehaving script
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -141,7 +140,7 @@ and didn&#39;t. It may also have false positives where a misbehaving script
 
 </div><div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="NoCurrentIntentionError.html" title="Demiurge::Errors::NoCurrentIntentionError (class)">NoCurrentIntentionError</a></span>, <span class='object_link'><a href="NoSuchActionError.html" title="Demiurge::Errors::NoSuchActionError (class)">NoSuchActionError</a></span>, <span class='object_link'><a href="NoSuchAgentError.html" title="Demiurge::Errors::NoSuchAgentError (class)">NoSuchAgentError</a></span>, <span class='object_link'><a href="NoSuchStateKeyError.html" title="Demiurge::Errors::NoSuchStateKeyError (class)">NoSuchStateKeyError</a></span>, <span class='object_link'><a href="TooManyIntentionLoopsError.html" title="Demiurge::Errors::TooManyIntentionLoopsError (class)">TooManyIntentionLoopsError</a></span>, <span class='object_link'><a href="TooManyNotificationLoopsError.html" title="Demiurge::Errors::TooManyNotificationLoopsError (class)">TooManyNotificationLoopsError</a></span></p>
+  <p class="children"><span class='object_link'><a href="LocationNameNotFoundError.html" title="Demiurge::Errors::LocationNameNotFoundError (class)">LocationNameNotFoundError</a></span>, <span class='object_link'><a href="NoCurrentIntentionError.html" title="Demiurge::Errors::NoCurrentIntentionError (class)">NoCurrentIntentionError</a></span>, <span class='object_link'><a href="NoSuchActionError.html" title="Demiurge::Errors::NoSuchActionError (class)">NoSuchActionError</a></span>, <span class='object_link'><a href="NoSuchAgentError.html" title="Demiurge::Errors::NoSuchAgentError (class)">NoSuchAgentError</a></span>, <span class='object_link'><a href="NoSuchStateKeyError.html" title="Demiurge::Errors::NoSuchStateKeyError (class)">NoSuchStateKeyError</a></span>, <span class='object_link'><a href="TooManyIntentionLoopsError.html" title="Demiurge::Errors::TooManyIntentionLoopsError (class)">TooManyIntentionLoopsError</a></span>, <span class='object_link'><a href="TooManyNotificationLoopsError.html" title="Demiurge::Errors::TooManyNotificationLoopsError (class)">TooManyNotificationLoopsError</a></span></p>
 </div>
 
 
@@ -178,7 +177,7 @@ and didn&#39;t. It may also have false positives where a misbehaving script
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:10 2018 by
+  Generated on Mon Jan 29 15:15:22 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

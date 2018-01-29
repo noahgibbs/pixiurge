@@ -101,12 +101,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>A TmxCache loads and remembers TMX file maps from the tmx gem. For a
-variety of reasons, it&#39;s not great to reload TMX files every time we
-need to know about them, but it can also be a problem to store a copy of
-the parsed version every time and place we use it. Caching is, of course, a
-time-honored solution to this problem.</p>
+    <p>A TmxCache loads and remembers TMX file maps from the tmx gem. For
+a variety of reasons, it&#39;s not great to reload TMX files every
+time we need to know about them, but it can also be a problem to
+store a copy of the parsed version every time and place we use it.
+Caching is, of course, a time-honored solution to this problem.</p>
 
 
   </div>
@@ -122,8 +121,7 @@ time-honored solution to this problem.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -157,8 +155,7 @@ time-honored solution to this problem.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Root directory the cache was created relative to.</p>
+    <span class="summary_desc"><div class='inline'><p>Root directory the cache was created relative to.</p>
 </div></span>
   
 </li>
@@ -194,8 +191,7 @@ time-honored solution to this problem.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Clear the TMX cache.</p>
+    <span class="summary_desc"><div class='inline'><p>Clear the TMX cache.</p>
 </div></span>
   
 </li>
@@ -220,8 +216,7 @@ time-honored solution to this problem.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Create the TmxCache.</p>
+    <span class="summary_desc"><div class='inline'><p>Create the TmxCache.</p>
 </div></span>
   
 </li>
@@ -244,8 +239,7 @@ time-honored solution to this problem.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Return a TMX entry for the given layout type and filename.</p>
+    <span class="summary_desc"><div class='inline'><p>Return a TMX entry for the given layout type and filename.</p>
 </div></span>
   
 </li>
@@ -268,8 +262,7 @@ time-honored solution to this problem.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Create the TmxCache</p>
+    <p>Create the TmxCache</p>
 
 
   </div>
@@ -290,8 +283,7 @@ time-honored solution to this problem.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Options</p>
+        <div class='inline'><p>Options</p>
 </div>
       
     </li>
@@ -311,8 +303,7 @@ time-honored solution to this problem.</p>
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>The root directory to read TMX and TSX files relative to</p>
+            &mdash; <div class='inline'><p>The root directory to read TMX and TSX files relative to</p>
 </div>
           
         </li>
@@ -329,8 +320,7 @@ time-honored solution to this problem.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -376,8 +366,7 @@ time-honored solution to this problem.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns Root directory the cache was created relative to</p>
+    <p>Returns Root directory the cache was created relative to</p>
 
 
   </div>
@@ -395,8 +384,7 @@ time-honored solution to this problem.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Root directory the cache was created relative to</p>
+        <div class='inline'><p>Root directory the cache was created relative to</p>
 </div>
       
     </li>
@@ -411,8 +399,7 @@ time-honored solution to this problem.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -458,11 +445,10 @@ time-honored solution to this problem.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p>
-<p>Clear the TMX cache. Remove all existing entries. This can potentially
-break existing TMX-based objects. Objects often refer repeatedly back into
-the cache to avoid duplicating structures, and to pick up new changes to
-those structures.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Clear the TMX cache. Remove all existing entries. This can
+potentially break existing TMX-based objects. Objects often
+refer repeatedly back into the cache to avoid duplicating
+structures, and to pick up new changes to those structures.</p>
 
 
   </div>
@@ -478,8 +464,7 @@ those structures.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -524,11 +509,10 @@ those structures.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
-<p>Return a TMX entry for the given layout type and filename. A “layout type”
-is something like normal TMX (called “tmx”) or Manasource-style (called
-“manasource”.) But additional types are likely to be added in future
-versions of Pixiurge.</p>
+<p>Return a TMX entry for the given layout type and filename. A
+&quot;layout type&quot; is something like normal TMX (called &quot;tmx&quot;) or
+Manasource-style (called &quot;manasource&quot;.) But additional types are
+likely to be added in future versions of Pixiurge.</p>
 
 
   </div>
@@ -547,8 +531,7 @@ versions of Pixiurge.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The subtype of TMX file; currently may be one of “tmx” or “manasource”</p>
+        <div class='inline'><p>The subtype of TMX file; currently may be one of &quot;tmx&quot; or &quot;manasource&quot;</p>
 </div>
       
     </li>
@@ -563,9 +546,7 @@ versions of Pixiurge.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The path to the TMX file relative to the tile cache&#39;s TMX root
-directory</p>
+        <div class='inline'><p>The path to the TMX file relative to the tile cache&#39;s TMX root directory</p>
 </div>
       
     </li>
@@ -583,8 +564,7 @@ directory</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The TMX cache entry, in an internal and potentially changeable format</p>
+        <div class='inline'><p>The TMX cache entry, in an internal and potentially changeable format</p>
 </div>
       
     </li>
@@ -599,8 +579,7 @@ directory</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -661,7 +640,7 @@ directory</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:08 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

@@ -57,12 +57,11 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'>
-<h1 id="label-Demiurge">Demiurge</h1>
+      <div id="content"><div id='filecontents'><h1>Demiurge</h1>
 
 <p>Demiurge is an experimental game state and simulation library.</p>
 
-<h2 id="label-Installation">Installation</h2>
+<h2>Installation</h2>
 
 <p>Add this line to your application&#39;s Gemfile:</p>
 
@@ -71,181 +70,181 @@
 
 <p>And then execute:</p>
 
-<pre class="code ruby"><code class="ruby">$ bundle</code></pre>
+<pre class="code ruby"><code class="ruby">$ bundle
+</code></pre>
 
 <p>Or install it yourself as:</p>
 
-<pre class="code ruby"><code class="ruby">$ gem install demiurge</code></pre>
+<pre class="code ruby"><code class="ruby">$ gem install demiurge
+</code></pre>
 
-<h2 id="label-Usage">Usage</h2>
+<h2>Usage</h2>
 
 <p>See test mini-games in the test directory. For more information, see
 lib/demiurge/engine.rb.</p>
 
-<p>For longer-term usage, Demiurge will normally be part of a larger program.
-Its intent is to manage behavior and state for a game or similar simulated
-world. In those cases, Demiurge will normally be required as a gem by its
-application, using normal “require &#39;demiurge&#39;”-style declarations.
-You can see what that looks like by examining test/example mini-worlds in
-the relevant Demiurge directories.</p>
+<p>For longer-term usage, Demiurge will normally be part of a larger
+program. Its intent is to manage behavior and state for a game or
+similar simulated world. In those cases, Demiurge will normally be
+required as a gem by its application, using normal &quot;require
+&#39;demiurge&#39;&quot;-style declarations. You can see what that looks like by
+examining test/example mini-worlds in the relevant Demiurge
+directories.</p>
 
-<p>If Demiurge is primarily managing a simulated world and you want to view
-the results, you&#39;ll need a display library to make its output visible.
-Currently that means Demiurge-CreateJS, which displays the results in your
-browser as a simulated world.</p>
+<p>If Demiurge is primarily managing a simulated world and you want to
+view the results, you&#39;ll need a display library to make its output
+visible. Currently that means Demiurge-CreateJS, which displays the
+results in your browser as a simulated world.</p>
 
-<p>Please note that it is very, very difficult to separate the specifics of
-behavior from the specifics of output and display - entities simply
-<em>behave</em> differently in a text-only world with generalized
-“locations” than they do in a 2D grid or a 3D world with collisions. As a
-result, even if your preferred method of output isn&#39;t as specific as
-“Unreal Engine” or “browser game” or “MUD-style text game,” your simulation
-is going to have a strong “flavor” of whatever underlying physics you
-select. There is no such thing as “just plain physics, with no strong bias
-that changes the behavior of agents within it.”</p>
+<p>Please note that it is very, very difficult to separate the specifics
+of behavior from the specifics of output and display - entities simply
+<em>behave</em> differently in a text-only world with generalized &quot;locations&quot;
+than they do in a 2D grid or a 3D world with collisions. As a result,
+even if your preferred method of output isn&#39;t as specific as &quot;Unreal
+Engine&quot; or &quot;browser game&quot; or &quot;MUD-style text game,&quot; your simulation is
+going to have a strong &quot;flavor&quot; of whatever underlying physics you
+select. There is no such thing as &quot;just plain physics, with no strong
+bias that changes the behavior of agents within it.&quot;</p>
 
-<p>This README doesn&#39;t tell you everything about creating and simulating a
-world with Demiurge. See CONCEPTS.md for an initial grounding in those
-ideas.</p>
+<p>This README doesn&#39;t tell you everything about creating and simulating
+a world with Demiurge. See CONCEPTS.md for an initial grounding in
+those ideas.</p>
 
-<h2 id="label-Demiurge+DSL+-28World+Files-29">Demiurge DSL (World Files)</h2>
+<h2>Demiurge DSL (World Files)</h2>
 
 <p>Demiurge contains an optional Domain-Specific Language (also called a
-“DSL”) which can be used to specify your simulated world and its rules and
-behaviors. The “test” directory contains some examples of these files.</p>
+&quot;DSL&quot;) which can be used to specify your simulated world and its rules
+and behaviors. The &quot;test&quot; directory contains some examples of these
+files.</p>
 
-<p>These DSLs may specify various sorts of locations and agents that roam them
-- the idea is that the world files should specify enough details to
-simulate the “world” fully, without containing too much additional detail
-on how to supply the results. Since many formats tend to pack this
-information together (e.g. TMX files contain layout and collision data
-required for simulation, but also links to image files for display) the
-Demiurge engine will often link to the display information without using
-it. This permits a display layer on top of Demiurge, such as
-Demiurge-CreateJS, to make use of the display information alongside the
-simulation data.</p>
+<p>These DSLs may specify various sorts of locations and agents that roam
+them - the idea is that the world files should specify enough details
+to simulate the &quot;world&quot; fully, without containing too much additional
+detail on how to supply the results. Since many formats tend to pack
+this information together (e.g. TMX files contain layout and collision
+data required for simulation, but also links to image files for
+display) the Demiurge engine will often link to the display
+information without using it. This permits a display layer on top of
+Demiurge, such as Demiurge-CreateJS, to make use of the display
+information alongside the simulation data.</p>
 
-<h2 id="label-Specific+Technologies-3A+2D+Tile+Maps">Specific Technologies: 2D Tile Maps</h2>
+<h2>Specific Technologies: 2D Tile Maps</h2>
 
-<p>Remember that “no such thing as just plain physics” bit above? As a
-consequence, Demiurge contains support for specific, non-abstract physics
-bits like “2d grid of defined terrains,” also called a tilemap or tiled
-terrain.</p>
+<p>Remember that &quot;no such thing as just plain physics&quot; bit above? As a
+consequence, Demiurge contains support for specific, non-abstract
+physics bits like &quot;2d grid of defined terrains,&quot; also called a tilemap
+or tiled terrain.</p>
 
 <p>There are standards for tilemaps, such as TMX format and the Tiled map
-editor (<a href="http://mapeditor.org">mapeditor.org</a>). TMX support
-also, not coincidentally, gives you a fairly rich source of existing media
-to use (e.g. The Mana Project and Source of Tales.) Please be careful to
-appropriately respect the licensing of this media, which requires an
-acknowledgement to the original authors for your graphics and map files.</p>
+editor (<a href="http://mapeditor.org">http://mapeditor.org</a>). TMX support also, not coincidentally,
+gives you a fairly rich source of existing media to use (e.g. The Mana
+Project and Source of Tales.) Please be careful to appropriately
+respect the licensing of this media, which requires an acknowledgement
+to the original authors for your graphics and map files.</p>
 
-<p>2D tile-based media is rich enough to provide interesting simulation and AI
-behaviors without being <em>so</em> interesting that your agent code
+<p>2D tile-based media is rich enough to provide interesting simulation
+and AI behaviors without being <em>so</em> interesting that your agent code
 can&#39;t be in scripting languages and spends all its time doing
 pathfinding, as would be the case with most open 3D environments.</p>
 
-<h2 id="label-Specific+Technologies-3A+Serializability+and+Immutability">Specific Technologies: Serializability and Immutability</h2>
+<h2>Specific Technologies: Serializability and Immutability</h2>
 
-<p>One of the hard challenges in game- and world-based AI is how to make it
-easy to create new content, primarily in the form of reactions and
-behavior. Those reactions and behavior are most frequently expressed as
-some form of code/scripts.</p>
+<p>One of the hard challenges in game- and world-based AI is how to make
+it easy to create new content, primarily in the form of reactions and
+behavior. Those reactions and behavior are most frequently expressed
+as some form of code/scripts.</p>
 
 <p>Reactions and behavior can take many forms. Two common ones are called
 Intentions and Actions by Demiurge. An Intention is generated by an
 artificial intelligence based on examining its current situation. For
-instance, “I am hungry and I remember food in the next room, so I intend to
-move in that direction.” An Intention will examine the state of the world,
-but will not normally change it.</p>
+instance, &quot;I am hungry and I remember food in the next room, so I
+intend to move in that direction.&quot; An Intention will examine the state
+of the world, but will not normally change it.</p>
 
 <p>An Action is normally the result of an Intention, and it applies that
 intention to the simulated world. An Action will frequently change the
 state of the world, such as by moving an agent within the world, or by
 moving other non-agent items in the world (e.g. eating food, picking up a
-stick, etc.) An Action may also frequently be thwarted (e.g. an item is too
-heavy, food is not where it was suspected or remembered, somebody has
-pushed their way into the hall ahead of you and you may not pass.)</p>
+stick, etc.) An Action may also frequently be thwarted (e.g. an item
+is too heavy, food is not where it was suspected or remembered,
+somebody has pushed their way into the hall ahead of you and you may
+not pass.)</p>
 
-<p>Immutable structures provide great verifiability and terrible performance.
-The code snippets can generate a second, modified version of each
-structure, but must copy nearly the entirety of it. You may be certain that
-no old state is being modified in a sloppy way, and memory usage and
-garbage collection time are both very high.</p>
+<p>Immutable structures provide great verifiability and terrible
+performance. The code snippets can generate a second, modified version
+of each structure, but must copy nearly the entirety of it. You may be
+certain that no old state is being modified in a sloppy way, and
+memory usage and garbage collection time are both very high.</p>
 
-<p>Mutable structures allow easy in-place modification for great performance,
-but they&#39;re hard to lock down when mutability isn&#39;t wanted (e.g.
-when verifying if an action is allowed to take place.)</p>
+<p>Mutable structures allow easy in-place modification for great
+performance, but they&#39;re hard to lock down when mutability isn&#39;t
+wanted (e.g. when verifying if an action is allowed to take place.)</p>
 
-<p>Demiurge attempts to handle this by making the code immutable per run of
-the world, and to store state data in sometimes-mutable JSON-serializable
-structures.</p>
+<p>Demiurge attempts to handle this by making the code immutable per run
+of the world, and to store state data in sometimes-mutable
+JSON-serializable structures.</p>
 
-<p>It is assumed but only sometimes verified that when calculating Intentions
-the state of the world isn&#39;t altered. It is assumed that the behaviors
-are replicatable – that random numbers generated from seeds are used in a
-way that is replicatable from run to run, for instance, or non-random
-behaviors reliably calculate the same intention from the same
-preconditions.</p>
+<p>It is assumed but only sometimes verified that when calculating
+Intentions the state of the world isn&#39;t altered. It is assumed that
+the behaviors are replicatable -- that random numbers generated from
+seeds are used in a way that is replicatable from run to run, for
+instance, or non-random behaviors reliably calculate the same
+intention from the same preconditions.</p>
 
-<p>This provides a compromise between full immutability (slow performance,
-great verifiability) and full mutability (fast performance, terrible
-verifiability) by switching back and forth between them on demand.</p>
+<p>This provides a compromise between full immutability (slow
+performance, great verifiability) and full mutability (fast
+performance, terrible verifiability) by switching back and forth
+between them on demand.</p>
 
-<h2 id="label-Development">Development</h2>
+<h2>Development</h2>
 
-<p>Demiurge is not yet ready for “pristine” production usage. It&#39;s not yet
-ready for you to just drop it in and use it unchanged. For that reason,
-assume you&#39;ll need to do some Demiurge development for yourself,
-whether or not you ever contribute it upstream.</p>
+<p>Demiurge is not yet ready for &quot;pristine&quot; production usage. It&#39;s not
+yet ready for you to just drop it in and use it unchanged. For that
+reason, assume you&#39;ll need to do some Demiurge development for
+yourself, whether or not you ever contribute it upstream.</p>
 
 <p>For more information on Demiurge&#39;s architecture, see the HACKING.md
 document in this directory.</p>
 
 <p>After checking out the repo, run <code>bin/setup</code> to install
-dependencies. Then, run <code>rake test</code> to run the tests. You can
-also run <code>bin/console</code> for an interactive prompt that will allow
-you to experiment.</p>
+dependencies. Then, run <code>rake test</code> to run the tests. You can also run
+<code>bin/console</code> for an interactive prompt that will allow you to
+experiment.</p>
 
 <p>To install this gem onto your local machine, run <code>bundle exec rake
 install</code>. To release a new version, update the version number in
-<code>version.rb</code>, and then run <code>bundle exec rake
-release</code>, which will create a git tag for the version, push git
-commits and tags, and push the <code>.gem</code> file to <a
-href="https://rubygems.org">rubygems.org</a>.</p>
+<code>version.rb</code>, and then run <code>bundle exec rake release</code>, which will
+create a git tag for the version, push git commits and tags, and push
+the <code>.gem</code> file to <a href="https://rubygems.org">rubygems.org</a>.</p>
 
-<h2 id="label-Contributing">Contributing</h2>
+<h2>Contributing</h2>
 
-<p>Bug reports and pull requests are welcome on GitHub at <a
-href="https://github.com/noahgibbs/demiurge">github.com/noahgibbs/demiurge</a>.
-This project is intended to be a safe, welcoming space for collaboration,
-and contributors are expected to adhere to the <a
-href="http://contributor-covenant.org">Contributor Covenant</a> code of
+<p>Bug reports and pull requests are welcome on GitHub at
+<a href="https://github.com/noahgibbs/demiurge">https://github.com/noahgibbs/demiurge</a>. This project is intended to be
+a safe, welcoming space for collaboration, and contributors are
+expected to adhere to the
+<a href="http://contributor-covenant.org">Contributor Covenant</a> code of
 conduct. See CODE_OF_CONDUCT.md.</p>
 
-<h2 id="label-References-2C+Influences+and+Sources+of+Media">References, Influences and Sources of Media</h2>
-<ul><li>
-<p>OpenGameArt and the Liberated Pixel Cup</p>
-</li><li>
-<p>Source of Tales</p>
-</li><li>
-<p>The Tiled Map Editor</p>
-</li><li>
-<p>The Mana World - <a
-href="https://github.com/themanaworld">github.com/themanaworld</a></p>
-</li><li>
-<p>The Mana Project</p>
-</li><li>
-<p>Evol Online</p>
-</li></ul>
+<h2>References, Influences and Sources of Media</h2>
 
-<h2 id="label-License">License</h2>
+<ul>
+<li>OpenGameArt and the Liberated Pixel Cup</li>
+<li>Source of Tales</li>
+<li>The Tiled Map Editor</li>
+<li>The Mana World - <a href="https://github.com/themanaworld">https://github.com/themanaworld</a></li>
+<li>The Mana Project</li>
+<li>Evol Online</li>
+</ul>
 
-<p>The gem is available as open source under the terms of the <a
-href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+<h2>License</h2>
+
+<p>The gem is available as open source under the terms of the
+<a href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:04 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

@@ -103,17 +103,17 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>StateItems can be serialized at any time to “structured array” format. That
-format consists of a set of Plain Old Ruby Objects (POROs) which are
-guaranteed to be serializable as JSON, and thus consist of only basic data
-structures like Strings, Arrays, Booleans and Hashes. A single StateItem
-will serialize itself to a short Array of this form: [“ObjectType”, “item
-name”, state_hash]. The ObjectType is the type registered with the engine,
-such as “ActionItem”. The “item name” is the object-unique item name. And
-the state_hash is a JSON-serializable Ruby Hash with the object&#39;s
-current state. A dump of multiple StateItems will be an Array of these
-Arrays.</p>
+    <p>StateItems can be serialized at any time to &quot;structured array&quot;
+format. That format consists of a set of Plain Old Ruby Objects
+(POROs) which are guaranteed to be serializable as JSON, and thus
+consist of only basic data structures like Strings, Arrays,
+Booleans and Hashes. A single StateItem will serialize itself to a
+short Array of this form: [&quot;ObjectType&quot;, &quot;item name&quot;,
+state_hash]. The ObjectType is the type registered with the
+engine, such as &quot;ActionItem&quot;. The &quot;item name&quot; is the object-unique
+item name. And the state_hash is a JSON-serializable Ruby Hash
+with the object&#39;s current state. A dump of multiple StateItems
+will be an Array of these Arrays.</p>
 
 
   </div>
@@ -154,8 +154,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The Engine this item is part of.</p>
+    <span class="summary_desc"><div class='inline'><p>The Engine this item is part of.</p>
 </div></span>
   
 </li>
@@ -183,8 +182,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The unique, registered or registerable name of this <span class='object_link'><a href="" title="Demiurge::StateItem (class)">StateItem</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>The unique, registered or registerable name of this <span class='object_link'><a href="" title="Demiurge::StateItem (class)">StateItem</a></span>.</p>
 </div></span>
   
 </li>
@@ -220,8 +218,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Create a single StateItem from structured array format.</p>
+    <span class="summary_desc"><div class='inline'><p>Create a single StateItem from structured array format.</p>
 </div></span>
   
 </li>
@@ -253,8 +250,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method determines whether the item will be treated as an agent.</p>
+    <span class="summary_desc"><div class='inline'><p>This method determines whether the item will be treated as an agent.</p>
 </div></span>
   
 </li>
@@ -277,8 +273,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The StateItem&#39;s serialized state in structured array format.</p>
+    <span class="summary_desc"><div class='inline'><p>The StateItem&#39;s serialized state in structured array format.</p>
 </div></span>
   
 </li>
@@ -303,8 +298,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The constructor.</p>
+    <span class="summary_desc"><div class='inline'><p>The constructor.</p>
 </div></span>
   
 </li>
@@ -327,9 +321,7 @@ Arrays.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get this StateItem&#39;s Intentions for the upcoming tick, with its current
-internal state.</p>
+    <span class="summary_desc"><div class='inline'><p>Get this StateItem&#39;s Intentions for the upcoming tick, with its current internal state.</p>
 </div></span>
   
 </li>
@@ -352,8 +344,7 @@ internal state.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Return this StateItem&#39;s current state in a JSON-serializable form.</p>
+    <span class="summary_desc"><div class='inline'><p>Return this StateItem&#39;s current state in a JSON-serializable form.</p>
 </div></span>
   
 </li>
@@ -376,8 +367,7 @@ internal state.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>The default StateItem type of this item.</p>
+    <span class="summary_desc"><div class='inline'><p>The default StateItem type of this item.</p>
 </div></span>
   
 </li>
@@ -400,9 +390,7 @@ internal state.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>This method determines whether the item will be treated as a top-level
-zone.</p>
+    <span class="summary_desc"><div class='inline'><p>This method determines whether the item will be treated as a top-level zone.</p>
 </div></span>
   
 </li>
@@ -425,9 +413,8 @@ zone.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>The constructor. This does not register the StateItem with the Engine. For
-that, see <span class='object_link'><a href="Engine.html#register_state_item-instance_method" title="Demiurge::Engine#register_state_item (method)">Engine#register_state_item</a></span>.</p>
+    <p>The constructor. This does not register the StateItem with the
+Engine. For that, see <span class='object_link'><a href="Engine.html#register_state_item-instance_method" title="Demiurge::Engine#register_state_item (method)">Engine#register_state_item</a></span>.</p>
 
 
   </div>
@@ -446,8 +433,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         &mdash;
-        <div class='inline'>
-<p>The Engine-unique item name</p>
+        <div class='inline'><p>The Engine-unique item name</p>
 </div>
       
     </li>
@@ -462,8 +448,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         &mdash;
-        <div class='inline'>
-<p>The Engine this item is part of</p>
+        <div class='inline'><p>The Engine this item is part of</p>
 </div>
       
     </li>
@@ -478,8 +463,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         &mdash;
-        <div class='inline'>
-<p>State data to initialize from</p>
+        <div class='inline'><p>State data to initialize from</p>
 </div>
       
     </li>
@@ -502,8 +486,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -553,8 +536,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns The Engine this item is part of</p>
+    <p>Returns The Engine this item is part of</p>
 
 
   </div>
@@ -572,8 +554,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         &mdash;
-        <div class='inline'>
-<p>The Engine this item is part of</p>
+        <div class='inline'><p>The Engine this item is part of</p>
 </div>
       
     </li>
@@ -614,9 +595,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns The unique, registered or registerable name of this
-<span class='object_link'><a href="" title="Demiurge::StateItem (class)">Demiurge::StateItem</a></span></p>
+    <p>Returns The unique, registered or registerable name of this <span class='object_link'><a href="" title="Demiurge::StateItem (class)">Demiurge::StateItem</a></span></p>
 
 
   </div>
@@ -634,8 +613,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         &mdash;
-        <div class='inline'>
-<p>The unique, registered or registerable name of this <span class='object_link'><a href="" title="Demiurge::StateItem (class)">Demiurge::StateItem</a></span></p>
+        <div class='inline'><p>The unique, registered or registerable name of this <span class='object_link'><a href="" title="Demiurge::StateItem (class)">Demiurge::StateItem</a></span></p>
 </div>
       
     </li>
@@ -650,8 +628,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -697,8 +674,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Create a single StateItem from structured array format</p>
+    <p>Create a single StateItem from structured array format</p>
 
 
   </div>
@@ -716,8 +692,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         &mdash;
-        <div class='inline'>
-<p>The deserialized StateItem</p>
+        <div class='inline'><p>The deserialized StateItem</p>
 </div>
       
     </li>
@@ -739,8 +714,7 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -785,12 +759,11 @@ that, see <span class='object_link'><a href="Engine.html#register_state_item-ins
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This method determines whether the item will be treated as an agent.
-Inheriting from Demiurge::Agent will cause that to occur. So will
-redefining the agent? method to return true. Whether agent? returns true
-should not depend on state, which may not be set when this method is
-called.</p>
+    <p>This method determines whether the item will be treated as an
+agent.  Inheriting from Demiurge::Agent will cause that to
+occur. So will redefining the agent? method to return true.
+Whether agent? returns true should not depend on state, which
+may not be set when this method is called.</p>
 
 
   </div>
@@ -808,8 +781,7 @@ called.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Whether this item is considered an Agent.</p>
+        <div class='inline'><p>Whether this item is considered an Agent.</p>
 </div>
       
     </li>
@@ -824,8 +796,7 @@ called.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -864,8 +835,7 @@ called.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>The StateItem&#39;s serialized state in structured array format.</p>
+    <p>The StateItem&#39;s serialized state in structured array format.</p>
 
 
   </div>
@@ -883,8 +853,7 @@ called.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The serialized state</p>
+        <div class='inline'><p>The serialized state</p>
 </div>
       
     </li>
@@ -906,8 +875,7 @@ called.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -946,11 +914,10 @@ called.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get this StateItem&#39;s Intentions for the upcoming tick, with its current
-internal state. Note that this can change over the course of a tick as the
-internal state changes, but it should <em>not</em> change if the state
-doesn&#39;t.</p>
+    <p>Get this StateItem&#39;s Intentions for the upcoming tick, with its
+current internal state. Note that this can change over the
+course of a tick as the internal state changes, but it should
+<em>not</em> change if the state doesn&#39;t.</p>
 
 
   </div>
@@ -968,8 +935,7 @@ doesn&#39;t.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The intentions for the next tick</p>
+        <div class='inline'><p>The intentions for the next tick</p>
 </div>
       
     </li>
@@ -984,8 +950,7 @@ doesn&#39;t.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1024,8 +989,8 @@ doesn&#39;t.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Return this StateItem&#39;s current state in a JSON-serializable form.</p>
+    <p>Return this StateItem&#39;s current state in a JSON-serializable
+form.</p>
 
 
   </div>
@@ -1043,8 +1008,7 @@ doesn&#39;t.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The JSON-serializable state, usually a Hash</p>
+        <div class='inline'><p>The JSON-serializable state, usually a Hash</p>
 </div>
       
     </li>
@@ -1059,8 +1023,7 @@ doesn&#39;t.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1099,9 +1062,7 @@ doesn&#39;t.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Returns The default StateItem type of this item. Can be overridden by child
-classes.</p>
+    <p>Returns The default StateItem type of this item. Can be overridden by child classes.</p>
 
 
   </div>
@@ -1119,9 +1080,7 @@ classes.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>The default StateItem type of this item. Can be overridden by child
-classes.</p>
+        <div class='inline'><p>The default StateItem type of this item. Can be overridden by child classes.</p>
 </div>
       
     </li>
@@ -1136,8 +1095,7 @@ classes.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1176,12 +1134,11 @@ classes.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>This method determines whether the item will be treated as a top-level
-zone. Inheriting from Demiurge::Zone will cause that to occur. So will
-redefining the zone? method to return true. Whether zone? returns true
-should not depend on state, which may not be set when this method is
-called.</p>
+    <p>This method determines whether the item will be treated as a
+top-level zone.  Inheriting from Demiurge::Zone will cause that
+to occur. So will redefining the zone? method to return true.
+Whether zone? returns true should not depend on state, which may
+not be set when this method is called.</p>
 
 
   </div>
@@ -1199,8 +1156,7 @@ called.</p>
       
       
         &mdash;
-        <div class='inline'>
-<p>Whether this item is considered a Zone.</p>
+        <div class='inline'><p>Whether this item is considered a Zone.</p>
 </div>
       
     </li>
@@ -1215,8 +1171,7 @@ called.</p>
       
       
         
-        <div class='inline'>
-<p>0.0.1</p>
+        <div class='inline'><p>0.0.1</p>
 </div>
       
     </li>
@@ -1249,7 +1204,7 @@ called.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:06 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

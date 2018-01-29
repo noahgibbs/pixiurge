@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: Pixiurge::Display::TmxMap
+  Class: Pixiurge::Display::TileAnimatedSprite
   
     &mdash; Pixiurge API Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../css/common.css" type="text/css" charset="utf-8" />
 
 <script type="text/javascript" charset="utf-8">
-  pathId = "Pixiurge::Display::TmxMap";
+  pathId = "Pixiurge::Display::TileAnimatedSprite";
   relpath = '../../';
 </script>
 
@@ -39,7 +39,7 @@
     <a href="../../_index.html">Index (T)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Display.html" title="Pixiurge::Display (module)">Display</a></span></span>
      &raquo; 
-    <span class="title">TmxMap</span>
+    <span class="title">TileAnimatedSprite</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: Pixiurge::Display::TmxMap
+      <div id="content"><h1>Class: Pixiurge::Display::TileAnimatedSprite
   
   
   
@@ -76,7 +76,7 @@
           
             <li class="next"><span class='object_link'><a href="../Displayable.html" title="Pixiurge::Displayable (class)">Pixiurge::Displayable</a></span></li>
           
-            <li class="next">Pixiurge::Display::TmxMap</li>
+            <li class="next">Pixiurge::Display::TileAnimatedSprite</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -96,15 +96,15 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/pixiurge/displayable/tmx_map.rb</dd>
+    <dd>lib/pixiurge/displayable/tile_animated_sprite.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>A TmxMap uses a Demiurge item&#39;s TMX entry as its source of data and
-behavior.</p>
+    <p>TileAnimatedSprites are good for playing tile-based animations from
+one or more tile sheeets.</p>
 
 
   </div>
@@ -150,7 +150,7 @@ behavior.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(tile_cache_entry, name:, engine_connector:)  &#x21d2; TmxMap </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(parameters, name:, engine_connector:)  &#x21d2; TileAnimatedSprite </a>
     
 
     
@@ -166,7 +166,7 @@ behavior.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Constructor.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor - create the sprite.</p>
 </div></span>
   
 </li>
@@ -189,7 +189,7 @@ behavior.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Messages to display the TMX object.</p>
+    <span class="summary_desc"><div class='inline'><p>Show this Displayable to a player.</p>
 </div></span>
   
 </li>
@@ -215,7 +215,7 @@ behavior.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(tile_cache_entry, name:, engine_connector:)  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::Display::TmxMap (class)">TmxMap</a></span></tt> 
+    #<strong>initialize</strong>(parameters, name:, engine_connector:)  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::Display::TileAnimatedSprite (class)">TileAnimatedSprite</a></span></tt> 
   
 
   
@@ -223,13 +223,136 @@ behavior.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Constructor. Assume we read the TMX cache information from the Demiurge item and display it.</p>
+    <p>Constructor - create the sprite</p>
+
+<p>In addition to normal Pixiurge Displayable parameters, a
+TileAnimatedSprite takes a params hash in a very specific format.</p>
+
+<p>For tilesets, the url property is where to load the tileset from,
+usually on the game&#39;s asset server(s). The tile_width,
+tile_height, spacing and margin define the size and location of
+the frames within a tileset. The first_frame_id defaults to 1 for
+the first tileset and gives the frame ID (number) for the very
+first frame number of that tileset. For later tilesets, the frame
+numbering begins with the next unused frame ID - so a tileset with
+room for 24 images followed by a tileset with room for 6 images
+will have frame IDs between 1 and 30 unless one of them sets
+first_frame_id.</p>
+
+<p>Properties for animations: frames, after (opt). Frames is an array.
+each element may be an integer, in which case it&#39;s a frame ID</p>
+
+<p>The default value for &quot;after&quot; is &quot;stop&quot;. Special values for
+&quot;after&quot; are &quot;loop&quot; and &quot;stop&quot;. It can also be set to the name of
+another animation in the same TileAnimatedSprite.</p>
+
+<p>The &quot;tileset&quot; property of an animation gives the default tileset
+for any frame that doesn&#39;t specify. The default value is the first
+tileset.</p>
+
+<p>The &quot;frames&quot; property of an animation is an array of frame
+specifications. A frame can be a number, which is a frame number
+as defined by the tilesets. A frame can also be a structure with a
+duration and frame_id. Or it can be a structure with a duration,
+an x and y coordinate for the upper left corner, a width and
+height, and a tileset name.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code>``` javascript
+{
+  tilesets: [
+    {
+      name: &quot;name1&quot;,
+      url: &quot;https://first_url.com/path&quot;,
+      tile_width: 32,
+      tile_height: 32,
+    },
+    {
+      name: &quot;name2&quot;,
+      url: &quot;https://second_url.com/path&quot;,
+      tile_width: 32,
+      tile_height: 32,
+      first_frame_id: 37,   # Frame ID of the first tile in this tileset
+      spacing: 3, # Optional field, default 0
+      margin: 2,  # Optional field, default 0
+      reg_x: 16,  # Optional field for anchor/registration x coord, default 0
+      reg_y: 16,  # Optional field for anchor/registration y coord, default 0
+    }
+  ],
+  animations: {
+    funny_walk: { frames: [ 1, 2, 3, 4, 5 ], after: &quot;loop&quot; },
+    second_anim: { frames: [ 7, 2, 4, 1, 6 ] },
+    third_anim: { frames: [
+      { tileset: &quot;name1&quot;, x: 0, y: 0, width: 32, height: 32, duration: 100 },
+      { frame_id: 7, duration: 150 },
+      { tileset: &quot;name2&quot;, x: 32, y: 96, width: 32, height: 32, duration: 50 },
+      7,
+      15
+    ], after: &quot;loop&quot; }
+  }
+  animation: &quot;funny_walk&quot;
+}
+```</code></pre>
+    
+  </div>
+<p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>parameters</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A JSON-serializable hash of  options to pass to the front end</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>name</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The Demiurge item name for this Displayable</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>engine_connector</span>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="../EngineConnector.html" title="Pixiurge::EngineConnector (class)">Pixiurge::EngineConnector</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The Pixiurge EngineConnector this Displayable belongs to</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -252,23 +375,21 @@ behavior.</p>
       <pre class="lines">
 
 
-11
-12
-13
-14
-15
-16
-17</pre>
+81
+82
+83
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/tmx_map.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/tile_animated_sprite.rb', line 81</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span><span class='comma'>,</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>engine_connector:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='comma'>,</span> <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>engine_connector:</span>
+  <span class='ivar'>@parameters</span> <span class='op'>=</span> <span class='id identifier rubyid_parameters'>parameters</span>
+  <span class='ivar'>@displayable_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tile_animated_sprite</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_check_parameters'>check_parameters</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='id identifier rubyid_engine_connector'>engine_connector</span><span class='rparen'>)</span>
-  <span class='ivar'>@displayable_type</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tmx</span><span class='tstring_end'>&quot;</span></span>
-  <span class='ivar'>@entry</span> <span class='op'>=</span> <span class='id identifier rubyid_tile_cache_entry'>tile_cache_entry</span>
-  <span class='ivar'>@block_width</span> <span class='op'>=</span> <span class='ivar'>@entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tilewidth</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='ivar'>@block_height</span> <span class='op'>=</span> <span class='ivar'>@entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>tileheight</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -293,7 +414,7 @@ behavior.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Messages to display the TMX object.</p>
+    <p>Show this Displayable to a player.</p>
 
 
   </div>
@@ -330,7 +451,7 @@ behavior.</p>
       
       
         &mdash;
-        <div class='inline'><p>Message to send to player</p>
+        <div class='inline'><p>Messages to show the TileAnimatedSprite via JSON</p>
 </div>
       
     </li>
@@ -358,21 +479,19 @@ behavior.</p>
       <pre class="lines">
 
 
-24
-25
-26
-27
-28
-29</pre>
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/tmx_map.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/tile_animated_sprite.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_messages_to_show_player'>messages_to_show_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
-  <span class='comment'># Currently TMX maps do not deign to send mere transforms. That
-</span>  <span class='comment'># may change if we need to put several of them together into a
-</span>  <span class='comment'># single layer.
-</span>  <span class='lbracket'>[</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@displayable_type</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>url</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@entry</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>filename</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span> <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_messages'>messages</span> <span class='op'>=</span> <span class='kw'>super</span>
+  <span class='id identifier rubyid_messages'>messages</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>params</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@parameters</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_messages'>messages</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

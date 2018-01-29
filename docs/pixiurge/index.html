@@ -109,6 +109,17 @@ application&#39;s Gemfile:</p>
 <pre class="code ruby"><code class="ruby">$ gem install pixiurge
 </code></pre>
 
+<h2>Development</h2>
+
+<p>To develop a game on Pixiurge, you&#39;ll need TLS (secure sockets.) Any
+new Pixiurge game comes with a &quot;start_server&quot; script which will create
+a local self-signed certificate so you&#39;re secure from the get-go. But
+you&#39;ll need to get your web browser to let you use a self-signed
+certificate with a localhost URL.</p>
+
+<p>I recommend Googling for &quot;Google Chrome self-signed certificate&quot; and
+doing what it says.</p>
+
 <h2>Usage</h2>
 
 <p>Ordinarily you&#39;ll use Pixiurge by creating a new game or similar
@@ -130,6 +141,30 @@ Pixiurge does <em>not</em> handle over-the-wire security for you, it assumes
 that SSL/TLS will take care of that problem. See example/start_server
 for an example of how to make sure SSL is set up when running your
 server locally.</p>
+
+<h2>Credits</h2>
+
+<p>For testing and other purposes I sometimes use CC0 (Creative Commons
+Zero, effectively Public Domain) artwork of various kinds. Luis Zuno
+(ansimuz.com), Daniel Harris (Hyptosis, lorestrome.com) and Kenney
+Vleugels (kenneynl.com, pixeland.io) all have wonderful CC0 work that
+I use. With CC0 I&#39;m not required to credit them and neither are you,
+but it&#39;s good karma to pay them if you make money off their work. It&#39;s
+also good karma to mention them when you use their work, as I do here.</p>
+
+<p>CC0 is wonderful because I don&#39;t have to worry about licensing, at
+all, full stop. Creative Commons licensing in general is awesome - I
+certainly don&#39;t mind crediting people for what they do. But I want to
+set any future Pixiurge users up for success, so I try to only use
+assets with the least-restrictive licenses. I remember DikuMUD too
+well, you know?</p>
+
+<p>I do <em>not</em> use any of the wonderful free GPL-licensed artwork out
+there because it&#39;s incompatible with the MIT license I use for my
+open-source coding. The GPL wasn&#39;t really designed for art assets like
+sprites or sound effects and it&#39;s not entirely clear how that should
+work. I steer clear of GPL and try to use CC0 where possible because I
+don&#39;t want to police all of you or encourage you in illegal directions.</p>
 
 <h2>Development</h2>
 
@@ -159,7 +194,7 @@ License</a>.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jan 29 15:15:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

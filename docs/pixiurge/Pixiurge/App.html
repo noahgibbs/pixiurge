@@ -183,6 +183,36 @@ This basic App class is very bare-bones. See
       </dt>
       <dd><pre class="code"><span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_login</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_logout</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_create_body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_message</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_reconnect</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>open</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>close</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>error</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>message</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>login</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span></pre></dd>
     
+      <dt id="INIT_OPTIONS-constant" class="">INIT_OPTIONS =
+        <div class="docstring">
+  <div class="discussion">
+    <p>Legal options to pass to Pixiurge::App.new</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='lbracket'>[</span> <span class='symbol'>:debug</span><span class='comma'>,</span> <span class='symbol'>:record_traffic</span><span class='comma'>,</span> <span class='symbol'>:incoming_traffic_logfile</span><span class='comma'>,</span> <span class='symbol'>:outgoing_traffic_logfile</span> <span class='rbracket'>]</span></pre></dd>
+    
   </dl>
 
 
@@ -388,7 +418,7 @@ This basic App class is very bare-bones. See
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = { &quot;debug&quot; =&gt; false, &quot;record_traffic&quot; =&gt; false,                    &quot;incoming_traffic_logfile&quot; =&gt; &quot;log/incoming_traffic.json&quot;, &quot;outgoing_traffic_logfile&quot; =&gt; &quot;log/outgoing_traffic.json&quot; })  &#x21d2; App </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(options = { :debug =&gt; false, :record_traffic =&gt; false,                    :incoming_traffic_logfile =&gt; &quot;log/incoming_traffic.json&quot;, :outgoing_traffic_logfile =&gt; &quot;log/outgoing_traffic.json&quot; })  &#x21d2; App </a>
     
 
     
@@ -436,7 +466,7 @@ This basic App class is very bare-bones. See
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#rack_builder-instance_method" title="#rack_builder (instance method)">#<strong>rack_builder</strong>(builder)  &#x21d2; Object </a>
+      <a href="#rack_builder-instance_method" title="#rack_builder (instance method)">#<strong>rack_builder</strong>(builder, options = {})  &#x21d2; Object </a>
     
 
     
@@ -474,6 +504,29 @@ This basic App class is very bare-bones. See
 
   
     <span class="summary_desc"><div class='inline'><p>Call this with your application&#39;s web root directory.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#root_redirect-instance_method" title="#root_redirect (instance method)">#<strong>root_redirect</strong>(url)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>To serve some specific file from the root, a redirect is one possibility.</p>
 </div></span>
   
 </li>
@@ -580,8 +633,8 @@ This basic App class is very bare-bones. See
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(options = { &quot;debug&quot; =&gt; false, &quot;record_traffic&quot; =&gt; false,
-                   &quot;incoming_traffic_logfile&quot; =&gt; &quot;log/incoming_traffic.json&quot;, &quot;outgoing_traffic_logfile&quot; =&gt; &quot;log/outgoing_traffic.json&quot; })  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::App (class)">App</a></span></tt> 
+    #<strong>initialize</strong>(options = { :debug =&gt; false, :record_traffic =&gt; false,
+                   :incoming_traffic_logfile =&gt; &quot;log/incoming_traffic.json&quot;, :outgoing_traffic_logfile =&gt; &quot;log/outgoing_traffic.json&quot; })  &#x21d2; <tt><span class='object_link'><a href="" title="Pixiurge::App (class)">App</a></span></tt> 
   
 
   
@@ -590,6 +643,15 @@ This basic App class is very bare-bones. See
 </h3><div class="docstring">
   <div class="discussion">
     <p>Constructor for Pixiurge App base class.</p>
+
+<p>Debugging options:</p>
+
+<ul>
+<li>:debug - whether to print debugging messages</li>
+<li>:record_traffic - whether to write network messages to a JSON logfile</li>
+<li>:incoming_traffic_logfile - the logfile for client-to-server traffic</li>
+<li>:outgoing_traffic_logfile - the logfile for server-to-client traffic</li>
+</ul>
 
 
   </div>
@@ -606,8 +668,8 @@ This basic App class is very bare-bones. See
         <span class='type'>(<tt>Hash</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>{ &quot;debug&quot; =&gt; false, &quot;record_traffic&quot; =&gt; false,
-                   &quot;incoming_traffic_logfile&quot; =&gt; &quot;log/incoming_traffic.json&quot;, &quot;outgoing_traffic_logfile&quot; =&gt; &quot;log/outgoing_traffic.json&quot; }</tt>)</em>
+        <em class="default">(defaults to: <tt>{ :debug =&gt; false, :record_traffic =&gt; false,
+                   :incoming_traffic_logfile =&gt; &quot;log/incoming_traffic.json&quot;, :outgoing_traffic_logfile =&gt; &quot;log/outgoing_traffic.json&quot; }</tt>)</em>
       
       
         &mdash;
@@ -625,7 +687,7 @@ This basic App class is very bare-bones. See
     <ul class="option">
       
         <li>
-          <span class="name">debug</span>
+          <span class="name">:debug</span>
           <span class="type">(<tt>Boolean</tt>)</span>
           <span class="default">
             
@@ -637,7 +699,7 @@ This basic App class is very bare-bones. See
         </li>
       
         <li>
-          <span class="name">record_traffic</span>
+          <span class="name">:record_traffic</span>
           <span class="type">(<tt>Boolean</tt>)</span>
           <span class="default">
             
@@ -649,7 +711,7 @@ This basic App class is very bare-bones. See
         </li>
       
         <li>
-          <span class="name">incoming_traffic_logfile</span>
+          <span class="name">:incoming_traffic_logfile</span>
           <span class="type">(<tt>String</tt>)</span>
           <span class="default">
             
@@ -661,7 +723,7 @@ This basic App class is very bare-bones. See
         </li>
       
         <li>
-          <span class="name">outgoing_traffic_logfile</span>
+          <span class="name">:outgoing_traffic_logfile</span>
           <span class="type">(<tt>String</tt>)</span>
           <span class="default">
             
@@ -697,24 +759,28 @@ This basic App class is very bare-bones. See
       <pre class="lines">
 
 
-288
-289
-290
-291
-292
-293
-294
-295</pre>
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 288</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 298</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>debug</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>record_traffic</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
-                 <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>incoming_traffic_logfile</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/incoming_traffic.json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>outgoing_traffic_logfile</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/outgoing_traffic.json</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='ivar'>@debug</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>debug</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='ivar'>@record_traffic</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>record_traffic</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='ivar'>@incoming_traffic_logfile</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>incoming_traffic_logfile</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/incoming_traffic.json</span><span class='tstring_end'>&quot;</span></span>
-  <span class='ivar'>@outgoing_traffic_logfile</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>outgoing_traffic_logfile</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/outgoing_traffic.json</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:debug</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='symbol'>:record_traffic</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+                 <span class='symbol'>:incoming_traffic_logfile</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/incoming_traffic.json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:outgoing_traffic_logfile</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/outgoing_traffic.json</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_illegal_options'>illegal_options</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='const'><span class='object_link'><a href="#INIT_OPTIONS-constant" title="Pixiurge::App::INIT_OPTIONS (constant)">INIT_OPTIONS</a></span></span>
+  <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Illegal options passed to Pixiurge::App#new: {illegal_options.inspect}!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_illegal_options'>illegal_options</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='ivar'>@debug</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:debug</span><span class='rbracket'>]</span>
+  <span class='ivar'>@record_traffic</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:record_traffic</span><span class='rbracket'>]</span>
+  <span class='ivar'>@incoming_traffic_logfile</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:incoming_traffic_logfile</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/incoming_traffic.json</span><span class='tstring_end'>&quot;</span></span>
+  <span class='ivar'>@outgoing_traffic_logfile</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:outgoing_traffic_logfile</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>log/outgoing_traffic.json</span><span class='tstring_end'>&quot;</span></span>
   <span class='ivar'>@event_handlers</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1022,14 +1088,14 @@ CoffeeScript.</p>
       <pre class="lines">
 
 
-41
-42
-43
-44
-45</pre>
+48
+49
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_coffeescript_dirs'>coffeescript_dirs</span> <span class='op'>*</span><span class='id identifier rubyid_dirs'>dirs</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Please set Pixiurge.root_dir before using Pixiurge.static_dirs!</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@root_dir</span>
@@ -1116,12 +1182,12 @@ dispatching them to one or more other events or handlers.</p>
       <pre class="lines">
 
 
-366
-367
-368</pre>
+378
+379
+380</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 366</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 378</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_message'>handle_message</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_send_event'>send_event</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>message</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span>
@@ -1182,27 +1248,31 @@ dispatching them to one or more other events or handlers.</p>
       <pre class="lines">
 
 
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135</pre>
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 138</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handler'>handler</span>
   <span class='ivar'>@static_files</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1212,10 +1282,14 @@ dispatching them to one or more other events or handlers.</p>
       <span class='id identifier rubyid_ws'>ws</span> <span class='op'>=</span> <span class='const'>Faye</span><span class='op'>::</span><span class='const'>WebSocket</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
       <span class='kw'>return</span> <span class='id identifier rubyid_websocket_handler'>websocket_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_rack_response'>rack_response</span>
     <span class='kw'>else</span>
+      <span class='kw'>if</span> <span class='ivar'>@root_redirect</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH_INFO</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>return</span> <span class='lbracket'>[</span><span class='int'>302</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Location</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@root_redirect</span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbracket'>]</span>
+      <span class='kw'>end</span>
       <span class='kw'>if</span> <span class='ivar'>@root_dir</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_static_files'>static_files</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH_INFO</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
         <span class='id identifier rubyid_file'>file</span> <span class='op'>=</span> <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>PATH_INFO</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
         <span class='id identifier rubyid_path'>path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@root_dir</span><span class='comma'>,</span> <span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span>
-        <span class='kw'>return</span> <span class='lbracket'>[</span><span class='int'>200</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text/html</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+        <span class='comment'># @todo Figure out how to do this with Rack::File instead of File.read
+</span>        <span class='kw'>return</span> <span class='lbracket'>[</span><span class='int'>200</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Content-Type</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>text/html</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_read'>read</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span><span class='rbracket'>]</span><span class='rbracket'>]</span>
       <span class='kw'>else</span>
         <span class='kw'>return</span> <span class='lbracket'>[</span><span class='int'>404</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
       <span class='kw'>end</span>
@@ -1327,14 +1401,14 @@ that a child method would receive for that event type.</p>
       <pre class="lines">
 
 
-339
-340
-341
-342
-343</pre>
+351
+352
+353
+354
+355</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 339</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 351</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_on_event'>on_event</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Can&#39;t subscribe to unrecognized event </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_event'>event</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>! Only </span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#EVENTS-constant" title="Pixiurge::App::EVENTS (constant)">EVENTS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="#EVENTS-constant" title="Pixiurge::App::EVENTS (constant)">EVENTS</a></span></span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_event'>event</span><span class='rparen'>)</span>
@@ -1349,7 +1423,7 @@ that a child method would receive for that event type.</p>
       <div class="method_details ">
   <h3 class="signature " id="rack_builder-instance_method">
   
-    #<strong>rack_builder</strong>(builder)  &#x21d2; <tt>Object</tt> 
+    #<strong>rack_builder</strong>(builder, options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1383,7 +1457,59 @@ in order to provide access to the Pixiurge debug or release Javascript.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>options</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Options about Rack middleware</p>
+</div>
+      
+    </li>
+  
 </ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:no_dev_pixiurge</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Don&#39;t automatically host the Pixiurge unminified Javascript at /pixiurge</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:no_vendor_pixiurge</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Don&#39;t automatically host the Pixiurge vendor scripts at /vendor</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
 
 <p class="tag_title">Since:</p>
 <ul class="since">
@@ -1407,21 +1533,29 @@ in order to provide access to the Pixiurge debug or release Javascript.</p>
       <pre class="lines">
 
 
-29
-30
-31
 32
 33
-34</pre>
+34
+35
+36
+37
+38
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 32</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_rack_builder'>rack_builder</span> <span class='id identifier rubyid_builder'>builder</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_rack_builder'>rack_builder</span> <span class='id identifier rubyid_builder'>builder</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_illegal_opts'>illegal_opts</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='lbracket'>[</span> <span class='symbol'>:no_dev_pixiurge</span><span class='comma'>,</span> <span class='symbol'>:no_vendor_pixiurge</span> <span class='rbracket'>]</span>
+  <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Unknown option(s) passed to rack_builder: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_illegal_opts'>illegal_opts</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_illegal_opts'>illegal_opts</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
   <span class='ivar'>@rack_builder</span> <span class='op'>=</span> <span class='id identifier rubyid_builder'>builder</span>
 
-  <span class='id identifier rubyid_coffee_root'>coffee_root</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid___dir__'>__dir__</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='ivar'>@rack_builder</span><span class='period'>.</span><span class='id identifier rubyid_use'>use</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Coffee</span><span class='comma'>,</span> <span class='symbol'>:root</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_coffee_root'>coffee_root</span><span class='comma'>,</span> <span class='symbol'>:urls</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/pixiurge</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_coffee_root'>coffee_root</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid___dir__'>__dir__</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>..</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_vendor_root'>vendor_root</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_coffee_root'>coffee_root</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>vendor</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='ivar'>@rack_builder</span><span class='period'>.</span><span class='id identifier rubyid_use'>use</span><span class='lparen'>(</span><span class='const'>Rack</span><span class='op'>::</span><span class='const'>Coffee</span><span class='comma'>,</span> <span class='symbol'>:root</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_coffee_root'>coffee_root</span><span class='comma'>,</span> <span class='symbol'>:urls</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/pixiurge</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:no_dev_pixiurge</span><span class='rbracket'>]</span>
+  <span class='ivar'>@rack_builder</span><span class='period'>.</span><span class='id identifier rubyid_use'>use</span><span class='lparen'>(</span><span class='const'>Rack</span><span class='op'>::</span><span class='const'>Static</span><span class='comma'>,</span> <span class='symbol'>:root</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_coffee_root'>coffee_root</span><span class='comma'>,</span> <span class='symbol'>:urls</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/vendor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:no_vendor_pixiurge</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1507,6 +1641,82 @@ this root.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="root_redirect-instance_method">
+  
+    #<strong>root_redirect</strong>(url)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>To serve some specific file from the root, a redirect is one
+possibility. This will redirect from &quot;/&quot; to the given URL
+with an HTTP status 302.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>url</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The URL to redirect to</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_root_redirect'>root_redirect</span> <span class='id identifier rubyid_url'>url</span>
+  <span class='ivar'>@root_redirect</span> <span class='op'>=</span> <span class='id identifier rubyid_url'>url</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="static_dirs-instance_method">
   
     #<strong>static_dirs</strong>(*dirs)  &#x21d2; <tt>Object</tt> 
@@ -1571,15 +1781,15 @@ it&#39;s slightly better to call it once with a list of directories.</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62</pre>
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_static_dirs'>static_dirs</span> <span class='op'>*</span><span class='id identifier rubyid_dirs'>dirs</span>
   <span class='id identifier rubyid_dirs'>dirs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='op'>*</span><span class='id identifier rubyid_dirs'>dirs</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -1659,13 +1869,13 @@ All paths are relative to the web root you passed to Pixiurge.root_dir.</p>
       <pre class="lines">
 
 
-70
-71
-72
-73</pre>
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_static_files'>static_files</span> <span class='op'>*</span><span class='id identifier rubyid_files'>files</span>
   <span class='ivar'>@static_files</span> <span class='op'>||=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -1705,6 +1915,11 @@ The current converter is somewhat limited - if we need a closer match
 in the future, the plan is to submit pull requests to the tmx gem
 until its approximation of Tiled&#39;s behavior is good enough.</p>
 
+<p>If the final argument appears to be a Hash, it will be treated as
+an options hash. If it contains the key :cache, the value of that
+key should be a Demiurge::Tmx::TileCache to use when querying
+TMX data. It defaults to TmxLocation.default_cache.</p>
+
 
   </div>
 </div>
@@ -1727,26 +1942,7 @@ until its approximation of Tiled&#39;s behavior is good enough.</p>
       
     </li>
   
-    <li>
-      
-        <span class='name'>options</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Optional final options after directories</p>
-</div>
-      
-    </li>
-  
 </ul>
-
-  
-    
-    
 
 <p class="tag_title">Since:</p>
 <ul class="since">
@@ -1770,22 +1966,22 @@ until its approximation of Tiled&#39;s behavior is good enough.</p>
       <pre class="lines">
 
 
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110</pre>
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tmx_dirs'>tmx_dirs</span> <span class='op'>*</span><span class='id identifier rubyid_dirs'>dirs</span>
   <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -1868,18 +2064,6 @@ until its approximation of Tiled&#39;s behavior is good enough.</p>
       <pre class="lines">
 
 
-302
-303
-304
-305
-306
-307
-308
-309
-310
-311
-312
-313
 314
 315
 316
@@ -1891,10 +2075,22 @@ until its approximation of Tiled&#39;s behavior is good enough.</p>
 322
 323
 324
-325</pre>
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 302</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 314</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_websocket_handler'>websocket_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_ws'>ws</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_ws'>ws</span><span class='period'>.</span><span class='id identifier rubyid_on'>on</span> <span class='symbol'>:open</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_event'>event</span><span class='op'>|</span>
@@ -1930,7 +2126,7 @@ until its approximation of Tiled&#39;s behavior is good enough.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jan 29 15:15:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

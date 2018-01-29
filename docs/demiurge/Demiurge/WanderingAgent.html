@@ -107,9 +107,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>This agent will wander around. A simple way to make a decorative mobile. Do
-we want this longer term, or should it be merged into the normal agent?</p>
+    <p>This agent will wander around. A simple way to make a decorative
+mobile.  Do we want this longer term, or should it be merged into
+the normal agent?</p>
 
 
   </div>
@@ -160,8 +160,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>If we&#39;re in a room but don&#39;t know where, pick a legal location.</p>
+    <span class="summary_desc"><div class='inline'><p>If we&#39;re in a room but don&#39;t know where, pick a legal location.</p>
 </div></span>
   
 </li>
@@ -186,8 +185,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Constructor.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor.</p>
 </div></span>
   
 </li>
@@ -210,8 +208,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Get intentions for the next upcoming tick.</p>
+    <span class="summary_desc"><div class='inline'><p>Get intentions for the next upcoming tick.</p>
 </div></span>
   
 </li>
@@ -267,8 +264,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Constructor</p>
+    <p>Constructor</p>
 
 
   </div>
@@ -282,13 +278,13 @@ we want this longer term, or should it be merged into the normal agent?</p>
       <pre class="lines">
 
 
-276
-277
-278
-279</pre>
+283
+284
+285
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 276</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 283</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_engine'>engine</span><span class='comma'>,</span> <span class='id identifier rubyid_state'>state</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -317,8 +313,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>If we&#39;re in a room but don&#39;t know where, pick a legal location.</p>
+    <p>If we&#39;re in a room but don&#39;t know where, pick a legal location.</p>
 
 
   </div>
@@ -332,19 +327,19 @@ we want this longer term, or should it be merged into the normal agent?</p>
       <pre class="lines">
 
 
-282
-283
-284
-285
-286
-287
-288
 289
 290
-291</pre>
+291
+292
+293
+294
+295
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 282</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finished_init'>finished_init</span>
   <span class='kw'>super</span>
@@ -372,8 +367,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Get intentions for the next upcoming tick</p>
+    <p>Get intentions for the next upcoming tick</p>
 
 
   </div>
@@ -387,12 +381,12 @@ we want this longer term, or should it be merged into the normal agent?</p>
       <pre class="lines">
 
 
-294
-295
-296</pre>
+301
+302
+303</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 294</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 301</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_intentions_for_next_step'>intentions_for_next_step</span>
   <span class='kw'>super</span> <span class='op'>+</span> <span class='lbracket'>[</span><span class='ivar'>@wander_intention</span><span class='rbracket'>]</span>
@@ -407,7 +401,7 @@ we want this longer term, or should it be merged into the normal agent?</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:09 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

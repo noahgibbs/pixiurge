@@ -117,17 +117,24 @@ vice-versa.</p>
       <dt id="AUTH_REGISTER_ACCOUNT-constant" class="">AUTH_REGISTER_ACCOUNT =
         <div class="docstring">
   <div class="discussion">
-    <p>This is the JSON specifier for registering an account using the
-built-in auth protocol. If used, it&#39;s the second string entry in
-its JSON array. The final entry in the array is a
-HashString=&gt;String with the keys &quot;username&quot;, &quot;salt&quot; and
-&quot;bcrypted&quot;.</p>
+    <p>Register an account using the built-in auth protocol.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>[ AUTH_REGISTER_ACCOUNT, { &quot;username&quot; =&gt; username, &quot;salt&quot; =&gt; salt, &quot;bcrypted&quot; =&gt; hash } ]</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+  </div>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -151,19 +158,27 @@ HashString=&gt;String with the keys &quot;username&quot;, &quot;salt&quot; and
       <dt id="AUTH_LOGIN-constant" class="">AUTH_LOGIN =
         <div class="docstring">
   <div class="discussion">
-    <p>This is the JSON specifier for logging into an account using the
-built-in auth protocol. If used, it&#39;s the second string entry in
-its JSON array. The final entry in the array is a
-HashString=&gt;String with the keys &quot;username&quot; and &quot;bcrypted&quot;.
-Note that the bcrypted value implicitly uses the salt, which does
-not need to be explicitly sent to the server - BCrypt handles
-that.</p>
+    <p>Log into an account using the built-in auth protocol. If used,
+it&#39;s the second string entry in its JSON array.  Note that the
+bcrypted value implicitly uses the salt, which does not need to be
+explicitly sent to the server. BCrypt handles that part.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>[ AUTH_LOGIN, { &quot;username&quot; =&gt; username, &quot;bcrypted&quot; =&gt; hash } ]</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+  </div>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -187,16 +202,25 @@ that.</p>
       <dt id="AUTH_GET_SALT-constant" class="">AUTH_GET_SALT =
         <div class="docstring">
   <div class="discussion">
-    <p>This is the JSON specifier for logging getting an account&#39;s
-cryptographic salt using the built-in auth protocol. If used, it&#39;s
-the second string entry in its JSON array. The final entry in the
-array is a HashString=&gt;String with the key &quot;username&quot;.</p>
+    <p>Get an account&#39;s cryptographic salt for the built-in auth
+protocol.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>[ AUTH_GET_SALT, { &quot;username&quot; =&gt; username } ]</p>
+</div></p>
+      
+      <pre class="example code"><code></code></pre>
+    
+  </div>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -230,7 +254,7 @@ array is a HashString=&gt;String with the key &quot;username&quot;.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jan 29 15:15:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

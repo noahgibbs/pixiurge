@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: PRODUCTION
+  
+    &mdash; Pixiurge API Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  pathId = "PRODUCTION";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: PRODUCTION</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1>So You Want to Put Pixiurge Into Production...</h1>
+
+<p>Getting a Websocket-aware game with a Ruby server into production has
+a lot of pieces to get right. It&#39;ll help if you&#39;ve done this sort of
+thing before. But even the pros can use a checklist. I can&#39;t provide
+you a fully complete list, but here are some of the things to look
+into for your deployment...</p>
+
+<ul>
+<li><p>Pixiurge ABSOLUTELY REQUIRES secure sockets. The dev versions uses a
+self-signed certificate, but you&#39;ll need a production certificate
+that matches your domain. Otherwise all your users will have to
+manually configure their web browsers to accept self-signed certs,
+which is NOT OKAY.</p></li>
+<li><p>You&#39;ll need a nice recent version of Ruby, which probably means
+using rvm to compile one. There may or may not be a good one for
+your Linux distribution of choice. For preference use the same
+version of Ruby you&#39;ve been developing with.</p></li>
+<li><p>Pixiurge is deployed on Thin, a Ruby application server. You&#39;ll
+either need to look into production settings for it (for instance,
+how many threads?) or figure out how to run Pixiurge on another app
+server like Puma.</p></li>
+<li><p>There is no reason to run Pixiurge as root. Don&#39;t do it. But make
+sure permissions are set up properly.</p></li>
+<li><p>Most commonly, Pixiurge writes local files to its directory for
+things like accounts and state. You&#39;ll need to back these up
+regularly. If you want to use a database or something, you&#39;ll need
+to make sure Pixiurge is configured for that, which it isn&#39;t right
+out of the box.  You&#39;ll <em>still</em> need to back them up regularly.</p></li>
+<li><p>A development Pixiurge install sometimes loads a lot of unminified
+Javascript. Make sure it got switched to requiring a single minified
+release version. In config.ru you can turn off hosting the gem&#39;s
+unminified Pixiurge scripts by passing :no_dev_pixiurge and
+:no_vendor_pixiurge to app.rack_builder, and you should.</p></li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Mon Jan 29 15:15:18 2018 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.12 (ruby-2.3.1).
+</div>
+
+    </div>
+  </body>
+</html>

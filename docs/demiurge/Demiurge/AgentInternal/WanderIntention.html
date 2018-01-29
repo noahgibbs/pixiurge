@@ -109,9 +109,7 @@
   <strong>This class is part of a private API.</strong>
   You should avoid using this class if possible, as it may be removed or be changed in the future.
 </p>
-
-<p>This is a simple Wandering agent for use with TmxLocations and similar
-grid-based maps.</p>
+<p>This is a simple Wandering agent for use with TmxLocations and similar grid-based maps.</p>
 
 
   </div>
@@ -156,8 +154,7 @@ grid-based maps.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Always allowed.</p>
+    <span class="summary_desc"><div class='inline'><p>Always allowed.</p>
 </div></span>
   
 </li>
@@ -180,8 +177,7 @@ grid-based maps.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Actually wander to an adjacent position, chosen randomly.</p>
+    <span class="summary_desc"><div class='inline'><p>Actually wander to an adjacent position, chosen randomly.</p>
 </div></span>
   
 </li>
@@ -206,8 +202,7 @@ grid-based maps.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Constructor.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor.</p>
 </div></span>
   
 </li>
@@ -230,8 +225,7 @@ grid-based maps.</p>
   <span class="private note title">private</span>
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>For now, WanderIntention is unblockable.</p>
+    <span class="summary_desc"><div class='inline'><p>For now, WanderIntention is unblockable.</p>
 </div></span>
   
 </li>
@@ -280,7 +274,6 @@ grid-based maps.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Constructor</p>
 
 
@@ -295,13 +288,13 @@ grid-based maps.</p>
       <pre class="lines">
 
 
-304
-305
-306
-307</pre>
+311
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_engine'>engine</span><span class='comma'>,</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@name</span> <span class='op'>=</span> <span class='id identifier rubyid_name'>name</span>
@@ -334,7 +327,6 @@ grid-based maps.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Always allowed</p>
 
 
@@ -362,12 +354,12 @@ grid-based maps.</p>
       <pre class="lines">
 
 
-310
-311
-312</pre>
+317
+318
+319</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 310</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 317</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_allowed?'>allowed?</span>
   <span class='kw'>true</span>
@@ -392,7 +384,6 @@ grid-based maps.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>Actually wander to an adjacent position, chosen randomly</p>
 
 
@@ -407,13 +398,6 @@ grid-based maps.</p>
       <pre class="lines">
 
 
-321
-322
-323
-324
-325
-326
-327
 328
 329
 330
@@ -422,10 +406,17 @@ grid-based maps.</p>
 333
 334
 335
-336</pre>
+336
+337
+338
+339
+340
+341
+342
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 321</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 328</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span>
   <span class='id identifier rubyid_agent'>agent</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='ivar'>@name</span><span class='rparen'>)</span>
@@ -440,7 +431,7 @@ grid-based maps.</p>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_chosen'>chosen</span> <span class='op'>=</span> <span class='id identifier rubyid_next_coords'>next_coords</span><span class='period'>.</span><span class='id identifier rubyid_sample'>sample</span>
   <span class='id identifier rubyid_pos'>pos</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>#</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_chosen'>chosen</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>,</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_move_to_position'>move_to_position</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_move_to_position'>move_to_position</span><span class='lparen'>(</span><span class='id identifier rubyid_pos'>pos</span><span class='comma'>,</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>method</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wander</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_agent'>agent</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wander_counter</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -463,10 +454,9 @@ grid-based maps.</p>
   <strong>This method is part of a private API.</strong>
   You should avoid using this method if possible, as it may be removed or be changed in the future.
 </p>
-
 <p>For now, WanderIntention is unblockable. That&#39;s not perfect, but
-otherwise we have to figure out how to offer an action without an action
-name.</p>
+otherwise we have to figure out how to offer an action without
+an action name.</p>
 
 
   </div>
@@ -480,11 +470,11 @@ name.</p>
       <pre class="lines">
 
 
-317
-318</pre>
+324
+325</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 317</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/agent.rb', line 324</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_offer'>offer</span>
 <span class='kw'>end</span></pre>
@@ -498,7 +488,7 @@ name.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:09 2018 by
+  Generated on Mon Jan 29 15:15:21 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>

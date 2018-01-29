@@ -90,51 +90,49 @@
     
   <div class="note todo">
     <strong>TODO:</strong>
-    <div class='inline'>
-<p>This entire file feels like a plugin waiting to happen. Putting it into
-Demiurge and monkeypatching seems slightly weird and “off”. There&#39;s
-nothing wrong with having TiledLocation in Demiurge, and we do. But TMX,
-specifically, has a lot of format-specific stuff that doesn&#39;t seem to
-belong in core Demiurge. That&#39;s part of why it&#39;s off by itself in a
-separate file. If we were to support a second tilemap format, that would
-definitely seem to belong in a plugin. It&#39;s not clear what makes TMX
-different other than it being the first supported map format. The only
-thing keeping this from being the “demiurge-tmx” gem is that I feel like
-the code is already diced too finely into gems for its current level of
-maturity.</p>
+    <div class='inline'><p>This entire file feels like a plugin waiting to
+happen. Putting it into Demiurge and monkeypatching seems slightly
+weird and &quot;off&quot;. There&#39;s nothing wrong with having TiledLocation
+in Demiurge, and we do. But TMX, specifically, has a lot of
+format-specific stuff that doesn&#39;t seem to belong in core
+Demiurge. That&#39;s part of why it&#39;s off by itself in a separate
+file. If we were to support a second tilemap format, that would
+definitely seem to belong in a plugin. It&#39;s not clear what makes
+TMX different other than it being the first supported map format.
+The only thing keeping this from being the &quot;demiurge-tmx&quot; gem is
+that I feel like the code is already diced too finely into gems
+for its current level of maturity.</p>
 </div>
   </div>
 
+<p>Demiurge::Tmx is the module for Tmx internals. This includes Tmx
+parsing, caching and general encapsulation.</p>
 
-<p>Demiurge::Tmx is the module for Tmx internals. This includes Tmx parsing,
-caching and general encapsulation.</p>
+<p>TMX support here includes basic/normal TMX support for products of
+the Tiled map editor (see &quot;<a href="http://mapeditor.org">http://mapeditor.org</a>&quot; and
+&quot;<a href="http://docs.mapeditor.org/en/latest/reference/tmx-map-format/%22">http://docs.mapeditor.org/en/latest/reference/tmx-map-format/&quot;</a>) and
+more complex tiled map support for formats based on the ManaSource
+game engine, including variants like Source of Tales, Land of Fire,
+The Mana World and others. For more information on the ManaSource
+mapping format, see &quot;<a href="http://doc.manasource.org/mapping.html">http://doc.manasource.org/mapping.html</a>&quot;.</p>
 
-<p>TMX support here includes basic/normal TMX support for products of the
-Tiled map editor (see “<a href="http://mapeditor.org">mapeditor.org</a>”
-and “<a
-href="http://docs.mapeditor.org/en/latest/reference/tmx-map-format">docs.mapeditor.org/en/latest/reference/tmx-map-format</a>/”)
-and more complex tiled map support for formats based on the ManaSource game
-engine, including variants like Source of Tales, Land of Fire, The Mana
-World and others. For more information on the ManaSource mapping format,
-see “<a
-href="http://doc.manasource.org/mapping.html">doc.manasource.org/mapping.html</a>”.</p>
-
-<p>In general, Tiled and “raw” TMX try to be all things to all games. If you
-can use a tile editor for it, Tiled would like to do that for you.
-ManaSource is a more specialized engine and introduces new concepts like
-named “Fringe” layers to make it clear how a humanoid sprite walks through
-the map, named “Collision” layers for walkability and swimmability,
-known-format “objects” for things like doors, warps, NPCs, NPC waypoints
-and monster spawns. Not all of that will be duplicated in Demiurge, but
-support for such things belongs in the ManaSource-specific TMX parsing
-code.</p>
+<p>In general, Tiled and &quot;raw&quot; TMX try to be all things to all
+games. If you can use a tile editor for it, Tiled would like to do
+that for you. ManaSource is a more specialized engine and
+introduces new concepts like named &quot;Fringe&quot; layers to make it clear
+how a humanoid sprite walks through the map, named &quot;Collision&quot;
+layers for walkability and swimmability, known-format &quot;objects&quot; for
+things like doors, warps, NPCs, NPC waypoints and monster spawns.
+Not all of that will be duplicated in Demiurge, but support for such
+things belongs in the ManaSource-specific TMX parsing code.</p>
 
 <p>In the long run, it&#39;s very likely that there will be other TMX
-“dialects” like ManaSource&#39;s. Indeed, Demiurge might eventually specify
-its own TMX dialect to support non-ManaSource features like procedural map
-generation. My intention is to add them in the same way - they may be
-requested in the Demiurge World files in the DSL, and they will be an
-additional parsing pass on the result of “basic” TMX parsing.</p>
+&quot;dialects&quot; like ManaSource&#39;s. Indeed, Demiurge might eventually
+specify its own TMX dialect to support non-ManaSource features like
+procedural map generation. My intention is to add them in the same
+way - they may be requested in the Demiurge World files in the DSL,
+and they will be an additional parsing pass on the result of &quot;basic&quot;
+TMX parsing.</p>
 
 
   </div>
@@ -150,8 +148,7 @@ additional parsing pass on the result of “basic” TMX parsing.</p>
       
       
         
-        <div class='inline'>
-<p>0.3.0</p>
+        <div class='inline'><p>0.3.0</p>
 </div>
       
     </li>
@@ -180,7 +177,7 @@ additional parsing pass on the result of “basic” TMX parsing.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:05 2018 by
+  Generated on Mon Jan 29 15:15:20 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.3.1).
 </div>
