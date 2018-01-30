@@ -6,7 +6,6 @@ messageMap = {
   "display_show": "showDisplayable",
   "display_destroy": "destroyDisplayable",
   "display_destroy_all": "destroyAllDisplayables",
-  "display_move": "moveStackTo",
   "display_pan": "panToPixel",
 }
 
