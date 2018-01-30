@@ -26,7 +26,7 @@ module Pixiurge::Display
     # @param name [String] This Displayable's name, which must either be the same as the name of the Demiurge item or correspond to no other Demiurge item
     # @param engine_connector [Pixiurge::EngineConnector] The EngineConnector containing this Displayable
     # @since 0.1.0
-    def initialize(item, name: item.name, engine_connector:)
+    def initialize(item, name: item.name, engine_connector:, &disp)
       # Several things, such as @item, @name and @engine_connector are intentionally available from the DSL
       @item = item
       @name = item.name
@@ -35,9 +35,7 @@ module Pixiurge::Display
       # Built_objects is a readable attribute to get the final result out
       @built_objects = []
 
-      disp = item.get_action("$display")["block"]
-      raise("No display action available for DisplayBuilder!") unless disp
-      self.instance_eval(&disp) # Create the built objects from the block
+      self.instance_eval(&disp) if disp # Create the built objects from the block
     end
 
     private
@@ -61,11 +59,11 @@ module Pixiurge::Display
     # @return [void]
     # @since 0.1.0
     def container(&block)
-      builder = ::Pixiurge::Display::ContainerBuilder.new(item, engine_connector: @engine_connector)
+      builder = ::Pixiurge::Display::ContainerBuilder.new(item, name: @name, engine_connector: @engine_connector)
       raise("Display container must supply a block!") unless block_given?
       builder.instance_eval(&block)
       raise("Display container must contain at least one item!") if builder.built_objects.empty?
-      add_built_object ::Pixurge::Display::Container.new(builder.built_objects, name: @name, engine_connector: @engine_connector)
+      add_built_object ::Pixiurge::Display::Container.new(builder.built_objects, name: @name, engine_connector: @engine_connector)
     end
 
     # Create a Displayable particle source according to the passed

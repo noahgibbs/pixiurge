@@ -20,6 +20,7 @@ class Pixiurge.Display
       particle_source: Pixiurge.ParticleSource,
       tile_animated_sprite: Pixiurge.TileAnimatedSprite,
       tmx: Pixiurge.TmxMap,
+      container: Pixiurge.DisplayContainer,
     }
 
   setup: () ->

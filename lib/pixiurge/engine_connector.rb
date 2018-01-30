@@ -289,7 +289,7 @@ class Pixiurge::EngineConnector
     # block in the World Files. If so, use it.
     disp_action = item.get_action("$display")
     if disp_action && disp_action["block"] # This special action is used to pass the Display info through to a Display library.
-      builder = Pixiurge::Display::DisplayBuilder.new(item, engine_connector: self)
+      builder = Pixiurge::Display::DisplayBuilder.new(item, engine_connector: self, &(disp_action["block"]))
       displayables = builder.built_objects
       raise("Only display one object per agent right now for item #{item.name.inspect}!") if displayables.size > 1
       raise("No display objects declared for item #{item.name.inspect}!") if displayables.size == 0
