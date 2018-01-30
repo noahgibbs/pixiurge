@@ -276,11 +276,43 @@ primitives. It knows how to display a JSON TMX tiled area, for
 instance, and to show hovering text, and humanoid figures with
 equipment.
 
-### Pixiurge Websocket Protocol
+### Front End Signals
 
-The Pixiurge Websocket Protocol is simple and designed for easy
-testing and reading by humans. That's bad if you need high
-performance, but good if you want to put together games easily.
+Pixiurge's front end, like Pixiurge in general, has a lot of kinds of
+messages and signals. The front end is fastest when it doesn't wait
+for the server, and so there are front-end-specific signals, called
+DisplaySignals, that get passed around. They don't normally go to the
+server at all, though you could subscribe to one and resend it if you
+wanted.
+
+If you know PIXI.js, you know that PIXI already sends events from its
+various displayable objects. Pixiurge Front End Signals are very
+similar, and some of them are just PIXI signals, resent by Pixiurge
+Displayables.
+
+The primary reason for Front End Signals is if you want something to
+be pretty and complicated, but not to involve the server. Idle
+animations? Front End Signals. Cute little sounds for atmosphere with
+no gameplay effects? Front End Signals. Front End Signals are a great
+way to chain one animation into another, such as various standing
+around and idle animations with some randomness. They're also a great
+way to chain animations from one Displayable into another, like if a
+crow makes a loud kaw and your player sprite jumps a bit.
+
+An animation name acts as a signal, except that sending that signal
+(on an object with that animation) will play the animation instead of
+generating a normal signal.
+
+There's a simple JSON language for tying Front End Signals together
+into animations. It's easy to need something more complicated than the
+JSON language allows. If you do, then you'll want to write JavaScript
+handlers that subscribe to one or more signals and/or send one or more
+signals in order to perform the more complicated logic. The JSON
+language for the front end isn't complicated enough to replace
+JavaScript, and it's really not designed to be. In cases where you'd
+have really trivial JavaScript you can use the JSON language
+instead. In cases where you'd have interesting JavaScript, you should
+still write JavaScript.
 
 ## Pixiurge Performance Limits
 
@@ -325,14 +357,20 @@ don't much care about building AAA-style high-performance "whoah, the
 graphics" games, but I care a *lot* about reaching people and talking
 to them. I hope you do too.
 
-### Network Round Trips
+### Pixiurge Websocket Protocol
 
-One of the biggest limits on Pixiurge performance is this: for most
-actions, you need a network round trip to the server. Worse, you need
-a *Websocket* round trip to the server, which means TCP/IP and
-significant per-message overhead.
+The Pixiurge Websocket Protocol is simple and designed for easy
+testing and reading by humans. That's bad if you need high
+performance, but good if you want to put together games easily.
 
-Can't we fix that?
+Probably the biggest limits are that it's client-server only, which
+means no peer-to-peer) and that it's WebSocket-based, meaning only
+in-order reliable delivery. A low-latency game mostly can't rely on
+TCP/IP, it needs UDP/IP, and it often needs to be peer-to-peer.
+
+(WebSockets also have nontrivial per-message overhead.)
+
+Can't we fix all that?
 
 Well, maybe. It's possible for you to write client-side Javascript
 that does things without waiting for the server. But then you're
