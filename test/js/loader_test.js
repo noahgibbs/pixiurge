@@ -61,6 +61,8 @@ describe('Pixiurge loader', function() {
             assert.equal(true, batch_2_complete);
             assert.equal(true, batch_3_complete);
             assert.equal(true, batch_4_complete);
+
+            assert.equal(true, TestHelper.verifyAllLoaded(loader));
         });
     });
 });
