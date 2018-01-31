@@ -9,6 +9,7 @@ which mocha-headless-chrome || npm install -g mocha-headless-chrome
 
 # Old test server running? Kill it.
 kill `ps | grep "rackup" | grep "6543" | cut -d " " -f 1` || echo "No kill, no problem."
+sleep 1 # Give it a second to die
 
 pushd test/js/test_server
 rackup -p 6543 &
