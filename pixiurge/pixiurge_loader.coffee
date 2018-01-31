@@ -17,7 +17,7 @@ class window.Pixiurge.Loader
 
   newBatchId: () ->
     @batch_id += 1
-    @batch_id
+    return @batch_id
 
   addResourceBatch: (resources, handler) ->
     to_load = []
@@ -27,7 +27,9 @@ class window.Pixiurge.Loader
       if status == "unloaded"
         to_load.push(url)
       else if status == "loading"
-        depends_on.push @resources_loading[url].id
+        idx = depends_on.indexOf(@resources_loading[url].id)
+        if idx == -1
+          depends_on.push @resources_loading[url].id
     if to_load.length == 0 && depends_on.length == 0
       return handler()
 
@@ -55,16 +57,22 @@ class window.Pixiurge.Loader
     dependent_batches = []
 
     # Remove this as a dependency from anything waiting on it
+    removed = []
     for dep_id in loading_obj.required
       dep_list = @resources_loading[dep_id].depends
-      idx = dep_list.indexOf(loading_obj.id)
-      if idx == -1
+      idx = dep_list.indexOf(id)
+      if idx < 0
         console.log "LOADER ERROR: this should never fail to find the index!"
       else
         dep_list.splice(idx, 1)
+        removed.push(dep_id)
       if dep_list.length == 0
         # This was the last dependency of the dependent batch
         dependent_batches.push(dep_id)
+    for dep_id in removed
+      # For each dependency we marked done, mark it as no longer required
+      idx = loading_obj.required.indexOf(dep_id)
+      loading_obj.required.splice(idx, 1)
 
     # Okay, we're good. Delete this from "loading", add it to "loaded", call the handler.
     for url in loading_obj.loading
@@ -77,7 +85,8 @@ class window.Pixiurge.Loader
     loading_obj.handler()
 
     # Now notify anybody else where we were their last dependency
-    @batchLoaded(dep_id) for dep_id in dependent_batches
+    for dep_id in dependent_batches
+      @batchLoaded(dep_id)
 
   getTexture: (url) ->
     rsc = @resources_loaded[url]

@@ -51,7 +51,11 @@ window.Mock.MockLoader = class {
             }
             batch.callback();
         } else {
-            console.log("Couldn't find batch index for URLs:", urls.join(","));
+            var batchKeys = [];
+            for(var i = 0; i < this._batches.length; i++) {
+                batchKeys.push(this._batches[i].id);
+            }
+            console.log("Couldn't find batch index for URLs:", urlId, batchKeys);
             return;
         }
     }
