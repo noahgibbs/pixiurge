@@ -7,9 +7,15 @@ which mocha-headless-chrome || npm install -g mocha-headless-chrome
 
 ./node_modules/.bin/webpack --config test/js/webpack.config.js
 
-# Old test server running? Kill it.
-kill `ps | grep "rackup" | grep "6543" | cut -d " " -f 1` || echo "No kill, no problem."
-sleep 1 # Give it a second to die
+function cleanup {
+  # Old test server running? Kill it.
+  ps x | grep "rackup" | grep "6543" | cut -d " " -f 1 | xargs kill -9
+  echo `ps x | grep "rackup"`
+}
+trap cleanup EXIT
+
+# Kill any running test server
+cleanup
 
 pushd test/js/test_server
 rackup -p 6543 &
@@ -23,4 +29,4 @@ mocha-headless-chrome -f http://localhost:6543/mocha_tests.html
 #open -a "Google Chrome.app" http://localhost:6543/mocha_tests.html
 
 # Now get rid of that test web server
-kill `ps | grep "rackup" | grep "6543" | cut -d " " -f 1` || echo "No kill, no problem."
+ps x | grep "rackup" | grep "6543" | cut -d " " -f 1 | xargs kill
