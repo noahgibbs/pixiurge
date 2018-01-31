@@ -3,8 +3,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
     super(data_hash)
 
     @url = @displayable_data.url
-    @loader = new PIXI.loaders.Loader()
-    @loader.add(@url).load(() => @jsonLoaded())
+    @pixi_display.loader.addResourceBatch([@url], () => @jsonLoaded())
 
     # Reserve our spot in the display order, even if the loader is slow
     @world = new PIXI.Container()
@@ -14,11 +13,10 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
   hide: () ->
 
   jsonLoaded: () ->
-    tmxCacheEntry = @loader.resources[@url].data
-    @loader.reset()
+    tmxCacheEntry = @pixi_display.loader.getJSON(@url)
     tilesetImages = (tileset.image for tileset in tmxCacheEntry.map.tilesets)
 
-    @loader.add(tilesetImages).load(() => @makeTiledWorld(tmxCacheEntry))
+    @pixi_display.loader.addResourceBatch(tilesetImages, () => @makeTiledWorld(tmxCacheEntry))
 
   # Parts of this are adapted from kittykatattack's tileUtilities
   makeTiledWorld: (tmxCacheEntry) ->
@@ -34,7 +32,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
         tile_height: tileset.tileheight,
         spacing: tileset.spacing,
         margin: tileset.margin,
-        texture: @loader.resources[tileset.image].texture,
+        texture: @pixi_display.loader.getTexture(tileset.image),
       }
       base_texture_by_tileset[tileset.name] = ts_spec_item.texture.baseTexture
       tileset_spec.push ts_spec_item

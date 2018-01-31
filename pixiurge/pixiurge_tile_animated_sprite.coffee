@@ -91,17 +91,16 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   constructor: (data_hash) ->
     super(data_hash)
 
-    images = tileset.url for tileset in @displayable_data.params.tilesets
+    images = (tileset.url for tileset in @displayable_data.params.tilesets)
     @tilesets = @displayable_data.params.tilesets
 
-    @loader = new PIXI.loaders.Loader();
-    @loader.add(images).load(() => @imagesLoaded())
+    @pixi_display.loader.addResourceBatch(images, () => @imagesLoaded())
     # @todo: how to make sure we can put this at a specific spot in the draw order, even if the load is slow
 
   imagesLoaded: () ->
     ts_base_textures = {}
     for tileset in @tilesets
-      tileset.texture = @loader.resources[tileset.url].texture
+      tileset.texture = @pixi_display.loader.getTexture(tileset.url)
       ts_base_textures[tileset.name] = tileset.texture.baseTexture
 
     # First, figure out the tile IDs

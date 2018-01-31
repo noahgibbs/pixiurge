@@ -21,6 +21,7 @@ class Pixiurge.Display
       tmx: Pixiurge.TmxMap,
       container: Pixiurge.DisplayContainer,
     }
+    @loader = new Pixiurge.Loader()
 
   setup: () ->
 

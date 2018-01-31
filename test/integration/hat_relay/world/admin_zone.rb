@@ -85,43 +85,55 @@ zone "admin zone" do
     end
 
     display do
-      tile_animated_sprite tilesets: [{
-          url: "/sprites/female_tilesheet.png",
-          tile_width: 80,
-          tile_height: 110,
-        }],
-      animations: {
-        stand: { after: [ { name: "stand", chance: 3 }, { name: "idle2" }, { name: "idle3" }, { name: "idle4" }],
-          frames: [
-            { frame_id: 24, duration: 5000 },
-            { frame_id: 1, duration: 1000 },
-            { frame_id: 24, duration: 5000 },
-            { frame_id: 23, duration: 1000 } ]
+      container do
+        tile_animated_sprite tilesets: [{
+            url: "/sprites/female_tilesheet.png",
+            tile_width: 80,
+            tile_height: 110,
+          }],
+        animations: {
+          stand: { after: [ { name: "stand", chance: 3 }, { name: "idle2" }, { name: "idle3" }, { name: "idle4" }],
+            frames: [
+              { frame_id: 24, duration: 5000 },
+              { frame_id: 1, duration: 1000 },
+              { frame_id: 24, duration: 5000 },
+              { frame_id: 23, duration: 1000 } ]
+          },
+          idle2: { after: "stand",
+            frames: [
+              { frame_id: 24, duration: 5000 },
+            ]
+          },
+          idle3: { after: "stand",
+            frames: [
+              { frame_id: 24, duration: 2000 },
+              { frame_id: 1, duration: 5000 },
+              { frame_id: 24, duration: 1000 } ]
+          },
+          idle4: { after: "stand",
+            frames: [
+              { frame_id: 24, duration: 1000 },
+              { frame_id: 1, duration: 2000 },
+              { frame_id: 2, duration: 500 },
+              { frame_id: 3, duration: 1500 },
+              { frame_id: 4, duration: 1500 },
+              { frame_id: 24, duration: 1000 } ]
+          },
+          walk: { after: "stand", frames: [ { frame_id: 10, duration: 250 }, { frame_id: 11, duration: 250 } ] * 3 },
+          jump: { after: "stand", frames: [ { frame_id: 1, duration: 250 }, { frame_id: 2, duration: 250 }, { frame_id: 4, duration: 250 } ] },
         },
-        idle2: { after: "stand",
-          frames: [
-            { frame_id: 24, duration: 5000 },
-          ]
+        animation: "stand"
+
+        tile_animated_sprite tilesets:[{
+            url: "/sprites/female_tilesheet.png",
+            tile_width: 80,
+            tile_height: 110,
+          }],
+        animations: {
+          stand: { after: "loop", frames: [ 25 ] },
         },
-        idle3: { after: "stand",
-          frames: [
-            { frame_id: 24, duration: 2000 },
-            { frame_id: 1, duration: 5000 },
-            { frame_id: 24, duration: 1000 } ]
-        },
-        idle4: { after: "stand",
-          frames: [
-            { frame_id: 24, duration: 1000 },
-            { frame_id: 1, duration: 2000 },
-            { frame_id: 2, duration: 500 },
-            { frame_id: 3, duration: 1500 },
-            { frame_id: 4, duration: 1500 },
-            { frame_id: 24, duration: 1000 } ]
-        },
-        walk: { after: "stand", frames: [ { frame_id: 10, duration: 250 }, { frame_id: 11, duration: 250 } ] * 3 },
-        jump: { after: "stand", frames: [ { frame_id: 1, duration: 250 }, { frame_id: 2, duration: 250 }, { frame_id: 4, duration: 250 } ] },
-      },
-      animation: "stand"
+        animation: "stand"
+      end
     end
   end
 end
