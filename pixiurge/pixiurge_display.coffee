@@ -15,6 +15,7 @@ class Pixiurge.Display
     @display_event_handlers = {}
 
     @container_spec = options["container"] || "body"
+    @pixiOptions = options["pixiOptions"] || {}
     @item_klasses = {
       particle_source: Pixiurge.ParticleSource,
       tile_animated_sprite: Pixiurge.TileAnimatedSprite,
@@ -25,12 +26,14 @@ class Pixiurge.Display
 
   setup: () ->
 
-  pixi_setup: () ->
+  pixiSetup: () ->
     @exposure = { x: @display_width / 2, y: @display_height / 2, width: @display_width, height: @display_height }
 
-    @pixi_app = new PIXI.Application(width: @display_width, height: @display_height)
-    @stage = @pixi_app.stage
-    $(@container_spec).append(@pixi_app.view)
+    pixiAppOptions = { width: @display_width, height: @display_height }
+    pixiAppOptions[key] = value for key, value of @pixiOptions
+    @pixiApp = new PIXI.Application(pixiAppOptions)
+    @stage = @pixiApp.stage
+    $(@container_spec).append(@pixiApp.view)
 
     # Later figure out Z-ordering: http://pixijs.io/examples/#/layers/zorder.js
     @layers_container = new PIXI.Container
@@ -51,7 +54,7 @@ class Pixiurge.Display
     @display_width = data.width
     @display_height = data.height
     @ms_per_tick = data.ms_per_tick
-    @pixi_setup()
+    @pixiSetup()
 
   panToPixel: (x, y) ->
     @exposure = { x: x, y: y, width: @display_width, height: @display_height }

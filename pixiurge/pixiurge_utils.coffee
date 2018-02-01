@@ -28,3 +28,23 @@ class Pixiurge.FakeCookieLib extends Pixiurge.CookieLib
 
   deleteCookie: (name) ->
     delete @cookies[name]
+
+Pixiurge.ScreenShot = {
+
+  # For this to work, have to pass preserveDrawingBuffer:true in the pixiOptions to your PixiurgeApp.
+  saveCanvas: (canvas, suggestedFileName = "screenshot.png") ->
+    uri = canvas.toDataURL('image/png')
+    link = document.createElement("a")
+    link.download = suggestedFileName
+    link.href = uri
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link);
+
+  dataURItoBlob: (dataURI) ->
+    binary = atob(dataURI.split(',')[1])
+    array = []
+    for i in binary
+      array.push(binary.charCodeAt i)
+    new Blob([new Uint8Array(array)], {type: 'image/png'});
+}

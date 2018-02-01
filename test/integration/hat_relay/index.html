@@ -101,7 +101,8 @@ function bad_login(reason) {
     // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
     var ws = new WebSocket("wss://localhost:3001/");
     hat_relay_game.setTransport(new Pixiurge.WebsocketTransport(hat_relay_game, ws));
-    var display = new Pixiurge.Display(hat_relay_game, { container: "#displayarea" });
+    var display = new Pixiurge.Display(hat_relay_game, { container: "#displayarea", pixiOptions: { preserveDrawingBuffer: true } });
+    hat_relay_game.pixi_display = display;
     hat_relay_game.setMessageHandler("display", display);
 
     hat_relay_game.setup();
@@ -146,7 +147,8 @@ function bad_login(reason) {
 <div id="displayarea"></div>
 
 <ul>
-  <li><a onclick="game_logout();">Log Out</li>
+  <li><a onclick="game_logout();">Log Out</a></li>  <!-- window.hat_relay_game.pixi_display.pixi_app.view -->
+  <li><a onclick="Pixiurge.ScreenShot.saveCanvas($('#displayarea canvas')[0]);">Save Screenshot</a></li>
 </ul>
 
 </body>
