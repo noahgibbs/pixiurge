@@ -1,6 +1,7 @@
 /*
  * decaffeinate suggestions:
  * DS101: Remove unnecessary use of Array.from
+ * DS102: Remove unnecessary code created because of implicit returns
  * DS205: Consider reworking code to avoid use of IIFEs
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
@@ -51,16 +52,16 @@ Pixiurge.Display = class Display {
     this.stage.addChild(this.layersContainer);
     this.fringeContainer = new PIXI.Container;
     this.fringeContainer.z = 0;
-    return this.layersContainer.addChild(this.fringeContainer);
+    this.layersContainer.addChild(this.fringeContainer);
   }
 
   message(msgName, argArray) {
     const handler = messageMap[msgName];
-    if (handler == null) {
+    if ((handler == null) || !this[handler]) {
       console.warn(`Couldn't handle message type ${msgName}!`);
       return;
     }
-    return this[handler](...Array.from(argArray || []));
+    this[handler](...Array.from(argArray || []));
   }
 
   initMessage(data) {
@@ -68,7 +69,7 @@ Pixiurge.Display = class Display {
     this.displayWidth = data.width;
     this.displayHeight = data.height;
     this.msPerTick = data.ms_per_tick;
-    return this.pixiSetup();
+    this.pixiSetup();
   }
 
   panToPixel(x, y) {
@@ -76,7 +77,7 @@ Pixiurge.Display = class Display {
     const leftX = this.exposure.x - (this.exposure.width - (this.displayWidth / 2));
     const upperY = this.exposure.y - (this.exposure.height - (this.displayHeight / 2));
     this.layersContainer.x = -leftX;
-    return this.layersContainer.y = -upperY;
+    this.layersContainer.y = -upperY;
   }
 
   showDisplayable(itemName, itemData) {
@@ -89,7 +90,7 @@ Pixiurge.Display = class Display {
       console.log(`Got back undefined or false displayable from creation: ${displayable}`, displayable);
       return;
     }
-    return this.displayables[itemName] = displayable;
+    this.displayables[itemName] = displayable;
   }
 
   createDisplayableFromMessages(parentContainer, itemName, itemData) {
@@ -99,7 +100,7 @@ Pixiurge.Display = class Display {
       console.log(`Couldn't find a class for item type: ${itemType}!`);
       return undefined;
     }
-    return new klass({pixi_display: this, parentContainer, displayable_name: itemName, displayable_data: itemData});
+    return new klass({pixiDisplay: this, parentContainer, displayableName: itemName, displayableData: itemData});
   }
 
   // This destroys this Displayable - it won't be referenced by name
@@ -107,7 +108,7 @@ Pixiurge.Display = class Display {
   destroyDisplayable(itemName) {
     if (this.displayables[itemName]) {
       this.displayables[itemName].destroy();
-      return this.displayables.delete(itemName);
+      this.displayables.delete(itemName);
     }
   }
 
@@ -117,7 +118,7 @@ Pixiurge.Display = class Display {
       const displayable = this.displayables[itemName];
       displayable.destroy();
     }
-    return this.displayables = {};
+    this.displayables = {};
   }
 
   onDisplayEvent(event, objectName, handler) {
@@ -128,7 +129,7 @@ Pixiurge.Display = class Display {
     if (this.displayEventHandlers[event][objectName] == null) {
       this.displayEventHandlers[event][objectName] = [];
     }
-    return this.displayEventHandlers[event][objectName].push(handler);
+    this.displayEventHandlers[event][objectName].push(handler);
   }
 
   sendDisplayEvent(event, objectName, data) {
@@ -138,10 +139,8 @@ Pixiurge.Display = class Display {
     for (var handler of Array.from(this.displayEventHandlers[event].any)) {
       handler(event, objectName, data);
     }
-    const result = [];
-      for (handler of Array.from(this.displayEventHandlers[objectName] || [])) {
-      result.push(handler(event, objectName, data));
+    for (handler of Array.from((this.displayEventHandlers[objectName] || []))) {
+      handler(event, objectName, data);
     }
-    return result;
   }
 };
