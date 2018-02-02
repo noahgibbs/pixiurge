@@ -8,7 +8,7 @@ describe('Pixiurge loader', function() {
 
             var urls = ["https://fake_url_1/fake.png", "https://fake_url_2/fake.json"];
             loader.addResourceBatch(urls, function() { done(); }); // Make sure it works at all - single batch calls successful "done" callback
-            var fakeLoader = loader.resources_loading[urls[0]].loader;
+            var fakeLoader = loader.resourcesLoading[urls[0]].loader;
 
             // Now tell it the batch is finished to invoke the "complete" handler
             fakeLoader.completeFakeLoad(urls);
@@ -35,10 +35,10 @@ describe('Pixiurge loader', function() {
             loader.addResourceBatch(urls_3, function() { batch_3_complete = true });
             loader.addResourceBatch(urls_4, function() { batch_4_complete = true });
 
-            var fakeLoader1 = loader.resources_loading[urls_1[0]].loader;
-            var fakeLoader2 = loader.resources_loading[urls_2[2]].loader;
-            var fakeLoader3 = loader.resources_loading[urls_3[0]].loader;
-            var fakeLoader4 = loader.resources_loading[urls_4[0]].loader;
+            var fakeLoader1 = loader.resourcesLoading[urls_1[0]].loader;
+            var fakeLoader2 = loader.resourcesLoading[urls_2[2]].loader;
+            var fakeLoader3 = loader.resourcesLoading[urls_3[0]].loader;
+            var fakeLoader4 = loader.resourcesLoading[urls_4[0]].loader;
 
             // Mark batch 3 complete, which should be entirely independent of the others
             fakeLoader3.completeFakeLoad(urls_3);
