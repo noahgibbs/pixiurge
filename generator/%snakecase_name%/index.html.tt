@@ -57,11 +57,11 @@ function game_login() {
     return;
   }
 
-  window.<%= snakecase_name %>_game.transport.login(username, password);
+  window.pixi_game.transport.login(username, password);
 };
 
 function game_logout() {
-  window.<%= snakecase_name %>_game.transport.logout();
+  window.pixi_game.transport.logout();
 };
 
 function game_register() {
@@ -79,7 +79,7 @@ function game_register() {
     return;
   }
 
-  window.<%= snakecase_name %>_game.transport.registerAccount(username, password);
+  window.pixi_game.transport.registerAccount(username, password);
 };
 
 function good_login(username) {
@@ -97,17 +97,17 @@ function bad_login(reason) {
       return;
     }
 
-    window.<%= snakecase_name %>_game = new Pixiurge();
+    window.pixi_game = new Pixiurge();
     // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
     var ws = new WebSocket("wss://localhost:3001/");
-    <%= snakecase_name %>_game.setTransport(new Pixiurge.WebsocketTransport(<%= snakecase_name %>_game, ws));
-    var display = new Pixiurge.Display(<%= snakecase_name %>_game, { container: "#displayarea" });
-    <%= snakecase_name %>_game.setMessageHandler("display", display);
+    pixi_game.setTransport(new Pixiurge.WebsocketTransport(pixi_game, ws));
+    var display = new Pixiurge.Display(pixi_game, { container: "#displayarea" });
+    pixi_game.setMessageHandler("display", display);
 
-    <%= snakecase_name %>_game.setup();
-    <%= snakecase_name %>_game.transport.onOpen(function() { <%= snakecase_name %>_game.transport.considerAutoLogin(); });
-    <%= snakecase_name %>_game.transport.onLogin(good_login);
-    <%= snakecase_name %>_game.transport.onFailedLogin(bad_login);
+    pixi_game.setup();
+    pixi_game.transport.onOpen(function() { pixi_game.transport.considerAutoLogin(); });
+    pixi_game.transport.onLogin(good_login);
+    pixi_game.transport.onFailedLogin(bad_login);
 
     $(".loginform").submit(function(event) {
       event.preventDefault();  // Don't trigger normal form handler.

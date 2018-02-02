@@ -57,11 +57,11 @@ function game_login() {
     return;
   }
 
-  window.hat_relay_game.transport.login(username, password);
+  window.pixi_game.transport.login(username, password);
 };
 
 function game_logout() {
-  window.hat_relay_game.transport.logout();
+  window.pixi_game.transport.logout();
 };
 
 function game_register() {
@@ -79,7 +79,7 @@ function game_register() {
     return;
   }
 
-  window.hat_relay_game.transport.registerAccount(username, password);
+  window.pixi_game.transport.registerAccount(username, password);
 };
 
 function good_login(username) {
@@ -97,20 +97,20 @@ function bad_login(reason) {
       return;
     }
 
-    window.hat_relay_game = new Pixiurge();
+    window.pixi_game = new Pixiurge();
     // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
     var ws = new WebSocket("wss://localhost:3001/");
-    hat_relay_game.setTransport(new Pixiurge.WebsocketTransport(hat_relay_game, ws));
-    var display = new Pixiurge.Display(hat_relay_game, { container: "#displayarea", pixiOptions: { preserveDrawingBuffer: true } });
-    hat_relay_game.setMessageHandler("display", display);
+    pixi_game.setTransport(new Pixiurge.WebsocketTransport(pixi_game, ws));
+    var display = new Pixiurge.Display(pixi_game, { container: "#displayarea", pixiOptions: { preserveDrawingBuffer: true } });
+    pixi_game.setMessageHandler("display", display);
 
     // Default input catches document events and feeds them to the event handling system, can be subclassed/overridden to "remote control" or test
-    //hat_relay_game.setInput(new Pixiurge.Input(hat_relay_game));
+    //pixi_game.setInput(new Pixiurge.Input(pixi_game));
 
-    hat_relay_game.setup();
-    hat_relay_game.transport.onOpen(function() { hat_relay_game.transport.considerAutoLogin(); });
-    hat_relay_game.transport.onLogin(good_login);
-    hat_relay_game.transport.onFailedLogin(bad_login);
+    pixi_game.setup();
+    pixi_game.transport.onOpen(function() { pixi_game.transport.considerAutoLogin(); });
+    pixi_game.transport.onLogin(good_login);
+    pixi_game.transport.onFailedLogin(bad_login);
 
     $(".loginform").submit(function(event) {
       event.preventDefault();  // Don't trigger normal form handler.
@@ -149,7 +149,7 @@ function bad_login(reason) {
 <div id="displayarea"></div>
 
 <ul>
-  <li><a onclick="game_logout();">Log Out</a></li>  <!-- window.hat_relay_game.pixi_display.pixi_app.view -->
+  <li><a onclick="game_logout();">Log Out</a></li>  <!-- window.pixi_game.pixi_display.pixi_app.view -->
   <li><a onclick="Pixiurge.ScreenShot.saveCanvas($('#displayarea canvas')[0]);">Save Screenshot</a></li>
 </ul>
 
