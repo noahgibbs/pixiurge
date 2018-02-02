@@ -37,7 +37,7 @@ class Pixiurge::App
     coffee_root = File.expand_path File.join(__dir__, "..", "..")
     vendor_root = File.join(coffee_root, "vendor")
     @rack_builder.use(Rack::Coffee, :root => coffee_root, :urls => ["/pixiurge"]) unless options[:no_dev_pixiurge]
-    @rack_builder.use(Rack::Static, :root => coffee_root, :urls => ["/vendor"]) unless options[:no_vendor_pixiurge]
+    @rack_builder.use(Rack::Static, :root => coffee_root, :urls => ["/vendor", "/pixiurge"]) unless options[:no_vendor_pixiurge]
   end
 
   # Call this to add coffeescript directories for your own app, if you're using

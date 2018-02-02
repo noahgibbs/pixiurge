@@ -11,6 +11,7 @@ messageMap = {
 
 class Pixiurge.Display
   constructor: (@pixiurge, options = {}) ->
+    @pixiurge.display = this
     @displayables = {}
     @display_event_handlers = {}
 
