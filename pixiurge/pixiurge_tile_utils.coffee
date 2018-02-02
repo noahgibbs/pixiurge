@@ -41,47 +41,47 @@ Pixiurge.TileUtils = {
   # the agent sprites don't need to be treated specially since they don't interleave in unusual ways. They're
   # always either all-below or all-above the player and can just be handled with a lot of tiles of the natural
   # size.
-  calculate_frames: (tilesets) ->
-    frame_definitions = {}
+  calculateFrames: (tilesets) ->
+    frameDefinitions = {}
 
-    dead_frame = [ 0, 0, 0, 0, 0, 0, 0 ] # Use the first natural-size tile of the first image for dead frames.
-    frame_definitions = [ dead_frame ]  # GIDs start at 1, so array offset 0 is always a dead frame.
-    frame_count = 1
+    deadFrame = [ 0, 0, 0, 0, 0, 0, 0 ] # Use the first natural-size tile of the first image for dead frames.
+    frameDefinitions = [ deadFrame ]  # GIDs start at 1, so array offset 0 is always a dead frame.
+    frameCount = 1
 
     for tileset in tilesets
       spacing = if tileset.spacing? then tileset.spacing else 0
       margin = if tileset.margin? then tileset.margin else 0
       if tileset.first_frame_id?
-        first_fid = tileset.first_frame_id
+        firstFid = tileset.first_frame_id
       else
-        first_fid = frame_count
+        firstFid = frameCount
 
       # Each new tileset specifies its starting GID. This may require pushing dead frames to pad
       # to the correct frame-number/GID.
-      dead_frames = first_fid - frame_count
-      if dead_frames < 0
+      deadFrames = firstFid - frameCount
+      if deadFrames < 0
         console.log "ERROR: GIDs are specified badly in tilesets! You are likely to see wrong tiles!"
-      else if dead_frames > 0
-        frame_definitions.push(dead_frame) for num in [1..dead_frames]
-        frame_count += dead_frames
+      else if deadFrames > 0
+        frameDefinitions.push(deadFrame) for num in [1..deadFrames]
+        frameCount += deadFrames
 
-      total_width = tileset.texture.baseTexture.realWidth
-      total_height = tileset.texture.baseTexture.realHeight
+      totalWidth = tileset.texture.baseTexture.realWidth
+      totalHeight = tileset.texture.baseTexture.realHeight
 
       # Oversize tilesets may have their own tile_width and tile_height; not all tiles need to be the same size
-      tile_width = tileset.tile_width
-      tile_height = tileset.tile_height
-      reg_x = if tileset.reg_x? then tileset.reg_x else 0
-      reg_y = if tileset.reg_y? then tileset.reg_y else 0
+      tileWidth = tileset.tile_width
+      tileHeight = tileset.tile_height
+      regX = if tileset.reg_x? then tileset.reg_x else 0
+      regY = if tileset.reg_y? then tileset.reg_y else 0
 
       y = margin
-      while y <= total_height - margin - tile_height
+      while y <= totalHeight - margin - tileHeight
         x = margin
-        while x <= total_width - margin - tile_width
-          frame_count += 1
-          frame_definitions.push [ x, y, tile_width, tile_height, tileset.name, reg_x, reg_y ]
-          x += tile_width + spacing
-        y += tile_height + spacing
+        while x <= totalWidth - margin - tileWidth
+          frameCount += 1
+          frameDefinitions.push [ x, y, tileWidth, tileHeight, tileset.name, regX, regY ]
+          x += tileWidth + spacing
+        y += tileHeight + spacing
 
-    frame_definitions
+    frameDefinitions
 }

@@ -1,13 +1,13 @@
 class Pixiurge.WebsocketTransport
-  constructor: (@pixiurge, @ws, cookie_lib = undefined) ->
+  constructor: (@pixiurge, @ws, cookieLib = undefined) ->
     @opened = false
     @ready = false
-    @login_handler = false
-    @failed_login_handler = false
-    @pending_password = false
-    @pending_username = false
-    @cookie_lib = cookie_lib || new Pixiurge.CookieLib
-    @on_open = false
+    @loginHandler = false
+    @failedLoginHandler = false
+    @pendingPassword = false
+    @pendingUsername = false
+    @cookieLib = cookieLib || new Pixiurge.CookieLib
+    @onOpenHandler = false
     @queue = []
 
   setup: () ->
@@ -15,31 +15,31 @@ class Pixiurge.WebsocketTransport
     @ws.onmessage = (evt) =>
       data = JSON.parse evt.data
       if data[0] == "failed_login" || data[0] == "failed_registration"
-        if @failed_login_handler?
-          @failed_login_handler(data[1]["message"])
+        if @failedLoginHandler?
+          @failedLoginHandler(data[1]["message"])
         else
           console.log "No failed login handler set!"
-        @pending_password = false
-        @pending_hash = false
-        @pending_save_login = false
+        @pendingPassword = false
+        @pendingHash = false
+        @pendingSaveLogin = false
         return
       if data[0] == "login_salt"
         bcrypt = dcodeIO.bcrypt
         salt = data[1]["salt"]
-        hashed = bcrypt.hashSync(@pending_password, salt)
-        @pending_password = false  # Tried it? Clear it.
-        @pending_hash = hashed
-        @sendMessageWithType "hashed_login", { username: @pending_username, bcrypted: hashed }
+        hashed = bcrypt.hashSync(@pendingPassword, salt)
+        @pendingPassword = false  # Tried it? Clear it.
+        @pendingHash = hashed
+        @sendMessageWithType "hashed_login", { username: @pendingUsername, bcrypted: hashed }
         return
       if data[0] == "login"
         console.log "Logged in as", data[1]["username"]
-        if @pending_save_login && @pending_hash
-          @cookie_lib.setCookie("pixiurge_username", data[1]["username"])
-          @cookie_lib.setCookie("pixiurge_hash", @pending_hash)
-          @pending_hash = false
-        @logged_in_as = data[1]["username"]
-        if @login_handler?
-          @login_handler(data[1]["username"])
+        if @pendingSaveLogin && @pendingHash
+          @cookieLib.setCookie("pixiurge_username", data[1]["username"])
+          @cookieLib.setCookie("pixiurge_hash", @pendingHash)
+          @pendingHash = false
+        @loggedInAs = data[1]["username"]
+        if @loginHandler?
+          @loginHandler(data[1]["username"])
         else
           console.log "No login handler set!"
         return
@@ -47,23 +47,23 @@ class Pixiurge.WebsocketTransport
         @considerAutoLogin()
         return
 
-      return transport.message_handler data[0], data.slice(1)
+      return transport.messageHandler data[0], data.slice(1)
 
     @ws.onclose = () ->
       console.log "socket closed"
 
     @ws.onopen = () ->
       @opened = true
-      ready_check = () =>
+      readyCheck = () =>
         if transport.ws.readyState == 1
           transport.ready = true
           transport.clearQueue()
         else
-          setTimeout ready_check, 0.25
+          setTimeout readyCheck, 0.25
       console.log "connected..."
-      ready_check()
-      if @on_open?
-        @on_open()
+      readyCheck()
+      if @onOpenHandler?
+        @onOpenHandler()
 
   sendMessage: (msgName, args...) ->
     sendMessageWithType("game_msg", msgName, args...)
@@ -81,21 +81,21 @@ class Pixiurge.WebsocketTransport
       for msg in @queue
         @ws.send JSON.stringify(msg)
 
-  playerAction: (action_name, args...) ->
-    @sendMessageWithType("player_action", action_name, args...)
+  playerAction: (actionName, args...) ->
+    @sendMessageWithType("player_action", actionName, args...)
 
   # Accepts a function like: transportHandler(apiCallName, argArray)
   # This handler is called by the Transport when a message is received from
   # the server
-  onMessage: (@message_handler) ->
+  onMessage: (@messageHandler) ->
 
-  onLogin: (@login_handler) ->
+  onLogin: (@loginHandler) ->
 
-  onFailedLogin: (@failed_login_handler) ->
+  onFailedLogin: (@failedLoginHandler) ->
 
-  onOpen: (@on_open) ->
+  onOpen: (@onOpenHandler) ->
     if @opened?
-      @on_open()  # Already open? Call it.
+      @onOpenHandler()  # Already open? Call it.
 
   registerAccount: (username, password) ->
     bcrypt = dcodeIO.bcrypt;
@@ -103,18 +103,18 @@ class Pixiurge.WebsocketTransport
     hashed = bcrypt.hashSync(password, salt);
     @sendMessageWithType("register_account", { username: username, salt: salt, bcrypted: hashed })
 
-  login: (username, password, save_login_info = true) ->
-    @pending_password = password
-    @pending_username = username
-    @pending_save_login = save_login_info
+  login: (username, password, saveLoginInfo = true) ->
+    @pendingPassword = password
+    @pendingUsername = username
+    @pendingSaveLogin = saveLoginInfo
     @sendMessageWithType("get_salt", { username: username })
 
   logout: () ->
-    @cookie_lib.deleteCookie('pixiurge_username')
-    @cookie_lib.deleteCookie('pixiurge_hash')
+    @cookieLib.deleteCookie('pixiurge_username')
+    @cookieLib.deleteCookie('pixiurge_hash')
 
   considerAutoLogin: () ->
-    cookie_username = @cookie_lib.getCookie("pixiurge_username")
-    cookie_hash = @cookie_lib.getCookie("pixiurge_hash")
-    if cookie_username? && cookie_username != "" && cookie_hash? && cookie_hash != ""
-      @sendMessageWithType "hashed_login", { username: cookie_username, bcrypted: cookie_hash }
+    cookieUsername = @cookieLib.getCookie("pixiurge_username")
+    cookieHash = @cookieLib.getCookie("pixiurge_hash")
+    if cookieUsername? && cookieUsername != "" && cookieHash? && cookieHash != ""
+      @sendMessageWithType "hashed_login", { username: cookieUsername, bcrypted: cookieHash }

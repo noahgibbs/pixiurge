@@ -40,7 +40,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
     # Calculating gids is a "fun" process - if you use oversize
     # sprites, for instance, different layers may have different tile
     # widths and tile heights.
-    tile_frame_definitions = Pixiurge.TileUtils.calculate_frames(tileset_spec)
+    tile_frame_definitions = Pixiurge.TileUtils.calculateFrames(tileset_spec)
     textureByGID = {}
 
     @world.tileWidth = tiledJSON.tilewidth

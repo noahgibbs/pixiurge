@@ -104,7 +104,7 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
       ts_base_textures[tileset.name] = tileset.texture.baseTexture
 
     # First, figure out the tile IDs
-    tile_frame_definitions = Pixiurge.TileUtils.calculate_frames(@tilesets)
+    tile_frame_definitions = Pixiurge.TileUtils.calculateFrames(@tilesets)
 
     @animations = {}
     # Next, we need to convert each animation to AnimatedSprite's format - an array of structures, each with "texture" and "time" fields.
