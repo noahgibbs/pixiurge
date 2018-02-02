@@ -3,24 +3,24 @@
 
 class window.Pixiurge
   constructor: () ->
-    @message_handlers = []
+    @messageHandlers = []
   setTransport: (transport) ->
     @transport = transport
   setMessageHandler: (prefix, handler) ->
-    @message_handlers.push [prefix, handler]
+    @messageHandlers.push [prefix, handler]
 
   getTransport: () -> @transport
   setup: (options = {}) ->
-    pixiurge_obj = this
-    @transport.onMessage (msgName, args) -> pixiurge_obj.gotTransportCall(msgName, args)
+    pixiurgeObj = this
+    @transport.onMessage (msgName, args) -> pixiurgeObj.gotTransportCall(msgName, args)
     @transport.setup()
-    for items in @message_handlers
+    for items in @messageHandlers
       handler = items[1]
       if handler.setup?
         handler.setup()
 
   gotTransportCall: (msgName, args) ->
-    for items in @message_handlers
+    for items in @messageHandlers
       prefix = items[0]
       handler = items[1]
       if prefix == "" || msgName.slice(0, prefix.length) == prefix
