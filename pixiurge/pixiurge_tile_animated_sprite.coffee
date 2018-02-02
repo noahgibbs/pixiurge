@@ -91,16 +91,16 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   constructor: (dataHash) ->
     super(dataHash)
 
-    images = (tileset.url for tileset in @displayable_data.params.tilesets)
-    @tilesets = @displayable_data.params.tilesets
+    images = (tileset.url for tileset in @displayableData.params.tilesets)
+    @tilesets = @displayableData.params.tilesets
 
-    @pixi_display.loader.addResourceBatch(images, () => @imagesLoaded())
+    @pixiDisplay.loader.addResourceBatch(images, () => @imagesLoaded())
     # @todo: how to make sure we can put this at a specific spot in the draw order, even if the load is slow
 
   imagesLoaded: () ->
     tsBaseTextures = {}
     for tileset in @tilesets
-      tileset.texture = @pixi_display.loader.getTexture(tileset.url)
+      tileset.texture = @pixiDisplay.loader.getTexture(tileset.url)
       tsBaseTextures[tileset.name] = tileset.texture.baseTexture
 
     # First, figure out the tile IDs
@@ -108,7 +108,7 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
 
     @animations = {}
     # Next, we need to convert each animation to AnimatedSprite's format - an array of structures, each with "texture" and "time" fields.
-    for animationName, animationStruct of @displayable_data.params.animations
+    for animationName, animationStruct of @displayableData.params.animations
       animFrames = []
       for frame in animationStruct.frames
         if typeof frame == "number"
@@ -136,26 +136,26 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
       @animations[animationName] = { frames: animFrames, after: after }
 
     # Create the AnimatedSprite with the textures for the first animation
-    @currentAnimation = @displayable_data.params.animation
+    @currentAnimation = @displayableData.params.animation
     unless @currentAnimation?
       console.log "No current animation set for TileAnimatedSprite!"
     @sprite = new PIXI.extras.AnimatedSprite(@animations[@currentAnimation].frames)
     thisPixiurgeSprite = this
     @sprite.onComplete = () => thisPixiurgeSprite.animationComplete()
 
-    dispData = @displayable_data.displayable
+    dispData = @displayableData.displayable
     if dispData.x? && dispData.x && dispData.y? && dispData.y
       @sprite.x = dispData.x * dispData.location_block_width
       @sprite.y = dispData.y * dispData.location_block_height
 
     @addDisplaySignalHandlers()
 
-    @parent_container.addChild @sprite
+    @parentContainer.addChild @sprite
     @startAnimation @currentAnimation
 
   addDisplaySignalHandlers: () ->
     for animationName, animation of @animations
-      @pixi_display.onDisplayEvent "animationEnd", @displayable_name, (animEnd, dispName, eventData) =>
+      @pixiDisplay.onDisplayEvent "animationEnd", @displayableName, (animEnd, dispName, eventData) =>
         anim = @animations[eventData.animation]
         if anim? && anim && anim.after? && anim.after
           @executeFrontEndEventCode(anim.after)

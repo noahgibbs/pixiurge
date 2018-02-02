@@ -2,21 +2,21 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
   constructor: (dataHash) ->
     super(dataHash)
 
-    @url = @displayable_data.url
-    @pixi_display.loader.addResourceBatch([@url], () => @jsonLoaded())
+    @url = @displayableData.url
+    @pixiDisplay.loader.addResourceBatch([@url], () => @jsonLoaded())
 
     # Reserve our spot in the display order, even if the loader is slow
     @world = new PIXI.Container()
-    @parent_container.addChild @world
+    @parentContainer.addChild @world
 
   # This is actually the "destroy" method for this Displayable
   hide: () ->
 
   jsonLoaded: () ->
-    tmxCacheEntry = @pixi_display.loader.getJSON(@url)
+    tmxCacheEntry = @pixiDisplay.loader.getJSON(@url)
     tilesetImages = (tileset.image for tileset in tmxCacheEntry.map.tilesets)
 
-    @pixi_display.loader.addResourceBatch(tilesetImages, () => @makeTiledWorld(tmxCacheEntry))
+    @pixiDisplay.loader.addResourceBatch(tilesetImages, () => @makeTiledWorld(tmxCacheEntry))
 
   # Parts of this are adapted from kittykatattack's tileUtilities
   makeTiledWorld: (tmxCacheEntry) ->
@@ -32,7 +32,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
         tile_height: tileset.tileheight,
         spacing: tileset.spacing,
         margin: tileset.margin,
-        texture: @pixi_display.loader.getTexture(tileset.image),
+        texture: @pixiDisplay.loader.getTexture(tileset.image),
       }
       baseTextureByTileset[tileset.name] = tsSpecItem.texture.baseTexture
       tilesetSpec.push tsSpecItem

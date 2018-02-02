@@ -1,10 +1,10 @@
 # Here's the parent class for Displayables
 class Pixiurge.Displayable
   constructor: (dataHash) ->
-    @parent_container = dataHash.parent_container
-    @displayable_name = dataHash.displayable_name
-    @displayable_data = dataHash.displayable_data
-    @pixi_display = dataHash.pixi_display
+    @parentContainer = dataHash.parentContainer
+    @displayableName = dataHash.displayableName
+    @displayableData = dataHash.displayableData
+    @pixiDisplay = dataHash.pixiDisplay
 
   show: () ->
 
@@ -12,4 +12,4 @@ class Pixiurge.Displayable
     throw("Implement me!")
 
   sendDisplayEvent: (eventName, eventData) ->
-    @pixi_display.sendDisplayEvent eventName, @displayable_name, eventData
+    @pixiDisplay.sendDisplayEvent eventName, @displayableName, eventData

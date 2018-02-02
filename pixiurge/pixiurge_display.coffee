@@ -13,11 +13,11 @@ class Pixiurge.Display
   constructor: (@pixiurge, options = {}) ->
     @pixiurge.display = this
     @displayables = {}
-    @display_event_handlers = {}
+    @displayEventHandlers = {}
 
-    @container_spec = options["container"] || "body"
+    @containerSpec = options["container"] || "body"
     @pixiOptions = options["pixiOptions"] || {}
-    @item_klasses = {
+    @itemKlasses = {
       particle_source: Pixiurge.ParticleSource,
       tile_animated_sprite: Pixiurge.TileAnimatedSprite,
       tmx: Pixiurge.TmxMap,
@@ -28,20 +28,20 @@ class Pixiurge.Display
   setup: () ->
 
   pixiSetup: () ->
-    @exposure = { x: @display_width / 2, y: @display_height / 2, width: @display_width, height: @display_height }
+    @exposure = { x: @displayWidth / 2, y: @displayHeight / 2, width: @displayWidth, height: @displayHeight }
 
-    pixiAppOptions = { width: @display_width, height: @display_height }
+    pixiAppOptions = { width: @displayWidth, height: @displayHeight }
     pixiAppOptions[key] = value for key, value of @pixiOptions
     @pixiApp = new PIXI.Application(pixiAppOptions)
     @stage = @pixiApp.stage
-    $(@container_spec).append(@pixiApp.view)
+    $(@containerSpec).append(@pixiApp.view)
 
     # Later figure out Z-ordering: http://pixijs.io/examples/#/layers/zorder.js
-    @layers_container = new PIXI.Container
-    @stage.addChild @layers_container
-    @fringe_container = new PIXI.Container
-    @fringe_container.z = 0
-    @layers_container.addChild @fringe_container
+    @layersContainer = new PIXI.Container
+    @stage.addChild @layersContainer
+    @fringeContainer = new PIXI.Container
+    @fringeContainer.z = 0
+    @layersContainer.addChild @fringeContainer
 
   message: (msgName, argArray) ->
     handler = messageMap[msgName]
@@ -52,62 +52,62 @@ class Pixiurge.Display
 
   initMessage: (data) ->
     console.log "Pixiurge Init Message", data
-    @display_width = data.width
-    @display_height = data.height
-    @ms_per_tick = data.ms_per_tick
+    @displayWidth = data.width
+    @displayHeight = data.height
+    @msPerTick = data.ms_per_tick
     @pixiSetup()
 
   panToPixel: (x, y) ->
-    @exposure = { x: x, y: y, width: @display_width, height: @display_height }
-    left_x = @exposure.x - (@exposure.width - @display_width / 2)
-    upper_y = @exposure.y - (@exposure.height - @display_height / 2)
-    @layers_container.x = -left_x
-    @layers_container.y = -upper_y
+    @exposure = { x: x, y: y, width: @displayWidth, height: @displayHeight }
+    leftX = @exposure.x - (@exposure.width - @displayWidth / 2)
+    upperY = @exposure.y - (@exposure.height - @displayHeight / 2)
+    @layersContainer.x = -leftX
+    @layersContainer.y = -upperY
 
-  showDisplayable: (item_name, item_data) ->
-    if @displayables[item_name]
-      console.log "Item name '#{item_name}' already exists!"
+  showDisplayable: (itemName, itemData) ->
+    if @displayables[itemName]
+      console.log "Item name '#{itemName}' already exists!"
       return
-    displayable = @createDisplayableFromMessages(@layers_container, item_name, item_data)
+    displayable = @createDisplayableFromMessages(@layersContainer, itemName, itemData)
     unless displayable? && displayable
       console.log "Got back undefined or false displayable from creation: #{displayable}", displayable
       return
-    @displayables[item_name] = displayable
+    @displayables[itemName] = displayable
 
-  createDisplayableFromMessages: (parent_container, item_name, item_data) ->
-    item_type = item_data.type
-    klass = @item_klasses[item_type]
+  createDisplayableFromMessages: (parentContainer, itemName, itemData) ->
+    itemType = itemData.type
+    klass = @itemKlasses[itemType]
     unless klass?
-      klasses = (key for key, val of @item_klasses)
-      console.log "Couldn't find a class for item type: #{item_type}! Legal types:", klasses
+      klasses = (key for key, val of @itemKlasses)
+      console.log "Couldn't find a class for item type: #{itemType}! Legal types:", klasses
       return undefined
-    new klass(pixi_display: this, parent_container: parent_container, displayable_name: item_name, displayable_data: item_data)
+    new klass(pixiDisplay: this, parentContainer: parentContainer, displayableName: itemName, displayableData: itemData)
 
   # This destroys this Displayable - it won't be referenced by name
   # again, ever (unless you recreate it.)
-  destroyDisplayable: (item_name) ->
-    if @displayables[item_name]
-      @displayables[item_name].destroy()
-      @displayables.delete(item_name)
+  destroyDisplayable: (itemName) ->
+    if @displayables[itemName]
+      @displayables[itemName].destroy()
+      @displayables.delete(itemName)
 
   # This destroys all Displayables and invalidates any hints or preloads
   destroyAllDisplayables: () ->
-    for item_name, displayable of @displayables
+    for itemName, displayable of @displayables
       displayable.destroy()
     @displayables = {}
 
-  onDisplayEvent: (event, object_name, handler) ->
-    unless @display_event_handlers[event]?
-      @display_event_handlers[event] = { any: [] }
-    @display_event_handlers[event].any.push(handler)
-    unless @display_event_handlers[event][object_name]?
-      @display_event_handlers[event][object_name] = []
-    @display_event_handlers[event][object_name].push(handler)
+  onDisplayEvent: (event, objectName, handler) ->
+    unless @displayEventHandlers[event]?
+      @displayEventHandlers[event] = { any: [] }
+    @displayEventHandlers[event].any.push(handler)
+    unless @displayEventHandlers[event][objectName]?
+      @displayEventHandlers[event][objectName] = []
+    @displayEventHandlers[event][objectName].push(handler)
 
-  sendDisplayEvent: (event, object_name, data) ->
-    unless @display_event_handlers[event]?
+  sendDisplayEvent: (event, objectName, data) ->
+    unless @displayEventHandlers[event]?
       return
-    for handler in @display_event_handlers[event].any
-      handler(event, object_name, data)
-    for handler in (@display_event_handlers[object_name] || [])
-      handler(event, object_name, data)
+    for handler in @displayEventHandlers[event].any
+      handler(event, objectName, data)
+    for handler in (@displayEventHandlers[objectName] || [])
+      handler(event, objectName, data)
