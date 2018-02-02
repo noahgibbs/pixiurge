@@ -1,6 +1,6 @@
 class Pixiurge.TmxMap extends Pixiurge.Displayable
-  constructor: (data_hash) ->
-    super(data_hash)
+  constructor: (dataHash) ->
+    super(dataHash)
 
     @url = @displayable_data.url
     @pixi_display.loader.addResourceBatch([@url], () => @jsonLoaded())
@@ -22,10 +22,10 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
   makeTiledWorld: (tmxCacheEntry) ->
     layers = tmxCacheEntry.tile_layers.sort (l1, l2) -> l1.z - l2.z
     tiledJSON = tmxCacheEntry.map
-    tileset_spec = []
-    base_texture_by_tileset = {}
+    tilesetSpec = []
+    baseTextureByTileset = {}
     for tileset in tiledJSON.tilesets
-      ts_spec_item = {
+      tsSpecItem = {
         name: tileset.name,
         first_frame_id: tileset.firstgid,
         tile_width: tileset.tilewidth,
@@ -34,13 +34,13 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
         margin: tileset.margin,
         texture: @pixi_display.loader.getTexture(tileset.image),
       }
-      base_texture_by_tileset[tileset.name] = ts_spec_item.texture.baseTexture
-      tileset_spec.push ts_spec_item
+      baseTextureByTileset[tileset.name] = tsSpecItem.texture.baseTexture
+      tilesetSpec.push tsSpecItem
 
     # Calculating gids is a "fun" process - if you use oversize
     # sprites, for instance, different layers may have different tile
     # widths and tile heights.
-    tile_frame_definitions = Pixiurge.TileUtils.calculateFrames(tileset_spec)
+    tileFrameDefinitions = Pixiurge.TileUtils.calculateFrames(tilesetSpec)
     textureByGID = {}
 
     @world.tileWidth = tiledJSON.tilewidth
@@ -79,7 +79,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
             mapY = mapRow * @world.tileHeight
 
             # regX and regY are for variable pivots - important for oversize terrain tiles in Fringe layers and similar
-            [ tileX, tileY, tileWidth, tileHeight, imageName, regX, regY ] = tile_frame_definitions[gid]
+            [ tileX, tileY, tileWidth, tileHeight, imageName, regX, regY ] = tileFrameDefinitions[gid]
 
             # Look up or allocate a texture for this tile
             # @todo Use the PIXI global texture cache for this
@@ -87,7 +87,7 @@ class Pixiurge.TmxMap extends Pixiurge.Displayable
               spriteTexture = textureByGID[gid]
             else
               rect = new PIXI.Rectangle(tileX, tileY, tileWidth, tileHeight)
-              spriteTexture = new PIXI.Texture(base_texture_by_tileset[imageName], rect)
+              spriteTexture = new PIXI.Texture(baseTextureByTileset[imageName], rect)
               textureByGID[gid] = spriteTexture
 
             # @todo AnimatedSprites for animated terrain

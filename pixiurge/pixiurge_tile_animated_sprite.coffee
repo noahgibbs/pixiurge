@@ -88,8 +88,8 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
   # an x and y coordinate for the upper left corner, a width and
   # height, and a tileset name.
 
-  constructor: (data_hash) ->
-    super(data_hash)
+  constructor: (dataHash) ->
+    super(dataHash)
 
     images = (tileset.url for tileset in @displayable_data.params.tilesets)
     @tilesets = @displayable_data.params.tilesets
@@ -98,63 +98,63 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
     # @todo: how to make sure we can put this at a specific spot in the draw order, even if the load is slow
 
   imagesLoaded: () ->
-    ts_base_textures = {}
+    tsBaseTextures = {}
     for tileset in @tilesets
       tileset.texture = @pixi_display.loader.getTexture(tileset.url)
-      ts_base_textures[tileset.name] = tileset.texture.baseTexture
+      tsBaseTextures[tileset.name] = tileset.texture.baseTexture
 
     # First, figure out the tile IDs
-    tile_frame_definitions = Pixiurge.TileUtils.calculateFrames(@tilesets)
+    tileFrameDefinitions = Pixiurge.TileUtils.calculateFrames(@tilesets)
 
     @animations = {}
     # Next, we need to convert each animation to AnimatedSprite's format - an array of structures, each with "texture" and "time" fields.
-    for animation_name, animation_struct of @displayable_data.params.animations
-      anim_frames = []
-      for frame in animation_struct.frames
+    for animationName, animationStruct of @displayable_data.params.animations
+      animFrames = []
+      for frame in animationStruct.frames
         if typeof frame == "number"
-          [x, y, tile_width, tile_height, tileset_name, reg_x, reg_y] = tile_frame_definitions[frame]
-          rect = new PIXI.Rectangle(x, y, tile_width, tile_height)
-          tex = new PIXI.Texture ts_base_textures[tileset_name], rect
-          anim_frames.push time: 100, texture: tex
+          [x, y, tileWidth, tileHeight, tilesetName, regX, regY] = tileFrameDefinitions[frame]
+          rect = new PIXI.Rectangle(x, y, tileWidth, tileHeight)
+          tex = new PIXI.Texture tsBaseTextures[tilesetName], rect
+          animFrames.push time: 100, texture: tex
         else if typeof frame == "object" && frame.frame_id?
-          [x, y, tile_width, tile_height, tileset_name, reg_x, reg_y] = tile_frame_definitions[frame.frame_id]
-          rect = new PIXI.Rectangle(x, y, tile_width, tile_height)
-          tex = new PIXI.Texture ts_base_textures[tileset_name], rect
+          [x, y, tileWidth, tileHeight, tilesetName, regX, regY] = tileFrameDefinitions[frame.frame_id]
+          rect = new PIXI.Rectangle(x, y, tileWidth, tileHeight)
+          tex = new PIXI.Texture tsBaseTextures[tilesetName], rect
           duration = if frame.duration? then frame.duration else 100
-          anim_frames.push time: duration, texture: tex
+          animFrames.push time: duration, texture: tex
         else if typeof frame == "object"
-          tileset_name = if frame.tileset? then frame.tileset else @tilesets[0].name
+          tilesetName = if frame.tileset? then frame.tileset else @tilesets[0].name
           rect = new PIXI.Rectangle(frame.x, frame.y, frame.width, frame.height)
-          tex = new PIXI.Texture ts_base_textures[tileset_name], rect
+          tex = new PIXI.Texture tsBaseTextures[tilesetName], rect
           duration = if frame.duration? then frame.duration else 100
-          anim_frames.push time: duration, texture: tex
+          animFrames.push time: duration, texture: tex
         else
           console.log "Unrecognized animation frame format in TileAnimatedSprite!", frame
 
       # The "after" fields will be handled later in @addDisplaySignalHandlers
-      after = if animation_struct.after? then animation_struct.after else "stop"
-      @animations[animation_name] = { frames: anim_frames, after: after }
+      after = if animationStruct.after? then animationStruct.after else "stop"
+      @animations[animationName] = { frames: animFrames, after: after }
 
     # Create the AnimatedSprite with the textures for the first animation
-    @current_animation = @displayable_data.params.animation
-    unless @current_animation?
+    @currentAnimation = @displayable_data.params.animation
+    unless @currentAnimation?
       console.log "No current animation set for TileAnimatedSprite!"
-    @sprite = new PIXI.extras.AnimatedSprite(@animations[@current_animation].frames)
-    this_pixiurge_sprite = this
-    @sprite.onComplete = () => this_pixiurge_sprite.animationComplete()
+    @sprite = new PIXI.extras.AnimatedSprite(@animations[@currentAnimation].frames)
+    thisPixiurgeSprite = this
+    @sprite.onComplete = () => thisPixiurgeSprite.animationComplete()
 
-    disp_data = @displayable_data.displayable
-    if disp_data.x? && disp_data.x && disp_data.y? && disp_data.y
-      @sprite.x = disp_data.x * disp_data.location_block_width
-      @sprite.y = disp_data.y * disp_data.location_block_height
+    dispData = @displayable_data.displayable
+    if dispData.x? && dispData.x && dispData.y? && dispData.y
+      @sprite.x = dispData.x * dispData.location_block_width
+      @sprite.y = dispData.y * dispData.location_block_height
 
     @addDisplaySignalHandlers()
 
     @parent_container.addChild @sprite
-    @startAnimation @current_animation
+    @startAnimation @currentAnimation
 
   addDisplaySignalHandlers: () ->
-    for animation_name, animation of @animations
+    for animationName, animation of @animations
       @pixi_display.onDisplayEvent "animationEnd", @displayable_name, (animEnd, dispName, eventData) =>
         anim = @animations[eventData.animation]
         if anim? && anim && anim.after? && anim.after
@@ -166,7 +166,7 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
       return
     # We shouldn't normally get an animationEnd for a looped animation
     if code == "loop"
-      return @startAnimation(@current_animation)
+      return @startAnimation(@currentAnimation)
     if typeof(code) == "string"
       return @startAnimation(code)
     if typeof(code) == "object"
@@ -185,14 +185,14 @@ class Pixiurge.TileAnimatedSprite extends Pixiurge.Displayable
     console.log "Unrecognized code for front-end event:", code
 
   startAnimation: (name) ->
-    @current_animation = name
+    @currentAnimation = name
     @sprite.stop()
-    @sprite.textures = @animations[@current_animation].frames
-    if @animations[@current_animation].after == "loop"
+    @sprite.textures = @animations[@currentAnimation].frames
+    if @animations[@currentAnimation].after == "loop"
       @sprite.loop = true
     else
       @sprite.loop = false
     @sprite.gotoAndPlay(0)
 
   animationComplete: () ->
-    @sendDisplayEvent("animationEnd", { animation: @current_animation })
+    @sendDisplayEvent("animationEnd", { animation: @currentAnimation })

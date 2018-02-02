@@ -1,10 +1,10 @@
 class Pixiurge.ParticleSource extends Pixiurge.Displayable
-  constructor: (data_hash) ->
-    super(data_hash)
+  constructor: (dataHash) ->
+    super(dataHash)
 
-    @texture_name = "/sprites/explosion00.png"
-    PIXI.loader.add(@texture_name).load(() => @finished_loading())
+    @textureName = "/sprites/explosion00.png"
+    PIXI.loader.add(@textureName).load(() => @finished_loading())
 
   finished_loading: () ->
-    @texture = PIXI.loader.resources[@texture_name]
+    @texture = PIXI.loader.resources[@textureName]
     @emitter = new PIXI.particles.Emitter(@parent_container, @texture, config)
