@@ -25,7 +25,7 @@ class Pixiurge::Display::TmxMap < ::Pixiurge::Displayable
     # Currently TMX maps do not deign to send mere transforms. That
     # may change if we need to put several of them together into a
     # single layer.
-    [ { "type" => @displayable_type, "url" => @entry["filename"] } ]
+    [ { "type" => @displayable_type, "url" => File.join("/", @entry["filename"]) } ]
   end
 
 end
