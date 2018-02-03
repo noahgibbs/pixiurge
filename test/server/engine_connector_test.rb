@@ -89,7 +89,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
 
     ws.close
@@ -107,7 +107,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
     ws.clear_sent_data
 
@@ -133,7 +133,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, ws.sent_data.size
     ws.clear_sent_data
 
@@ -148,7 +148,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal 4, next_ws.sent_data.size  # This would be higher if either of these players had visible bodies - they can't see each other
 
     assert_equal false, socket_closed
@@ -181,7 +181,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "murray" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[4]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[5]
     assert_equal 6, ws.sent_data.size
@@ -191,7 +191,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "sam" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[4]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[5]
     assert_equal 6, ws.sent_data.size
@@ -201,7 +201,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "phil" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[4]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[5]
 
@@ -321,7 +321,7 @@ DSL
 
     assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see himself shown when entering the room"
     assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see murray shown when entering the room"
-    assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"
+    assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"
 
     assert_equal 5, messages.size
     phil_ws.sent_data.clear
@@ -365,7 +365,7 @@ DSL
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[0]
     assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see himself shown when entering the room"
     assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see murray shown when entering the room"
-    assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"
+    assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"
     assert_equal 4, sam_ws.sent_data.size
   end
 end
