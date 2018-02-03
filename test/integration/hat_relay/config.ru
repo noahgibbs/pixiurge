@@ -18,11 +18,13 @@ require_relative "./hat_relay.rb"
 app = HatRelay.new
 app.rack_builder self
 app.root_dir __dir__
-app.root_redirect "/index.html"
+app.root_redirect "/html/index.html"
 #app.coffeescript_dirs "hat_relay"  # Optional for CoffeeScript front-end files
 #app.static_dirs "tiles", "sprites", "vendor_js", "ui", "static"   # Optional for any static front-end files such as graphics, sounds, HTML or scripts
 app.static_dirs "sprites"
 app.static_files "index.html"  # Optional for individual static files
 app.tmx_dirs "tmx"
+
+app.tilt_dirs "html"
 
 run app.handler

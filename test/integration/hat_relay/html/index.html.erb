@@ -3,23 +3,7 @@
 <head>
   <title>Hat Relay</title>
 
-  <!-- For dev, include all the JavaScript individually -->
-  <script src="/pixiurge/pixiurge.js"></script>
-  <script src="/pixiurge/pixiurge_websocket.js"></script>
-  <script src="/pixiurge/pixiurge_display.js"></script>
-  <script src="/pixiurge/pixiurge_displayable.js"></script>
-  <script src="/pixiurge/pixiurge_utils.js"></script>
-  <script src="/pixiurge/pixiurge_tile_utils.js"></script>
-  <script src="/pixiurge/pixiurge_tile_animated_sprite.js"></script>
-  <script src="/pixiurge/pixiurge_tmx_map.js"></script>
-  <script src="/pixiurge/pixiurge_displayable_container.js"></script>
-  <script src="/pixiurge/pixiurge_loader.js"></script>
-  <script src="/vendor/jquery-3.2.1.js"></script>
-  <script src="/vendor/bcrypt.js"></script>
-  <script src="/vendor/pixi-4.6.2.js"></script>
-  <script src="/vendor/sha1.js"></script>
-
-  <!-- For production use a single minified script:  <script src="pixiurge-0.1.0.min.js"></script> -->
+  <%= pixiurge_scripts %>
 
   <style media="screen" type="text/css">
     .errdisplay {
@@ -34,6 +18,8 @@
 
 <script>
 //<![CDATA[
+
+// Move this Javascript snippet into a separate script file
 
 // Not HTTPS already? Redirect to HTTPS. You need TLS to safely pass around password-equivalent tokens like we do.
 if (window.location.protocol != "https:") {
