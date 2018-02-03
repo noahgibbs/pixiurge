@@ -151,7 +151,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     # This websocket is already logged in. Weird. Close the new connection.
     if @username_for_websocket.has_key?(ws)
       websocket_send ws, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Your websocket is somehow already logged in! Failing!" }
-      ws.close(1002, "Websocket already logged in, failing")  # 1002 is a protocol error, such as a double-login
+      ws.close(1000, "Websocket already logged in, failing") # @todo Figure out websocket error codes well enough to know what to return here
       return
     end
 

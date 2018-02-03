@@ -47,10 +47,29 @@ class HatRelay < Pixiurge::AuthenticatedApp
   # This handler lets you react to Websocket messages sent from this player's browser.
   def on_player_message(username, action_name, *args)
     player = @engine_connector.player_by_username(username)
+
+    # This action is if you want to send move messages without bothering to send them as keycodes
     if action_name == "move"
       player.demi_item.queue_action "move", args[0]
       return
     end
+
+    if action_name == "keypress"
+      data = args[0]
+      keycode = data["code"]
+      if keycode == Pixiurge::Protocol::Incoming::Keycode::LEFT_ARROW
+        player.demi_item.queue_action "move", "left"
+      elsif keycode == Pixiurge::Protocol::Incoming::Keycode::RIGHT_ARROW
+        player.demi_item.queue_action "move", "right"
+      elsif keycode == Pixiurge::Protocol::Incoming::Keycode::UP_ARROW
+        player.demi_item.queue_action "move", "up"
+      elsif keycode == Pixiurge::Protocol::Incoming::Keycode::DOWN_ARROW
+        player.demi_item.queue_action "move", "down"
+      else
+        STDERR.puts "Received keycode #{keycode.inspect}, but there's no handler!"
+      end
+    end
+
     raise "Unknown player action #{action_name.inspect} with args #{args.inspect}!"
   end
 

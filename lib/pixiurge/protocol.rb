@@ -35,6 +35,28 @@ module Pixiurge::Protocol::Incoming
   #
   # @since 0.1.0
   AUTH_GET_SALT = "get_salt"
+
+  module Keycode
+    # This is the ASCII and web-browser keycode for the left arrow.
+    #
+    # @since 0.1.0
+    LEFT_ARROW = 37
+
+    # This is the ASCII and web-browser keycode for the up arrow.
+    #
+    # @since 0.1.0
+    UP_ARROW = 38
+
+    # This is the ASCII and web-browser keycode for the right arrow.
+    #
+    # @since 0.1.0
+    RIGHT_ARROW = 39
+
+    # This is the ASCII and web-browser keycode for the down arrow.
+    #
+    # @since 0.1.0
+    DOWN_ARROW = 40
+  end
 end
 
 # Fixed constants for outgoing protocol messages. That means messages
