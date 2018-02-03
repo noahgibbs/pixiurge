@@ -89,6 +89,28 @@ class Pixiurge::App
     @root_redirect = url
   end
 
+  # To serve various template file types, the Tilt middleware can be
+  # used.  This is for things like Erb or Haml that can generate HTML,
+  # but can also work for CoffeeScript and other file types.
+  #
+  # @param dirs [String, Array<String>] One or more paths to treat as tilt dirs; relative to Pixiurge.root_dir
+  # @param options [Hash] Optional final Hash with which to supply options to the Tilt middleware
+  # @option options [Array<String>] :engines What template types to allow from the Tilt-provided list of template types; default: ["erubis"]
+  # @return [void]
+  # @since 0.1.0
+  def tilt_dirs *dirs
+    options = {}
+    options = dirs.pop if dirs[-1].respond_to?(:has_key?)
+    dirs = [*dirs].flatten
+    raise "Please set Pixiurge.root_dir before using Pixiurge.tilt_dirs!" unless @root_dir
+    @rack_builder.use Pixiurge::Middleware::Tilt,
+      :root => @root_dir,
+      :urls => dirs.map { |d| "/" + d },
+      :scope => Pixiurge::TemplateView.new,
+      :engines => options[:engines] || ["erubis"]
+    nil
+  end
+
   # The Tiled map editor strongly prefers keeping its map data in TMX,
   # an XML-based format. Unfortunately, JSON is *much* better for use by
   # Javascript. Since TMX has a standard JSON export format, we
@@ -168,13 +190,15 @@ module Pixiurge::Middleware
 
   # The TmxJson middleware reads TMX files in the normal XML mode that
   # Tiled loads and saves easily, but serves it in the AJAX-friendly
-  # JSON format that it exports. By converting the (static) TMX file
-  # and giving appropriate checksums and cache headers, you can make
-  # virtual-static exported JSON TMX files with sane caching and
-  # reload behavior directly from a standard XML TMX file.
+  # JSON format that Tiled exports. This allows JavaScript-friendly
+  # usage directly from a standard XML TMX file without the manual
+  # export step every time.
   #
   # @since 0.1.0
   class TmxJson
+    # Constructor. Rack has a standard format for these, though the
+    # options are specific to the TmxJson middleware.
+    #
     # @param app [Rack::App] The next innermost Rack app
     # @param options [Hash] Options to this middleware
     # @option options [String,Array<String>] :urls A root or list of URL roots to serve TMX files from
@@ -190,6 +214,7 @@ module Pixiurge::Middleware
 
     # The Rack .call method for middleware.
     #
+    # @param env [Hash] The Rack environment hash.
     # @since 0.1.0
     def call(env)
       # If no TMX path is matched, forward the call to the next middleware
@@ -235,5 +260,118 @@ module Pixiurge::Middleware
       @urls.detect { |u| path.index(u) == 0 }
     end
 
+  end
+
+  require "tilt"
+
+  # The Tilt middleware serves Tilt (template) directories. See
+  # https://github.com/rtomayko/tilt for the list of supported
+  # template engines.
+  class Tilt
+    MIME_TYPE_EXTENSION_MAP = {
+    }
+
+    # Constructor. If you supply a list of engines, you'll need to
+    # make sure the appropriate gems are included for them.  For
+    # instance if you supply "haml" as an engine, make sure to include
+    # the "haml" gem for your game.
+    #
+    # This can be used to serve Ruby template files like Erb or Haml,
+    # but also Markdown, CoffeeScript, TypeScript, LiveScript, Less,
+    # Sass/Scss and more with the right gems. See
+    # https://github.com/rtomayko/tilt for the list of supported
+    # template engines.
+    #
+    # For templating libraries like Erb that can handle any file type,
+    # this middleware will *strip* extensions.  That means something
+    # ending in ".html.erb" will only be served if you ask for the
+    # same with ".html". You can do the same with something like
+    # CoffeeScript, so you could name your files
+    # whatever_filename.js.coffee if you want them to be converted to
+    # JS and served with a .js extension. But the middleware will also
+    # try to use sane extensions (convert .coffee to .js, etc) where
+    # it can. If you have trouble, try manually using the "stripped"
+    # extension trick (e.g. my_file.js.coffee or my_file.html.haml).
+    #
+    # Note that multiple instances don't keep the extensions separate,
+    # so it may be hard to keep from serving Markdown files out of
+    # your Haml directory... Don't keep files in your asset
+    # directories if you're worried about your users seeing them, in
+    # general.
+    #
+    # In production it will be faster to "bake" these directories into
+    # static files of the appropriate type instead of converting on
+    # the server.
+    #
+    # @param app [Rack::App] The next innermost Rack app
+    # @param options [Hash] Options to this middleware
+    # @option options [String,Array<String>] :urls A root or list of URL roots to serve TMX files from
+    # @option options [String] :root The file system root to serve from (default: Dir.pwd)
+    # @option options [String, Array<String>] :engines List of Tilt-supported template engines to use; default: [ "erubis" ]
+    # @option options [String] :encoding The string encoding for Tilt to use (default: 'utf8')
+    # @option options [Object] :scope The 'scope' object for Tilt evaluation - can define methods that will be available
+    # @option options [Hash] :locals Local variables to be defined inside Tilt evaluations
+    # @since 0.1.0
+    def initialize(app, options = {})
+      @app = app
+      @urls = [(options[:urls] || "/tmx")].flatten
+      @root = options[:root] || Dir.pwd
+
+      @tilt_scope = options[:scope] || Object.new
+      @tilt_locals = options[:locals] || {}
+
+      engines = []
+      if options[:engines]
+        engines = [options[:engines]].flatten
+      else
+        engines = [ "erubis" ]
+      end
+
+      engines.each { |engine_name| require engine_name }
+      bad_engines = engines.select { |eng| ::Tilt[eng].nil? }
+      raise("No Tilt templating engine for engine(s): #{bad_engines.inspect}!") unless bad_engines.empty?
+      tilt_engines = engines.map { |engine_name| ::Tilt[engine_name] }
+      # We just want the list of extensions. We're going to use Tilt's
+      # default preference priorities for a given extension. If
+      # somebody wants different, they're allowed to call Tilt.prefer,
+      # likely from config.ru.
+      @extensions = tilt_engines.flat_map { |eng| ::Tilt.default_mapping.extensions_for(eng) }.uniq
+
+      @mapped_extensions = {}
+      tilt_engines.each do |engine|
+        engine.default_mime_type
+      end
+
+      @encoding = options[:encoding] || 'utf8'
+    end
+
+    # The Rack .call method for middleware.
+    #
+    # @param env [Hash] The Rack environment hash.
+    # @since 0.1.0
+    def call(env)
+      # If no Tilt path is matched, forward the call to the next middleware
+      call_root = @urls.detect { |u| env["PATH_INFO"].index(u) == 0 }
+      return @app.call(env) unless call_root
+
+      # A directory was matched. Let's see if we have any file which,
+      # when we strip the extension, would give us the requested
+      # file.
+      local_path = File.join(@root, env["PATH_INFO"])
+      local_extension = @extensions.detect { |ext| File.exist?(local_path + "." + ext) }
+      # No match? 404.
+      unless local_extension
+        return [404, {}, [""]]
+      end
+
+      local_template_file = local_path + "." + local_extension
+
+      # Caching these is faster than not. You know what's faster yet?
+      # Rendering them into a nice static file and serving that via
+      # NGinX. The easiest way to do that for nontrivial cases is
+      # probably using 'curl' to get these from the server.
+      template = ::Tilt.new local_template_file
+      return [200, {}, [ template.render(@tilt_scope, @tilt_locals) ]]
+    end
   end
 end

@@ -39,4 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "rack-coffee", "~> 1.0"
   spec.add_runtime_dependency "thor", "~> 0.20"
   spec.add_runtime_dependency "trollop", "~> 2.1"
+  spec.add_runtime_dependency "tilt", "~> 2.0"
+  spec.add_runtime_dependency "erubis", "~> 2.7"
 end
