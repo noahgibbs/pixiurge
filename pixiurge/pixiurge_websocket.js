@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS207: Consider shorter variations of null checks
- */
 Pixiurge.WebsocketTransport = class WebsocketTransport {
   constructor(pixiurge, ws, cookieLib) {
     this.pixiurge = pixiurge;
@@ -87,7 +82,7 @@ Pixiurge.WebsocketTransport = class WebsocketTransport {
   }
 
   sendMessage(msgName, ...args) {
-    sendMessageWithType("game_msg", msgName, ...Array.from(args));
+      this.sendMessageWithType("game_msg", msgName, ...args);
   }
 
   sendMessageWithType(msgType, msgName, ...args) {
@@ -102,13 +97,13 @@ Pixiurge.WebsocketTransport = class WebsocketTransport {
 
   clearQueue() {
     if (this.ready && (this.queue.length > 0)) {
-      Array.from(this.queue).map((msg) =>
+      this.queue.map((msg) =>
         this.ws.send(JSON.stringify(msg)));
     }
   }
 
   playerAction(actionName, ...args) {
-    this.sendMessageWithType("player_action", actionName, ...Array.from(args));
+    this.sendMessageWithType("player_action", actionName, ...args);
   }
 
   // Accepts a function like: transportHandler(apiCallName, argArray)

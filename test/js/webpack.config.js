@@ -7,8 +7,8 @@ module.exports = {
 
     entry: glob.sync("./test/js/*test.js")
     .concat(glob.sync("./vendor/dev/*.js"))
-    .concat(glob.sync("./test/jshelper/*.js"))
-    .concat(glob.sync("./pixiurge/pixiurge*.js").concat(glob.sync("./pixiurge/pixiurge*.coffee")).sort()),
+    .concat(glob.sync("./pixiurge/pixiurge*.js").concat(glob.sync("./pixiurge/pixiurge*.coffee")).sort())
+    .concat(glob.sync("./test/jshelper/*.js")),
     output: {
         filename: "test/js/test_server/public/test_bundle.js"
     },

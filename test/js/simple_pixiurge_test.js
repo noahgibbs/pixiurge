@@ -22,17 +22,17 @@ describe('Simple Pixiurge configuration', function() {
         });
 
         it('should dispatch Pixiurge messages', function(done) {
-            window.pixiurge_game = new Pixiurge();
+            let pixiurge_game = new Pixiurge();
 
             var mock_ws = window.Mock.get_mock_websocket();
             pixiurge_game.setTransport(new Pixiurge.WebsocketTransport(pixiurge_game, mock_ws));
             var display = new Pixiurge.Display(pixiurge_game, { canvas: "displayCanvas" });
-            display.message = function(messageType, argArray) { if(messageType == "displayInit") done(); }
+            display.message = function(messageType, argArray) { if(messageType == "display_init") done(); }
             pixiurge_game.setMessageHandler("display", display);
 
             pixiurge_game.setup();
             assert.equal(mock_ws, pixiurge_game.getTransport().ws);
-            mock_ws.receive(JSON.stringify([ "displayInit", { ms_per_tick: 300, width: 640, height: 480 }]));
+            mock_ws.receive(JSON.stringify([ "display_init", { ms_per_tick: 300, width: 640, height: 480 }]));
         });
     });
 });

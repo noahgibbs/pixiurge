@@ -5,11 +5,11 @@ if(window.Mock === undefined) {
 
 window.Mock.get_mock_websocket = function() {
     var mock = {
-        _ready: true,
+        _ready: 1,
         _onopen: undefined,
         _onclose: undefined,
         _onmessage: undefined,
-        _sent_data: [],
+        _sentData: [],
 
         get readyState() {
             return this._ready;
@@ -32,10 +32,10 @@ window.Mock.get_mock_websocket = function() {
         },
 
         send: function (data) {
-            _sent_data.concat([data]);
+            this._sentData.push(data);
         },
 
-        get_sent: function() { return this._sent_data; },
+        getSent: function() { return this._sentData; },
 
         receive: function(received_data) {
             if(this._onmessage != undefined) {
