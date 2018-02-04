@@ -99,6 +99,7 @@ Pixiurge.WebsocketTransport = class WebsocketTransport {
     if (this.ready && (this.queue.length > 0)) {
       this.queue.map((msg) =>
         this.ws.send(JSON.stringify(msg)));
+      this.queue.splice(0, this.queue.length);
     }
   }
 
