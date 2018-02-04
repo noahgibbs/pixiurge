@@ -130,6 +130,12 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
       return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_SALT, { "salt" => user_salt }
     end
 
+    if msg_type == Pixiurge::Protocol::Incoming::PLAYER_ACTION
+      username = @username_for_websocket[websocket]
+      raise("No player actions allowed from non-logged-in websockets!") unless username
+      return send_event "player_action", username, args[1..-1]
+    end
+
     super
   end
 
@@ -219,6 +225,20 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     @username_for_websocket.keys
   end
 
+  # If you inherit from AuthenticatedApp, this handler will be called
+  # when a websocket receives a message of a miscellaneous type -- not
+  # authentication or a player action, for instance.
+  #
+  # @param ws [Websocket] A Websocket-Driver websocket object
+  # @param data [Object] Deserialized JSON message data
+  # @return [void]
+  # @since 0.1.0
+  def on_message(ws, data)
+    username = @username_for_websocket[ws]
+    if username && data.is_a?(Array) && data[0] == Pixiurge::Protocol::Incoming::PLAYER_ACTION
+      send_event "player_action", username, *data
+    end
+  end
 end
 
 # Code specific to Pixiurge's built-in Authentication libraries.

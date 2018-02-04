@@ -13,6 +13,7 @@ module Pixiurge
         <script src="/pixiurge/pixiurge_tmx_map.js"></script>
         <script src="/pixiurge/pixiurge_displayable_container.js"></script>
         <script src="/pixiurge/pixiurge_loader.js"></script>
+        <script src="/pixiurge/pixiurge_input.js"></script>
         <script src="/vendor/jquery-3.2.1.js"></script>
         <script src="/vendor/bcrypt.js"></script>
         <script src="/vendor/pixi-4.6.2.js"></script>

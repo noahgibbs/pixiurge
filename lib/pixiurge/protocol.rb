@@ -36,6 +36,14 @@ module Pixiurge::Protocol::Incoming
   # @since 0.1.0
   AUTH_GET_SALT = "get_salt"
 
+  # A message from player input.
+  #
+  # @example [ PLAYER_ACTION, "move", "left" ]
+  # @example [ PLAYER_ACTION, "keypress", { "code" => 37 } ]
+  #
+  # @since 0.1.0
+  PLAYER_ACTION = "player_action"
+
   module Keycode
     # This is the ASCII and web-browser keycode for the left arrow.
     #

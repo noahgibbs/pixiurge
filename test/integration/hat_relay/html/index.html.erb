@@ -91,7 +91,7 @@ function bad_login(reason) {
     pixi_game.setMessageHandler("display", display);
 
     // Default input catches document events and feeds them to the event handling system, can be subclassed/overridden to "remote control" or test
-    //pixi_game.setInput(new Pixiurge.Input(pixi_game));
+    window.pixi_input = new Pixiurge.Input(pixi_game);
 
     pixi_game.setup();
     pixi_game.transport.onOpen(function() { pixi_game.transport.considerAutoLogin(); });

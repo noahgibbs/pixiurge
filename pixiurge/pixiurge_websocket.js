@@ -81,16 +81,12 @@ Pixiurge.WebsocketTransport = class WebsocketTransport {
     };
   }
 
-  sendMessage(msgName, ...args) {
-      this.sendMessageWithType("game_msg", msgName, ...args);
-  }
-
   sendMessageWithType(msgType, msgName, ...args) {
     if (this.ready) {
       // Serialize as JSON, send
-      this.ws.send(JSON.stringify([ msgType, msgName, args ]));
+      this.ws.send(JSON.stringify([ msgType, msgName, ...args ]));
     } else {
-      this.queue.push([msgType, msgName, args]);
+      this.queue.push([msgType, msgName, ...args]);
       setTimeout((() => this.clearQueue()), 0.5);
     }
   }

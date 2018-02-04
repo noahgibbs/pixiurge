@@ -241,8 +241,6 @@ class Pixiurge::EngineConnector
     end
     @app.on_event "player_reconnect" do |username|
     end
-    @app.on_event "player_message" do |username, msg_type, *args|
-    end
   end
 
   public

@@ -45,29 +45,33 @@ class HatRelay < Pixiurge::AuthenticatedApp
   end
 
   # This handler lets you react to Websocket messages sent from this player's browser.
-  def on_player_message(username, action_name, *args)
+  def on_player_action(username, args)
     player = @engine_connector.player_by_username(username)
+    player_demi_item = @engine.item_by_name(username)
+
+    action_name = args[0]
 
     # This action is if you want to send move messages without bothering to send them as keycodes
     if action_name == "move"
-      player.demi_item.queue_action "move", args[0]
+      player_demi_item.queue_action "move", args[1]
       return
     end
 
     if action_name == "keypress"
-      data = args[0]
+      data = args[1]
       keycode = data["code"]
       if keycode == Pixiurge::Protocol::Incoming::Keycode::LEFT_ARROW
-        player.demi_item.queue_action "move", "left"
+        player_demi_item.queue_action "move", "left"
       elsif keycode == Pixiurge::Protocol::Incoming::Keycode::RIGHT_ARROW
-        player.demi_item.queue_action "move", "right"
+        player_demi_item.queue_action "move", "right"
       elsif keycode == Pixiurge::Protocol::Incoming::Keycode::UP_ARROW
-        player.demi_item.queue_action "move", "up"
+        player_demi_item.queue_action "move", "up"
       elsif keycode == Pixiurge::Protocol::Incoming::Keycode::DOWN_ARROW
-        player.demi_item.queue_action "move", "down"
+        player_demi_item.queue_action "move", "down"
       else
         STDERR.puts "Received keycode #{keycode.inspect}, but there's no handler!"
       end
+      return
     end
 
     raise "Unknown player action #{action_name.inspect} with args #{args.inspect}!"

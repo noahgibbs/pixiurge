@@ -56,7 +56,7 @@ require "pixiurge/protocol"
 #
 # * {#on_player_login} - a new player has logged in
 # * {#on_player_logout} - a player has logged out
-# * {#on_player_message} - a message has been received from a logged-in player via their browser
+# * {#on_player_action} - an action message has been received from a logged-in player via their browser
 # * {#on_player_reconnect} - a player has re-logged in, often from a new browser session
 #
 # Next are the message handlers that your app can define for the
@@ -203,7 +203,7 @@ class Pixiurge::AppInterface
   # @param args [Array] Arguments sent along with this message
   # @return [void]
   # @since 0.1.0
-  def on_player_message(username, message_type, *args)
+  def on_player_action(username, action_name, *args)
     raise "Do not use AppInterface directly!"
   end
 
@@ -275,7 +275,7 @@ class Pixiurge::App
   # Path to logfile for outgoing Websocket messages
   attr_reader :outgoing_traffic_logfile
 
-  EVENTS = [ "player_login", "player_logout", "player_create_body", "player_message", "player_reconnect", "open", "close", "error", "message", "login" ]
+  EVENTS = [ "player_login", "player_logout", "player_create_body", "player_action", "player_reconnect", "open", "close", "error", "message", "login" ]
 
   # Legal options to pass to Pixiurge::App.new
   INIT_OPTIONS = [ :debug, :record_traffic, :incoming_traffic_logfile, :outgoing_traffic_logfile ]
