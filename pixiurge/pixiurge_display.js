@@ -1,17 +1,13 @@
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS205: Consider reworking code to avoid use of IIFEs
- */
 // Pixi display for Pixiurge. Mostly this is a message handler to
 // dispatch to more specific Pixi drawing classes.
 
 const messageMap = {
-  "display_init": "initMessage",
-  "display_show": "showDisplayable",
-  "display_destroy": "destroyDisplayable",
-  "display_destroy_all": "destroyAllDisplayables",
-  "display_pan": "panToPixel",
+    "display_init": "initMessage",
+    "display_show": "showDisplayable",
+    "display_destroy": "destroyDisplayable",
+    "display_destroy_all": "destroyAllDisplayables",
+    "display_move": "moveDisplayable",
+    "display_pan": "panToPixel",
 };
 
 Pixiurge.Display = class Display {
@@ -58,7 +54,7 @@ Pixiurge.Display = class Display {
       console.warn(`Couldn't handle message type ${msgName}!`);
       return;
     }
-    this[handler](...Array.from(argArray || []));
+    this[handler](...(argArray || []));
   }
 
   initMessage(data) {
@@ -78,6 +74,9 @@ Pixiurge.Display = class Display {
   }
 
   showDisplayable(itemName, itemData) {
+    if("any" === itemName || "all" === itemName) {
+      console.log(`Illegal item name '${itemName}'!`);
+    }
     if (this.displayables[itemName]) {
       console.log(`Item name '${itemName}' already exists!`);
       return;
@@ -133,10 +132,10 @@ Pixiurge.Display = class Display {
     if (this.displayEventHandlers[event] == null) {
       return;
     }
-    for (var handler of Array.from(this.displayEventHandlers[event].any)) {
+    for (var handler of this.displayEventHandlers[event].any) {
       handler(event, objectName, data);
     }
-    for (handler of Array.from((this.displayEventHandlers[objectName] || []))) {
+    for (handler of (this.displayEventHandlers[objectName] || [])) {
       handler(event, objectName, data);
     }
   }
