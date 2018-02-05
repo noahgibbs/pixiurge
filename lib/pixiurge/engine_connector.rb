@@ -159,13 +159,6 @@ class Pixiurge::EngineConnector
   def start_engine_periodic_timer
     counter = 0
 
-    ## This is the EventMachine ensure_reactor_running idiom, as pulled from Faye::WebSocket
-    #unless EventMachine.reactor_running?
-    #  puts "Starting EventMachine reactor thread..."
-    #  @reactor_thread = Thread.new { EventMachine.run; STDERR.puts "SHOULD NEVER GET HERE, SOMEBODY STOPPED THE EVENT LOOP!" }
-    #  Thread.pass until EventMachine.reactor_running?
-    #end
-
     @engine_started = true
     EM.add_periodic_timer(0.001 * @ms_per_tick) do
       # Step game content forward by one tick
