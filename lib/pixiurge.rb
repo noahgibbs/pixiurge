@@ -33,6 +33,8 @@ require "pixiurge/authentication"
 require "pixiurge/engine_connector"
 require "pixiurge/player"
 require "pixiurge/template_view"
+require "pixiurge/config_ru"
+
 require "pixiurge/displayable"
 require "pixiurge/displayable/dsl"
 require "pixiurge/displayable/invisible"

@@ -148,11 +148,16 @@ class Pixiurge::EngineConnector
     #start_engine_periodic_timer
   end
 
-  # It's hard to tell where to call this. It appears that somebody is
-  # stopping the event loop if it's called too early.
+  # It's hard to tell where to call this. It can only happen after
+  # EventMachine's loop is started. There's a lot of weirdness with
+  # trying to ensure_running ourselves, because then Thin won't run
+  # its own event loop, and there's constant problems with running off
+  # the end of the main thread. At this point, we're winding up doing
+  # a horrible thing in config_ru.rb for the event loop.
   #
   # @api private
   def start_engine_periodic_timer
+    counter = 0
 
     ## This is the EventMachine ensure_reactor_running idiom, as pulled from Faye::WebSocket
     #unless EventMachine.reactor_running?
@@ -184,6 +189,33 @@ class Pixiurge::EngineConnector
         end
       end
     end
+  end
+
+  def thin_eventmachine_loop(rack_app, port, ssl_key_path, ssl_cert_path)
+    # No luck with Puma - for now, hardcode using Thin
+    Faye::WebSocket.load_adapter('thin')
+
+    EventMachine.run {
+      thin = Rack::Handler.get('thin')
+      thin.run(rack_app, :Port => port) do |server|
+        server.ssl_options = {
+          # Supported options: http://www.rubydoc.info/github/eventmachine/eventmachine/EventMachine/Connection:start_tls
+          :private_key_file => ssl_key_path,
+          :cert_chain_file  => ssl_cert_path,
+          :verify_peer => false,
+        }
+        server.ssl = true
+      end
+      Signal.trap("INT")  { STDERR.puts "Caught SIGINT, telling EventMachine to stop..."; EventMachine.stop }
+      Signal.trap("TERM") { STDERR.puts "Caught SIGTERM, telling EventMachine to stop..."; EventMachine.stop }
+
+      # And now, the purpose of this whole loop - allowing WebSockets,
+      # the Thin server *and* a single periodic timer to all run at
+      # once without multiple threads, and still have the timer start
+      # when the server does. *sigh*
+      start_engine_periodic_timer
+    }
+    STDERR.puts "Killed by SIGINT or SIGTERM... Exiting!"
   end
 
   private

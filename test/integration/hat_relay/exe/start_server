@@ -22,7 +22,8 @@ if [ ! -f hat_relay_server.crt ]; then
 fi
 
 # Thin doesn't seem to support HTTP and HTTPS on the same port (fair), but *does* support HTTPS and WSS on the same port.
-bundle exec thin start -R config.ru -p 3001 --ssl --ssl-disable-verify --ssl-key-file ./hat_relay_server.key --ssl-cert-file ./hat_relay_server.crt
+#bundle exec thin start -R config.ru -p 3001 --ssl --ssl-disable-verify --ssl-key-file ./hat_relay_server.key --ssl-cert-file ./hat_relay_server.crt
+PIXIURGE_PORT=3001 PIXIURGE_KEY_FILE=./hat_relay_server.key PIXIURGE_CERT_FILE=./hat_relay_server.crt bundle exec ruby hat_relay.rb
 
 # Sometimes you want to run your server with "rerun" - that makes it easy to restart your production game by updating an empty file called "restart.txt". If you do, make sure to
 # put "rerun" in your Gemfile.

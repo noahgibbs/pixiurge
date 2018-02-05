@@ -1,9 +1,14 @@
-require "pixiurge"
+require "pixiurge/config_ru"
+require "rack"
 require "demiurge"
 
+# Get the absolute path for the game root
 PIXI_APP_ROOT = File.expand_path(__dir__)
 
 class HatRelay < Pixiurge::AuthenticatedApp
+  attr_reader :engine_connector
+  attr_reader :engine
+
   def initialize
     # Configure Pixiurge AuthenticatedApp
     options = {
@@ -104,3 +109,35 @@ class HatRelay < Pixiurge::AuthenticatedApp
   #   on_message,
   #   on_login
 end
+
+pixi_app = HatRelay.new
+
+rack_builder = Rack::Builder.new do
+  file = File.new File.join(__dir__, "log", "http_requests.txt"), "a"
+  file.sync = true
+  use Rack::CommonLogger, file
+
+  use Rack::ShowExceptions if ["development", ""].include?(ENV["RACK_ENV"].to_s)  # Useful for debugging, turn off in production
+
+  EM.error_handler do |e|
+    STDERR.puts "ERROR: #{e.message}\n#{e.backtrace.join "\n"}\n"
+  end
+
+  pixi_app.rack_builder self
+  pixi_app.root_dir __dir__
+  pixi_app.root_redirect "/html/index.html"
+  #pixi_app.coffeescript_dirs "hat_relay"  # Optional for CoffeeScript front-end files
+  #pixi_app.static_dirs "tiles", "sprites", "vendor_js", "ui", "static"   # Optional for any static front-end files such as graphics, sounds, HTML or scripts
+  pixi_app.static_dirs "sprites"
+  pixi_app.static_files "index.html"  # Optional for individual static files
+  pixi_app.tmx_dirs "tmx"
+
+  pixi_app.tilt_dirs "html"
+
+  run pixi_app.handler
+end
+
+rack_app = rack_builder.to_app
+
+# This method doesn't return, it just runs the loop forever.
+pixi_app.engine_connector.thin_eventmachine_loop(rack_app, ENV['PIXIURGE_PORT'].to_i, ENV['PIXIURGE_KEY_FILE'], ENV['PIXIURGE_CERT_FILE'])
