@@ -12,9 +12,6 @@ class EngineConnectorTestApp < Pixiurge::AuthenticatedApp
     @mem_storage = Pixiurge::Authentication::MemStorage.new
     super(options.merge({ :storage => @mem_storage }))
 
-    on_event("player_message") do |username, action_name, *args|
-    end
-
     on_event("player_create_body") do |username|
       player_template = @engine.item_by_name("player template")
       body = @engine.instantiate_new_item(username, player_template, "position" => "right here")
