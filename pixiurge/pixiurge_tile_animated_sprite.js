@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 // This sprite accepts and loads multiple tilemaps and handles
 // appropriate frames and animation timing. The supplied information is
 // used to create textures for a PIXI.extras.AnimatedSprite.
@@ -92,11 +87,10 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
     // duration and frame_id. Or it can be a structure with a duration,
     // an x and y coordinate for the upper left corner, a width and
     // height, and a tileset name.
-
     constructor(dataHash) {
         super(dataHash);
 
-        const images = (Array.from(this.displayableData.params.tilesets).map((tileset) => tileset.url));
+        const images = this.displayableData.params.tilesets.map((tileset) => tileset.url);
         this.tilesets = this.displayableData.params.tilesets;
 
         this.pixiDisplay.loader.addResourceBatch(images, () => this.imagesLoaded());
@@ -106,7 +100,7 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
     imagesLoaded() {
         let x, y;
         const tsBaseTextures = {};
-        for (let tileset of Array.from(this.tilesets)) {
+        for (let tileset of this.tilesets) {
             tileset.texture = this.pixiDisplay.loader.getTexture(tileset.url);
             tsBaseTextures[tileset.name] = tileset.texture.baseTexture;
         }
@@ -119,15 +113,15 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
         for (let animationName in this.displayableData.params.animations) {
             const animationStruct = this.displayableData.params.animations[animationName];
             const animFrames = [];
-            for (let frame of Array.from(animationStruct.frames)) {
+            for (let frame of animationStruct.frames) {
                 var duration, rect, regX, regY, tex, tileHeight, tilesetName, tileWidth;
                 if (typeof frame === "number") {
-                    [x, y, tileWidth, tileHeight, tilesetName, regX, regY] = Array.from(tileFrameDefinitions[frame]);
+                    [x, y, tileWidth, tileHeight, tilesetName, regX, regY] = tileFrameDefinitions[frame];
                     rect = new PIXI.Rectangle(x, y, tileWidth, tileHeight);
                     tex = new PIXI.Texture(tsBaseTextures[tilesetName], rect);
                     animFrames.push({time: 100, texture: tex});
                 } else if ((typeof frame === "object") && (frame.frame_id != null)) {
-                    [x, y, tileWidth, tileHeight, tilesetName, regX, regY] = Array.from(tileFrameDefinitions[frame.frame_id]);
+                    [x, y, tileWidth, tileHeight, tilesetName, regX, regY] = tileFrameDefinitions[frame.frame_id];
                     rect = new PIXI.Rectangle(x, y, tileWidth, tileHeight);
                     tex = new PIXI.Texture(tsBaseTextures[tilesetName], rect);
                     duration = (frame.duration != null) ? frame.duration : 100;
@@ -198,11 +192,11 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
         }
         if (typeof(code) === "object") {
             let chances = 0.0;
-            for (var item of Array.from(code)) {
+            for (var item of code) {
                 chances += (item.chance || 1.0);
             }
             let r = Math.random() * chances;
-            for (item of Array.from(code)) {
+            for (item of code) {
                 r -= (item.chance || 1.0);
                 if (r <= 0.0) {
                     this.startAnimation(item.name);
