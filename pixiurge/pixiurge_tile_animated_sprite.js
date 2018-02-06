@@ -172,7 +172,8 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
     addDisplaySignalHandlers() {
         for (let animationName in this.animations) {
             const animation = this.animations[animationName];
-            this.pixiDisplay.onDisplayEvent("animationEnd", this.displayableName, (animEnd, dispName, eventData) => {
+            this.pixiDisplay.onDisplayEvent("animationEnd", this.displayableName, (event) => {
+                const eventData = event.data;
                 const anim = this.animations[eventData.animation];
                 if ((anim != null) && anim && (anim.after != null) && anim.after) {
                     this.executeFrontEndEventCode(anim.after);

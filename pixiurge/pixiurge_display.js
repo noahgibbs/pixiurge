@@ -10,6 +10,19 @@ const messageMap = {
     "display_pan": "panToPixel",
 };
 
+Pixiurge.DisplayEvent = class DisplayEvent {
+    constructor(eventName, objectName, eventData) {
+        this.name = eventName;
+        this.objectName = objectName;
+        this.data = eventData;
+        this.prevented = false;
+    }
+    // Let's just steal the interface from DOM events
+    preventDefault() {
+        this.prevented = true;
+    }
+};
+
 Pixiurge.Display = class Display {
     constructor(pixiurge, options) {
         this.pixiurge = pixiurge;
@@ -108,13 +121,34 @@ Pixiurge.Display = class Display {
         }
     }
 
-    // This destroys all Displayables and invalidates any hints or preloads
+    // This destroys all Displayables and invalidates any hints or preloads.
     destroyAllDisplayables() {
         for (let itemName in this.displayables) {
             const displayable = this.displayables[itemName];
             displayable.destroy();
         }
         this.displayables = {};
+    }
+
+    // Move a Displayable to its new location. data.options can
+    // describe how to move it to that location. The sequence of
+    // occurrences is:
+    //
+    // * send a DisplayEvent with the motion
+    // * if the DisplayEvent is unhandled, call the Displayable with moveTo
+    //
+    // The DisplayEvent allows the application to override a motion on
+    // one or more Displayables if it wants to alter how a motion
+    // occurs (walking, hopping, etc) on various sorts of
+    // Displayables.
+    //
+    // This "position" is a Demiurge position, and needs to be
+    // multiplied by block size or otherwise mapped to a pixel
+    // location.
+    moveDisplayable(itemName, data) {
+        const displayable = this.displayables[itemName];
+        const newPosition = data.position;
+        displayable.moveTo(newPosition, data.options);
     }
 
     onDisplayEvent(event, objectName, handler) {
@@ -128,15 +162,28 @@ Pixiurge.Display = class Display {
         this.displayEventHandlers[event][objectName].push(handler);
     }
 
-    sendDisplayEvent(event, objectName, data) {
+    // Send a DisplayEvent. A DisplayEvent will notify down the list
+    // of handlers until something marks it "handled", and then it
+    // will stop.
+    sendDisplayEvent(event, objectName, data, defaultCallback = null) {
         if (this.displayEventHandlers[event] == null) {
             return;
         }
-        for (var handler of this.displayEventHandlers[event].any) {
-            handler(event, objectName, data);
-        }
+        let eventObject = new Pixiurge.DisplayEvent(event, objectName, data);
         for (handler of (this.displayEventHandlers[objectName] || [])) {
-            handler(event, objectName, data);
+            handler(eventObject);
+            if(eventObject.prevented)
+                break;
+        }
+        if(!eventObject.prevented) {
+            for (var handler of this.displayEventHandlers[event].any) {
+                handler(eventObject);
+                if(eventObject.prevented)
+                    break;
+            }
+        }
+        if(!eventObject.prevented && defaultCallback) {
+            defaultCallback(event);
         }
     }
 };

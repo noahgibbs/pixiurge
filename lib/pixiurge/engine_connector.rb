@@ -164,11 +164,13 @@ class Pixiurge::EngineConnector
       # Step game content forward by one tick
       begin
         @engine.advance_one_tick
+        admin_item = @engine.item_by_name("admin")
+        ticks = admin_item.state["ticks"]
         counter += 1
-        if @autosave_ticks != 0 && counter % @autosave_ticks == 0
+        if @autosave_ticks != 0 && ticks % @autosave_ticks == 0
           puts "Writing periodic statefile, every #{@autosave_ticks.inspect} ticks..."
           ss = @engine.structured_state
-          statefile = @autosave_path.sub("%TICKS%", @engine.state["ticks"])
+          statefile = @autosave_path.sub("%TICKS%", ticks)
           File.open(state, "w") do |f|
             f.print MultiJson.dump(ss, :pretty => true)
           end
@@ -501,7 +503,7 @@ class Pixiurge::EngineConnector
       if @players[acting_item]
         # This was a player action that was cancelled
         player = @players[acting_item]
-        player.message "displayTextAnimOverStack", player.displayable.stack_name, data["reason"], "color" => "#FFCCCC", "font" => "20px Arial", "duration" => 3.0
+        player.message Pixiurge::Protocol::Outgoing::DISPLAY_EFFECT_TEXT, "", { "at" => player.displayable.name, "text" => data["reason"], "color" => "#FFCCCC", "font" => "20px Arial", "duration" => 3.0 }
         return
       end
       return
@@ -540,7 +542,7 @@ class Pixiurge::EngineConnector
     actor_do = @displayables[data["actor"]][:displayable]
     x, y = ::Demiurge::TiledLocation.position_to_coords(data["new_position"])
     loc_name = data["new_location"]
-    loc_do = @displayables[loc_name][:displayable]
+    loc_do = @displayables[loc_name] ? @displayables[loc_name][:displayable] : nil
     unless loc_do
       STDERR.puts "Moving to a non-displayed location #{loc_name.inspect}, no display object found..."
       return

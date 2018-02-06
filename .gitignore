@@ -25,3 +25,4 @@ accounts.json.old
 pixiurge-*.gem
 
 test/integration/**/log/http_requests.txt
+test/integration/**/state/*.json

@@ -13,6 +13,9 @@ Pixiurge.Displayable = class Displayable {
         throw("Implement me!");
     }
 
+    moveTo(position) {
+    }
+
     sendDisplayEvent(eventName, eventData) {
         this.pixiDisplay.sendDisplayEvent(eventName, this.displayableName, eventData);
     }

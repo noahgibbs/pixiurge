@@ -179,4 +179,12 @@ module Pixiurge::Protocol::Outgoing
   #
   # @since 0.1.0
   DISPLAY_PAN_TO_PIXEL = "display_pan"
+
+  # Show text briefly at a location. This can be cancelled on purpose,
+  # but will normally expire automatically.
+  #
+  # @example [ DISPLAY_TRANSIENT_TEXT, "effect_name_or_empty_string", { x: 137, y: 128 } ]
+  #
+  # @since 0.1.0
+  DISPLAY_EFFECT_TEXT = "display_text_effect"
 end
