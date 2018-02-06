@@ -7,13 +7,12 @@ Pixiurge.Displayable = class Displayable {
         this.pixiDisplay = dataHash.pixiDisplay;
     }
 
-    show() {}
-
     destroy() {
-        throw("Implement me!");
+        throw(`Implement destroy! ${this.displayableName}`);
     }
 
-    moveTo(position) {
+    moveTo(x, y, options) {
+        throw(`Implement moveTo! ${this.displayableName}`);
     }
 
     sendDisplayEvent(eventName, eventData) {
