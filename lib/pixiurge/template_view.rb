@@ -2,23 +2,19 @@ module Pixiurge
   class TemplateView
     # HTML to include JavaScript for the appropriate Pixiurge scripts.
     def pixiurge_scripts
-      <<-SCRIPTS
-        <script src="/pixiurge/pixiurge.js"></script>
-        <script src="/pixiurge/pixiurge_websocket.js"></script>
-        <script src="/pixiurge/pixiurge_display.js"></script>
-        <script src="/pixiurge/pixiurge_displayable.js"></script>
-        <script src="/pixiurge/pixiurge_utils.js"></script>
-        <script src="/pixiurge/pixiurge_tile_utils.js"></script>
-        <script src="/pixiurge/pixiurge_tile_animated_sprite.js"></script>
-        <script src="/pixiurge/pixiurge_tmx_map.js"></script>
-        <script src="/pixiurge/pixiurge_displayable_container.js"></script>
-        <script src="/pixiurge/pixiurge_loader.js"></script>
-        <script src="/pixiurge/pixiurge_input.js"></script>
-        <script src="/vendor/jquery-3.2.1.js"></script>
-        <script src="/vendor/bcrypt.js"></script>
-        <script src="/vendor/pixi-4.6.2.js"></script>
-        <script src="/vendor/sha1.js"></script>
-      SCRIPTS
+      out_html = ""
+      pix_dir = File.join(__dir__, "..", "..", "pixiurge")
+      Dir[File.join(pix_dir, "*.js")].sort.each do |js_file|
+        filebase = File.basename(js_file)
+        next if filebase == "webpack.config.js"
+        out_html += "<script src=\"/pixiurge/#{filebase}\"></script>\n"
+      end
+      vendor_dir = File.join(__dir__, "..", "..", "vendor", "dev")
+      Dir[File.join(vendor_dir, "*.js")].sort.each do |js_file|
+        filebase = File.basename(js_file)
+        out_html += "<script src=\"/vendor/#{filebase}\"></script>\n"
+      end
+      out_html
     end
   end
 end
