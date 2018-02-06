@@ -186,5 +186,5 @@ module Pixiurge::Protocol::Outgoing
   # @example [ DISPLAY_TRANSIENT_TEXT, "effect_name_or_empty_string", { x: 137, y: 128 } ]
   #
   # @since 0.1.0
-  DISPLAY_EFFECT_TEXT = "display_text_effect"
+  DISPLAY_EFFECT_TEXT = "display_effect_text"
 end
