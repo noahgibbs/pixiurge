@@ -171,7 +171,7 @@ class Pixiurge::EngineConnector
           puts "Writing periodic statefile, every #{@autosave_ticks.inspect} ticks..."
           ss = @engine.structured_state
           statefile = @autosave_path.gsub("%TICKS%", ticks.to_s)
-          File.open(state, "w") do |f|
+          File.open(statefile, "w") do |f|
             f.print MultiJson.dump(ss, :pretty => true)
           end
         end
