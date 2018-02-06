@@ -329,6 +329,10 @@ class Pixiurge::EngineConnector
       raise "Nope! Haven't implemented a default displayable for agents yet!"
     end
 
+    if item.zone?
+      return ::Pixiurge::Display::Invisible.new name: item.name, engine_connector: self
+    end
+
     # If we got here, we have no idea how to display this.
     nil
   end
@@ -348,9 +352,7 @@ class Pixiurge::EngineConnector
     end
 
     # What if there's no Displayable for this item? That might be okay or might not.
-
-    return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
-    return if item.zone? # No displayable info for zones, you're not supposed to see them
+    return if item.is_a?(::Demiurge::InertStateItem) # Nothing needed for InertStateItems
 
     STDERR.puts "Don't know how to register or display this item: #{item.name.inspect}"
   end
