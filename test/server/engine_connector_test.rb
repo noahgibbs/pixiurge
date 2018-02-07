@@ -206,6 +206,24 @@ DSL
     assert_equal false, socket_closed
   end
 
+  def test_reconnection_messages
+    con = connector
+
+    ws.open
+    ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "murray", "bcrypted" => "fake_hash3" } ])
+    ws.close
+
+    new_ws = additional_websocket
+    new_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "murray", "bcrypted" => "fake_hash3" } ])
+    messages = new_ws.parsed_sent_data
+    assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "murray" } ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[2]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ], messages[3]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ], messages[4]
+    assert_equal 5, messages.size
+  end
+
   def test_same_location_movement_visibility
     con = connector
 
