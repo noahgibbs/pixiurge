@@ -19,35 +19,11 @@ zone "admin zone" do
     # No position or location - this isn't a visible object, it's a
     # template to instantiate.
 
-    # Action that gets performed on character's body being created
-    define_action("create") do
-      if ["bob", "angelbob", "noah"].include?(item.name)
-        item.state["admin"] = true
-      end
-    end
-
     # Action that gets performed on login
-    define_action("login", "engine_code" => true) do
-      raise("Called login on a non-player item!") unless @item.state["$player_body"]
-      player_name = item.name
-      item.state["player"] ||= player_name
-      player_item = engine.item_by_name("players")
-      player_state = player_item.state[player_name]
-      current_position = player_state ? player_state["active_position"] : nil
-      player_item.state.delete "active_position" # Delete the old active position
-      if current_position
-        item.move_to_position(current_position)
-      else
-        x, y = engine.item_by_name("start location").tmx_object_coords_by_name("start location")
-        item.move_to_position "start location##{x},#{y}"
-      end
-    end
+    define_action("login") do
 
-    define_action("logout") do
-      player_state["active_position"] = item.position
-      # Logged out? Teleport the player's agent to the "adminzone" zone,
-      # in a sort of suspended animation.
-      move_to_instant("admin zone")
+      x, y = engine.item_by_name("start location").tmx_object_coords_by_name("start location")
+      move_to_instant("start_location##{x},#{y}")
     end
 
     define_action("move", "tags" => ["player_action"]) do |direction|
@@ -69,7 +45,6 @@ zone "admin zone" do
 
       # Just a straight-up move-immediately-if-possible, no frills.
       move_to_instant(next_position)
-      player_state["active_position"] = item.position
     end
 
     define_action("statedump", "tags" => ["admin", "player_action"]) do
