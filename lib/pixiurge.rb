@@ -30,6 +30,7 @@ module Pixiurge;end
 
 require "pixiurge/app"
 require "pixiurge/authentication"
+require "pixiurge/notification_names"
 require "pixiurge/engine_connector"
 require "pixiurge/player"
 require "pixiurge/template_view"
@@ -42,3 +43,4 @@ require "pixiurge/displayable/container"
 require "pixiurge/displayable/tmx_map"
 require "pixiurge/displayable/particle_source"
 require "pixiurge/displayable/tile_animated_sprite"
+require "pixiurge/displayable/text_effect"
