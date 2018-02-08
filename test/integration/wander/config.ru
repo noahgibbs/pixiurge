@@ -16,7 +16,6 @@ app = Wander.new
 app.rack_builder self
 app.root_dir __dir__
 app.root_redirect "/index.html"
-#app.coffeescript_dirs "wander"  # Optional for CoffeeScript front-end files
 #app.static_dirs "tiles", "sprites", "vendor_js", "ui", "static"   # Optional for any static front-end files such as graphics, sounds, HTML or scripts
 app.static_files "index.html"  # Optional for individual static files
 

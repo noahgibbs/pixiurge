@@ -61,7 +61,7 @@ Pixiurge.TmxMap = class TmxMap extends Pixiurge.Displayable {
         this.world.widthInTiles = tiledJSON.width;
         this.world.heightInTiles = tiledJSON.height;
 
-        for (var tiledLayer of Array.from(layers)) {
+        for (var tiledLayer of layers) {
             if (tiledLayer.type === "tilelayer") {
 
                 var layer = {
@@ -89,7 +89,7 @@ Pixiurge.TmxMap = class TmxMap extends Pixiurge.Displayable {
                         const mapY = mapRow * this.world.tileHeight;
 
                         // regX and regY are for variable pivots - important for oversize terrain tiles in Fringe layers and similar
-                        const [ tileX, tileY, tileWidth, tileHeight, imageName, regX, regY ] = Array.from(tileFrameDefinitions[gid]);
+                        const [ tileX, tileY, tileWidth, tileHeight, imageName, regX, regY ] = tileFrameDefinitions[gid];
 
                         // Look up or allocate a texture for this tile
                         // @todo Use the PIXI global texture cache for this

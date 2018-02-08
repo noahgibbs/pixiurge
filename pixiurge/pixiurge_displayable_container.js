@@ -1,8 +1,3 @@
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 Pixiurge.DisplayContainer = class DisplayContainer extends Pixiurge.Displayable {
     constructor(dataHash) {
         super(dataHash);
@@ -18,6 +13,19 @@ Pixiurge.DisplayContainer = class DisplayContainer extends Pixiurge.Displayable 
         }
 
         // This won't instantly load everything. Lots of Displayable types put stuff into a loader and load over time.
-        this.contents = (Array.from(contentsMessages).map((msgs) => this.pixiDisplay.createDisplayableFromMessages(this.pixiContainer, msgs[0].name, msgs[0])));
+        this.contents = contentsMessages.map((msgs) => this.pixiDisplay.createDisplayableFromMessages(this.pixiContainer, msgs[0].name, msgs[0]));
+    }
+
+    moveTo(x, y, options) {
+        const dispData = this.displayableData.displayable;
+        // @todo: Tweening
+        this.pixiContainer.x = x * dispData.location_block_width;
+        this.pixiContainer.y = y * dispData.location_block_height;
+    }
+
+    destroy() {
+        this.contents.map((displayable) => displayable.destroy());
+        this.parentContainer.removeChild(this.pixiContainer);
+        this.pixiContainer.destroy({ children: true });
     }
 };

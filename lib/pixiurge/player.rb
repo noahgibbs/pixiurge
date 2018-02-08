@@ -16,6 +16,19 @@ class Pixiurge::Player
   # The Displayable object the player is identified with
   attr_reader :displayable
 
+  # Here's something fun - when a player logs in, we want to *not*
+  # show them any queued Demiurge notifications from before they
+  # logged in. Those are just confusing to the client. Instead, we
+  # want to send the initial "here's where you are" messages (show the
+  # player's body and immediate surroundings) but *not* any other
+  # updates until the player's own login notification goes through.
+  # We do that by having a toggle on the Player object that starts
+  # "on" and turns "off" when the EngineConnector sees that Player's
+  # login notification. We don't send any messages through except the
+  # special initial setup until that toggle gets flipped to "off" by
+  # the EngineConnector.
+  attr_writer :login_update_toggle
+
   # Constructor. Set this player up with the appropriate network
   # settings, Displayable object, engine connector and so on.  This is
   # normally called by the EngineConnector.
@@ -168,6 +181,7 @@ class Pixiurge::Player
   # @since 0.1.0
   def move_displayable(displayable, old_position, new_position, options = {})
     return unless @currently_shown[displayable.name]
+    return if old_position == new_position
 
     displayable.move_for_player(self, old_position, new_position, options)
     nil

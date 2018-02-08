@@ -227,4 +227,22 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
     animationComplete() {
         this.sendDisplayEvent("animationEnd", { animation: this.currentAnimation });
     }
+
+    moveTo(x, y, options) {
+        const dispData = this.displayableData.displayable;
+        // @todo: Tweening
+        this.sprite.x = x * dispData.location_block_width;
+        this.sprite.y = y * dispData.location_block_height;
+    }
+
+    destroy() {
+        if(!(this.tween == null))
+            this.tween.stop();
+
+        if(!(this.sprite == null)) {
+            this.sprite.stop();
+            this.parentContainer.removeChild(this.sprite);
+            this.sprite.destroy({ children: true });
+        }
+    }
 };

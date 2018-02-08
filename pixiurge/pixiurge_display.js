@@ -8,6 +8,7 @@ const messageMap = {
     "display_destroy_all": "destroyAllDisplayables",
     "display_move": "moveDisplayable",
     "display_pan": "panToPixel",
+    "": ""
 };
 
 Pixiurge.DisplayEvent = class DisplayEvent {
@@ -117,7 +118,7 @@ Pixiurge.Display = class Display {
     destroyDisplayable(itemName) {
         if (this.displayables[itemName]) {
             this.displayables[itemName].destroy();
-            this.displayables.delete(itemName);
+            delete this.displayables[itemName];
         }
     }
 
@@ -148,9 +149,17 @@ Pixiurge.Display = class Display {
     moveDisplayable(itemName, data) {
         const displayable = this.displayables[itemName];
         const newPosition = data.position;
-        displayable.moveTo(newPosition, data.options);
+        const [location, coords] = newPosition.split("#", 2);
+        if(coords == null)
+            return;
+        const [x, y] = coords.split(",");
+        displayable.moveTo(x, y, data.options);
     }
 
+    // Register a handler for a DisplayEvent on the given
+    // objectName. The handler will receive a single DisplayEvent
+    // object with the accessors .name, .objectName, .data, .prevented
+    // and the method .preventDefault().
     onDisplayEvent(event, objectName, handler) {
         if (this.displayEventHandlers[event] == null) {
             this.displayEventHandlers[event] = { any: [] };

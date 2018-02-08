@@ -233,8 +233,10 @@ class Pixiurge::EngineConnector
       register_engine_item(item)
     end
 
-    # Next, subscribe to appropriate notifications for the Pixiurge
-    # App - these let us handle player network connections.
+    # Next, subscribe to appropriate events for the Pixiurge App -
+    # these let us handle player network connections. These events are
+    # sent immediately, not when we flush notifications from the
+    # Demiurge engine.
     @app.on_event "player_login" do |username|
       demi_item = @engine.item_by_name(username)
       if demi_item
@@ -446,6 +448,11 @@ class Pixiurge::EngineConnector
     end
   end
 
+  # One interesting difficulty here... Everything going on here
+  # generates notifications. We don't want to just flush notifications
+  # in the engine, because this may be in between timesteps. But we
+  # also don't want to have a bunch of player body movements pile up
+  # pre-login.
   def add_player(player)
     @players[player.name] = player
     unless player.displayable
@@ -469,14 +476,31 @@ class Pixiurge::EngineConnector
     @players.delete(player.name)
   end
 
+  # This is the internal constant to exit early from the notification
+  # routine if the notification is of any of these types. Anything
+  # here requires no direct response from the EngineConnector, for a
+  # variety of different reasons.
+  IGNORED_NOTIFICATION_TYPES = {
+    # Tick finished? Great, no change.
+    Demiurge::Notifications::TickFinished => true,
+
+    # MoveFrom? We handle the corresponding MoveTo instead.
+    Demiurge::Notifications::MoveFrom => true,
+
+    # LoadStateStart/Verify or LoadWorldStart notifications? We'll make changes when they complete
+    Demiurge::Notifications::LoadStateStart => true,
+    Demiurge::Notifications::LoadWorldStart => true,
+    Demiurge::Notifications::LoadWorldVerify => true,
+
+    # Player logout or reconnect? Already handled. This EngineConnector was the object that sent this notification anyway.
+    Pixiurge::Notifications::PlayerLogout => true,
+    Pixiurge::Notifications::PlayerReconnect => true,
+  }
+
   # When new data comes in about things in the engine changing, this is what receives that notification.
   def notified(data)
     # First, ignore a bunch of notifications we don't care about
-    return if data["type"] == Demiurge::Notifications::TickFinished
-    return if data["type"] == Demiurge::Notifications::MoveFrom
-    return if data["type"] == Demiurge::Notifications::LoadStateStart
-    return if data["type"] == Demiurge::Notifications::LoadWorldVerify
-    return if data["type"] == Demiurge::Notifications::LoadWorldStart
+    return if IGNORED_NOTIFICATION_TYPES[data["type"]]
 
     # We subscribe to all events in all locations, and the move-from
     # and move-to have the same fields except location, zone and
