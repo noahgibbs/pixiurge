@@ -115,6 +115,37 @@ choices and wait for the results. It's meant for a slower-paced game,
 more like Stardew Valley or Dwarf Fortress, where the user's exact,
 instant actions aren't make-or-break.
 
+### Interesting Subtleties of Timing
+
+Ordinarily, the engine simulates everything and then notifications are
+generated. At the end of a timestep the notifications are dispatched
+all at once -- subscribers can't respond mid-timestep. If you want
+actions that affect something *during* the timestep, you'll want to
+look up how Intentions and Offers work in Demiurge. Notifications are
+meant as an after-the-fact description of what has already happened.
+
+That means that when a notification is dispatched, other results may
+have already occurred as well. The notification usually contains
+enough information for a before-and-after description of what happened
+in that fraction of that timestep, but keep in mind that the "after"
+may not reflect the current state of the object - there may be another
+notification pending that says something *else* that has already
+happened to that same object, changing the state.
+
+This also causes some subtleties with actions that are, by their
+nature, not driven by Demiurge. Player messages and logins aren't
+synchronized with the Demiurge timestep, for instance. As a result, a
+lot of the "Player" object logic is meant to deal with that
+difference. When a player message comes in, a Demiurge action gets
+queued, waiting for the next timestep. When a new login comes in and a
+body gets created, you don't really want to show messages of the
+arrival and creation to the player, even though the notifications
+haven't gone out yet. You also don't want to dispatch all pending
+notifications - what if a timestep is still going on? Instead, we
+queue a "login" notification for that player, and until we see it, we
+don't show the player what happened prior to their login, even if the
+notifications were still queued up and waiting when they arrived.
+
 ## Pixiurge Conventions
 
 Demiurge leaves many things to the user's preferences. It tries to be
