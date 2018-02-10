@@ -148,12 +148,10 @@ class Pixiurge::EngineConnector
     #start_engine_periodic_timer
   end
 
-  # It's hard to tell where to call this. It can only happen after
-  # EventMachine's loop is started. There's a lot of weirdness with
-  # trying to ensure_running ourselves, because then Thin won't run
-  # its own event loop, and there's constant problems with running off
-  # the end of the main thread. At this point, we're winding up doing
-  # a horrible thing in config_ru.rb for the event loop.
+  private
+
+  # Start the actual EventMachine periodic timer for the simulation.
+  # This should be done only once EventMachine is running.
   #
   # @api private
   def start_engine_periodic_timer
@@ -186,6 +184,11 @@ class Pixiurge::EngineConnector
     end
   end
 
+  public
+
+  # Start the EventMachine loop to run Thin, the periodic timer and so on.
+  #
+  # @api private
   def thin_eventmachine_loop(rack_app, port, ssl_key_path, ssl_cert_path)
     # No luck with Puma - for now, hardcode using Thin
     Faye::WebSocket.load_adapter('thin')
@@ -425,12 +428,11 @@ class Pixiurge::EngineConnector
     end
   end
 
-  # @todo Should the backdrop be marked as special somehow? Make it
-  #   clear that it winds up under everything else?  PIXI.js doesn't
-  #   really do Z coordinates for most things, but right now anything
-  #   that gets "lucky" enough to get displayed before the backdrop
-  #   would become permanently invisible. There might be some
-  #   constellation of events where that could happen.
+  # This is going to wind up as a complicated interaction at some
+  # point between the player and the zone/location.  There need to be
+  # different areas where different levels of other-player activity
+  # are visible or invisible; that doesn't take things like sharding
+  # into account either...
   def set_player_backdrop(player, player_position, location_do)
     loc_name = location_do.name
 
@@ -448,11 +450,7 @@ class Pixiurge::EngineConnector
     end
   end
 
-  # One interesting difficulty here... Everything going on here
-  # generates notifications. We don't want to just flush notifications
-  # in the engine, because this may be in between timesteps. But we
-  # also don't want to have a bunch of player body movements pile up
-  # pre-login.
+  # This must be called on the Demiurge timeline, not immediately. So we wait for the PlayerLogin notification.
   def add_player(player)
     @players[player.name] = player
     unless player.displayable
@@ -541,19 +539,6 @@ class Pixiurge::EngineConnector
       return
     end
 
-    if data["type"] == "speech"
-      text = data["words"] || "ADD WORDS TO SPEECH NOTIFICATION!"
-      speaker = @engine.item_by_name(data["actor"])
-      body = @displayables[data["actor"]][:displayable]
-      speaker_loc_name = speaker.location_name
-      @players.each do |player_name, player_obj|
-        player_loc_name = player_obj.displayable.location_name
-        next unless player_loc_name == speaker_loc_name
-        player_obj.message "displayTextAnimOverStack", body.stack_name, text, "color" => data["color"] || "#CCCCCC", "font" => data["font"] || "20px Arial", "duration" => data["duration"] || 5.0
-      end
-      return
-    end
-
     # This notification will catch new player bodies, instantiated agents and whatnot.
     if data["type"] == Demiurge::Notifications::NewItem
       item = @engine.item_by_name data["actor"]
@@ -593,7 +578,7 @@ class Pixiurge::EngineConnector
     # Whether it's a player moving or something else, update all the
     # players who just saw the item move, disappear or appear.
     @players.each do |player_name, player|
-      next if player_name == data["actor"]  # Already handled it if this player is the one moving.
+      next if player_name == data["actor"]      # Already handled it if this player is the one moving.
       player_loc_name = player.displayable.location_name
 
       # First case: moving player remained in the same room - update movement for anybody *in* that room
