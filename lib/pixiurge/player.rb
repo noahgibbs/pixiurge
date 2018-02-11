@@ -120,9 +120,9 @@ class Pixiurge::Player
   # @return [void]
   # @since 0.1.0
   def destroy_all_displayables
-    @currently_shown.each do |item_name, displayable|
-      displayable.destroy_for_player(self)
-    end
+    #@currently_shown.each do |item_name, displayable|
+    #  displayable.destroy_for_player(self)
+    #end
     # Let the front end know: hints, preloads and whatnot... Clear it all.
     self.message Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL
     @currently_shown = {}

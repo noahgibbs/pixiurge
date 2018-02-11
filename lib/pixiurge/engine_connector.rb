@@ -204,8 +204,8 @@ class Pixiurge::EngineConnector
         }
         server.ssl = true
       end
-      Signal.trap("INT")  { STDERR.puts "Caught SIGINT, telling EventMachine to stop..."; EventMachine.stop }
-      Signal.trap("TERM") { STDERR.puts "Caught SIGTERM, telling EventMachine to stop..."; EventMachine.stop }
+      Signal.trap("INT")  { EventMachine.stop }
+      Signal.trap("TERM") { EventMachine.stop }
 
       # And now, the purpose of this whole loop - allowing WebSockets,
       # the Thin server *and* a single periodic timer to all run at
@@ -239,39 +239,19 @@ class Pixiurge::EngineConnector
     # Next, subscribe to appropriate events for the Pixiurge App -
     # these let us handle player network connections. These events are
     # sent immediately, not when we flush notifications from the
-    # Demiurge engine.
+    # Demiurge engine. Which means that Demiurge-synced occurrences
+    # must happen from the Demiurge-side PlayerLogin event that gets
+    # pushed by this handler.
     @app.on_event "player_login" do |username|
-      demi_item = @engine.item_by_name(username)
-      if demi_item
-        raise("There is already a body with reserved name #{username} not marked for this player!") unless demi_item.state["$player_body"] == username
-      else
-        # No body yet? Send a signal to indicate that we need one.
-        @app.send("send_event", "player_create_body", username)
-        demi_item = @engine.item_by_name(username)
-        unless demi_item
-          # Still no body? Either there was no signal handler, or it did nothing.
-          STDERR.puts "No player body was created in Demiurge for #{username.inspect}! No login for you!"
-          return
-        end
-        demi_item.state["$player_body"] = username
-        demi_item.run_action("create") if demi_item.get_action("create")
-        # Now register the player's body with the EngineConnector to make sure we have a Displayable for it
-        register_engine_item(demi_item)
-        displayable = @displayables[username][:displayable]
-        unless(displayable)
-          raise "No displayable item was created for user #{username}'s body!"
-        end
-      end
-      demi_item.run_action("login") if demi_item.get_action("login")
-      ws = @app.websocket_for_username username
-      displayable = @displayables[username][:displayable]
-      player = Pixiurge::Player.new websocket: ws, name: username, displayable: displayable, display_settings: display_settings, engine_connector: self
-      add_player(player)
+      # Put an event for this into the Demiurge timeline
+      @engine.send_notification({ "player" => username }, type: Pixiurge::Notifications::PlayerLogin, zone: "admin", location: nil, actor: nil)
     end
     @app.on_event "player_logout" do |username|
       remove_player(@players[username]) if @players[username]
+      @engine.send_notification({ "player" => username }, type: Pixiurge::Notifications::PlayerLogout, zone: "admin", location: nil, actor: nil)
     end
     @app.on_event "player_reconnect" do |username|
+      @engine.send_notification({ "player" => username }, type: Pixiurge::Notifications::PlayerReconnect, zone: "admin", location: nil, actor: nil)
     end
   end
 
@@ -512,6 +492,44 @@ class Pixiurge::EngineConnector
       return
     end
 
+    # On Login, we let the Player object know it can start showing all
+    # update messages, not just the special early ones. We've caught
+    # up to the point in the notification stream where this player
+    # logged in, so after this it's all actually new.
+    if data["type"] == Pixiurge::Notifications::PlayerLogin
+      username = data["player"]
+      # We touch (and/or create) the body Demiurge item on the assumption that nobody else is using it yet...
+      demi_item = @engine.item_by_name(username)
+      if demi_item
+        raise("There is already a body with reserved name #{username} not marked for this player!") unless demi_item.state["$player_body"] == username
+      else
+        # No body yet? Send a signal to indicate that we need one.
+        @app.send("send_event", "player_create_body", username)
+        demi_item = @engine.item_by_name(username)
+        unless demi_item
+          # Still no body? Either there was no signal handler, or it did nothing.
+          STDERR.puts "No player body was created in Demiurge for #{username.inspect}! No login for you!"
+          return
+        end
+        demi_item.state["$player_body"] = username
+        demi_item.run_action("create") if demi_item.get_action("create")
+        # Now register the player's body with the EngineConnector to make sure we have a Displayable for it
+        register_engine_item(demi_item)
+        displayable = @displayables[username][:displayable]
+        unless(displayable)
+          raise "No displayable item was created for user #{username}'s body!"
+        end
+      end
+      demi_item.run_action("login") if demi_item.get_action("login")
+      ws = @app.websocket_for_username username
+      displayable = @displayables[username][:displayable]
+      player = Pixiurge::Player.new websocket: ws, name: username, displayable: displayable, display_settings: display_settings, engine_connector: self
+
+      # Add_player sets the player's backdrop manually.
+      add_player(player)
+      return
+    end
+
     if data["type"] == Demiurge::Notifications::LoadWorldEnd
       # Not entirely clear what we do here. Demiurge has just reloaded
       # the World files, which may result in a bunch of changes...
@@ -527,7 +545,9 @@ class Pixiurge::EngineConnector
       if @players[acting_item]
         # This was a player action that was cancelled
         player = @players[acting_item]
-        player.message Pixiurge::Protocol::Outgoing::DISPLAY_EFFECT_TEXT, "", { "at" => player.displayable.name, "text" => data["reason"], "color" => "#FFCCCC", "font" => "20px Arial", "duration" => 3.0 }
+        # TODO: at what location?
+        displayable = Pixiurge::Display::TextEffect.new(data["reason"], style: { fill: "orange" }, duration: 3000, name: "", engine_connector: this)
+        player.show_displayable(displayable)
         return
       end
       return

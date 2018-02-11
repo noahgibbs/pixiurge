@@ -81,6 +81,8 @@ DSL
     con = connector
     ws.open
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
 
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
@@ -99,6 +101,8 @@ DSL
     ws.open
     ws.on(:close) { socket_closed = true }
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
 
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
@@ -112,6 +116,8 @@ DSL
     next_ws = additional_websocket
     next_ws.open
     next_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
 
     # We should see a disconnect and a websocket close on the first socket
     assert_equal Pixiurge::Protocol::Outgoing::DISCONNECTION, ws.parsed_sent_data[0][0]
@@ -125,6 +131,8 @@ DSL
     ws.open
     ws.on(:close) { socket_closed = true }
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "bob", "bcrypted" => "fake_hash" } ])
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
 
     messages = ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "bob" } ], messages[0]
@@ -139,6 +147,8 @@ DSL
     next_ws.on(:close) { socket_closed = true }
     next_ws.open
     next_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "sam", "bcrypted" => "fake_hash2" } ])
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
 
     # We should see login messages and no closing of either socket
     messages = next_ws.parsed_sent_data
@@ -172,6 +182,9 @@ DSL
     phil_ws.on(:close) { socket_closed = true }
     phil_ws.open
     phil_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "phil", "bcrypted" => "fake_hash4" } ])
+
+    # Make sure all the login and NewItem notifications have gone through
+    @demi_engine.flush_notifications
 
     # Check murray's messages
     messages = ws.parsed_sent_data
@@ -211,10 +224,14 @@ DSL
 
     ws.open
     ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "murray", "bcrypted" => "fake_hash3" } ])
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
     ws.close
 
     new_ws = additional_websocket
     new_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "murray", "bcrypted" => "fake_hash3" } ])
+    @demi_engine.flush_notifications
+
     messages = new_ws.parsed_sent_data
     assert_equal [ Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => "murray" } ], messages[0]
     assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_INIT, { "width" => 640, "height" => 480, "ms_per_tick" => 300 } ], messages[1]
@@ -237,6 +254,9 @@ DSL
     phil_ws = additional_websocket
     phil_ws.open
     phil_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "phil", "bcrypted" => "fake_hash4" } ])
+
+    # The login doesn't really happen until the notification goes through...
+    @demi_engine.flush_notifications
 
     demi_phil = @demi_engine.item_by_name("phil")
     demi_murray = @demi_engine.item_by_name("murray")
@@ -286,6 +306,8 @@ DSL
     phil_ws.open
     phil_ws.json_message([Pixiurge::Protocol::Incoming::AUTH_LOGIN, { "username" => "phil", "bcrypted" => "fake_hash4" } ])
 
+    @demi_engine.flush_notifications
+
     # Clear all the login messages
     murray_ws.sent_data.clear
     sam_ws.sent_data.clear
@@ -304,24 +326,21 @@ DSL
 
     # Both murray and sam should see phil leave
     messages = murray_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
     assert_equal 1, murray_ws.sent_data.size
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
     murray_ws.sent_data.clear
     messages = sam_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
     assert_equal 1, sam_ws.sent_data.size
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
     sam_ws.sent_data.clear
 
     # Phil should see himself and murray (but not the invisible sam)
     # get hidden individually and a hide-all, then showing himself
     # Note that his new room is invisible and doesn't get shown.
     messages = phil_ws.parsed_sent_data
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[3]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>1, "location_block_height"=>1, "position"=>"somewhere else"}, "params" => { "shape" => "square" } } ], messages[4]
-    assert_equal 5, messages.size
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>1, "location_block_height"=>1, "position"=>"somewhere else"}, "params" => { "shape" => "square" } } ], messages[1]
+    assert_equal 2, messages.size
     phil_ws.sent_data.clear
 
     demi_phil.move_to_position("right here")
@@ -331,14 +350,14 @@ DSL
     # invisible), and then everybody shown, including himself and the
     # new room.
     messages = phil_ws.parsed_sent_data
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[1]
+    #assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ], messages[0]
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[0]
 
-    assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see himself shown when entering the room"
-    assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see murray shown when entering the room"
-    assert messages[2..4].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"
+    assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "phil", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see himself shown when entering the room"
+    assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "murray", { "type" => "particle_source", "displayable"=>{"x"=>nil, "y"=>nil, "location_block_width"=>32, "location_block_height"=>32, "position"=>"right here"}, "params" => { "shape" => "square" } } ]), "Phil should see murray shown when entering the room"
+    assert messages[1..3].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_SHOW_DISPLAYABLE, "right here", { "type" => "tmx", "url" => "/tmx/magecity_cc0_lorestrome.json" } ]), "Phil should see the room shown when entering the room"
 
-    assert_equal 5, messages.size
+    assert_equal 4, messages.size
     phil_ws.sent_data.clear
 
     # The other two just see Phil enter
@@ -362,10 +381,10 @@ DSL
 
     # Sam sees the old room disappear... But the new room doesn't appear, it's invisible.
     messages = sam_ws.parsed_sent_data
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
-    assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
-    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[3]
+    #assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "phil" ]), "Phil should see phil hidden when leaving the room"
+    #assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "murray" ]), "Phil should see murray hidden when leaving the room"
+    #assert messages[0..2].include?([ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_DISPLAYABLE, "right here" ]), "Phil should see the room hidden when leaving the room"
+    assert_equal [ Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL ], messages[0]
     sam_ws.sent_data.clear
 
     demi_sam.move_to_position("right here")
