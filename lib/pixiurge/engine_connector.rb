@@ -545,8 +545,8 @@ class Pixiurge::EngineConnector
       if @players[acting_item]
         # This was a player action that was cancelled
         player = @players[acting_item]
-        # TODO: at what location?
-        displayable = Pixiurge::Display::TextEffect.new(data["reason"], style: { fill: "orange" }, duration: 3000, name: "", engine_connector: this)
+        displayable = Pixiurge::Display::TextEffect.new(data["reason"], style: { fill: "orange" }, duration: 3000, name: "", engine_connector: self)
+        displayable.position = player.displayable.position
         player.show_displayable(displayable)
         return
       end

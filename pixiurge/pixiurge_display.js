@@ -30,6 +30,7 @@ Pixiurge.Display = class Display {
         if (options == null) { options = {}; }
         this.pixiurge.display = this;
         this.displayables = {};
+        this.transientEffectCounter = 0;
         this.displayEventHandlers = {};
 
         this.containerSpec = options["container"] || "body";
@@ -91,9 +92,17 @@ Pixiurge.Display = class Display {
         if("any" === itemName || "all" === itemName) {
             console.log(`Illegal item name '${itemName}'!`);
         }
-        if (this.displayables[itemName]) {
+        if(this.displayables[itemName]) {
             console.log(`Item name '${itemName}' already exists!`);
             return;
+        }
+        if("" === itemName) {
+            // Empty item names are normally for transient effects
+            // which won't be controlled.  They generally fade on
+            // their own and/or are removed via
+            // DestroyAllDisplayables.
+            itemName = `@transientEffect${this.transientEffectCounter}`
+            this.transientEffectCounter++;
         }
         const displayable = this.createDisplayableFromMessages(this.layersContainer, itemName, itemData);
         if ((displayable == null) || !displayable) {

@@ -8,30 +8,49 @@ Pixiurge.TmxMap = class TmxMap extends Pixiurge.Displayable {
         super(dataHash);
 
         this.url = this.displayableData.url;
-        this.pixiDisplay.loader.addResourceBatch([this.url], () => this.jsonLoaded());
+        let callbackDestroyHack = { destroyed: false };
+        this.callbackDestroyHack = callbackDestroyHack;
+        this.pixiDisplay.loader.addResourceBatch([this.url], () => {
+            if(!callbackDestroyHack.destroyed) {
+                this.jsonLoaded()
+            }
+        });
 
         // Reserve our spot in the display order, even if the loader is slow
         this.world = new PIXI.Container();
         this.parentContainer.addChild(this.world);
     }
 
-    // This is actually the "destroy" method for this Displayable
-    hide() {}
+    destroy() {
+        // First, cancel any pending callbacks
+        this.callbackDestroyHack.destroyed = true;
+
+        this.parentContainer.removeChild(this.world);
+        this.world.destroy({ children: true });
+    }
 
     jsonLoaded() {
         const tmxCacheEntry = this.pixiDisplay.loader.getJSON(this.url);
-        const tilesetImages = (Array.from(tmxCacheEntry.map.tilesets).map((tileset) => tileset.image));
+        const tilesetImages = tmxCacheEntry.map.tilesets.map((tileset) => tileset.image);
+        let callbackDestroyHack = this.callbackDestroyHack;
 
-        this.pixiDisplay.loader.addResourceBatch(tilesetImages, () => this.makeTiledWorld(tmxCacheEntry));
+        this.pixiDisplay.loader.addResourceBatch(tilesetImages, () => {
+            if(!callbackDestroyHack.destroyed)
+                this.makeTiledWorld(tmxCacheEntry);
+        });
     }
 
     // Parts of this are adapted from kittykatattack's tileUtilities
     makeTiledWorld(tmxCacheEntry) {
+        // If we got destroyed too quickly, and this slipped around the callbackDestroyHack earlier...
+        if(this.world === undefined || this.callbackDestroyHack.destroyed)
+            return;
+
         const layers = tmxCacheEntry.tile_layers.sort((l1, l2) => l1.z - l2.z);
         const tiledJSON = tmxCacheEntry.map;
         const tilesetSpec = [];
         const baseTextureByTileset = {};
-        for (let tileset of Array.from(tiledJSON.tilesets)) {
+        for (let tileset of tiledJSON.tilesets) {
             const tsSpecItem = {
                 name: tileset.name,
                 first_frame_id: tileset.firstgid,

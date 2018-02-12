@@ -92,8 +92,10 @@ Pixiurge.TileAnimatedSprite = class TileAnimatedSprite extends Pixiurge.Displaya
 
         const images = this.displayableData.params.tilesets.map((tileset) => tileset.url);
         this.tilesets = this.displayableData.params.tilesets;
+        this.callbackDestroyHack = { destroyed: false };
+        let callbackDestroyHack = this.callbackDestroyHack;
 
-        this.pixiDisplay.loader.addResourceBatch(images, () => this.imagesLoaded());
+        this.pixiDisplay.loader.addResourceBatch(images, () => { if(!callbackDestroyHack.destroyed) { this.imagesLoaded(); } });
     }
 
     // @todo: how to make sure we can put this at a specific spot in the draw order, even if the load is slow
