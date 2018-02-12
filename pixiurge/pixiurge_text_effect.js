@@ -14,11 +14,10 @@ Pixiurge.TextEffect = class TextEffect extends Pixiurge.Displayable {
 
         const dispData = this.displayableData;
         const style = new PIXI.TextStyle(dispData.style || {});
-        console.log("Text:", dispData.text);
-        this.textObj = new PIXI.Text(dispData.text);  // Add style back
+        this.textObj = new PIXI.Text(dispData.text); //, style);
 
-        this.textObj.x = dispData.x * dispData.location_block_width;
-        this.textObj.y = dispData.y * dispData.location_block_height;
+        this.textObj.x = dispData.displayable.x * dispData.displayable.location_block_width;
+        this.textObj.y = dispData.displayable.y * dispData.displayable.location_block_height;
 
         this.duration = dataHash.duration || 5000;
 

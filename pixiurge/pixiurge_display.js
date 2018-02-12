@@ -40,6 +40,7 @@ Pixiurge.Display = class Display {
             tile_animated_sprite: Pixiurge.TileAnimatedSprite,
             tmx: Pixiurge.TmxMap,
             container: Pixiurge.DisplayContainer,
+            text_effect: Pixiurge.TextEffect
         };
         this.loader = new Pixiurge.Loader();
     }
@@ -119,7 +120,7 @@ Pixiurge.Display = class Display {
             console.log(`Couldn't find a class for item type: ${itemType}!`);
             return undefined;
         }
-        return new klass({pixiDisplay: this, parentContainer, displayableName: itemName, displayableData: itemData});
+        return new klass({pixiDisplay: this, parentContainer: parentContainer, displayableName: itemName, displayableData: itemData});
     }
 
     // This destroys this Displayable - it won't be referenced by name
