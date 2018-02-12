@@ -1,5 +1,6 @@
 require "pixiurge"
 require "demiurge"
+require "rack"
 
 PIXI_APP_ROOT = File.expand_path(__dir__)
 

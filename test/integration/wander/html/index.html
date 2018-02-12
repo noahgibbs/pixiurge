@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wander</title>
+
+  <!-- For dev, include all the JavaScript individually -->
+  <script src="/pixiurge/pixiurge.js"></script>
+  <script src="/pixiurge/pixiurge_websocket.js"></script>
+  <script src="/pixiurge/pixiurge_display.js"></script>
+  <script src="/pixiurge/pixiurge_displayable.js"></script>
+  <script src="/pixiurge/pixiurge_utils.js"></script>
+  <script src="/pixiurge/pixiurge_tile_utils.js"></script>
+  <script src="/pixiurge/pixiurge_tile_animated_sprite.js"></script>
+  <script src="/pixiurge/pixiurge_tmx_map.js"></script>
+  <script src="/pixiurge/pixiurge_displayable_container.js"></script>
+  <script src="/pixiurge/pixiurge_loader.js"></script>
+  <script src="/vendor/jquery-3.2.1.js"></script>
+  <script src="/vendor/bcrypt.js"></script>
+  <script src="/vendor/pixi-4.6.2.js"></script>
+  <script src="/vendor/sha1.js"></script>
+
+  <!-- For production use a single minified script:  <script src="pixiurge-0.1.0.min.js"></script> -->
+
+  <style media="screen" type="text/css">
+    .errdisplay {
+      color: red;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Wander</h1>
+
+<script>
+//<![CDATA[
+
+// Not HTTPS already? Redirect to HTTPS. You need TLS to safely pass around password-equivalent tokens like we do.
+if (window.location.protocol != "https:") {
+   window.location.protocol = "https:";
+   window.location.reload();
+}
+
+function game_login() {
+  var username = $(".username_field").val();
+  var password = $(".password_field").val();
+  $(".login").hide();  // We started logging in. Let's not do that more than once, though.
+
+  if(password == "") {
+    $(".errdisplay").text("You must set a password to log in!");
+    $(".login").show();
+    return;
+  }
+  if(username == "") {
+    $(".errdisplay").text("You must set a username to log in!");
+    $(".login").show();
+    return;
+  }
+
+  window.pixi_game.transport.login(username, password);
+};
+
+function game_logout() {
+  window.pixi_game.transport.logout();
+};
+
+function game_register() {
+  var username = $(".username_field").val();
+  var password = $(".password_field").val();
+
+  if(password == "") {
+    $(".errdisplay").text("You must set a password to register an account!");
+    $(".login").show();
+    return;
+  }
+  if(username == "") {
+    $(".errdisplay").text("You must set a username to register an account!");
+    $(".login").show();
+    return;
+  }
+
+  window.pixi_game.transport.registerAccount(username, password);
+};
+
+function good_login(username) {
+  $(".login").hide();
+};
+
+function bad_login(reason) {
+  $(".errdisplay").text("The server couldn't log you in: " + reason);
+  $(".login").show();
+};
+
+  $(function(){
+    if(!("WebSocket" in window)) {
+      alert("Sorry, your browser does not appear to support WebSockets. Please use the latest version of your browser, and not any version of Opera Mini.");
+      return;
+    }
+
+    window.pixi_game = new Pixiurge();
+    // WSS in the URL means you need to set up secure sockets! See the file "exe/start_script" for the development version
+    var ws = new WebSocket("wss://localhost:3001/");
+    pixi_game.setTransport(new Pixiurge.WebsocketTransport(pixi_game, ws));
+    var display = new Pixiurge.Display(pixi_game, { container: "#displayarea" });
+    pixi_game.setMessageHandler("display", display);
+
+    pixi_game.setup();
+    pixi_game.transport.onOpen(function() { pixi_game.transport.considerAutoLogin(); });
+    pixi_game.transport.onLogin(good_login);
+    pixi_game.transport.onFailedLogin(bad_login);
+
+    $(".loginform").submit(function(event) {
+      event.preventDefault();  // Don't trigger normal form handler.
+      game_login();
+    });
+
+    $(".login_button").click(function(event) {
+      event.preventDefault();
+      game_login();
+    });
+
+    $(".register_button").click(function(event) {
+      event.preventDefault();
+      game_register();
+    });
+
+  });
+
+//]]>
+</script>
+
+<div id="login" class="login">
+  <p class="errdisplay"></p>
+  <form class="loginform">
+    <label name="username">User Name:</label>
+    <input class="username_field" type="text" name="username"></input>
+
+    <label name="password">Password:</label>
+    <input class="password_field" type="password" name="password"></input>
+
+    <button class="login_button">Log In</button> OR
+    <button type="button" class="register_button">Register a New Account</button>
+  </form>
+</div>
+
+<div id="displayarea"></div>
+
+<ul>
+  <li><a onclick="game_logout();">Log Out</a></li>
+</ul>
+
+</body>
+</html>

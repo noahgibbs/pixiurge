@@ -1,9 +1,13 @@
 require "pixiurge"
 require "demiurge"
+require "rack"
 
 PIXI_APP_ROOT = File.expand_path(__dir__)
 
 class Wander < Pixiurge::AuthenticatedApp
+  attr_reader :engine_connector
+  attr_reader :engine
+
   def initialize
     # Configure Pixiurge AuthenticatedApp
     options = {
@@ -27,7 +31,7 @@ class Wander < Pixiurge::AuthenticatedApp
       :engine_dsl_dir => "#{PIXI_APP_ROOT}/world",
 
       # Restore state from the last available statefile, if any
-      #:engine_restore_statefile => last_statefile,
+      :engine_restore_statefile => last_statefile,
 
       # Configure automatic statedumps
       :autosave_ticks => 600,
@@ -45,12 +49,34 @@ class Wander < Pixiurge::AuthenticatedApp
   end
 
   # This handler lets you react to Websocket messages sent from this player's browser.
-  def on_player_message(username, action_name, *args)
+  def on_player_action(username, args)
     player = @engine_connector.player_by_username(username)
+    player_demi_item = @engine.item_by_name(username)
+
+    action_name = args[0]
+
     if action_name == "move"
       player.demi_item.queue_action "move", args[0]
       return
     end
+
+    if action_name == "keypress"
+      data = args[1]
+      keycode = data["code"]
+      if keycode == Pixiurge::Protocol::Incoming::Keycode::LEFT_ARROW
+        player_demi_item.queue_action "move", "left"
+      elsif keycode == Pixiurge::Protocol::Incoming::Keycode::RIGHT_ARROW
+        player_demi_item.queue_action "move", "right"
+      elsif keycode == Pixiurge::Protocol::Incoming::Keycode::UP_ARROW
+        player_demi_item.queue_action "move", "up"
+      elsif keycode == Pixiurge::Protocol::Incoming::Keycode::DOWN_ARROW
+        player_demi_item.queue_action "move", "down"
+      else
+        STDERR.puts "Received keycode #{keycode.inspect}, but there's no handler!"
+      end
+      return
+    end
+
     raise "Unknown player action #{action_name.inspect} with args #{args.inspect}!"
   end
 
@@ -81,3 +107,35 @@ class Wander < Pixiurge::AuthenticatedApp
   #   on_message,
   #   on_login
 end
+
+pixi_app = Wander.new
+
+rack_builder = Rack::Builder.new do
+  file = File.new File.join(__dir__, "log", "http_requests.txt"), "a"
+  file.sync = true
+  use Rack::CommonLogger, file
+
+  use Rack::ShowExceptions if ["development", ""].include?(ENV["RACK_ENV"].to_s)  # Useful for debugging, turn off in production
+
+  EM.error_handler do |e|
+    STDERR.puts "ERROR: #{e.message}\n#{e.backtrace.join "\n"}\n"
+  end
+
+  pixi_app.rack_builder self
+  pixi_app.root_dir __dir__
+  pixi_app.root_redirect "/html/index.html"
+  #pixi_app.coffeescript_dirs "hat_relay"  # Optional for CoffeeScript front-end files
+  #pixi_app.static_dirs "tiles", "sprites", "vendor_js", "ui", "static"   # Optional for any static front-end files such as graphics, sounds, HTML or scripts
+  pixi_app.static_dirs "sprites"
+  pixi_app.static_files "index.html"  # Optional for individual static files
+  pixi_app.tmx_dirs "tmx"
+
+  pixi_app.tilt_dirs "html"
+
+  run pixi_app.handler
+end
+
+rack_app = rack_builder.to_app
+
+# This method doesn't return, it just runs the loop forever.
+pixi_app.engine_connector.thin_eventmachine_loop(rack_app, ENV['PIXIURGE_PORT'].to_i, ENV['PIXIURGE_KEY_FILE'], ENV['PIXIURGE_CERT_FILE'])
