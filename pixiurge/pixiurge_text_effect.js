@@ -14,7 +14,8 @@ Pixiurge.TextEffect = class TextEffect extends Pixiurge.Displayable {
 
         const dispData = this.displayableData;
         const style = new PIXI.TextStyle(dispData.style || {});
-        this.textObj = new PIXI.Text(dispData.text); //, style);
+        const textObj = new PIXI.Text(dispData.text, style);
+        this.textObj = textObj;
 
         this.textObj.x = dispData.displayable.x * dispData.displayable.location_block_width;
         this.textObj.y = dispData.displayable.y * dispData.displayable.location_block_height;
@@ -26,11 +27,11 @@ Pixiurge.TextEffect = class TextEffect extends Pixiurge.Displayable {
         let finalProps = this.displayableData.finalProperties || { y: "-20", alpha: 0.1 };
 
         // Can also call tween.easing() to adjust the easing curve. Do that?
-        //this.tween = new TWEEN.Tween(this.textObj)
-        //    .to(finalProps, this.duration)
-        //    .onComplete((self) => { this.destroy(); })
-        //    .onStop((self) => { this.destroy(); })
-        //    .start();
+        this.tween = new TWEEN.Tween(this.textObj)
+            .to(finalProps, this.duration)
+            .onComplete((self) => { if(textObj) textObj.destroy({ children: true }); })
+            .onStop((self) => { if(textObj) textObj.destroy({ children: true }); })
+            .start();
     }
 
     destroy() {

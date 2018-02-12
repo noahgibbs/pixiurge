@@ -62,6 +62,9 @@ Pixiurge.Display = class Display {
         this.fringeContainer = new PIXI.Container;
         this.fringeContainer.z = 0;
         this.layersContainer.addChild(this.fringeContainer);
+
+        // Update the shared TWEEN.js group from the shared PIXI.js ticker
+        PIXI.ticker.shared.add(() => { TWEEN.update(); });
     }
 
     message(msgName, argArray) {
