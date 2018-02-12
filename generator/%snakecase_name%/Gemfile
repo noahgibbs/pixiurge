@@ -1,3 +1,8 @@
 source "https://rubygems.org"
 
 gem "pixiurge", "~>0.1.0"
+
+# TODO: May need to depend on a more recent Demiurge release...
+
+# When there's a more recent tmx release, depend on that instead.
+gem "tmx", :git => "git@github.com:noahgibbs/tmx.git", :branch => "add-exporters"
