@@ -2,3 +2,5 @@
 *.key
 /.bundle/
 log/*.txt
+accounts.json
+accounts.json.old
