@@ -1,5 +1,10 @@
 # So You Want to Put Pixiurge Into Production...
 
+FIRST OFF: PIXIURGE IS NOT PRODUCTION-READY. IT MAY WORK, BUT IT HAS
+NOT BEEN TESTED AT ANY NONTRIVIAL SCALE.
+
+Still with me? Okay.
+
 Getting a Websocket-aware game with a Ruby server into production has
 a lot of pieces to get right. It'll help if you've done this sort of
 thing before. But even the pros can use a checklist. I can't provide

@@ -297,8 +297,106 @@ window.
 
 In a software sense, a Displayable subclass knows how to display or
 hide itself using messages over Websockets. A Player knows what
-objects are currently displayed, but must ask a Displayable to display
-itself to get the specific messages.
+objects are currently displayed. But if that Player wants to know the
+specific messages required to display that Displayable, it must ask
+the Displayable to display itself.
+
+## Kinds of Information
+
+What information is sent where? That's a complicated question, and
+depends on a lot of interesting issues:
+
+* Cheating: front-end code is _never_ secure from interference by humans
+* Timing: information staying in the client or server is much faster than crossing between them
+* Persistence: anything the server doesn't know about, won't be restored
+* Responsiveness: anything not on the client can't change or respond without a round-trip to the server
+* Synchronization: for multiple players to see the same thing, it must go through the server
+* Lag: if you have to hear from the server for every action, you can't display anything during network lag
+* Complexity: the more places the information is needed, the more complicated it is to get it there and update it
+
+What kinds of information are in Pixiurge? Which are the easiest or cheapest?
+
+### Client-Only Information
+
+Some information is transient. For instance, if you have a little frog
+animation in a swamp tile, you probably don't need to send anything
+about it to the server. There's no reason every player has to see the
+frog at the same time if it's not part of a puzzle or response.
+
+The exact current frame of an animation probably doesn't need to be
+sent to the server.
+
+Sometimes other decorative choices are similar - if you're showing a
+fountain of particles, the server may know the even that caused
+them. But it probably won't know the randomized color and position of
+every particle. That's generally for the best.
+
+If you have a specific window or display up, the server may not need
+to know that. Optional hitpoint display in the player's HUD? The
+server may not need to know whether it's up, and may not care. The
+hitpoints will want to be synchronized with the server, but the
+interface settings for displaying them don't have to be.
+
+Remember that client-only information can't be trusted. Players can
+open a JavaScript console and see or change any code or data you send
+them. So try to keep client-only information to UI elements and
+decorative data.
+
+### Server-Only Information
+
+Some information can be kept entirely on the server. The client may
+see a result of that information (or may not.) But the information
+itself doesn't need to be sent.
+
+For instance, the server may store the exact creation time of a
+player, along with their logins and logouts. It may send text later
+saying something like "it's your character's birthday!" or "91 hours
+played." But the specific creation time and login/logout times are
+probably only on the server. Client actions were related to creating
+that information, but it wasn't directly sent by the client.
+
+### Events and Messages
+
+Events and messages frequently cross back and forth between the client
+and server. Those events and messages may carry information back and
+forth. In fact, they're the primary way of doing so.
+
+Information may be carried by events and messages from the client to
+the server and vice-versa. Not only the information that is directly
+sent, but things like the time that a message arrives may be used.
+
+For instance: a client message may say that an account was created and
+exactly when... But that date might only be accepted by the server if
+the "created at" date is within a few minuts of the current time, to
+avoid problems with cheating or wrong time zones. You wouldn't want
+somebody to set their local computer time to 1990 and get 20+ years of
+playtime bonuses, right?
+
+Just because a message _carries_ information, doesn't mean the
+receiver of the information must _trust_ it. But events and messages
+are usually the only source of information.
+
+### Synchronized Information
+
+Information that is cooperatively synchronized between the client and
+server is the slowest, most complicated and most useful kind of
+information. That includes things like the player's current position
+and statistics. It also includes all of a player's actions and
+(indirectly) NPC actions which are affected by player state.
+
+Since the client can't ever really be trusted, this kind of
+information needs a lot of careful thinking-through and (often
+complicated and slow) checking.  It's important to filter information
+the server sends to the client so the client can't know "impossible"
+things. It's important to filter the information the client sends to
+the server to make sure it's working right. And it's important to send
+as little as possible in both directions to save bandwidth and
+CPU. Yet all this filtering adds complexity, and the simplest thing is
+to send nearly everything and let both ends sort it out.
+
+As a result, this is usually a compromise of some kind. Sychronized
+information might be simple and not well-secured, or complicated and
+effective but possibly bug-prone.
 
 ## The Front End
 
@@ -388,18 +486,18 @@ don't much care about building AAA-style high-performance "whoah, the
 graphics" games, but I care a *lot* about reaching people and talking
 to them. I hope you do too.
 
-### Pixiurge Websocket Protocol
+### Pixiurge Websocket Protocol - Decisions and Limitations
 
 The Pixiurge Websocket Protocol is simple and designed for easy
 testing and reading by humans. That's bad if you need high
 performance, but good if you want to put together games easily.
 
 Probably the biggest limits are that it's client-server only, which
-means no peer-to-peer) and that it's WebSocket-based, meaning only
+means no peer-to-peer, and that it's WebSocket-based, meaning only
 in-order reliable delivery. A low-latency game mostly can't rely on
 TCP/IP, it needs UDP/IP, and it often needs to be peer-to-peer.
 
-(WebSockets also have nontrivial per-message overhead.)
+WebSockets also have nontrivial per-message overhead.
 
 Can't we fix all that?
 
@@ -419,10 +517,10 @@ browsers. Worse, it requires anybody setting it up to run
 [TURN](https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT)
 servers, which are *not* trivial to set up.
 
-There are ways around all of this... *If* you make every player
-install a browser plugin, which is how engines like Unity handle
-it. It would be wonderful if there were
-[some kind of sane in-browser UDP-style protocol](https://en.wikipedia.org/wiki/Netcode)
+There are ways around all of this... *If* you make most players, or
+every player, install a browser plugin. That's how engines like Unity
+handle it. It would be wonderful if there were [some kind of sane
+in-browser UDP-style protocol](https://en.wikipedia.org/wiki/Netcode)
 to handle this. But currently there's no such standard on the
 horizon. You have to install a plugin.
 
