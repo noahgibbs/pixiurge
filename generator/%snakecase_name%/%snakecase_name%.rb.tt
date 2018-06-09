@@ -4,6 +4,9 @@ require "rack"
 
 PIXI_APP_ROOT = File.expand_path(__dir__)
 
+# There are a number of things you can customize in this file. It's
+# not a bad idea to look through it.
+
 class <%= camelcase_name %> < Pixiurge::AuthenticatedApp
   attr_reader :engine_connector
   attr_reader :engine
@@ -101,6 +104,10 @@ end
 
 pixi_app = <%= camelcase_name %>.new
 
+# This section is like a config.ru file, but embedded in a block.  You
+# can add Rack middleware or other normal Rack items if you like. Why
+# no config.ru? Because the way we're using EventMachine here doesn't
+# work well with one.
 rack_builder = Rack::Builder.new do
   file = File.new File.join(__dir__, "log", "http_requests.txt"), "a"
   file.sync = true
@@ -115,12 +122,15 @@ rack_builder = Rack::Builder.new do
   pixi_app.rack_builder self
   pixi_app.root_dir __dir__
   pixi_app.root_redirect "/html/index.html"
-  #pixi_app.coffeescript_dirs "hat_relay"  # Optional for CoffeeScript front-end files
+  #pixi_app.coffeescript_dirs "my_coffee_dir"  # Optional for CoffeeScript front-end files
   #pixi_app.static_dirs "tiles", "sprites", "vendor_js", "ui", "static"   # Optional for any static front-end files such as graphics, sounds, HTML or scripts
   pixi_app.static_dirs "sprites"
   pixi_app.static_files "index.html"  # Optional for individual static files
   pixi_app.tmx_dirs "tmx"
 
+  # "Tilt" is a template library. Any directory listed as a "tilt_dir"
+  # will try to serve templates if it recognizes a file extension -
+  # such as .erb, for instance.
   pixi_app.tilt_dirs "html"
 
   run pixi_app.handler
