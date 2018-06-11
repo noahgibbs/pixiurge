@@ -604,7 +604,7 @@ and agents.</p>
       <pre class="code"><span class="info file"># File 'lib/demiurge/location.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_exit'>add_exit</span><span class='lparen'>(</span><span class='label'>from:</span><span class='id identifier rubyid_any_legal_position'>any_legal_position</span><span class='comma'>,</span> <span class='label'>to:</span><span class='comma'>,</span> <span class='label'>to_location:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>properties:</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_to_loc'>to_loc</span><span class='comma'>,</span> <span class='id identifier rubyid_to_coords'>to_coords</span> <span class='op'>=</span> <span class='id identifier rubyid_to'>to</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='int'>2</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_to_loc'>to_loc</span> <span class='op'>=</span> <span class='id identifier rubyid_to'>to</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span><span class='int'>2</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_to_location'>to_location</span> <span class='op'>==</span> <span class='kw'>nil</span>
     <span class='id identifier rubyid_to_location'>to_location</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_to_loc'>to_loc</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
@@ -1070,9 +1070,9 @@ subclass of Location you&#39;re dealing with.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:21 2018 by
+  Generated on Mon Jun 11 16:00:09 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

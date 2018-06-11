@@ -862,24 +862,24 @@ normally called by the EngineConnector.</p>
       <pre class="lines">
 
 
-147
-148
-149
-150
-151
-152
-153
-154
-155</pre>
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 122</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy_all_displayables'>destroy_all_displayables</span>
-  <span class='ivar'>@currently_shown</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_item_name'>item_name</span><span class='comma'>,</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='op'>|</span>
-    <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_destroy_for_player'>destroy_for_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='comment'># Let the front end know: hints, preloads and whatnot... Clear it all.
+  <span class='comment'>#@currently_shown.each do |item_name, displayable|
+</span>  <span class='comment'>#  displayable.destroy_for_player(self)
+</span>  <span class='comment'>#end
+</span>  <span class='comment'># Let the front end know: hints, preloads and whatnot... Clear it all.
 </span>  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol.html" title="Pixiurge::Protocol (module)">Protocol</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html" title="Pixiurge::Protocol::Outgoing (module)">Outgoing</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Protocol/Outgoing.html#DISPLAY_DESTROY_ALL-constant" title="Pixiurge::Protocol::Outgoing::DISPLAY_DESTROY_ALL (constant)">DISPLAY_DESTROY_ALL</a></span></span>
   <span class='ivar'>@currently_shown</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='kw'>nil</span>
@@ -948,15 +948,15 @@ normally called by the EngineConnector.</p>
       <pre class="lines">
 
 
-124
-125
-126
-127
-128
-129</pre>
+99
+100
+101
+102
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy_displayable'>destroy_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_disp'>disp</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_disp'>disp</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
@@ -1028,15 +1028,15 @@ normally called by the EngineConnector.</p>
       <pre class="lines">
 
 
-136
-137
-138
-139
-140
-141</pre>
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy_displayable_name'>destroy_displayable_name</span><span class='lparen'>(</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rbracket'>]</span>
@@ -1140,7 +1140,7 @@ that. This is normally called by the Player constructor.</p>
 </h3><div class="docstring">
   <div class="discussion">
     <p class="note returns_void">This method returns an undefined value.</p><p>Send a message to the connected browser for this player. This will
-serialize to JSON and respects the record_traffic setting for the
+serialize to JSON. It respects the record_traffic setting for the
 Pixiurge app.</p>
 
 
@@ -1337,18 +1337,20 @@ running, or it may be possible to supply a speed or a duration.</p>
       <pre class="lines">
 
 
-169
-170
-171
-172
-173
-174</pre>
+144
+145
+146
+147
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 169</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 144</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_move_displayable'>move_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='ivar'>@currently_shown</span><span class='lbracket'>[</span><span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_old_position'>old_position</span> <span class='op'>==</span> <span class='id identifier rubyid_new_position'>new_position</span>
 
   <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_move_for_player'>move_for_player</span><span class='lparen'>(</span><span class='kw'>self</span><span class='comma'>,</span> <span class='id identifier rubyid_old_position'>old_position</span><span class='comma'>,</span> <span class='id identifier rubyid_new_position'>new_position</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
@@ -1449,14 +1451,14 @@ running, or it may be possible to supply a speed or a duration.</p>
       <pre class="lines">
 
 
-198
-199
-200
-201
-202</pre>
+174
+175
+176
+177
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 174</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_pan_to_coordinates'>pan_to_coordinates</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_loc'>loc</span> <span class='op'>=</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_location_displayable'>location_displayable</span>
@@ -1559,16 +1561,16 @@ running, or it may be possible to supply a speed or a duration.</p>
       <pre class="lines">
 
 
-183
-184
-185
-186
-187
-188
-189</pre>
+159
+160
+161
+162
+163
+164
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 183</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/player.rb', line 159</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_send_instant_pan_to_pixel_offset'>send_instant_pan_to_pixel_offset</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_x'>x</span> <span class='op'>==</span> <span class='ivar'>@pan_center_x</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>==</span> <span class='ivar'>@pan_center_y</span>
@@ -1670,9 +1672,9 @@ as to lose previous visibility.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:18 2018 by
+  Generated on Mon Jun 11 16:00:06 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

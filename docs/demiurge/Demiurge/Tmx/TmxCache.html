@@ -333,12 +333,12 @@ Caching is, of course, a time-honored solution to this problem.</p>
       <pre class="lines">
 
 
+272
 273
-274
-275</pre>
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 272</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@root_dir</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:root_dir</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_pwd'>pwd</span>
@@ -412,12 +412,12 @@ Caching is, of course, a time-honored solution to this problem.</p>
       <pre class="lines">
 
 
+264
 265
-266
-267</pre>
+266</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 264</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_root_dir'>root_dir</span>
   <span class='ivar'>@root_dir</span>
@@ -477,13 +477,13 @@ structures, and to pick up new changes to those structures.</p>
       <pre class="lines">
 
 
+283
 284
 285
-286
-287</pre>
+286</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 284</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 283</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_clear_cache'>clear_cache</span>
   <span class='ivar'>@tile_cache</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -592,6 +592,7 @@ likely to be added in future versions of Pixiurge.</p>
       <pre class="lines">
 
 
+311
 312
 313
 314
@@ -607,11 +608,10 @@ likely to be added in future versions of Pixiurge.</p>
 324
 325
 326
-327
-328</pre>
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 312</span>
+      <pre class="code"><span class="info file"># File 'lib/demiurge/tmx.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tmx_entry'>tmx_entry</span><span class='lparen'>(</span><span class='id identifier rubyid_layout_type'>layout_type</span><span class='comma'>,</span> <span class='id identifier rubyid_layout_filename'>layout_filename</span><span class='rparen'>)</span>
   <span class='ivar'>@tile_cache</span> <span class='op'>||=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -640,9 +640,9 @@ likely to be added in future versions of Pixiurge.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:21 2018 by
+  Generated on Mon Jun 11 16:00:09 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

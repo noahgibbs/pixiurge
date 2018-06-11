@@ -506,13 +506,21 @@ and down when the body jumps.)</p>
 32
 33
 34
-35</pre>
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/pixiurge/displayable/container.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_messages_to_show_player'>messages_to_show_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_show_contents_msgs'>show_contents_msgs</span> <span class='op'>=</span> <span class='ivar'>@contents</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_messages_to_show_player'>messages_to_show_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_show_contents_msgs'>show_contents_msgs</span> <span class='op'>=</span> <span class='ivar'>@contents</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_d'>d</span><span class='op'>|</span>
+    <span class='id identifier rubyid_msgs'>msgs</span> <span class='op'>=</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_messages_to_show_player'>messages_to_show_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_msgs'>msgs</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_d'>d</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_msgs'>msgs</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_messages'>messages</span> <span class='op'>=</span> <span class='kw'>super</span>
   <span class='id identifier rubyid_messages'>messages</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>contents</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_show_contents_msgs'>show_contents_msgs</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -528,9 +536,9 @@ and down when the body jumps.)</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:19 2018 by
+  Generated on Mon Jun 11 16:00:07 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

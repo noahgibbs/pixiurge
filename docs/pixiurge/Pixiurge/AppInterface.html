@@ -157,7 +157,7 @@ are high-level handlers you can implement:</p>
 <ul>
 <li><span class='object_link'><a href="#on_player_login-instance_method" title="Pixiurge::AppInterface#on_player_login (method)">#on_player_login</a></span> - a new player has logged in</li>
 <li><span class='object_link'><a href="#on_player_logout-instance_method" title="Pixiurge::AppInterface#on_player_logout (method)">#on_player_logout</a></span> - a player has logged out</li>
-<li><span class='object_link'><a href="#on_player_message-instance_method" title="Pixiurge::AppInterface#on_player_message (method)">#on_player_message</a></span> - a message has been received from a logged-in player via their browser</li>
+<li><span class='object_link'><a href="#on_player_action-instance_method" title="Pixiurge::AppInterface#on_player_action (method)">#on_player_action</a></span> - an action message has been received from a logged-in player via their browser</li>
 <li><span class='object_link'><a href="#on_player_reconnect-instance_method" title="Pixiurge::AppInterface#on_player_reconnect (method)">#on_player_reconnect</a></span> - a player has re-logged in, often from a new browser session</li>
 </ul>
 
@@ -401,6 +401,29 @@ or reason. For more detail on the Websocket object, see
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#on_player_action-instance_method" title="#on_player_action (instance method)">#<strong>on_player_action</strong>(username, action_name, *args)  &#x21d2; void </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>This event means a player has sent a message from their browser to your application.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#on_player_create_body-instance_method" title="#on_player_create_body (instance method)">#<strong>on_player_create_body</strong>(username)  &#x21d2; void </a>
     
 
@@ -462,29 +485,6 @@ or reason. For more detail on the Websocket object, see
 
   
     <span class="summary_desc"><div class='inline'><p>This event means a player has logged out of your application.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#on_player_message-instance_method" title="#on_player_message (instance method)">#<strong>on_player_message</strong>(username, message_type, *args)  &#x21d2; void </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'><p>This event means a player has sent a message from their browser to your application.</p>
 </div></span>
   
 </li>
@@ -1193,6 +1193,117 @@ later associate this connection with an account username.</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="on_player_action-instance_method">
+  
+    #<strong>on_player_action</strong>(username, action_name, *args)  &#x21d2; <tt>void</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has sent a message from their browser to your application.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>username</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The player&#39;s registered username</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>message_type</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The type of the message</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>args</span>
+      
+      
+        <span class='type'>(<tt>Array</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Arguments sent along with this message</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
+    
+  </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+206
+207
+208</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 206</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_on_player_action'>on_player_action</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_action_name'>action_name</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="on_player_create_body-instance_method">
   
     #<strong>on_player_create_body</strong>(username)  &#x21d2; <tt>void</tt> 
@@ -1442,117 +1553,6 @@ they have one.</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="on_player_message-instance_method">
-  
-    #<strong>on_player_message</strong>(username, message_type, *args)  &#x21d2; <tt>void</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note returns_void">This method returns an undefined value.</p><p>This event means a player has sent a message from their browser to your application.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>username</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The player&#39;s registered username</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>message_type</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>The type of the message</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>args</span>
-      
-      
-        <span class='type'>(<tt>Array</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Arguments sent along with this message</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-
-  <p class="tag_title">See Also:</p>
-  <ul class="see">
-    
-      <li><span class='object_link'><a href="AuthenticatedApp.html#websocket_for_username-instance_method" title="Pixiurge::AuthenticatedApp#websocket_for_username (method)">Pixiurge::AuthenticatedApp#websocket_for_username</a></span></li>
-    
-  </ul>
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-206
-207
-208</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/app.rb', line 206</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_on_player_message'>on_player_message</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_message_type'>message_type</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Do not use AppInterface directly!</span><span class='tstring_end'>&quot;</span></span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
   <h3 class="signature " id="on_player_reconnect-instance_method">
   
     #<strong>on_player_reconnect</strong>(username)  &#x21d2; <tt>void</tt> 
@@ -1641,9 +1641,9 @@ wish.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jan 16 12:25:02 2018 by
+  Generated on Mon Jun 11 16:00:06 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

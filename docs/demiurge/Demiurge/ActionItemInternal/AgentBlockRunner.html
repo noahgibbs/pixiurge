@@ -465,7 +465,7 @@ walking animation or anything. Just put it where it needs to be.</p>
   <span class='comment'># TODO: We don&#39;t have a great way to do this for non-agent entities. How does &quot;accomodate&quot; work for non-agents?
 </span>  <span class='comment'># This may be app-specific.
 </span>
-  <span class='id identifier rubyid_loc_name'>loc_name</span><span class='comma'>,</span> <span class='id identifier rubyid_next_x'>next_x</span><span class='comma'>,</span> <span class='id identifier rubyid_next_y'>next_y</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../TiledLocation.html" title="Demiurge::TiledLocation (class)">TiledLocation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_position_to_loc_coords'><span class='object_link'><a href="../TiledLocation.html#position_to_loc_coords-class_method" title="Demiurge::TiledLocation.position_to_loc_coords (method)">position_to_loc_coords</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_loc_name'>loc_name</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../TiledLocation.html" title="Demiurge::TiledLocation (class)">TiledLocation</a></span></span><span class='period'>.</span><span class='id identifier rubyid_position_to_loc_coords'><span class='object_link'><a href="../TiledLocation.html#position_to_loc_coords-class_method" title="Demiurge::TiledLocation.position_to_loc_coords (method)">position_to_loc_coords</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_location'>location</span> <span class='op'>=</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_engine'>engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_location'>location</span>
     <span class='id identifier rubyid_cancel_intention_if_present'>cancel_intention_if_present</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Location </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> doesn&#39;t exist.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>position</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_position'>position</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>mover</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='ivar'>@item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -599,9 +599,9 @@ tick.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:22 2018 by
+  Generated on Mon Jun 11 16:00:10 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

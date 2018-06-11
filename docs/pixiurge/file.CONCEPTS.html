@@ -176,6 +176,37 @@ choices and wait for the results. It&#39;s meant for a slower-paced game,
 more like Stardew Valley or Dwarf Fortress, where the user&#39;s exact,
 instant actions aren&#39;t make-or-break.</p>
 
+<h3>Interesting Subtleties of Timing</h3>
+
+<p>Ordinarily, the engine simulates everything and then notifications are
+generated. At the end of a timestep the notifications are dispatched
+all at once -- subscribers can&#39;t respond mid-timestep. If you want
+actions that affect something <em>during</em> the timestep, you&#39;ll want to
+look up how Intentions and Offers work in Demiurge. Notifications are
+meant as an after-the-fact description of what has already happened.</p>
+
+<p>That means that when a notification is dispatched, other results may
+have already occurred as well. The notification usually contains
+enough information for a before-and-after description of what happened
+in that fraction of that timestep, but keep in mind that the &quot;after&quot;
+may not reflect the current state of the object - there may be another
+notification pending that says something <em>else</em> that has already
+happened to that same object, changing the state.</p>
+
+<p>This also causes some subtleties with actions that are, by their
+nature, not driven by Demiurge. Player messages and logins aren&#39;t
+synchronized with the Demiurge timestep, for instance. As a result, a
+lot of the &quot;Player&quot; object logic is meant to deal with that
+difference. When a player message comes in, a Demiurge action gets
+queued, waiting for the next timestep. When a new login comes in and a
+body gets created, you don&#39;t really want to show messages of the
+arrival and creation to the player, even though the notifications
+haven&#39;t gone out yet. You also don&#39;t want to dispatch all pending
+notifications - what if a timestep is still going on? Instead, we
+queue a &quot;login&quot; notification for that player, and until we see it, we
+don&#39;t show the player what happened prior to their login, even if the
+notifications were still queued up and waiting when they arrived.</p>
+
 <h2>Pixiurge Conventions</h2>
 
 <p>Demiurge leaves many things to the user&#39;s preferences. It tries to be
@@ -325,8 +356,108 @@ window.</p>
 
 <p>In a software sense, a Displayable subclass knows how to display or
 hide itself using messages over Websockets. A Player knows what
-objects are currently displayed, but must ask a Displayable to display
-itself to get the specific messages.</p>
+objects are currently displayed. But if that Player wants to know the
+specific messages required to display that Displayable, it must ask
+the Displayable to display itself.</p>
+
+<h2>Kinds of Information</h2>
+
+<p>What information is sent where? That&#39;s a complicated question, and
+depends on a lot of interesting issues:</p>
+
+<ul>
+<li>Cheating: front-end code is <em>never</em> secure from interference by humans</li>
+<li>Timing: information staying in the client or server is much faster than crossing between them</li>
+<li>Persistence: anything the server doesn&#39;t know about, won&#39;t be restored</li>
+<li>Responsiveness: anything not on the client can&#39;t change or respond without a round-trip to the server</li>
+<li>Synchronization: for multiple players to see the same thing, it must go through the server</li>
+<li>Lag: if you have to hear from the server for every action, you can&#39;t display anything during network lag</li>
+<li>Complexity: the more places the information is needed, the more complicated it is to get it there and update it</li>
+</ul>
+
+<p>What kinds of information are in Pixiurge? Which are the easiest or cheapest?</p>
+
+<h3>Client-Only Information</h3>
+
+<p>Some information is transient. For instance, if you have a little frog
+animation in a swamp tile, you probably don&#39;t need to send anything
+about it to the server. There&#39;s no reason every player has to see the
+frog at the same time if it&#39;s not part of a puzzle or response.</p>
+
+<p>The exact current frame of an animation probably doesn&#39;t need to be
+sent to the server.</p>
+
+<p>Sometimes other decorative choices are similar - if you&#39;re showing a
+fountain of particles, the server may know the even that caused
+them. But it probably won&#39;t know the randomized color and position of
+every particle. That&#39;s generally for the best.</p>
+
+<p>If you have a specific window or display up, the server may not need
+to know that. Optional hitpoint display in the player&#39;s HUD? The
+server may not need to know whether it&#39;s up, and may not care. The
+hitpoints will want to be synchronized with the server, but the
+interface settings for displaying them don&#39;t have to be.</p>
+
+<p>Remember that client-only information can&#39;t be trusted. Players can
+open a JavaScript console and see or change any code or data you send
+them. So try to keep client-only information to UI elements and
+decorative data.</p>
+
+<h3>Server-Only Information</h3>
+
+<p>Some information can be kept entirely on the server. The client may
+see a result of that information (or may not.) But the information
+itself doesn&#39;t need to be sent.</p>
+
+<p>For instance, the server may store the exact creation time of a
+player, along with their logins and logouts. It may send text later
+saying something like &quot;it&#39;s your character&#39;s birthday!&quot; or &quot;91 hours
+played.&quot; But the specific creation time and login/logout times are
+probably only on the server. Client actions were related to creating
+that information, but it wasn&#39;t directly sent by the client.</p>
+
+<h3>Events and Messages</h3>
+
+<p>Events and messages frequently cross back and forth between the client
+and server. Those events and messages may carry information back and
+forth. In fact, they&#39;re the primary way of doing so.</p>
+
+<p>Information may be carried by events and messages from the client to
+the server and vice-versa. Not only the information that is directly
+sent, but things like the time that a message arrives may be used.</p>
+
+<p>For instance: a client message may say that an account was created and
+exactly when... But that date might only be accepted by the server if
+the &quot;created at&quot; date is within a few minuts of the current time, to
+avoid problems with cheating or wrong time zones. You wouldn&#39;t want
+somebody to set their local computer time to 1990 and get 20+ years of
+playtime bonuses, right?</p>
+
+<p>Just because a message <em>carries</em> information, doesn&#39;t mean the
+receiver of the information must <em>trust</em> it. But events and messages
+are usually the only source of information.</p>
+
+<h3>Synchronized Information</h3>
+
+<p>Information that is cooperatively synchronized between the client and
+server is the slowest, most complicated and most useful kind of
+information. That includes things like the player&#39;s current position
+and statistics. It also includes all of a player&#39;s actions and
+(indirectly) NPC actions which are affected by player state.</p>
+
+<p>Since the client can&#39;t ever really be trusted, this kind of
+information needs a lot of careful thinking-through and (often
+complicated and slow) checking.  It&#39;s important to filter information
+the server sends to the client so the client can&#39;t know &quot;impossible&quot;
+things. It&#39;s important to filter the information the client sends to
+the server to make sure it&#39;s working right. And it&#39;s important to send
+as little as possible in both directions to save bandwidth and
+CPU. Yet all this filtering adds complexity, and the simplest thing is
+to send nearly everything and let both ends sort it out.</p>
+
+<p>As a result, this is usually a compromise of some kind. Sychronized
+information might be simple and not well-secured, or complicated and
+effective but possibly bug-prone.</p>
 
 <h2>The Front End</h2>
 
@@ -335,11 +466,43 @@ primitives. It knows how to display a JSON TMX tiled area, for
 instance, and to show hovering text, and humanoid figures with
 equipment.</p>
 
-<h3>Pixiurge Websocket Protocol</h3>
+<h3>Front End Signals</h3>
 
-<p>The Pixiurge Websocket Protocol is simple and designed for easy
-testing and reading by humans. That&#39;s bad if you need high
-performance, but good if you want to put together games easily.</p>
+<p>Pixiurge&#39;s front end, like Pixiurge in general, has a lot of kinds of
+messages and signals. The front end is fastest when it doesn&#39;t wait
+for the server, and so there are front-end-specific signals, called
+DisplaySignals, that get passed around. They don&#39;t normally go to the
+server at all, though you could subscribe to one and resend it if you
+wanted.</p>
+
+<p>If you know PIXI.js, you know that PIXI already sends events from its
+various displayable objects. Pixiurge Front End Signals are very
+similar, and some of them are just PIXI signals, resent by Pixiurge
+Displayables.</p>
+
+<p>The primary reason for Front End Signals is if you want something to
+be pretty and complicated, but not to involve the server. Idle
+animations? Front End Signals. Cute little sounds for atmosphere with
+no gameplay effects? Front End Signals. Front End Signals are a great
+way to chain one animation into another, such as various standing
+around and idle animations with some randomness. They&#39;re also a great
+way to chain animations from one Displayable into another, like if a
+crow makes a loud kaw and your player sprite jumps a bit.</p>
+
+<p>An animation name acts as a signal, except that sending that signal
+(on an object with that animation) will play the animation instead of
+generating a normal signal.</p>
+
+<p>There&#39;s a simple JSON language for tying Front End Signals together
+into animations. It&#39;s easy to need something more complicated than the
+JSON language allows. If you do, then you&#39;ll want to write JavaScript
+handlers that subscribe to one or more signals and/or send one or more
+signals in order to perform the more complicated logic. The JSON
+language for the front end isn&#39;t complicated enough to replace
+JavaScript, and it&#39;s really not designed to be. In cases where you&#39;d
+have really trivial JavaScript you can use the JSON language
+instead. In cases where you&#39;d have interesting JavaScript, you should
+still write JavaScript.</p>
 
 <h2>Pixiurge Performance Limits</h2>
 
@@ -384,14 +547,20 @@ don&#39;t much care about building AAA-style high-performance &quot;whoah, the
 graphics&quot; games, but I care a <em>lot</em> about reaching people and talking
 to them. I hope you do too.</p>
 
-<h3>Network Round Trips</h3>
+<h3>Pixiurge Websocket Protocol - Decisions and Limitations</h3>
 
-<p>One of the biggest limits on Pixiurge performance is this: for most
-actions, you need a network round trip to the server. Worse, you need
-a <em>Websocket</em> round trip to the server, which means TCP/IP and
-significant per-message overhead.</p>
+<p>The Pixiurge Websocket Protocol is simple and designed for easy
+testing and reading by humans. That&#39;s bad if you need high
+performance, but good if you want to put together games easily.</p>
 
-<p>Can&#39;t we fix that?</p>
+<p>Probably the biggest limits are that it&#39;s client-server only, which
+means no peer-to-peer, and that it&#39;s WebSocket-based, meaning only
+in-order reliable delivery. A low-latency game mostly can&#39;t rely on
+TCP/IP, it needs UDP/IP, and it often needs to be peer-to-peer.</p>
+
+<p>WebSockets also have nontrivial per-message overhead.</p>
+
+<p>Can&#39;t we fix all that?</p>
 
 <p>Well, maybe. It&#39;s possible for you to write client-side Javascript
 that does things without waiting for the server. But then you&#39;re
@@ -409,10 +578,10 @@ browsers. Worse, it requires anybody setting it up to run
 <a href="https://en.wikipedia.org/wiki/Traversal_Using_Relays_around_NAT">TURN</a>
 servers, which are <em>not</em> trivial to set up.</p>
 
-<p>There are ways around all of this... <em>If</em> you make every player
-install a browser plugin, which is how engines like Unity handle
-it. It would be wonderful if there were
-<a href="https://en.wikipedia.org/wiki/Netcode">some kind of sane in-browser UDP-style protocol</a>
+<p>There are ways around all of this... <em>If</em> you make most players, or
+every player, install a browser plugin. That&#39;s how engines like Unity
+handle it. It would be wonderful if there were <a href="https://en.wikipedia.org/wiki/Netcode">some kind of sane
+in-browser UDP-style protocol</a>
 to handle this. But currently there&#39;s no such standard on the
 horizon. You have to install a plugin.</p>
 
@@ -446,9 +615,9 @@ instead.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:35:47 2018 by
+  Generated on Mon Jun 11 16:00:05 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

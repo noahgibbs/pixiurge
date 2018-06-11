@@ -70,77 +70,76 @@ Demiurge and displays the result.</p>
 <p>Pixiurge&#39;s tech stack includes:</p>
 
 <ul>
-<li>Pixi.JS</li>
+<li>Pixi.JS (though you can build other display technology if you like)</li>
 <li>Demiurge</li>
 <li>Websockets using Faye and EventMachine</li>
-<li>CoffeeScript</li>
+<li>WebPacker for CoffeeScript and other front-end tooling</li>
 <li>The Tiled Sprite Editor and its format (TMX/TSX format, TMX JSON format)</li>
 </ul>
 
 <p>Pixiurge is intended for creating simulation-heavy browser games that
 don&#39;t need fast response -- it&#39;s for interactive novels and simulated
-gardens, not &quot;twitch&quot; games.</p>
+gardens, not multiplayer &quot;twitch&quot; games.</p>
 
 <h2>Getting Started</h2>
 
 <p>Whether you&#39;re getting up to speed on an existing Pixiurge project or
-starting a new one, documentation is important. See
-<a href="https://codefolio.github.io/pixiurge">the documentation page</a> for
-various good starting points and
-<a href="https://codefolio.github.io/pixiurge/pixiurge">the API documentation</a>.</p>
+starting a new one, documentation is important. See <a href="https://noahgibbs.github.io/pixiurge">the documentation
+page</a> for various good starting
+points and <a href="https://noahgibbs.github.io/pixiurge/pixiurge">the API
+documentation</a> for a
+more in-depth treatment.</p>
 
 <h2>Installation</h2>
 
 <p>For creating a new Pixiurge-based project, see &quot;Usage&quot; below.</p>
 
-<p>To add Pixiurge to an existing app directory, add this line to your
-application&#39;s Gemfile:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pixiurge</span><span class='tstring_end'>&#39;</span></span>
-</code></pre>
-
-<p>And then execute:</p>
-
-<pre class="code ruby"><code class="ruby">$ bundle
-</code></pre>
-
-<p>Or install it yourself as:</p>
+<p>To install Pixiurge outside of a Gemfile or project:</p>
 
 <pre class="code ruby"><code class="ruby">$ gem install pixiurge
 </code></pre>
 
-<h2>Development</h2>
+<p>If Pixiurge is already part of a project&#39;s Gemfile, just run &quot;bundle&quot;
+to install all gems for that project, including Pixiurge.</p>
+
+<h2>Usage</h2>
+
+<p>Ordinarily you&#39;ll use Pixiurge by creating a new game or similar
+gamelike application that uses the Pixiurge gem. The recommended way
+to do that is with the &quot;pixiurge&quot; command:</p>
+
+<pre class="code ruby"><code class="ruby">$ pixiurge my_project_name
+</code></pre>
+
+<p>This will create a new project directory with important files and
+directories set up for you. You&#39;ll want to run &quot;bundle&quot; to install the
+appropriate gems, and you&#39;ll probably want to create a new repository
+in your source control system of choice. If you use Git:</p>
+
+<pre class="code ruby"><code class="ruby">$ git init
+$ git add .
+$ git commit -m &quot;Initial commit&quot;
+</code></pre>
+
+<p>Pixiurge projects start with a .gitignore file. Its contents may be
+useful if you want to exclude appropriate files in a different source
+control system.</p>
+
+<p>You can find documentation on writing a new Pixiurge game in the
+Pixiurge documentation, at <a href="https://noahgibbs.github.io/pixiurge/pixiurge/file.WRITING_A_GAME.html">the WRITING_A_GAME
+page</a>.</p>
+
+<h3>Security</h3>
 
 <p>To develop a game on Pixiurge, you&#39;ll need TLS (secure sockets.) Any
 new Pixiurge game comes with a &quot;start_server&quot; script which will create
 a local self-signed certificate so you&#39;re secure from the get-go. But
 you&#39;ll need to get your web browser to let you use a self-signed
-certificate with a localhost URL.</p>
+certificate with a localhost URL (or use a URL redirect - if you&#39;re
+used to SSL for development on localhost, this is a familiar problem.)</p>
 
 <p>I recommend Googling for &quot;Google Chrome self-signed certificate&quot; and
 doing what it says.</p>
-
-<h2>Usage</h2>
-
-<p>Ordinarily you&#39;ll use Pixiurge by creating a new game or similar
-gamelike application that uses the Pixiurge gem. Add &quot;pixiurge&quot; to
-your gemspec or Gemfile to include Pixiurge. Make sure to run
-&quot;bundle&quot;.</p>
-
-<p>This gem includes a sample config.ru file, showing how to serve the
-appropriate HTML and JavaScript content for your browser-based game
-client and to connect your evented game server via websockets.</p>
-
-<p>Your software will run via an app server, either Thin or Puma.</p>
-
-<pre class="code ruby"><code class="ruby">$ thin start -R config.ru -p 3001
-</code></pre>
-
-<p>For most applications you&#39;ll want to run with SSL configured -
-Pixiurge does <em>not</em> handle over-the-wire security for you, it assumes
-that SSL/TLS will take care of that problem. See example/start_server
-for an example of how to make sure SSL is set up when running your
-server locally.</p>
 
 <h2>Credits</h2>
 
@@ -194,9 +193,9 @@ License</a>.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:18 2018 by
+  Generated on Mon Jun 11 16:00:05 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

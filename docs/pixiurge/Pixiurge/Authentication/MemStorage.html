@@ -344,12 +344,12 @@ reboots. This is intended for testing, not production.</p>
       <pre class="lines">
 
 
-374
-375
-376</pre>
+394
+395
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 374</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 394</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@account_state</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -406,12 +406,12 @@ reboots. This is intended for testing, not production.</p>
       <pre class="lines">
 
 
-369
-370
-371</pre>
+389
+390
+391</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_account_state'>account_state</span>
   <span class='ivar'>@account_state</span>
@@ -504,12 +504,12 @@ reboots. This is intended for testing, not production.</p>
       <pre class="lines">
 
 
-395
-396
-397</pre>
+415
+416
+417</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 395</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 415</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_data_for'>data_for</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
   <span class='ivar'>@account_state</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span>
@@ -595,12 +595,12 @@ allowed to contain any JSON-serializable Hash in general.</p>
       <pre class="lines">
 
 
-386
-387
-388</pre>
+406
+407
+408</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 406</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register'>register</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_account_data'>account_data</span><span class='rparen'>)</span>
   <span class='ivar'>@account_state</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_account_data'>account_data</span>
@@ -686,12 +686,12 @@ exist.</p>
       <pre class="lines">
 
 
-407
-408
-409</pre>
+427
+428
+429</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 407</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 427</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_data_for'>set_data_for</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_new_data'>new_data</span><span class='rparen'>)</span>
   <span class='ivar'>@account_state</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_new_data'>new_data</span>
@@ -760,15 +760,15 @@ exist.</p>
       <pre class="lines">
 
 
-416
-417
-418
-419
-420
-421</pre>
+436
+437
+438
+439
+440
+441</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 416</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/authentication.rb', line 436</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unregister'>unregister</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='ivar'>@account_state</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span>
@@ -786,9 +786,9 @@ exist.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:18 2018 by
+  Generated on Mon Jun 11 16:00:06 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

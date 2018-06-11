@@ -195,6 +195,54 @@ objects.</p>
       </dt>
       <dd><pre class="code"><span class='const'><span class='object_link'><a href="#SIMULATION_OPTIONS-constant" title="Pixiurge::EngineConnector::SIMULATION_OPTIONS (constant)">SIMULATION_OPTIONS</a></span></span> <span class='op'>+</span> <span class='lbracket'>[</span> <span class='symbol'>:default_width</span><span class='comma'>,</span> <span class='symbol'>:default_height</span><span class='comma'>,</span> <span class='symbol'>:no_start_simulation</span> <span class='rbracket'>]</span></pre></dd>
     
+      <dt id="IGNORED_NOTIFICATION_TYPES-constant" class="">IGNORED_NOTIFICATION_TYPES =
+        <div class="docstring">
+  <div class="discussion">
+    <p>This is the internal constant to exit early from the notification
+routine if the notification is of any of these types. Anything
+here requires no direct response from the EngineConnector, for a
+variety of different reasons.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+      </dt>
+      <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='comment'># Tick finished? Great, no change.
+</span>  <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>TickFinished</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+
+  <span class='comment'># MoveFrom? We handle the corresponding MoveTo instead.
+</span>  <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>MoveFrom</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+
+  <span class='comment'># LoadStateStart/Verify or LoadWorldStart notifications? We&#39;ll make changes when they complete
+</span>  <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadStateStart</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadWorldStart</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadWorldVerify</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+
+  <span class='comment'># Player logout or reconnect? Already handled. This EngineConnector was the object that sent this notification anyway.
+</span>  <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Pixiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#PlayerLogout-constant" title="Pixiurge::Notifications::PlayerLogout (constant)">PlayerLogout</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Pixiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#PlayerReconnect-constant" title="Pixiurge::Notifications::PlayerReconnect (constant)">PlayerReconnect</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+<span class='rbrace'>}</span></pre></dd>
+    
   </dl>
 
 
@@ -287,7 +335,8 @@ objects.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>This must be called on the Demiurge timeline, not immediately.</p>
+</div></span>
   
 </li>
 
@@ -581,7 +630,8 @@ objects.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>This is going to wind up as a complicated interaction at some point between the player and the zone/location.</p>
+</div></span>
   
 </li>
 
@@ -611,29 +661,6 @@ objects.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#start_engine_periodic_timer-instance_method" title="#start_engine_periodic_timer (instance method)">#<strong>start_engine_periodic_timer</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  <span class="private note title">private</span>
-
-  
-    <span class="summary_desc"><div class='inline'><p>It&#39;s hard to tell where to call this.</p>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#start_simulation-instance_method" title="#start_simulation (instance method)">#<strong>start_simulation</strong>(options = {})  &#x21d2; void </a>
     
 
@@ -649,6 +676,29 @@ objects.</p>
 
   
     <span class="summary_desc"><div class='inline'><p>Make sure the simulation is running.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#thin_eventmachine_loop-instance_method" title="#thin_eventmachine_loop (instance method)">#<strong>thin_eventmachine_loop</strong>(rack_app, port, ssl_key_path, ssl_cert_path)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  <span class="private note title">private</span>
+
+  
+    <span class="summary_desc"><div class='inline'><p>Start the EventMachine loop to run Thin, the periodic timer and so on.</p>
 </div></span>
   
 </li>
@@ -1074,7 +1124,8 @@ simulation-related options to create the simulation engine.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>This must be called on the Demiurge timeline, not immediately. So we wait for the PlayerLogin notification.</p>
+
 
   </div>
 </div>
@@ -1102,26 +1153,26 @@ simulation-related options to create the simulation engine.</p>
       <pre class="lines">
 
 
-422
-423
-424
-425
-426
-427
-428
-429
-430
-431
-432
-433
 434
 435
 436
 437
-438</pre>
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 422</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 434</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_player'>add_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
   <span class='ivar'>@players</span><span class='lbracket'>[</span><span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_player'>player</span>
@@ -1225,12 +1276,12 @@ presence.</p>
       <pre class="lines">
 
 
-259
-260
-261</pre>
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 259</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_displayable_by_name'>displayable_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rparen'>)</span>
   <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_item_name'>item_name</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span>
@@ -1279,16 +1330,6 @@ presence.</p>
       <pre class="lines">
 
 
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
 295
 296
 297
@@ -1303,10 +1344,24 @@ presence.</p>
 306
 307
 308
-309</pre>
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 285</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 295</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_displayable_for_item'>displayable_for_item</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>InertStateItem</span><span class='rparen'>)</span> <span class='comment'># Nothing needed for InertStateItems
@@ -1315,7 +1370,7 @@ presence.</p>
 </span>  <span class='comment'># block in the World Files. If so, use it.
 </span>  <span class='id identifier rubyid_disp_action'>disp_action</span> <span class='op'>=</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_get_action'>get_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$display</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_disp_action'>disp_action</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_disp_action'>disp_action</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>block</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='comment'># This special action is used to pass the Display info through to a Display library.
-</span>    <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display/DisplayBuilder.html" title="Pixiurge::Display::DisplayBuilder (class)">DisplayBuilder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Display/DisplayBuilder.html#initialize-instance_method" title="Pixiurge::Display::DisplayBuilder#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='kw'>self</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_builder'>builder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display/DisplayBuilder.html" title="Pixiurge::Display::DisplayBuilder (class)">DisplayBuilder</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Display/DisplayBuilder.html#initialize-instance_method" title="Pixiurge::Display::DisplayBuilder#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='kw'>self</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='lparen'>(</span><span class='id identifier rubyid_disp_action'>disp_action</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>block</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_displayables'>displayables</span> <span class='op'>=</span> <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_built_objects'>built_objects</span>
     <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Only display one object per agent right now for item </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_displayables'>displayables</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
     <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No display objects declared for item </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_displayables'>displayables</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>==</span> <span class='int'>0</span>
@@ -1328,6 +1383,10 @@ presence.</p>
     <span class='comment'># No Display information? Default to generic guy in a hat.
 </span>    <span class='id identifier rubyid_layers'>layers</span> <span class='op'>=</span> <span class='lbracket'>[</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>male</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kettle_hat_male</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>robe_male</span><span class='tstring_end'>&quot;</span></span> <span class='rbracket'>]</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Nope! Haven&#39;t implemented a default displayable for agents yet!</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_zone?'>zone?</span>
+    <span class='kw'>return</span> <span class='op'>::</span><span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display/Invisible.html" title="Pixiurge::Display::Invisible (class)">Invisible</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Display/Invisible.html#initialize-instance_method" title="Pixiurge::Display::Invisible#initialize (method)">new</a></span></span> <span class='label'>name:</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='kw'>self</span>
   <span class='kw'>end</span>
 
   <span class='comment'># If we got here, we have no idea how to display this.
@@ -1377,17 +1436,17 @@ presence.</p>
       <pre class="lines">
 
 
-369
-370
-371
-372
-373
-374
-375
-376</pre>
+381
+382
+383
+384
+385
+386
+387
+388</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 369</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 381</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_displayable_for_location_name'>each_displayable_for_location_name</span><span class='lparen'>(</span><span class='id identifier rubyid_location_name'>location_name</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@displayables</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_disp_name'>disp_name</span><span class='comma'>,</span> <span class='id identifier rubyid_disp_hash'>disp_hash</span><span class='op'>|</span>
@@ -1441,17 +1500,17 @@ presence.</p>
       <pre class="lines">
 
 
-360
-361
-362
-363
-364
-365
-366
-367</pre>
+372
+373
+374
+375
+376
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 372</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each_player_for_location_name'>each_player_for_location_name</span><span class='lparen'>(</span><span class='id identifier rubyid_location_name'>location_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:except</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='ivar'>@players</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_player_name'>player_name</span><span class='comma'>,</span> <span class='id identifier rubyid_player'>player</span><span class='op'>|</span>
@@ -1505,21 +1564,21 @@ presence.</p>
       <pre class="lines">
 
 
-386
-387
-388
-389
-390
-391
-392
-393
-394
-395
-396
-397</pre>
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 386</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_hide_displayable_from_players'>hide_displayable_from_players</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='comma'>,</span> <span class='id identifier rubyid_position'>position</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_position'>position</span> <span class='op'>||=</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
@@ -1578,39 +1637,6 @@ presence.</p>
       <pre class="lines">
 
 
-446
-447
-448
-449
-450
-451
-452
-453
-454
-455
-456
-457
-458
-459
-460
-461
-462
-463
-464
-465
-466
-467
-468
-469
-470
-471
-472
-473
-474
-475
-476
-477
-478
 479
 480
 481
@@ -1646,18 +1672,70 @@ presence.</p>
 511
 512
 513
-514</pre>
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 446</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 479</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_notified'>notified</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='comment'># First, ignore a bunch of notifications we don&#39;t care about
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>TickFinished</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>MoveFrom</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadStateStart</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadWorldVerify</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadWorldStart</span>
+</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="#IGNORED_NOTIFICATION_TYPES-constant" title="Pixiurge::EngineConnector::IGNORED_NOTIFICATION_TYPES (constant)">IGNORED_NOTIFICATION_TYPES</a></span></span><span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
 
   <span class='comment'># We subscribe to all events in all locations, and the move-from
 </span>  <span class='comment'># and move-to have the same fields except location, zone and
@@ -1669,6 +1747,44 @@ presence.</p>
   <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadStateEnd</span>
     <span class='comment'># What to do here? Displayables don&#39;t care about this any more. Does anything in Pixiurge?
 </span>    <span class='kw'>return</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># On Login, we let the Player object know it can start showing all
+</span>  <span class='comment'># update messages, not just the special early ones. We&#39;ve caught
+</span>  <span class='comment'># up to the point in the notification stream where this player
+</span>  <span class='comment'># logged in, so after this it&#39;s all actually new.
+</span>  <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html" title="Pixiurge::Notifications (module)">Notifications</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Notifications.html#PlayerLogin-constant" title="Pixiurge::Notifications::PlayerLogin (constant)">PlayerLogin</a></span></span>
+    <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='comment'># We touch (and/or create) the body Demiurge item on the assumption that nobody else is using it yet...
+</span>    <span class='id identifier rubyid_demi_item'>demi_item</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_demi_item'>demi_item</span>
+      <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>There is already a body with reserved name </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_username'>username</span><span class='embexpr_end'>}</span><span class='tstring_content'> not marked for this player!</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$player_body</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='id identifier rubyid_username'>username</span>
+    <span class='kw'>else</span>
+      <span class='comment'># No body yet? Send a signal to indicate that we need one.
+</span>      <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>send_event</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>player_create_body</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_demi_item'>demi_item</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
+      <span class='kw'>unless</span> <span class='id identifier rubyid_demi_item'>demi_item</span>
+        <span class='comment'># Still no body? Either there was no signal handler, or it did nothing.
+</span>        <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No player body was created in Demiurge for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_username'>username</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>! No login for you!</span><span class='tstring_end'>&quot;</span></span>
+        <span class='kw'>return</span>
+      <span class='kw'>end</span>
+      <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>$player_body</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_username'>username</span>
+      <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_run_action'>run_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>create</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_get_action'>get_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>create</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+      <span class='comment'># Now register the player&#39;s body with the EngineConnector to make sure we have a Displayable for it
+</span>      <span class='id identifier rubyid_register_engine_item'>register_engine_item</span><span class='lparen'>(</span><span class='id identifier rubyid_demi_item'>demi_item</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_displayable'>displayable</span> <span class='op'>=</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span>
+      <span class='kw'>unless</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='rparen'>)</span>
+        <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>No displayable item was created for user </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_username'>username</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;s body!</span><span class='tstring_end'>&quot;</span></span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_run_action'>run_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_demi_item'>demi_item</span><span class='period'>.</span><span class='id identifier rubyid_get_action'>get_action</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_ws'>ws</span> <span class='op'>=</span> <span class='ivar'>@app</span><span class='period'>.</span><span class='id identifier rubyid_websocket_for_username'>websocket_for_username</span> <span class='id identifier rubyid_username'>username</span>
+    <span class='id identifier rubyid_displayable'>displayable</span> <span class='op'>=</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_player'>player</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Player.html" title="Pixiurge::Player (class)">Player</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Player.html#initialize-instance_method" title="Pixiurge::Player#initialize (method)">new</a></span></span> <span class='label'>websocket:</span> <span class='id identifier rubyid_ws'>ws</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='label'>displayable:</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='comma'>,</span> <span class='label'>display_settings:</span> <span class='id identifier rubyid_display_settings'>display_settings</span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='kw'>self</span>
+
+    <span class='comment'># Add_player sets the player&#39;s backdrop manually.
+</span>    <span class='id identifier rubyid_add_player'>add_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
+    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>Notifications</span><span class='op'>::</span><span class='const'>LoadWorldEnd</span>
@@ -1686,7 +1802,9 @@ presence.</p>
     <span class='kw'>if</span> <span class='ivar'>@players</span><span class='lbracket'>[</span><span class='id identifier rubyid_acting_item'>acting_item</span><span class='rbracket'>]</span>
       <span class='comment'># This was a player action that was cancelled
 </span>      <span class='id identifier rubyid_player'>player</span> <span class='op'>=</span> <span class='ivar'>@players</span><span class='lbracket'>[</span><span class='id identifier rubyid_acting_item'>acting_item</span><span class='rbracket'>]</span>
-      <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>displayTextAnimOverStack</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_stack_name'>stack_name</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>reason</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>color</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#FFCCCC</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>20px Arial</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>duration</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='float'>3.0</span>
+      <span class='id identifier rubyid_displayable'>displayable</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Pixiurge.html" title="Pixiurge (module)">Pixiurge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display.html" title="Pixiurge::Display (module)">Display</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Display/TextEffect.html" title="Pixiurge::Display::TextEffect (class)">TextEffect</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Display/TextEffect.html#initialize-instance_method" title="Pixiurge::Display::TextEffect#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>reason</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>style:</span> <span class='lbrace'>{</span> <span class='label'>fill:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>orange</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>duration:</span> <span class='int'>3000</span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>engine_connector:</span> <span class='kw'>self</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='op'>=</span> <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span>
+      <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_show_displayable'>show_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='rparen'>)</span>
       <span class='kw'>return</span>
     <span class='kw'>end</span>
     <span class='kw'>return</span>
@@ -1696,19 +1814,6 @@ presence.</p>
     <span class='comment'># For right now we don&#39;t need any kind of confirmations. But
 </span>    <span class='comment'># when we do, this is where they come from.
 </span>    <span class='kw'>return</span>
-  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>type</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>speech</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_text'>text</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>words</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ADD WORDS TO SPEECH NOTIFICATION!</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_speaker'>speaker</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_item_by_name'>item_by_name</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>actor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_body'>body</span> <span class='op'>=</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>actor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_speaker_loc_name'>speaker_loc_name</span> <span class='op'>=</span> <span class='id identifier rubyid_speaker'>speaker</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span>
-    <span class='ivar'>@players</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_player_name'>player_name</span><span class='comma'>,</span> <span class='id identifier rubyid_player_obj'>player_obj</span><span class='op'>|</span>
-      <span class='id identifier rubyid_player_loc_name'>player_loc_name</span> <span class='op'>=</span> <span class='id identifier rubyid_player_obj'>player_obj</span><span class='period'>.</span><span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span>
-      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_player_loc_name'>player_loc_name</span> <span class='op'>==</span> <span class='id identifier rubyid_speaker_loc_name'>speaker_loc_name</span>
-      <span class='id identifier rubyid_player_obj'>player_obj</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>displayTextAnimOverStack</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_body'>body</span><span class='period'>.</span><span class='id identifier rubyid_stack_name'>stack_name</span><span class='comma'>,</span> <span class='id identifier rubyid_text'>text</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>color</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>color</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#CCCCCC</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>font</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>20px Arial</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>duration</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>duration</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='float'>5.0</span>
-    <span class='kw'>end</span>
-    <span class='kw'>return</span>
   <span class='kw'>end</span>
 
   <span class='comment'># This notification will catch new player bodies, instantiated agents and whatnot.
@@ -1764,67 +1869,67 @@ presence.</p>
       <pre class="lines">
 
 
-516
-517
-518
-519
-520
-521
-522
-523
-524
-525
-526
-527
-528
-529
-530
-531
-532
-533
-534
-535
-536
-537
-538
-539
-540
-541
-542
-543
-544
-545
-546
-547
-548
-549
-550
-551
-552
-553
-554
-555
-556
-557
-558
-559
-560
-561
-562
-563
-564
-565
-566
-567</pre>
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 516</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 572</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_notified_of_move_to'>notified_of_move_to</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_actor_do'>actor_do</span> <span class='op'>=</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>actor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_x'>x</span><span class='comma'>,</span> <span class='id identifier rubyid_y'>y</span> <span class='op'>=</span> <span class='op'>::</span><span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>TiledLocation</span><span class='period'>.</span><span class='id identifier rubyid_position_to_coords'>position_to_coords</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>new_position</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_loc_name'>loc_name</span> <span class='op'>=</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>new_location</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_loc_do'>loc_do</span> <span class='op'>=</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_loc_do'>loc_do</span> <span class='op'>=</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='symbol'>:displayable</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='kw'>nil</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_loc_do'>loc_do</span>
     <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Moving to a non-displayed location </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'>, no display object found...</span><span class='tstring_end'>&quot;</span></span>
     <span class='kw'>return</span>
@@ -1849,7 +1954,7 @@ presence.</p>
   <span class='comment'># Whether it&#39;s a player moving or something else, update all the
 </span>  <span class='comment'># players who just saw the item move, disappear or appear.
 </span>  <span class='ivar'>@players</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_player_name'>player_name</span><span class='comma'>,</span> <span class='id identifier rubyid_player'>player</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_player_name'>player_name</span> <span class='op'>==</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>actor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>  <span class='comment'># Already handled it if this player is the one moving.
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_player_name'>player_name</span> <span class='op'>==</span> <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>actor</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>      <span class='comment'># Already handled it if this player is the one moving.
 </span>    <span class='id identifier rubyid_player_loc_name'>player_loc_name</span> <span class='op'>=</span> <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_location_name'>location_name</span>
 
     <span class='comment'># First case: moving player remained in the same room - update movement for anybody *in* that room
@@ -1954,12 +2059,12 @@ Demiurge username for that player&#39;s body if there is one.</p>
       <pre class="lines">
 
 
-269
-270
-271</pre>
+279
+280
+281</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 269</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 279</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_player_by_username'>player_by_username</span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
   <span class='ivar'>@players</span><span class='lbracket'>[</span><span class='id identifier rubyid_username'>username</span><span class='rbracket'>]</span>
@@ -2042,16 +2147,16 @@ guarantees uniqueness.</p>
       <pre class="lines">
 
 
-352
-353
-354
-355
-356
-357
-358</pre>
+364
+365
+366
+367
+368
+369
+370</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 364</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register_displayable_object'>register_displayable_object</span><span class='lparen'>(</span><span class='id identifier rubyid_object'>object</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_object'>object</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='comment'># Already have this one
@@ -2104,30 +2209,28 @@ guarantees uniqueness.</p>
       <pre class="lines">
 
 
-311
-312
-313
-314
-315
-316
-317
-318
-319
-320
-321
-322
-323
-324
 325
 326
 327
 328
 329
 330
-331</pre>
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 311</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 325</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register_engine_item'>register_engine_item</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='ivar'>@displayables</span><span class='lbracket'>[</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rbracket'>]</span> <span class='comment'># Already have this one
@@ -2144,9 +2247,7 @@ guarantees uniqueness.</p>
   <span class='kw'>end</span>
 
   <span class='comment'># What if there&#39;s no Displayable for this item? That might be okay or might not.
-</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>InertStateItem</span><span class='rparen'>)</span> <span class='comment'># Nothing needed for InertStateItems
-</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_zone?'>zone?</span> <span class='comment'># No displayable info for zones, you&#39;re not supposed to see them
+</span>  <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='op'>::</span><span class='const'>Demiurge</span><span class='op'>::</span><span class='const'>InertStateItem</span><span class='rparen'>)</span> <span class='comment'># Nothing needed for InertStateItems
 </span>
   <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Don&#39;t know how to register or display this item: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
@@ -2195,12 +2296,12 @@ guarantees uniqueness.</p>
       <pre class="lines">
 
 
-441
-442
-443</pre>
+453
+454
+455</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 441</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 453</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove_player'>remove_player</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='rparen'>)</span>
   <span class='ivar'>@players</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
@@ -2221,18 +2322,11 @@ guarantees uniqueness.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'><p>Should the backdrop be marked as special somehow? Make it
-clear that it winds up under everything else?  PIXI.js doesn&#39;t
-really do Z coordinates for most things, but right now anything
-that gets &quot;lucky&quot; enough to get displayed before the backdrop
-would become permanently invisible. There might be some
-constellation of events where that could happen.</p>
-</div>
-  </div>
-
+    <p>This is going to wind up as a complicated interaction at some
+point between the player and the zone/location.  There need to be
+different areas where different levels of other-player activity
+are visible or invisible; that doesn&#39;t take things like sharding
+into account either...</p>
 
 
   </div>
@@ -2261,25 +2355,25 @@ constellation of events where that could happen.</p>
       <pre class="lines">
 
 
-405
-406
-407
-408
-409
-410
-411
-412
-413
-414
-415
 416
 417
 418
 419
-420</pre>
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 405</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 416</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_player_backdrop'>set_player_backdrop</span><span class='lparen'>(</span><span class='id identifier rubyid_player'>player</span><span class='comma'>,</span> <span class='id identifier rubyid_player_position'>player_position</span><span class='comma'>,</span> <span class='id identifier rubyid_location_do'>location_do</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_loc_name'>loc_name</span> <span class='op'>=</span> <span class='id identifier rubyid_location_do'>location_do</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span>
@@ -2341,142 +2435,22 @@ constellation of events where that could happen.</p>
       <pre class="lines">
 
 
-378
-379
-380
-381
-382
-383
-384</pre>
+390
+391
+392
+393
+394
+395
+396</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 378</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 390</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_displayable_to_players'>show_displayable_to_players</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='symbol'>:except</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span> <span class='comment'># Agents and some other items are allowed to have no position and just be instantiable
 </span>  <span class='id identifier rubyid_loc_name'>loc_name</span> <span class='op'>=</span> <span class='id identifier rubyid_displayable'>displayable</span><span class='period'>.</span><span class='id identifier rubyid_position'>position</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>#</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_each_player_for_location_name'>each_player_for_location_name</span><span class='lparen'>(</span><span class='id identifier rubyid_loc_name'>loc_name</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_player'>player</span><span class='op'>|</span>
     <span class='id identifier rubyid_player'>player</span><span class='period'>.</span><span class='id identifier rubyid_show_displayable'>show_displayable</span><span class='lparen'>(</span><span class='id identifier rubyid_displayable'>displayable</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="start_engine_periodic_timer-instance_method">
-  
-    #<strong>start_engine_periodic_timer</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    <p class="note private">
-  <strong>This method is part of a private API.</strong>
-  You should avoid using this method if possible, as it may be removed or be changed in the future.
-</p>
-<p>It&#39;s hard to tell where to call this. It appears that somebody is
-stopping the event loop if it&#39;s called too early.</p>
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>0.1.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-155
-156
-157
-158
-159
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183
-184
-185
-186
-187</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 155</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_start_engine_periodic_timer'>start_engine_periodic_timer</span>
-
-  <span class='comment'>## This is the EventMachine ensure_reactor_running idiom, as pulled from Faye::WebSocket
-</span>  <span class='comment'>#unless EventMachine.reactor_running?
-</span>  <span class='comment'>#  puts &quot;Starting EventMachine reactor thread...&quot;
-</span>  <span class='comment'>#  @reactor_thread = Thread.new { EventMachine.run; STDERR.puts &quot;SHOULD NEVER GET HERE, SOMEBODY STOPPED THE EVENT LOOP!&quot; }
-</span>  <span class='comment'>#  Thread.pass until EventMachine.reactor_running?
-</span>  <span class='comment'>#end
-</span>
-  <span class='ivar'>@engine_started</span> <span class='op'>=</span> <span class='kw'>true</span>
-  <span class='const'>EM</span><span class='period'>.</span><span class='id identifier rubyid_add_periodic_timer'>add_periodic_timer</span><span class='lparen'>(</span><span class='float'>0.001</span> <span class='op'>*</span> <span class='ivar'>@ms_per_tick</span><span class='rparen'>)</span> <span class='kw'>do</span>
-    <span class='comment'># Step game content forward by one tick
-</span>    <span class='kw'>begin</span>
-      <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_advance_one_tick'>advance_one_tick</span>
-      <span class='id identifier rubyid_counter'>counter</span> <span class='op'>+=</span> <span class='int'>1</span>
-      <span class='kw'>if</span> <span class='ivar'>@autosave_ticks</span> <span class='op'>!=</span> <span class='int'>0</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_counter'>counter</span> <span class='op'>%</span> <span class='ivar'>@autosave_ticks</span> <span class='op'>==</span> <span class='int'>0</span>
-        <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Writing periodic statefile, every </span><span class='embexpr_beg'>#{</span><span class='ivar'>@autosave_ticks</span><span class='period'>.</span><span class='id identifier rubyid_inspect'>inspect</span><span class='embexpr_end'>}</span><span class='tstring_content'> ticks...</span><span class='tstring_end'>&quot;</span></span>
-        <span class='id identifier rubyid_ss'>ss</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_structured_state'>structured_state</span>
-        <span class='id identifier rubyid_statefile'>statefile</span> <span class='op'>=</span> <span class='ivar'>@autosave_path</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%TICKS%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_state'>state</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ticks</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
-        <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_state'>state</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-          <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_ss'>ss</span><span class='comma'>,</span> <span class='symbol'>:pretty</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
-        <span class='kw'>end</span>
-      <span class='kw'>end</span>
-    <span class='kw'>rescue</span>
-      <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error trace:\n</span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_content'>\n</span><span class='embexpr_beg'>#{</span><span class='gvar'>$!</span><span class='period'>.</span><span class='id identifier rubyid_backtrace'>backtrace</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-      <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Error when advancing engine state. Dumping state, skipping tick.</span><span class='tstring_end'>&quot;</span></span>
-      <span class='id identifier rubyid_ss'>ss</span> <span class='op'>=</span> <span class='ivar'>@engine</span><span class='period'>.</span><span class='id identifier rubyid_structured_state'>structured_state</span>
-      <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>state/error_statefile.json</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>w</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span>
-        <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_print'>print</span> <span class='const'>MultiJson</span><span class='period'>.</span><span class='id identifier rubyid_dump'>dump</span><span class='lparen'>(</span><span class='id identifier rubyid_ss'>ss</span><span class='comma'>,</span> <span class='symbol'>:pretty</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='rparen'>)</span>
-      <span class='kw'>end</span>
-    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -2770,14 +2744,119 @@ of ticks completed if it is part of the :autosave_path.</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="thin_eventmachine_loop-instance_method">
+  
+    #<strong>thin_eventmachine_loop</strong>(rack_app, port, ssl_key_path, ssl_cert_path)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p class="note private">
+  <strong>This method is part of a private API.</strong>
+  You should avoid using this method if possible, as it may be removed or be changed in the future.
+</p>
+<p>Start the EventMachine loop to run Thin, the periodic timer and so on.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>0.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/engine_connector.rb', line 192</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_thin_eventmachine_loop'>thin_eventmachine_loop</span><span class='lparen'>(</span><span class='id identifier rubyid_rack_app'>rack_app</span><span class='comma'>,</span> <span class='id identifier rubyid_port'>port</span><span class='comma'>,</span> <span class='id identifier rubyid_ssl_key_path'>ssl_key_path</span><span class='comma'>,</span> <span class='id identifier rubyid_ssl_cert_path'>ssl_cert_path</span><span class='rparen'>)</span>
+  <span class='comment'># No luck with Puma - for now, hardcode using Thin
+</span>  <span class='const'>Faye</span><span class='op'>::</span><span class='const'>WebSocket</span><span class='period'>.</span><span class='id identifier rubyid_load_adapter'>load_adapter</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thin</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+  <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span> <span class='lbrace'>{</span>
+    <span class='id identifier rubyid_thin'>thin</span> <span class='op'>=</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Handler</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thin</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_thin'>thin</span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_rack_app'>rack_app</span><span class='comma'>,</span> <span class='symbol'>:Port</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_port'>port</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_server'>server</span><span class='op'>|</span>
+      <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_ssl_options'>ssl_options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+        <span class='comment'># Supported options: http://www.rubydoc.info/github/eventmachine/eventmachine/EventMachine/Connection:start_tls
+</span>        <span class='symbol'>:private_key_file</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_ssl_key_path'>ssl_key_path</span><span class='comma'>,</span>
+        <span class='symbol'>:cert_chain_file</span>  <span class='op'>=&gt;</span> <span class='id identifier rubyid_ssl_cert_path'>ssl_cert_path</span><span class='comma'>,</span>
+        <span class='symbol'>:verify_peer</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
+      <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_server'>server</span><span class='period'>.</span><span class='id identifier rubyid_ssl'>ssl</span> <span class='op'>=</span> <span class='kw'>true</span>
+    <span class='kw'>end</span>
+    <span class='const'>Signal</span><span class='period'>.</span><span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>INT</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>  <span class='lbrace'>{</span> <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_stop'>stop</span> <span class='rbrace'>}</span>
+    <span class='const'>Signal</span><span class='period'>.</span><span class='id identifier rubyid_trap'>trap</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>TERM</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='const'>EventMachine</span><span class='period'>.</span><span class='id identifier rubyid_stop'>stop</span> <span class='rbrace'>}</span>
+
+    <span class='comment'># And now, the purpose of this whole loop - allowing WebSockets,
+</span>    <span class='comment'># the Thin server *and* a single periodic timer to all run at
+</span>    <span class='comment'># once without multiple threads, and still have the timer start
+</span>    <span class='comment'># when the server does. *sigh*
+</span>    <span class='id identifier rubyid_start_engine_periodic_timer'>start_engine_periodic_timer</span>
+  <span class='rbrace'>}</span>
+  <span class='const'>STDERR</span><span class='period'>.</span><span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Killed by SIGINT or SIGTERM... Exiting!</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:19 2018 by
+  Generated on Mon Jun 11 16:00:06 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

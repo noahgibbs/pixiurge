@@ -65,24 +65,24 @@ challenging.</p>
 
 <h2>What You&#39;ll Need</h2>
 
-<p>I&#39;m assuming you already know Ruby pretty well. A Pixiurge is about as
+<p>I&#39;m assuming you already know Ruby pretty well. A Pixiurge app is about as
 hard to build as a Ruby on Rails app - not massively hard, but you&#39;ll
 need to be a decent computer programmer. If you&#39;re not a computer
-programmer, you probably need to find one for this.</p>
+programmer, you probably need to find one.</p>
 
 <p>(A non-computer-programmer can certainly help. In fact, most of the
 work of building a game isn&#39;t computer programming at all - it&#39;s art,
 sounds, text, storytelling and so on. But Pixiurge assumes you have a
 computer programmer on the project too. If you don&#39;t, and you don&#39;t
-want to, Pixiurge probably isn&#39;t for you.)</p>
+want to, then Pixiurge probably isn&#39;t for you.)</p>
 
 <p>Pixiurge is still new and raw. So you&#39;ll need a programmer willing to
-deal with a few sharp edges and dig in. Sorry! Everything starts
+deal with a few sharp edges and dig in. Sorry! Every project starts
 somewhere.</p>
 
 <p>You or your programmer will need to know Ruby and Javascript. Ruby
 runs on the server, and Javascript (mostly) runs in the browser. You
-don&#39;t need to know Rails, though it won&#39;t hurt.</p>
+don&#39;t need to know Ruby on Rails, though it won&#39;t hurt.</p>
 
 <h2>How-To</h2>
 
@@ -91,7 +91,7 @@ will do it, or you can add Pixiurge to your Gemfile and run &quot;bundle
 install&quot;. You&#39;ll need Ruby for this - you already have Ruby installed,
 yes?</p>
 
-<p>Once you have Ruby and Pixiurge installed, you can type &quot;pixiurge new
+<p>Once you have Ruby and Pixiurge installed, you can type &quot;pixiurge
 game_name&quot; at the command line. Use your own game name instead of
 &quot;game_name&quot;. It doesn&#39;t need to be final and perfect or anything -
 again, the programming isn&#39;t the hard part, and you&#39;ll be able to
@@ -101,11 +101,14 @@ change it later if you need to.</p>
 directories full of things a browser will want - static assets like
 tmx files and Javascript, an index.html file, stuff like that.</p>
 
-<p>The Pixiurge library itself isn&#39;t in there. You&#39;ll be using it from a
-gem. You can <em>use</em> it, it&#39;s just not copied into your game.</p>
+<p>The Pixiurge library itself isn&#39;t inside your new game
+directory. You&#39;ll be using it from a gem. Your Gemfile already uses it
+and that&#39;s enough.</p>
 
 <p>To look up stuff about Pixiurge and Demiurge, you&#39;ll want to have a
-look at their documentation: &quot;<a href="https://noahgibbs.github.io/pixiurge">https://noahgibbs.github.io/pixiurge</a>&quot;.</p>
+look at their documentation:
+&quot;<a href="https://noahgibbs.github.io/pixiurge">https://noahgibbs.github.io/pixiurge</a>&quot;. That documentation is checked
+into the Pixiurge &quot;docs&quot; directory, so you can also look for it there.</p>
 
 <p>The &quot;world&quot; directory is where you&#39;re going to be spending a <em>lot</em> of
 quality time. It&#39;s where the world simulation code lives. Demiurge is
@@ -118,11 +121,12 @@ browser to walk around in that world.</p>
 
 <p>You&#39;ll want to read <a href="https://noahgibbs.github.io/pixiurge">a bunch of
 documentation</a>. It&#39;s not a bad
-idea to find an example game, especially if you can find one that&#39;s a
-lot like what you want to build.</p>
+idea to find an example game, especially if you can find one that&#39;s
+like what you want to build.</p>
 
-<p>But right now, there aren&#39;t many good examples out there. So you
-probably want to read the documentation, mostly.</p>
+<p>But right now, there aren&#39;t many good examples. So you probably want
+to read the documentation, mostly. You can also read the Demiurge and
+Pixiurge code, which are 100% free and open.</p>
 
 <h3>Parts of Everything</h3>
 
@@ -148,9 +152,9 @@ for a few more details.</p>
 <h3>The Interface</h3>
 
 <p>It&#39;s a good idea to make a new Pixiurge app and then just look up the
-pieces of it in the API documentation. That will show you a bunch of
-things you could do. Keep in mind that along with classes and methods,
-there are things like Protocol messages, Notifications and
+its code in the API documentation. That will show you a bunch of
+things you could do. Along with classes and methods, your new code
+contains things like Protocol messages, Notifications and
 Intentions. The CONCEPT documentation for both Pixiurge and Demiurge
 can help a bit with knowing what all the pieces are.</p>
 
@@ -159,15 +163,6 @@ code. There&#39;s not a huge amount of it, and it will definitely show you
 what you can do. Also, you may need to add something to
 Pixiurge... Don&#39;t be afraid to jump in with a pull request, or even to
 fork your own separate version of Pixiurge for your own game.</p>
-
-<p>I won&#39;t go heavily into the software interface here -- that&#39;s what the
-API docs are for. But make sure to check the Ruby file that defines
-your Application object (inherited from AuthenticatedApp) and see what
-it does with handlers.</p>
-
-<p>Often you&#39;ll want to add to it. Sometimes you&#39;ll want to cut parts
-out. But it&#39;s basically always worth reading the generated code that
-got written for you, because it shows you where you can change things.</p>
 
 <h2>Assets</h2>
 
@@ -178,14 +173,30 @@ handle that?</p>
 <p>You can:</p>
 
 <ul>
-<li><p>Do it yourself. This will likely involve learning things, and maybe
-buying software.</p></li>
+<li><p>Do it yourself. This will likely involve reading and practice, and
+maybe buying software.</p></li>
 <li><p>Have somebody else do it. If you&#39;re not paying them, don&#39;t expect
 this to go well and happen quickly.</p></li>
 <li><p>Restrict yourself to what you can find for free. This option gets
 easier every year, and it&#39;s a great starting place for the other two
 options as well.</p></li>
 </ul>
+
+<p>What hardware and software are necessary? For graphics, there are some
+great free 2D drawing programs like Medibang and Krita. Tiled is a
+wonderful free map editor. There are great free animation programs
+like Spriter (non-Pro version). With a microphone and Audacity, you
+can do quite a lot. You can even get free image-processing programs
+like The GIMP. And if you&#39;re willing to pay a bit of money, you can do
+even better with programs like Affinity Designer, up through expensive
+and amazing options like the Adobe Creative Suite ($50/month, but it&#39;s
+used by basically all serious artistic professionals -- of whom I am
+not one.)</p>
+
+<p>In general, you&#39;ll need to pick one or more programs to match the
+artistic style of what you&#39;re trying to make. And you and/or your
+artistic team will need to use them, preferably so that the results
+all look vaguely similar to each other.</p>
 
 <h3>In General</h3>
 
@@ -201,14 +212,17 @@ what you want and modify it from there?</p>
 
 <p>You can find great Tiled maps out there if you look - the Kenney
 dungeon tile set, for instance, comes with TMX files for Tiled. And
-games that use it (Source of Tales, The Mana World, etc.) often have
-very nice maps you can start looking at. Keep in mind how the
+games that use Tiled (Source of Tales, The Mana World, etc.) often
+have very nice maps you can start looking at. Keep in mind how the
 licensing works - Kenney&#39;s stuff is CC0 (do whatever you want) but
-many other games may be GPL or may prevent commercial use.</p>
+many other games may need attribution, or require you to re-share or
+may prevent commercial use.</p>
 
 <p>And if you can find these free graphics, so can other folks. Which
-means if they see it in your game they&#39;ll know you&#39;re using it
-illegally. Graphics and maps are hard to hide.</p>
+means if they see it in your game they&#39;ll know whether you&#39;re using it
+illegally. Graphics and maps are hard to hide. Try to use graphics
+only in ways that are permitted, or use graphics like Kenney&#39;s that
+can be used in any way.</p>
 
 <h3>Graphics</h3>
 
@@ -219,32 +233,33 @@ it&#39;s not especially cheap if you&#39;re not a professional.</p>
 <p>Pixiurge is best for bitmap graphics, not vector graphics - so vector
 images like SVGs, SWAs, FLAs and AI files will all be hard to use.</p>
 
-<p>Check out OpenGameArt </p>
+<p>Check out OpenGameArt for useful source material, as long as the
+license is compatible with what you want to do.</p>
 
 <h2>Licensing</h2>
 
-<p>After the &quot;Assets&quot; section, let&#39;s talk a bit about licensing. It&#39;s a
-huge topic, but we can hit the highlights.</p>
+<p>Let&#39;s talk a bit about licensing. It&#39;s a huge topic, but we can hit
+the highlights.</p>
 
 <p>The short version of licensing is &quot;whoever creates a thing gets to
 decide how it&#39;s used.&quot; If they sell it to somebody, of course, then
 the new owner gets to decide.</p>
 
-<h3>Proprietary Assets and Code</h3>
+<h3>Proprietary Assets/Code</h3>
 
 <p>If a company or a professional author/illustrator makes something,
 they don&#39;t usually let you use it how you want. You can&#39;t just take a
 Disney picture of Mickey Mouse, or characters from The Lord of the
-Rings or text from a John Steinbeck book and use it how you
-like. Those things are all under restrictive copyrights, and you&#39;re
-honestly better off avoiding them.</p>
+Rings or text from a John Steinbeck book and make money off them.
+Those assets are all under restrictive copyrights, and you&#39;re better
+off avoiding them.</p>
 
-<p>There&#39;s a (small) exemption for &quot;Fair Use&quot; stuff, which is a <em>very</em>
-legally blurry category. You can&#39;t use very much of their stuff, but
-it&#39;s not clear how much. You&#39;re more likely to be found guilty of
-infringement if you charge money, but it&#39;s not clear how much more
-likely. Fair Use is hard if you&#39;re using more than a tiny chunk of
-their stuff. Try to avoid leaning on it.</p>
+<p>There&#39;s a (small) exemption in the United States for &quot;Fair Use,&quot; which
+is a <em>very</em> legally blurry category. You can&#39;t use very much from any
+particular work, but it&#39;s not clear how much. You&#39;re more likely to be
+found guilty of infringement if you charge money, but it&#39;s not clear
+how much more likely. Fair Use is hard to understand, and usually a
+bad idea to count on.  If possible, just avoid other people&#39;s assets.</p>
 
 <p>In the USA, you have a nearly unlimited ability to do parody and
 satire. In many other places (e.g. Germany) you don&#39;t. What if you&#39;re
@@ -256,17 +271,17 @@ somebody else&#39;s work, you can decide the license for yourself. Which
 means <em>you</em> could make it proprietary.</p>
 
 <p>If you want your game to be proprietary, don&#39;t use anybody else&#39;s
-assets. Or pay a license fee for assets to use. And you can use CC0
-assets with anything, including your proprietary game (see below.) In
-general, &quot;proprietary&quot; is how companies do it -- and you&#39;ll notice
-that nobody except Disney uses Disney&#39;s assets without paying for
-them.</p>
+assets. Or pay a license fee for assets to use. And you can use CC0 or
+Public Domain assets with anything, including your proprietary game
+(see below.) In general, &quot;proprietary&quot; is how companies do it -- and
+you&#39;ll notice that nobody except Disney uses Disney&#39;s assets without
+paying.</p>
 
 <h3>CC0 Assets and Code; Public Domain</h3>
 
 <p>There&#39;s a great group called &quot;Creative Commons&quot; that make legal
-licenses for &quot;open&quot; assets - things you can just pick up and use. I
-have huge respect for them. Creative Commons is awesome.</p>
+licenses for &quot;open&quot; assets - assets you can use for your own
+projects. I have huge respect for them. Creative Commons is awesome.</p>
 
 <p>The most extreme version of this is the &quot;CC0&quot; license, or &quot;Creative
 Commons Zero.&quot; It mimics the public domain. It&#39;s not clear that in the
@@ -278,17 +293,20 @@ public domain.</p>
 
 <p>Any artwork or writing older than around 1920 in the United States is
 already public domain, as are certain things done for the government
--- that&#39;s why NASA images are public domain, for instance.</p>
+-- that&#39;s why NASA images are public domain, for instance. Some more
+recent works are also in the public domain if the copyright was never
+renewed - the later writing of H.P. Lovecraft, for instance.</p>
 
-<p>You&#39;ll also see a few AWESOME artists releasing stuff this way. You
-can use their work for absolutely anything you like. Kenney Vleugels
-(Kenney.nl) and Hyptosis (Lorestrome.com) both do this, for instance,
-and I use their stuff regularly.</p>
+<p>You&#39;ll also see a few AWESOME artists releasing stuff as CC0 or Public
+Domain. You can use their work for absolutely anything you
+like. Kenney Vleugels (Kenney.nl) and Hyptosis (Lorestrome.com) both
+release CC0 work, for instance. I use their stuff regularly.</p>
 
 <p>CC0 is great for using with any other license. If you release <em>your</em>
-stuff as CC0 you&#39;ll probably get less credit and you&#39;ll definitely get
-less money for it, but your stuff is likely to be <em>used</em> all over the
-place. Which is why we&#39;re so grateful to the folks that do it.</p>
+assets as CC0 you&#39;ll probably get less credit and you&#39;ll definitely
+get less money for it. But the assets you release may be <em>used</em> all
+over the place. Which is why we&#39;re so grateful to the folks that do
+it.</p>
 
 <h3>Creative Commons</h3>
 
@@ -326,8 +344,9 @@ credit (and you should.)</p>
 having to credit a LOT of people. The way games like Source of Tales
 or The Mana World deal with this is to have an AUTHORS file with a
 long list of all their graphics and sounds and who gets credit for
-each individual image. That&#39;s kind of extreme, but... For a CC 3.0 BY
-license, you <em>have</em> to do something like that.</p>
+each individual image. That sounds kind of extreme. But if you use a
+lot of CC 3.0-BY licensed assets, you <em>have</em> to do something like
+that.</p>
 
 <h3>GNU General Public License (&quot;GPL&quot;)</h3>
 
@@ -343,39 +362,43 @@ a different server... But <em>when</em> exactly? Not clear.</p>
 
 <p>&quot;Linking&quot; is even less clear with graphics than with computer
 code. And a lot of the GPL license is written with code in mind, and
-talks about code.</p>
+talks about code, not assets.</p>
 
 <p>Realistically, if your <em>code</em> is also GPL, there&#39;s nothing wrong with
-using GPL graphics. But it&#39;s not obvious what that means if somebody
-wants to use your graphics and <em>not</em> use your code.</p>
+using GPL graphics. But it&#39;s not obvious what &quot;GPL graphics&quot; actually
+<em>do</em> if somebody wants to use your graphics and <em>not</em> use your code.</p>
 
 <p>If you make anything new, I recommend using a different license like
 Creative Commons instead of GPL. Using a CC 3.0 BY-SA license will
-give you what you want (they have to share changes to your graphics)
-without the confusion of trying to apply the GNU General Public
-License to something that isn&#39;t computer code.</p>
+give you what you want (they have to give you credit and share changes
+to your graphics) without the confusion of trying to apply the GNU
+General Public License to something that isn&#39;t source code.</p>
 
 <p>There is at least one more GNU license I know of that <em>is</em> designed
 for creative assets instead of code - the GNU Free Documentation
 License. I don&#39;t know much about it, and I&#39;ve never seen anything in
 the wild that uses it that isn&#39;t from GNU itself. I can&#39;t give you a
-useful contrast between the GNU FDL and the CC 3.0 SA, but that&#39;s
-probably the closest Creative Commons equivalent.</p>
+useful contrast between the GNU FDL and CC 3.0 BY-SA. But those two
+seem similar to each other, at first glance.</p>
 
 <h3>Derived Works</h3>
 
-<p>If you start from somebody else&#39;s work, you&#39;re making a &quot;derived
-work&quot; - it&#39;s not all yours and it&#39;s not all theirs, but some murky
-in-between. If they gave you permission to do this (CC0 license,
-CC 3.0 BY-SA license, GPL, etc) and you license it the same way, then
-all&#39;s well. If you don&#39;t share it with anybody except yourself, you&#39;re
-fine. But if you want to change the license, that&#39;s murky legal
-territory. Sometimes it works (you can relicense CC0 as <em>anything</em>)
-and sometimes it doesn&#39;t (you can&#39;t turn GPL into CC0.)</p>
+<p>If you start from somebody else&#39;s work, you&#39;re making a &quot;derived work&quot;</p>
 
-<p>In general, try to keep the license the same. Dealing in GPL&#39;d stuff?
-Great, make a GPL&#39;d result. CC BY-SA? Great, make your thing CC BY-SA
-as well and add your name to the contributors.</p>
+<ul>
+<li>it&#39;s not all yours and it&#39;s not all theirs, but some murky
+in-between. If they gave you permission to do this (CC0 license, CC
+3.0 BY-SA license, GPL, etc) and you license it the same way, then
+all&#39;s well. If you don&#39;t share the derived work with anybody except
+yourself, you&#39;re fine. But if you want to change the license, that&#39;s
+murky legal territory. Sometimes it works (you can relicense CC0 as
+<em>anything</em>) and sometimes it doesn&#39;t (you can&#39;t turn GPL into CC0.)</li>
+</ul>
+
+<p>In general, try to keep the license the same. Are you starting from
+GPL&#39;d assets and code? Great, make a GPL&#39;d result. CC BY-SA? Great,
+make your thing CC BY-SA as well and add your name to the
+contributors. Starting from CC0? Do whatever you want.</p>
 
 <h3>Compatibility</h3>
 
@@ -387,21 +410,21 @@ lawyer):</p>
 goes with anything and relicenses as anything.</p></li>
 <li><p>If you&#39;re giving the results away and you&#39;re careful to say what
 stuff you used from other people, CC 3.0 is great with any of BY or
-SA. Be careful with NC (&quot;NonCommercial&quot;) since they&#39;ve never spelled
-out clearly what that means, so it&#39;s hard to say what it&#39;s
-compatible with.</p></li>
+SA. Be careful with NC (&quot;NonCommercial&quot;) since Creative Commons has
+never spelled out clearly what that means. So it&#39;s hard to say what
+it&#39;s compatible with.</p></li>
 <li><p>GPL: man, who knows? Does using a set of graphics with other
 graphics count as &quot;linking&quot; them? Do you have to give away source
 code to your entire game? Can you put GPL&#39;d graphics in a
-spritesheet with CC BY-NC is is that illegal? The GPL was <em>not</em>
+spritesheet with CC BY-NC, or is that illegal? The GPL was <em>not</em>
 designed for assets, which makes these <em>very</em> sticky questions. I&#39;d
 want to talk to a lawyer before doing them, which is why I DO NOT
-USE assets under GPL. I&#39;ve read the license very carefully. They&#39;re
-hard questions.</p></li>
+USE assets under GPL. I&#39;ve read the license very carefully. These
+are hard questions.</p></li>
 </ul>
 
 <p>In general, I recommend picking a license you&#39;re okay with. See above
-for how that works with just one. Plus you can use CC0 content with
+for how that works with just one license. Plus you can use CC0 content with
 any other license, however you want.</p>
 
 <h2>Philosophical Advice</h2>
@@ -417,8 +440,8 @@ happen.</p>
 <p>So: what are its opinions?</p>
 
 <p>First off: Pixiurge only does browser games. If you want to write a
-native mobile game or a Windows game or something, Pixiurge basically
-won&#39;t help you at all.</p>
+native mobile game or a Windows game or something, Pixiurge won&#39;t help
+you.</p>
 
 <p>Pixiurge is set up for slower-paced simulation games, not twitch
 games. Pixiurge needs a network round trip to do <em>anything</em> that
@@ -444,9 +467,9 @@ you don&#39;t use a shared server at all, right?</p>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:18 2018 by
+  Generated on Mon Jun 11 16:00:05 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>

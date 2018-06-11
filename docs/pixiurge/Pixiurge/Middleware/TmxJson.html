@@ -103,10 +103,9 @@
   <div class="discussion">
     <p>The TmxJson middleware reads TMX files in the normal XML mode that
 Tiled loads and saves easily, but serves it in the AJAX-friendly
-JSON format that it exports. By converting the (static) TMX file
-and giving appropriate checksums and cache headers, you can make
-virtual-static exported JSON TMX files with sane caching and
-reload behavior directly from a standard XML TMX file.</p>
+JSON format that Tiled exports. This allows JavaScript-friendly
+usage directly from a standard XML TMX file without the manual
+export step every time.</p>
 
 
   </div>
@@ -186,7 +185,7 @@ reload behavior directly from a standard XML TMX file.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of TmxJson.</p>
+    <span class="summary_desc"><div class='inline'><p>Constructor.</p>
 </div></span>
   
 </li>
@@ -209,7 +208,8 @@ reload behavior directly from a standard XML TMX file.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of TmxJson</p>
+    <p>Constructor. Rack has a standard format for these, though the
+options are specific to the TmxJson middleware.</p>
 
 
   </div>
@@ -321,15 +321,15 @@ reload behavior directly from a standard XML TMX file.</p>
       <pre class="lines">
 
 
-184
-185
-186
-187
-188
-189</pre>
+204
+205
+206
+207
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_app'>app</span><span class='comma'>,</span> <span class='id identifier rubyid_options'>options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@app</span> <span class='op'>=</span> <span class='id identifier rubyid_app'>app</span>
@@ -366,7 +366,26 @@ reload behavior directly from a standard XML TMX file.</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>env</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The Rack environment hash.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -389,27 +408,6 @@ reload behavior directly from a standard XML TMX file.</p>
       <pre class="lines">
 
 
-194
-195
-196
-197
-198
-199
-200
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212
-213
-214
 215
 216
 217
@@ -425,10 +423,31 @@ reload behavior directly from a standard XML TMX file.</p>
 227
 228
 229
-230</pre>
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'lib/pixiurge/config_ru.rb', line 215</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
   <span class='comment'># If no TMX path is matched, forward the call to the next middleware
@@ -477,9 +496,9 @@ reload behavior directly from a standard XML TMX file.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jan 29 15:15:18 2018 by
+  Generated on Mon Jun 11 16:00:06 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.3.1).
+  0.9.12 (ruby-2.5.0).
 </div>
 
     </div>
