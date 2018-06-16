@@ -43,7 +43,7 @@ window.Pixiurge = class Pixiurge {
             }
         }
 
-        // TODO: send back a warning to the server side?
+        // TODO: send back a warning to the server side
         return console.warn(`Unknown message name: ${msgName}, args: ${args}`);
     }
 };
