@@ -8,6 +8,6 @@ window.Mock.FakeInput = class FakeInput extends Pixiurge.Input {
     }
 
     sendKeypress(code) {
-        this.pixiApp.transport.sendMessageWithType("keypress", { code: code });
+        this.pixiApp.transport.sendMessageWithType("player_action", "keypress", { code: code });
     }
 }

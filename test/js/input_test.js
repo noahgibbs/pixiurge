@@ -16,7 +16,7 @@ describe('Pixiurge input configuration', function() {
             mock_ws.receive(JSON.stringify([ "display_init", { ms_per_tick: 300, width: 640, height: 480 }]));
 
             mock_input.sendKeypress(37);
-            assert.deepEqual([JSON.stringify([ "game_msg", "keypress", [{ code: 37 }]])], mock_ws.getSent());
+            assert.deepEqual([JSON.stringify([ "player_action", "keypress", { code: 37 }])], mock_ws.getSent());
         });
     });
 });

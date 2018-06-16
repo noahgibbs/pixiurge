@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
  * DS205: Consider reworking code to avoid use of IIFEs
  */
 // The top-level Pixiurge library sets up message handling for default graphical display and
@@ -24,7 +23,7 @@ window.Pixiurge = class Pixiurge {
         this.transport.onMessage((msgName, args) => pixiurgeObj.gotTransportCall(msgName, args));
         this.transport.setup();
         const result = [];
-        for (let items of Array.from(this.messageHandlers)) {
+        for (let items of this.messageHandlers) {
             const handler = items[1];
             if (handler.setup != null) {
                 result.push(handler.setup());
@@ -35,7 +34,7 @@ window.Pixiurge = class Pixiurge {
     }
 
     gotTransportCall(msgName, args) {
-        for (let items of Array.from(this.messageHandlers)) {
+        for (let items of this.messageHandlers) {
             const prefix = items[0];
             const handler = items[1];
             if ((prefix === "") || (msgName.slice(0, prefix.length) === prefix)) {
