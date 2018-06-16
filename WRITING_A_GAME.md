@@ -76,21 +76,22 @@ for most games.
 
 Want to make a new *kind* of thing display? First, make sure you know
 what the old ones are -- sometimes you can just use an existing thing
-to do what you want. But if not, you'll need to learn how to add a
-message to Pixiurge's protocol, and write some PIXI.js code to display
-your new thing.
+to do what you want. But for nearly any project you'll need to learn
+how to add a message to Pixiurge's protocol, and write some Javascript
+code to display your new thing. You may need to learn how to write
+PIXI.js code to display what you want to display.
 
 Want to make things *act* a new way? Learn about Demiurge, the
 simulation library. And learn about Ruby if it's new to you. Something
 like "Learn Ruby the Hard Way" or the Pickaxe Book could help you
 figure out Ruby solidly.
 
-For almost anything, you'll need to find or make some assets -
+For almost any game you'll need to find or make some assets -
 pictures, sounds, maps. That's a significant undertaking and I can
 only tell you a little about it. See the "Assets" section of this file
 for a few more details.
 
-### The Interface
+### The Programmer's Interface
 
 It's a good idea to make a new Pixiurge app and then just look up the
 its code in the API documentation. That will show you a bunch of
@@ -104,6 +105,40 @@ code. There's not a huge amount of it, and it will definitely show you
 what you can do. Also, you may need to add something to
 Pixiurge... Don't be afraid to jump in with a pull request, or even to
 fork your own separate version of Pixiurge for your own game.
+
+## Major Decisions
+
+There's always more to decide. But let's talk about some important
+parts.
+
+### Ticks
+
+You'll need to decide how often to have "ticks." By default, you'll
+get 500 milliseconds per tick, or two ticks per second,
+automatically. These ticks advance on a timer while the server is
+running. That means:
+
+1) If you measure time in Ticks for your simulation, that's the speed.
+2) Time doesn't advance when your server isn't running.
+
+You'll also get an autosave of the simulation engine data every 600
+ticks by default. You can change the number of ticks or turn off
+autosave. Every 600 ticks and 500 ms/tick means you'll get an autosave
+every five minutes (300 seconds) by default.
+
+If you set ms\_per\_tick to zero, there won't be a timer. If you want
+to advance the simulation engine by a tick, you'll need to do it
+yourself. You should do this if you want more control over how time
+flows in your game.
+
+You also won't automatically get "catch up" ticks if your server isn't
+running and you restart it. Instead, time will stop while the server
+is stopped, and pick up where it left off when you start again.
+
+If you want to be able to "pause", that's usually done with world-file
+actions. For instance, don't let a player move when the pause is
+happening. If you pause the whole simulation engine, that means
+*nobody* can do anything, not just one player or group of players.
 
 ## Assets
 

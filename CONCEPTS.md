@@ -107,6 +107,13 @@ the action and send the results, the user's browser doesn't have to
 know about all these things. It can send the action and wait for an
 answer.
 
+Also, having a "tick" that looks at all actions helps keep actions
+fair between players. Would combat be better if you won by hitting the
+same key sooner, or more often? It makes more sense to have a
+particular "tick speed" - how often actions are taken - and just have
+players act at those times. But then you need to wait a moment for all
+players to have a fair chance to take action.
+
 The down-side of all this is that it limits the speed of
 feedback. Very little that the player does can happen faster than once
 per tick. You'd never want to build a rhythm game or a fast-paced
@@ -204,12 +211,26 @@ to web browsers. There are other software components such as
 Displayables. Most of Pixiurge is about passing the messages back and
 forth in a reasonable way.
 
+The Pixiurge App may handle all of this by itself, or may have
+existing chunks of code to handle message handling and state
+processing. These mini-libraries are called "Slivers".
+
+The "Demiurge Engine" or "Simulation Engine" handles all changes in
+persistent state. Each separate smaller Sliver handles some part of
+the state, some part of the message passing and (possibly) some part
+of the user interface to accept actions and display the results.
+
+A Pixiurge App can be made of many different Slivers, plus various
+other code (not necessarily in Slivers) for actions, display, message
+passing, logic and whatnot.
+
 ### Displayables on the Server, sprites on the Client
 
 A Pixiurge server provides different views into Demiurge for a lot of
 different clients at a lot of different times. The same zone or room
 looks different to different players, as you'd expect it to, and of
-course each player only sees a sliver of the game world at any time.
+course each player only sees a sliver of the game world at any time -
+often the one specific room they're currently 'standing' in.
 
 There is one single Demiurge engine on the server, with one copy of
 each unique item. When a Demiurge item changes, several different
