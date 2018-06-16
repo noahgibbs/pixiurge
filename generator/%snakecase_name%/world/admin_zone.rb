@@ -21,6 +21,10 @@ zone "admin zone" do
 
     # Action that gets performed on character's body being created
     define_action("create") do
+      # See this? This is what a backdoor would look like. It's a bad
+      # thing.  You should change this - either to one specific
+      # account that you want to be an admin, or just remove the whole
+      # thing.
       if ["bob", "angelbob", "noah"].include?(item.name)
         item.state["admin"] = true
       end
