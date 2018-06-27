@@ -74,11 +74,11 @@ require "pixiurge/protocol"
 # * {#on_login} - called when a user successfully logs in using built-in authentication (AuthenticatedApp only)
 #
 # And finally there's a low-level websocket message handler you can
-# override, but it doesn't send events via on_event:
+# override, but it doesn't send events via on_event or handle them with on_message_type:
 #
 # * {#handle_message} - very low-level message handler, only use it if you're comfortable reading the source code
 #
-# Some of these handlers may already be defined by AuthenticatedApp,
+# Some of these handlers may already be defined if you use AuthenticatedApp,
 # which will require you to call super() appropriately.
 #
 # The low-level message handlers tend to use websocket objects. A
@@ -304,6 +304,7 @@ class Pixiurge::App
     @incoming_traffic_logfile = options[:incoming_traffic_logfile] || "log/incoming_traffic.json"
     @outgoing_traffic_logfile = options[:outgoing_traffic_logfile] || "log/outgoing_traffic.json"
     @event_handlers = {}
+    @message_handlers = {}
   end
 
   # The websocket handler for the Pixiurge app.
@@ -354,6 +355,25 @@ class Pixiurge::App
     @event_handlers[event].push(block)
   end
 
+  # This method declares a handler for a specific message type. Each
+  # message type may only have a single handler. Ordinarily a
+  # particular file, class or splinter will declare multiple message
+  # types and multiple handlers for inclusion, and handle only its own
+  # types - an example of this method is Authentication, which
+  # declares a number of authentication-specific messages and ignores
+  # all others.
+  #
+  # @see #on_message, #handle_message
+  # @param message_name [String] The message type to handle
+  # @yield The handler for this message type
+  # @return [void]
+  # @since 0.2.0
+  def on_message_type(message_name, &block)
+    raise MessageTypeError.new("Message type '#{message_name}' already has a handler!") if @message_handlers[message_name]
+    @message_handlers[message_name] = block
+    nil
+  end
+
   private
   # Sends an event such as {#on_event} would receive. This checks for
   # both inherited handler methods and on_event subscriptions.
@@ -376,6 +396,12 @@ class Pixiurge::App
   # @param data [Object] Deserialized JSON data sent from the client
   # @since 0.1.0
   def handle_message(ws, data)
+    msg_type = data[0]
+
+    if @message_handlers[msg_type]
+      return @message_handlers[msg_type].call(ws, data)
+    end
+
     return send_event "message", ws, data
   end
 

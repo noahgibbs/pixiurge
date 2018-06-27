@@ -76,7 +76,54 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
     @storage = options[:storage] || Pixiurge::Authentication::FileAccountStorage.new(options[:accounts_file] || "accounts.json")
     @username_for_websocket = {}
     @websocket_for_username = {}
+    set_handlers
     nil
+  end
+
+  # Set up message-type handlers for authorization messages.
+  #
+  # @return void
+  # @since 0.2.0
+  def set_handlers
+    on_message_type(Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT) do |websocket, args|
+      username, salt, hashed = args[1]["username"], args[1]["salt"], args[1]["bcrypted"]
+      user_state = @storage.data_for(username)
+      if user_state
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, { "message" => "Account #{username.inspect} already exists!" }
+      elsif !(username =~ USERNAME_REGEX)
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, { "message" => "Username contains illegal characters: #{username.inspect}!" }
+      else
+        @storage.register(username, { "account" => { "salt" => salt, "hashed" => hashed, "method" => "bcrypt" } })
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_REGISTRATION, { "username" => username }
+      end
+    end
+
+    on_message_type(Pixiurge::Protocol::Incoming::AUTH_LOGIN) do |websocket, args|
+      username, hashed = args[1]["username"], args[1]["bcrypted"]
+      user_state = @storage.data_for(username)
+      if !user_state
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as #{username.inspect}!" }
+      elsif user_state["account"]["hashed"] == hashed
+        # Let the browser side know that a login succeeded
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => username }
+        # Let the app know that a login succeeded
+        send_event "login", websocket, username
+      else
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Wrong password for user #{username.inspect}!" }
+      end
+    end
+
+    on_message_type(Pixiurge::Protocol::Incoming::AUTH_GET_SALT) do |websocket, args|
+      username = args[1]["username"]
+      user_state = @storage.data_for(username)
+      if ! user_state
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as #{username.inspect}!" }
+      else
+        user_salt = user_state["account"]["salt"]
+        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_SALT, { "salt" => user_salt }
+      end
+    end
+
   end
 
   # Process an authorization message or fall back to old message handling.
@@ -88,47 +135,6 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
   # @since 0.1.0
   def handle_message(websocket, args)
     msg_type = args[0]
-    if msg_type == Pixiurge::Protocol::Incoming::AUTH_REGISTER_ACCOUNT
-      username, salt, hashed = args[1]["username"], args[1]["salt"], args[1]["bcrypted"]
-      user_state = @storage.data_for(username)
-      if user_state
-        return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, { "message" => "Account #{username.inspect} already exists!" }
-      end
-      unless username =~ USERNAME_REGEX
-        return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_REGISTRATION, { "message" => "Username contains illegal characters: #{username.inspect}!" }
-      end
-      @storage.register(username, { "account" => { "salt" => salt, "hashed" => hashed, "method" => "bcrypt" } })
-      websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_REGISTRATION, { "username" => username }
-
-      return
-    end
-
-    if msg_type == Pixiurge::Protocol::Incoming::AUTH_LOGIN
-      username, hashed = args[1]["username"], args[1]["bcrypted"]
-      user_state = @storage.data_for(username)
-      unless user_state
-        return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as #{username.inspect}!" }
-      end
-      if user_state["account"]["hashed"] == hashed
-        # Let the browser side know that a login succeeded
-        websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_LOGIN, { "username" => username }
-        # Let the app know that a login succeeded
-        return send_event "login", websocket, username
-      else
-        return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "Wrong password for user #{username.inspect}!" }
-      end
-      # Unreachable, already returned
-    end
-
-    if msg_type == Pixiurge::Protocol::Incoming::AUTH_GET_SALT
-      username = args[1]["username"]
-      user_state = @storage.data_for(username)
-      unless user_state
-        return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_FAILED_LOGIN, { "message" => "No such user as #{username.inspect}!" }
-      end
-      user_salt = user_state["account"]["salt"]
-      return websocket_send websocket, Pixiurge::Protocol::Outgoing::AUTH_SALT, { "salt" => user_salt }
-    end
 
     if msg_type == Pixiurge::Protocol::Incoming::PLAYER_ACTION
       username = @username_for_websocket[websocket]
@@ -136,6 +142,7 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
       return send_event "player_action", username, args[1..-1]
     end
 
+    # Fall back to normal message handling
     super
   end
 
@@ -236,8 +243,10 @@ class Pixiurge::AuthenticatedApp < Pixiurge::App
   def on_message(ws, data)
     username = @username_for_websocket[ws]
     if username && data.is_a?(Array) && data[0] == Pixiurge::Protocol::Incoming::PLAYER_ACTION
-      send_event "player_action", username, *data
+      return send_event "player_action", username, *data
     end
+
+    # Unknown message
   end
 end
 
