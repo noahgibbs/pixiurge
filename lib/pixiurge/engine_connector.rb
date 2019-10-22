@@ -57,6 +57,8 @@ class Pixiurge::EngineConnector
     @default_height = options[:default_height] || 480
     @ms_per_tick = 500
 
+    @state_subscriptions = {}
+
     unless options[:no_start_simulation]
       # @todo Replace this with Hash#slice and require a higher minimum Ruby version
       sim_options = {}
@@ -150,21 +152,69 @@ class Pixiurge::EngineConnector
 
   private
 
+  # Advance the engine by one or more ticks. Then notify any
+  # subscribers of whether their subscribed state changed over that
+  # time.
+  def engine_advance_with_updates(num_ticks: 1, update_subs: true)
+    return num_ticks.times { @engine.advance_one_tick } unless update_subs
+
+    ss = @engine.structured_state
+    num_ticks.times { @engine.advance_one_tick }
+    new_ss = @engine.structured_state
+
+    item_state = {}
+    ss.each do |row|
+      type, name, state = *row
+      if @state_subscriptions[name]
+        item_state[name] = {
+          old_type: type,    # This shouldn't normally change, but...
+          old_state: state,
+          subs: @state_subscriptions[name],
+        }
+      end
+    end
+
+    new_ss.each do |row|
+      type, name, state = *row
+      if item_state[name]  # In this case, there is a subscription and old state
+        old_type, _, old_state = item_state[name]
+        if old_type != type || old_state != state
+          # There was a change in type or state - check all subscriptions.
+          @state_subscriptions[name].each do |field_name, block|
+            if field_name.nil?
+              block.call(name)
+            elsif state[field_name] != old_state[field_name]
+              block.call("#{name}:#{field_name}")
+            end
+          end
+        end
+      elsif @state_subscriptions[name] # In this case there is a subscription, but no old state
+        # This just got added, which counts as a change.
+        @state_subscriptions[name].each do |field_name, block|
+          if field_name.nil?
+            # Notify for all fields, so notify.
+            block.call(name)
+          elsif state[field_name]
+            # If checking a specific field name, only notify if it got added.
+            block.call("#{name}:#{field_name}")
+          end
+        end
+      end
+    end
+  end
+
   # Start the actual EventMachine periodic timer for the simulation.
   # This should be done only once EventMachine is running.
   #
   # @api private
   def start_engine_periodic_timer
-    counter = 0
-
     @engine_started = true
     EM.add_periodic_timer(0.001 * @ms_per_tick) do
       # Step game content forward by one tick
       begin
-        @engine.advance_one_tick
+        engine_advance_with_updates
         admin_item = @engine.item_by_name("admin")
         ticks = admin_item.state["ticks"]
-        counter += 1
         if @autosave_ticks != 0 && ticks % @autosave_ticks == 0
           puts "Writing periodic statefile, every #{@autosave_ticks.inspect} ticks..."
           ss = @engine.structured_state
@@ -280,6 +330,31 @@ class Pixiurge::EngineConnector
     @players[username]
   end
 
+  # When state matching subscriptions changes during a tick or ticks,
+  # call the supplied block.
+
+  # Subscriptions can be a single string or an array of strings. Each
+  # string may be:
+  #
+  # * A single Demiurge item name
+  # * A Demiurge item name followed by a colon and a field name
+  #
+  # Since Demiurge names may contain spaces, it's important not to add
+  # any additional spaces to the item name(s) or field name(s).
+  #
+  # @param subscriptions [Array<String>] The Array of subscription strings, or a single String
+  # @yield This block is yielded after one or more ticks with changes to the supplied field(s)
+  # @yieldparam subscription [String] The subscribed string that the change matches
+  # @return [void]
+  # @since 0.2.0
+  def subscribe_to_state_change(subscriptions, &block)
+    [subscriptions].flatten(1).each |sub|
+      item_name, field_name = sub.split(":", 2)
+      @state_subscriptions[item_name] ||= []
+      @state_subscriptions[item_name].push [field_name, block]
+    end
+  end
+
   private
 
   def display_settings
@@ -292,6 +367,11 @@ class Pixiurge::EngineConnector
 
   public
 
+  # Create the Displayable object for a given item. This may be based
+  # on its declared display block, or may be a default Displayable
+  # depending on its type.
+  #
+  # @param item [Demiurge::StateItem] The item to c
   def displayable_for_item(item)
     return if item.is_a?(Demiurge::InertStateItem) # Nothing needed for InertStateItems
 
@@ -322,6 +402,10 @@ class Pixiurge::EngineConnector
     nil
   end
 
+  # Make sure a given engine item is known to the EngineConnector, has
+  # the correct Displayable and so on.
+  #
+  # @param item [Demiurge::StateItem] The item to query
   def register_engine_item(item)
     if @displayables[item.name] # Already have this one
       return if @displayables[item.name][:source] == :demiurge  # Duplicate registration, it's fine
@@ -369,6 +453,14 @@ class Pixiurge::EngineConnector
     @displayables[object.name] = { displayable: object, source: object }
   end
 
+  # Find all players in a given location name, and run the supplied
+  # block with each of them as a parameter.
+  #
+  # @param location_name [String] The location name
+  # @param options [Hash] Options about the location or players
+  # @option options :except [Array] An array of player objects and/or names to exclude, and not call the block for
+  # @yield The block to yield once for each player, with the player object (not name) called each time.
+  # @return [void]
   def each_player_for_location_name(location_name, options = { :except => [] }, &block)
     @players.each do |player_name, player|
       next if options[:except].include?(player) || options[:except].include?(player_name)
@@ -475,7 +567,8 @@ class Pixiurge::EngineConnector
     Pixiurge::Notifications::PlayerReconnect => true,
   }
 
-  # When new data comes in about things in the engine changing, this is what receives that notification.
+  # When new Demiurge notifications come in about events in the
+  # engine, this method receives them.
   def notified(data)
     # First, ignore a bunch of notifications we don't care about
     return if IGNORED_NOTIFICATION_TYPES[data["type"]]

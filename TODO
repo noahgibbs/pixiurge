@@ -1,0 +1,45 @@
+Testing:
+
+* Set up SauceLabs testing: https://philipwalton.com/articles/learning-how-to-set-up-automated-cross-browser-javascript-unit-testing/
+* Set up Ruby-and-JS integration testing for local environment
+* Test w/ engine state-load while a connection is active
+* "Destroy everything" callback to destroy all Pixiurge apps and their deps; including texture caches and Tweens - add as a test setup/teardown
+
+Interface/API:
+
+* Some kind of runner for Demiurge routines that catches exceptions and shows the cause chain and the context when a Demiurge error gets caught...
+* Add default AuthenticatedApp on_player_message that hooks up action names that match to in-Demiurge player actions on body object if they're tagged "action"
+* Handle socket disconnect/reconnect with retries and so on
+
+JS/Visual:
+
+* z-order/display: https://github.com/pixijs/pixi-display
+* Look into fullscreen mode: https://github.com/kittykatattack/fullScreen
+* Look more into window resizing: https://github.com/kittykatattack/learningPixi#creating-the-pixi-application-and-stage
+* Make sure we can tag motion (e.g. walking) with *how* it occurs and that the result gets sent all the way to the front end
+
+Software Design Issues:
+
+* Add verification of name formats for Displayable names in JS
+* Add verification of name formats for objects in DSLs?
+* Add list of forbidden Pixiurge object names like "any" and "all"
+* Add Pixiurge exceptions file like Demiurge
+* Add Pixiurge warnings events like Demiurge
+* Front-end ability to send errors back
+
+Security:
+
+* Rate-limiting for login and salts
+
+Extract:
+
+* TmxJson middleware
+* Rack::Tilt middleware
+
+Releases:
+
+* Start properly version-tagging and uploading gems
+* Minify our combined JS for release - maybe transpile first so UglifyJS can minify? http://jilles.me/webpack-is-not-as-complicated-as-you-think/
+* Write a little shellscript/fragment for docs releases to not update *just* the "generated at time X" line for any file under docs
+* Look into LetsEncrypt, see how hard it is to get an auto-cert from them instead of self-signed for production-like usage
+* Add BabelJS pass to make sure the generated JS is compatible with the widest range of browsers

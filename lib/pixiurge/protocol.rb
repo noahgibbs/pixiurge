@@ -68,7 +68,8 @@ module Pixiurge::Protocol::Incoming
 end
 
 # Fixed constants for outgoing protocol messages. That means messages
-# sent from the server to the front end rather than the opposite.
+# sent from the server to the browser rather than from browser to
+# server.
 #
 # @since 0.1.0
 module Pixiurge::Protocol::Outgoing
@@ -179,4 +180,32 @@ module Pixiurge::Protocol::Outgoing
   #
   # @since 0.1.0
   DISPLAY_PAN_TO_PIXEL = "display_pan"
+
+  # Subscribe to some amount of game state; the browser is asking to
+  # be notified when any of this changes. The server has a chance to
+  # deny this request, or only partially fulfill it. Options may be
+  # used in an application-specific way to pass important information
+  # about what is subscribed to. The "channel" option is used to have
+  # multiple sets of state subscriptions - useful when multiple user
+  # interface elements want different subscriptions, for instance.
+  #
+  # @example [ STATE_SUBSCRIBE, ["item1_name:field1", "item1_name:field2", "item2_name:field1"], { "options" => "go here", "channel" => "ui_elt_1" } ]
+  #
+  # @since 0.2.0
+  STATE_SUBSCRIBE = "state_subscribe"
+
+  # Ask to no longer be notified about changes to these state
+  # elements. It is an error to unsubscribe to a specific entry
+  # without having first subscribed to it, and may result in undefined
+  # behavior. Unsubscribe with an empty array of field names does
+  # nothing. Unsubscribe with the special string value "all" instead
+  # of an array of field names unsubscribes from all current
+  # subscriptions. Passing the special "channel" option will
+  # unsubscribe only from subscriptions with the same matching
+  # channel.
+  #
+  # @example [ STATE_UNSUBSCRIBE, ["item_name:field1", "item_name:field2", "item2:field"], { "options" => "go here", "channel" => "ul_elt_1" } ]
+  #
+  # @since 0.2.0
+  STATE_UNSUBSCRIBE = "state_unsubscribe"
 end
